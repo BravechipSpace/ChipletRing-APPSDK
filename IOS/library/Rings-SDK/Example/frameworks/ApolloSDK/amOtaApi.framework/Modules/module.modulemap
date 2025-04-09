@@ -1,0 +1,6 @@
+framework module amOtaApi {
+  umbrella header "amOtaApi.h"
+
+  export *
+  module * { export * }
+}

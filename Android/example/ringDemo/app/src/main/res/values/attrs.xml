@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorPickerView">
+        <attr name="indicatorColor" format="color" /><!--指示点颜色-->
+        <attr name="indicatorEnable" format="boolean" /><!--是否启用指示点-->
+        <attr name="orientation" format="integer">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RingColorPicker">
+        <!--默认角度-->
+        <attr name="angle" format="float"/>
+        <!--圆形选择器填充色-->
+        <attr name="markBackground" format="color|reference"/>
+        <!--圆形选择器边框颜色-->
+        <attr name="markStrokeColor" format="color|reference"/>
+        <!--圆形选择器描边-->
+        <attr name="isMarkStroke" format="boolean"/>
+        <!--圆环宽度-->
+        <attr name="ringWidth" format="dimension"/>
+        <!--选择器自动色-->
+        <attr name="isMarkAutoColor" format="boolean"/>
+        <!--扩散特效透明度-->
+        <attr name="spreadAlpha" format="integer"/>
+        <!--选择器描边宽度-->
+        <attr name="markStrokeWidth" format="dimension|reference"/>
+        <!--中心按钮图像资源-->
+        <attr name="srcCompat" />
+        <!--中心按钮图像透明度-->
+        <attr name="centerImageAlpha" format="integer"/>
+        <!--中心复选状态-->
+        <attr name="checked" format="boolean"/>
+        <!--当前指向的颜色-->
+        <attr name="currentColor" format="color|reference"/>
+        <!--过滤颜色-->
+        <attr name="tint" />
+        <!--视图样式-->
+        <attr name="colorPickerStyle" format="enum">
+            <enum name="MARK_RING_INNER" value="0"/>
+            <enum name="MARK_RING_OUTER" value="1"/>
+            <enum name="MARK_RING_DOWN_OUTER" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,40 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url "https://jitpack.io" }
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.3'
+//        classpath 'com.novoda:bintray-release:0.9'
+        //数据库
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0' // add plugin
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url "https://jitpack.io" }
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

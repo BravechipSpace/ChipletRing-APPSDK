@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F5U-Lb-1Id">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naF-2e-1uQ" userLabel="0_Btn">
+                                <rect key="frame" x="15" y="123" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="28r-4l-vaE"/>
+                                    <constraint firstAttribute="height" constant="40" id="cdt-XD-O2J"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="搜索连接"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zEL-TS-2ee"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1wW-qh-k9w" userLabel="1_Btn">
+                                <rect key="frame" x="150.66666666666666" y="123" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="MUT-Zc-bsI"/>
+                                    <constraint firstAttribute="height" constant="40" id="WR2-ma-IQl"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="断开连接"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cI4-eA-1Ao"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTe-Ch-9sg" userLabel="2_Btn">
+                                <rect key="frame" x="286" y="123" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="Fqf-zY-FC6"/>
+                                    <constraint firstAttribute="height" constant="40" id="PPb-QJ-HUX"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="同步时间"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wAa-KK-FgF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1AQ-jO-Mg8" userLabel="3_Btn">
+                                <rect key="frame" x="15" y="183" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KZa-he-AFy"/>
+                                    <constraint firstAttribute="width" constant="92" id="Vlm-Kn-aGc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="读取时间"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E1i-6o-oyz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efk-j7-kqP" userLabel="4_Btn">
+                                <rect key="frame" x="150.66666666666666" y="183" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="91k-fk-zZG"/>
+                                    <constraint firstAttribute="height" constant="40" id="jyA-8w-iK4"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="实时步数"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wok-L2-F6s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKJ-m1-PDf" userLabel="5_Btn">
+                                <rect key="frame" x="286" y="183" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Vcm-w6-krv"/>
+                                    <constraint firstAttribute="width" constant="92" id="vsJ-Pc-tgf"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="清除步数"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="op7-N4-dAZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KCS-hT-YZ3" userLabel="6_Btn">
+                                <rect key="frame" x="15" y="243" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="Zqt-OH-M2f"/>
+                                    <constraint firstAttribute="height" constant="40" id="l3j-66-GB8"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="获取电量"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hdg-gP-Wlz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1007" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjm-fR-kBu" userLabel="7_Btn">
+                                <rect key="frame" x="150.66666666666666" y="243" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="0XW-9g-VsT"/>
+                                    <constraint firstAttribute="height" constant="40" id="cVx-yS-6j5"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="充电状态"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qtg-nr-UaY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1008" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GU1-vD-KEf" userLabel="8_Btn">
+                                <rect key="frame" x="286" y="243" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="Wze-7R-lpx"/>
+                                    <constraint firstAttribute="height" constant="40" id="hkC-wQ-3pd"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="体温"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pXV-Lc-Bcg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1009" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikB-tE-kgf" userLabel="9_Btn">
+                                <rect key="frame" x="15" y="303" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="gxx-ET-qzb"/>
+                                    <constraint firstAttribute="height" constant="40" id="xOV-aP-eLy"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="实时血氧"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cx5-0E-M5p"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1010" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NE8-G0-LaX" userLabel="10_Btn">
+                                <rect key="frame" x="150.66666666666666" y="303" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1w6-lg-IUC"/>
+                                    <constraint firstAttribute="width" constant="92" id="5vk-M0-MEh"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="心率变异性"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ojH-CV-jV4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nef-u9-aaK" userLabel="11_Btn">
+                                <rect key="frame" x="286" y="303" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="VjR-Cm-qs8"/>
+                                    <constraint firstAttribute="width" constant="92" id="pmo-hU-v4K"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="实时心率"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sBf-G1-Zuw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1012" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWu-lr-BKh" userLabel="12_Btn">
+                                <rect key="frame" x="15" y="363" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="OIC-Be-Rf1"/>
+                                    <constraint firstAttribute="width" constant="92" id="c2T-JC-qzU"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="清除数据"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1F1-2u-j1i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1013" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2b-ar-Cg7" userLabel="13_Btn">
+                                <rect key="frame" x="150.66666666666666" y="363" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="4Ux-Vc-CDa"/>
+                                    <constraint firstAttribute="height" constant="40" id="oaf-lt-knM"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="获取全部数据"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xSr-A5-WQC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1014" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnO-w4-yHd" userLabel="14_Btn">
+                                <rect key="frame" x="286" y="363" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="JPc-TF-yP0"/>
+                                    <constraint firstAttribute="height" constant="40" id="eGt-5s-zXD"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="读未上传记录"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CVL-kO-srl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1015" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgE-8t-glT" userLabel="15_Btn">
+                                <rect key="frame" x="15" y="423" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="TxZ-KV-k5e"/>
+                                    <constraint firstAttribute="height" constant="40" id="cwn-Tw-ZN6"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="固件版本"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9o0-pV-Zdc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1016" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofm-PX-65y" userLabel="16_Btn">
+                                <rect key="frame" x="150.66666666666666" y="423" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Dar-PB-leF"/>
+                                    <constraint firstAttribute="width" constant="92" id="jNV-hG-3gq"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="硬件版本"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QCM-Ng-ayQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1017" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6H-pfO" userLabel="17_Btn">
+                                <rect key="frame" x="286" y="423" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="9BV-0D-6Wj"/>
+                                    <constraint firstAttribute="width" constant="92" id="Fbc-w2-2ui"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="睡眠数据"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YOW-Fc-MY6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1018" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMn-fO-kLR" userLabel="18_Btn">
+                                <rect key="frame" x="15" y="483" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="1XE-Sw-bpf"/>
+                                    <constraint firstAttribute="height" constant="40" id="Mld-vG-De8"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="设置采集周期"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jbm-o2-cDh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1019" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJq-gG-uux" userLabel="19_Btn">
+                                <rect key="frame" x="150.66666666666666" y="483" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="GHx-zv-sor"/>
+                                    <constraint firstAttribute="height" constant="40" id="dOL-8J-MRk"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="读采集周期"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DeW-f0-R9A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1020" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVg-vp-IJ0" userLabel="20_Btn">
+                                <rect key="frame" x="286" y="483" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="R0j-GP-xrS"/>
+                                    <constraint firstAttribute="width" constant="92" id="y0y-fi-t0h"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="恢复出厂设置"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MP0-Qc-ODh"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="1021" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-Cw-b39" userLabel="21_Btn">
+                                <rect key="frame" x="15" y="543" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="LYe-Mb-iqk"/>
+                                    <constraint firstAttribute="height" constant="40" id="wOk-s3-Y55"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="获取Token"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yJV-3S-NjN"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="1022" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBD-z8-ipu" userLabel="22_Btn">
+                                <rect key="frame" x="150.66666666666666" y="543" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="gPV-ox-tzT"/>
+                                    <constraint firstAttribute="height" constant="40" id="rfe-Mc-tfC"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="固件更新检查"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UuU-h7-PSf"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="1023" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ov0-Bb-Yga" userLabel="23_Btn">
+                                <rect key="frame" x="286" y="543" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1QU-hm-uvN"/>
+                                    <constraint firstAttribute="width" constant="92" id="FPW-fP-Lyl"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="固件下载"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h56-kH-LAQ"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="1024" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6lb-gb-16e" userLabel="24_Btn">
+                                <rect key="frame" x="15" y="603" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="ONJ-Ct-Qtj"/>
+                                    <constraint firstAttribute="height" constant="40" id="y7I-KY-Z95"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="升级固件"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fXK-Qe-7fv"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="1025" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7EV-1s-fkn" userLabel="25_Btn">
+                                <rect key="frame" x="150.66666666666666" y="603" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="PCm-ud-IIq"/>
+                                    <constraint firstAttribute="height" constant="40" id="xQG-Lq-d0z"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="实时RSSI"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8tc-aC-jxW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1026" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRm-Fv-bOz" userLabel="26_Btn">
+                                <rect key="frame" x="286" y="603" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="VTs-2s-FPc"/>
+                                    <constraint firstAttribute="width" constant="92" id="ndO-Nn-crq"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Mac连接"/>
+                                <connections>
+                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rJP-PP-yYp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nuU-VT-QFR" userLabel="log_Btn">
+                                <rect key="frame" x="286" y="734" width="92" height="40"/>
+                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="VQ2-Zd-v02"/>
+                                    <constraint firstAttribute="height" constant="40" id="r5O-DL-PWf"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="日志信息"/>
+                                <connections>
+                                    <action selector="logAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BZq-Wp-Ywt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1wW-qh-k9w" firstAttribute="centerY" secondItem="naF-2e-1uQ" secondAttribute="centerY" id="19l-pY-H8u"/>
+                            <constraint firstItem="nef-u9-aaK" firstAttribute="centerX" secondItem="GU1-vD-KEf" secondAttribute="centerX" id="2ek-dn-ZCB"/>
+                            <constraint firstItem="jJq-gG-uux" firstAttribute="centerX" secondItem="ofm-PX-65y" secondAttribute="centerX" id="3Zf-Rx-C6m"/>
+                            <constraint firstItem="ofm-PX-65y" firstAttribute="centerX" secondItem="U2b-ar-Cg7" secondAttribute="centerX" id="3fK-G9-XUG"/>
+                            <constraint firstItem="ePo-6H-pfO" firstAttribute="centerY" secondItem="fgE-8t-glT" secondAttribute="centerY" id="4U8-h5-nPJ"/>
+                            <constraint firstItem="ov0-Bb-Yga" firstAttribute="centerX" secondItem="JVg-vp-IJ0" secondAttribute="centerX" id="7Lq-56-R2U"/>
+                            <constraint firstItem="U2b-ar-Cg7" firstAttribute="centerY" secondItem="AWu-lr-BKh" secondAttribute="centerY" id="7f0-7f-ms4"/>
+                            <constraint firstItem="7EV-1s-fkn" firstAttribute="centerX" secondItem="IBD-z8-ipu" secondAttribute="centerX" id="8Cl-gw-sC4"/>
+                            <constraint firstItem="Tto-Cw-b39" firstAttribute="centerX" secondItem="fMn-fO-kLR" secondAttribute="centerX" id="9E3-CA-Rhi"/>
+                            <constraint firstItem="efk-j7-kqP" firstAttribute="centerX" secondItem="1wW-qh-k9w" secondAttribute="centerX" id="Agq-y1-VGn"/>
+                            <constraint firstItem="NTe-Ch-9sg" firstAttribute="centerY" secondItem="naF-2e-1uQ" secondAttribute="centerY" id="AvC-b3-AGW"/>
+                            <constraint firstItem="AWu-lr-BKh" firstAttribute="centerX" secondItem="ikB-tE-kgf" secondAttribute="centerX" id="BBf-Yg-Yag"/>
+                            <constraint firstItem="GRm-Fv-bOz" firstAttribute="centerY" secondItem="6lb-gb-16e" secondAttribute="centerY" id="CG1-Ae-gOl"/>
+                            <constraint firstItem="fMn-fO-kLR" firstAttribute="top" secondItem="fgE-8t-glT" secondAttribute="bottom" constant="20" id="Eus-Lg-q1Z"/>
+                            <constraint firstItem="IBD-z8-ipu" firstAttribute="centerY" secondItem="Tto-Cw-b39" secondAttribute="centerY" id="GVx-os-QkJ"/>
+                            <constraint firstItem="Bjm-fR-kBu" firstAttribute="centerX" secondItem="efk-j7-kqP" secondAttribute="centerX" id="Hpv-8y-spV"/>
+                            <constraint firstItem="1AQ-jO-Mg8" firstAttribute="top" secondItem="naF-2e-1uQ" secondAttribute="bottom" constant="20" id="Hwz-9e-3Df"/>
+                            <constraint firstItem="JVg-vp-IJ0" firstAttribute="centerX" secondItem="ePo-6H-pfO" secondAttribute="centerX" id="I42-vw-cIr"/>
+                            <constraint firstItem="ikB-tE-kgf" firstAttribute="top" secondItem="KCS-hT-YZ3" secondAttribute="bottom" constant="20" id="LxH-EX-tse"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nuU-VT-QFR" secondAttribute="trailing" constant="15" id="MCX-H4-SDX"/>
+                            <constraint firstItem="jJq-gG-uux" firstAttribute="centerY" secondItem="fMn-fO-kLR" secondAttribute="centerY" id="NM5-vR-Xo7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NTe-Ch-9sg" secondAttribute="trailing" constant="15" id="NtK-Td-Kcl"/>
+                            <constraint firstItem="AWu-lr-BKh" firstAttribute="top" secondItem="ikB-tE-kgf" secondAttribute="bottom" constant="20" id="PbG-1H-D6o"/>
+                            <constraint firstItem="HKJ-m1-PDf" firstAttribute="centerX" secondItem="NTe-Ch-9sg" secondAttribute="centerX" id="R8L-dj-HKW"/>
+                            <constraint firstItem="JVg-vp-IJ0" firstAttribute="centerY" secondItem="fMn-fO-kLR" secondAttribute="centerY" id="R8Y-5C-448"/>
+                            <constraint firstItem="6lb-gb-16e" firstAttribute="centerX" secondItem="Tto-Cw-b39" secondAttribute="centerX" id="SjT-sf-Hgn"/>
+                            <constraint firstItem="1wW-qh-k9w" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Sqq-1m-0fl"/>
+                            <constraint firstItem="NE8-G0-LaX" firstAttribute="centerY" secondItem="ikB-tE-kgf" secondAttribute="centerY" id="UYI-OP-7Wz"/>
+                            <constraint firstItem="dnO-w4-yHd" firstAttribute="centerX" secondItem="nef-u9-aaK" secondAttribute="centerX" id="V4N-ch-5F1"/>
+                            <constraint firstItem="GU1-vD-KEf" firstAttribute="centerX" secondItem="HKJ-m1-PDf" secondAttribute="centerX" id="Vj8-h7-wRV"/>
+                            <constraint firstItem="naF-2e-1uQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Wll-Jk-exJ"/>
+                            <constraint firstItem="ofm-PX-65y" firstAttribute="centerY" secondItem="fgE-8t-glT" secondAttribute="centerY" id="XrM-3m-c0W"/>
+                            <constraint firstItem="naF-2e-1uQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Z68-5b-0Kj"/>
+                            <constraint firstItem="NE8-G0-LaX" firstAttribute="centerX" secondItem="Bjm-fR-kBu" secondAttribute="centerX" id="cbs-eT-nsk"/>
+                            <constraint firstItem="dnO-w4-yHd" firstAttribute="centerY" secondItem="AWu-lr-BKh" secondAttribute="centerY" id="dMd-mg-65f"/>
+                            <constraint firstItem="7EV-1s-fkn" firstAttribute="centerY" secondItem="6lb-gb-16e" secondAttribute="centerY" id="dnV-q1-tun"/>
+                            <constraint firstItem="Bjm-fR-kBu" firstAttribute="centerY" secondItem="KCS-hT-YZ3" secondAttribute="centerY" id="dou-cV-7sl"/>
+                            <constraint firstItem="fgE-8t-glT" firstAttribute="top" secondItem="AWu-lr-BKh" secondAttribute="bottom" constant="20" id="eHg-SE-ma9"/>
+                            <constraint firstItem="fgE-8t-glT" firstAttribute="centerX" secondItem="AWu-lr-BKh" secondAttribute="centerX" id="eb6-YD-wLB"/>
+                            <constraint firstItem="KCS-hT-YZ3" firstAttribute="centerX" secondItem="1AQ-jO-Mg8" secondAttribute="centerX" id="f7B-m8-D5F"/>
+                            <constraint firstItem="KCS-hT-YZ3" firstAttribute="top" secondItem="1AQ-jO-Mg8" secondAttribute="bottom" constant="20" id="f7I-E3-Uny"/>
+                            <constraint firstItem="ikB-tE-kgf" firstAttribute="centerX" secondItem="KCS-hT-YZ3" secondAttribute="centerX" id="fRG-I1-Iln"/>
+                            <constraint firstItem="nef-u9-aaK" firstAttribute="centerY" secondItem="ikB-tE-kgf" secondAttribute="centerY" id="fyl-mD-Irh"/>
+                            <constraint firstItem="U2b-ar-Cg7" firstAttribute="centerX" secondItem="NE8-G0-LaX" secondAttribute="centerX" id="gCM-Eh-Iga"/>
+                            <constraint firstItem="GU1-vD-KEf" firstAttribute="centerY" secondItem="KCS-hT-YZ3" secondAttribute="centerY" id="h8P-Zx-aS3"/>
+                            <constraint firstItem="1AQ-jO-Mg8" firstAttribute="centerX" secondItem="naF-2e-1uQ" secondAttribute="centerX" id="hjy-3P-2um"/>
+                            <constraint firstItem="ov0-Bb-Yga" firstAttribute="centerY" secondItem="Tto-Cw-b39" secondAttribute="centerY" id="ip2-ar-ZCn"/>
+                            <constraint firstItem="GRm-Fv-bOz" firstAttribute="centerX" secondItem="ov0-Bb-Yga" secondAttribute="centerX" id="ldG-t0-JjV"/>
+                            <constraint firstItem="IBD-z8-ipu" firstAttribute="centerX" secondItem="jJq-gG-uux" secondAttribute="centerX" id="mbb-PR-9VL"/>
+                            <constraint firstItem="fMn-fO-kLR" firstAttribute="centerX" secondItem="fgE-8t-glT" secondAttribute="centerX" id="nhC-2e-cr4"/>
+                            <constraint firstItem="HKJ-m1-PDf" firstAttribute="centerY" secondItem="1AQ-jO-Mg8" secondAttribute="centerY" id="nqn-4s-Omz"/>
+                            <constraint firstItem="Tto-Cw-b39" firstAttribute="top" secondItem="fMn-fO-kLR" secondAttribute="bottom" constant="20" id="qYT-ln-mZg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nuU-VT-QFR" secondAttribute="bottom" constant="44" id="rpe-aH-MP4"/>
+                            <constraint firstItem="6lb-gb-16e" firstAttribute="top" secondItem="Tto-Cw-b39" secondAttribute="bottom" constant="20" id="sfK-Yz-ai4"/>
+                            <constraint firstItem="ePo-6H-pfO" firstAttribute="centerX" secondItem="dnO-w4-yHd" secondAttribute="centerX" id="wMv-tY-6Y2"/>
+                            <constraint firstItem="efk-j7-kqP" firstAttribute="centerY" secondItem="1AQ-jO-Mg8" secondAttribute="centerY" id="xCU-qj-5ml"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="AKC-IP-gbd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-561" y="-670"/>
+        </scene>
+        <!--LogVC-->
+        <scene sceneID="2dC-Vn-PCM">
+            <objects>
+                <viewController storyboardIdentifier="LogVC_ID" id="Ayu-Bd-2iN" customClass="LogVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JCW-tv-CLX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日志记录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwc-K8-9Fc">
+                                <rect key="frame" x="154.66666666666666" y="79" width="84" height="26.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="An9-NP-B0c">
+                                <rect key="frame" x="0.0" y="105.33333333333331" width="393" height="712.66666666666674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dmr-zG-bJT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="An9-NP-B0c" firstAttribute="leading" secondItem="Dmr-zG-bJT" secondAttribute="leading" id="0YM-i9-jk7"/>
+                            <constraint firstItem="An9-NP-B0c" firstAttribute="top" secondItem="dwc-K8-9Fc" secondAttribute="bottom" id="2vR-wP-idG"/>
+                            <constraint firstItem="Dmr-zG-bJT" firstAttribute="bottom" secondItem="An9-NP-B0c" secondAttribute="bottom" id="ETq-ev-0hG"/>
+                            <constraint firstItem="Dmr-zG-bJT" firstAttribute="trailing" secondItem="An9-NP-B0c" secondAttribute="trailing" id="EZT-Ln-RhH"/>
+                            <constraint firstItem="dwc-K8-9Fc" firstAttribute="centerX" secondItem="Dmr-zG-bJT" secondAttribute="centerX" id="WWU-3a-KQV"/>
+                            <constraint firstItem="dwc-K8-9Fc" firstAttribute="top" secondItem="Dmr-zG-bJT" secondAttribute="top" constant="20" id="c3M-wh-zoY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="log_TV" destination="An9-NP-B0c" id="qWF-EV-qD9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="07f-Lm-ecx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="161" y="-670"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ksy-9L-xML">
+            <objects>
+                <navigationController id="F5U-Lb-1Id" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="scR-vo-jTv">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="P0B-nR-hin"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ENX-XP-eSv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1366" y="-670"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

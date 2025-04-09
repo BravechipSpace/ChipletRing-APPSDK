@@ -1,0 +1,30 @@
+use_frameworks!
+use_modular_headers!
+
+platform :ios, '13.0'
+
+target 'Rings-SDK_Example' do
+  pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
+  pod 'QMUIKit','4.8.0'
+  
+#  pod 'RingsSDK', :path => '../../RingsSDK'
+  pod 'RingsSDK', :path => 'Frameworks/RingsSDK'
+  pod 'ApolloOTA', :path => 'Frameworks/ApolloSDK'
+  
+  pod 'RxSwift', '~> 6.8.0'
+  pod 'RxRelay', '~> 6.8.0'
+
+  target 'Rings-SDK_Tests' do
+    inherit! :search_paths
+  end
+end
+
+# 添加 post_install 钩子
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+  end
+end

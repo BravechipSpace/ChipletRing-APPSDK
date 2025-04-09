@@ -1,0 +1,55 @@
+1.0.12 
+新增修改/读取蓝牙名称接口
+增加长连接相关的连接、重连、断开功能
+新增实时血压测量接口（和固件相关）
+1.0.14
+修改蓝牙连接方式，优化连接速度
+1.0.16
+添加语音录制，增加一键获取状态接口
+1.0.17
+修复自1.0.12以来可能遇到的LmAPI.READ_HISTORY((byte) 0x01, new IHistoryListener()回调全为0的bug
+1.0.18
+增加混淆，语音返回值改为byte数组，添加客户定制化接口
+1.0.19
+拆分步数接口回调
+1.0.21
+拆分采集周期接口回调
+1.0.22
+增加语音录制的adpcm转pcm的示例
+1.0.23
+增加HID功能-增加硬连接
+1.0.24
+将语音所需的so文件集成到aar中
+1.0.25
+修改温度的单独接口LmAPI.READ_TEMP
+1.0.27
+增加序列号的接口（私版），增加获取信号强度的方法
+
+
+
+1.0.12（EN）
+Added the interface for modifying/reading Bluetooth names
+Added connection, reconnection, and disconnection functions related to persistent connections
+Added real-time blood pressure measurement interface (related to firmware)
+1.0.14
+Modify the Bluetooth connection mode to optimize the connection speed
+1.0.16
+Add a voice recording，Added the API for obtaining status with one click
+1.0.17
+Fixed the bug that the LmAPI.READ_HISTORY((byte) 0x01, new IHistoryListener() callback all 0 that may be encountered since 1.0.12
+1.0.18
+Confusion is added, the voice return value is changed to byte array, and customized interfaces are added
+1.0.19
+Callback for splitting the number of steps
+1.0.21
+Callback to the API for splitting the collection cycle
+1.0.22
+Example of adding ADPCM to PCM
+1.0.23
+Added HID function - Added hardwire
+1.0.24
+Integrate the SO files required for speech into the AAR
+1.0.25
+Modify the separate interface LmAPI.READ_TEMP for temperature
+1.0.27
+Added the interface of the serial number (private version) and added the method of obtaining the signal strength

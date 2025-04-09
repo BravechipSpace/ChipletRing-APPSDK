@@ -1,0 +1,28 @@
+{
+  "name": "ApolloOTA",
+  "version": "0.1.0",
+  "summary": "A short description of ApolloOTA.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/qq432591/ApolloOTA",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "qq432591": "dtl432591@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/qq432591/ApolloOTA.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "amOtaApi.framework",
+  "public_header_files": "amOtaApi.framework/Headers/*.h",
+  "vendored_frameworks": "amOtaApi.framework",
+  "frameworks": [
+    "CoreBluetooth",
+    "Foundation"
+  ]
+}

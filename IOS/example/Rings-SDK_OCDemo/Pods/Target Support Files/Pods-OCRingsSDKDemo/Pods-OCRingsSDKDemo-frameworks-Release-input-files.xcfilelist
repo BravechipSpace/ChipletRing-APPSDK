@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-OCRingsSDKDemo/Pods-OCRingsSDKDemo-frameworks.sh
+${PODS_ROOT}/../Frameworks/ApolloSDK/amOtaApi.framework
+${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
+${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework

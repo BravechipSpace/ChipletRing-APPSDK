@@ -1,0 +1,3152 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name RingsSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import CoreBluetooth
+import Darwin
+import Dispatch
+import Foundation
+import ObjectiveC
+@_exported import RingsSDK
+import RxRelay
+import RxSwift
+import SQLite3
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import amOtaApi
+import ObjectiveC.runtime
+public enum RelativeFormatterLanguage : Swift.String, Swift.CaseIterable {
+  case af
+  case am
+  case ar_AE
+  case ar
+  case `as`
+  case az
+  case be
+  case bg
+  case bn
+  case br
+  case bs
+  case bs_Cyrl
+  case ca
+  case cz
+  case cy
+  case cs
+  case da
+  case de
+  case dsb
+  case dz
+  case ee
+  case el
+  case en
+  case es_AR
+  case es_PY
+  case es_MX
+  case es_US
+  case es
+  case et
+  case eu
+  case fa
+  case fi
+  case fil
+  case fo
+  case fr_CA
+  case fr
+  case fur
+  case fy
+  case ga
+  case gd
+  case gl
+  case gu
+  case he
+  case hi
+  case hr
+  case hsb
+  case hu
+  case hy
+  case id
+  case `is`
+  case it
+  case ja
+  case jgo
+  case ka
+  case kea
+  case kk
+  case kl
+  case km
+  case kn
+  case ko
+  case kok
+  case ksh
+  case ky
+  case lb
+  case lkt
+  case lo
+  case lt
+  case lv
+  case mk
+  case ml
+  case mn
+  case mr
+  case ms
+  case mt
+  case my
+  case mzn
+  case nb
+  case ne
+  case nl
+  case nn
+  case or
+  case pa
+  case pl
+  case ps
+  case pt
+  case ro
+  case ru
+  case sah
+  case sd
+  case se_FI
+  case se
+  case si
+  case sk
+  case sl
+  case sq
+  case sr_Latn
+  case sr
+  case sv
+  case sw
+  case ta
+  case te
+  case th
+  case ti
+  case tk
+  case to
+  case tr
+  case ug
+  case uk
+  case ur_IN
+  case ur
+  case uz_Cyrl
+  case uz
+  case vi
+  case wae
+  case yue_Hans
+  case yue_Hant
+  case zh_Hans_HK
+  case zh_Hans_MO
+  case zh_Hans_SG
+  case zh_Hant_HK
+  case zh_Hant_MO
+  case zh_Hans
+  case zh_Hant
+  case zh
+  case zu
+  public var flavours: [Swift.String : Any] {
+    get
+  }
+  public var identifier: Swift.String {
+    get
+  }
+  public func quantifyKey(forValue value: Swift.Double) -> RingsSDK.RelativeFormatter.PluralForm?
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [RingsSDK.RelativeFormatterLanguage]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [RingsSDK.RelativeFormatterLanguage] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public func - (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Foundation.TimeInterval
+public func + (lhs: RingsSDK.DateInRegion, rhs: Foundation.DateComponents) -> RingsSDK.DateInRegion
+public func - (lhs: RingsSDK.DateInRegion, rhs: Foundation.DateComponents) -> RingsSDK.DateInRegion
+public func + (lhs: RingsSDK.DateInRegion, rhs: [Foundation.Calendar.Component : Swift.Int]) -> RingsSDK.DateInRegion
+public func - (lhs: RingsSDK.DateInRegion, rhs: [Foundation.Calendar.Component : Swift.Int]) -> RingsSDK.DateInRegion
+extension RingsSDK.DateInRegion {
+  public mutating func addTimeInterval(_ timeInterval: Foundation.TimeInterval)
+}
+@_hasMissingDesignatedInitializers open class SwiftyBeaver {
+  public static let version: Swift.String
+  public static let build: Swift.Int
+  public enum Level : Swift.Int {
+    case verbose
+    case debug
+    case info
+    case warning
+    case error
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public static var destinations: Swift.Set<RingsSDK.BaseDestination> {
+    get
+  }
+  @discardableResult
+  open class func addDestination(_ destination: RingsSDK.BaseDestination) -> Swift.Bool
+  @discardableResult
+  open class func removeDestination(_ destination: RingsSDK.BaseDestination) -> Swift.Bool
+  open class func removeAllDestinations()
+  open class func countDestinations() -> Swift.Int
+  open class func verbose(_ message: @autoclosure () -> Any, _ file: Swift.String = #file, _ function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  open class func debug(_ message: @autoclosure () -> Any, _ file: Swift.String = #file, _ function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  open class func info(_ message: @autoclosure () -> Any, _ file: Swift.String = #file, _ function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  open class func warning(_ message: @autoclosure () -> Any, _ file: Swift.String = #file, _ function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  open class func error(_ message: @autoclosure () -> Any, _ file: Swift.String = #file, _ function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  open class func custom(level: RingsSDK.SwiftyBeaver.Level, message: @autoclosure () -> Any, file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, context: Any? = nil)
+  public class func flush(secondTimeout: Swift.Int64) -> Swift.Bool
+  @objc deinit
+}
+extension Foundation.Date {
+  public func compareCloseTo(_ refDate: Foundation.Date, precision: Foundation.TimeInterval = 300) -> Swift.Bool
+  public func compare(_ compareType: RingsSDK.DateComparisonType) -> Swift.Bool
+  public func compare(toDate refDate: Foundation.Date, granularity: Foundation.Calendar.Component) -> Foundation.ComparisonResult
+  public func isBeforeDate(_ refDate: Foundation.Date, orEqual: Swift.Bool = false, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func isAfterDate(_ refDate: Foundation.Date, orEqual: Swift.Bool = false, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func positionInRange(date startDate: Foundation.Date, and endDate: Foundation.Date) -> Swift.Double?
+  public func isInRange(date startDate: Foundation.Date, and endDate: Foundation.Date, orEqual: Swift.Bool = false, granularity: Foundation.Calendar.Component = .nanosecond) -> Swift.Bool
+  public func isInside(date: Foundation.Date, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func earlierDate(_ date: Foundation.Date) -> Foundation.Date
+  public func laterDate(_ date: Foundation.Date) -> Foundation.Date
+}
+extension Foundation.Date {
+  public func difference(in component: Foundation.Calendar.Component, from other: Foundation.Date) -> Swift.Int?
+  public func differences(in components: Swift.Set<Foundation.Calendar.Component>, from other: Foundation.Date) -> [Foundation.Calendar.Component : Swift.Int]
+}
+@propertyWrapper public struct WrappedDefault<T> where T : RingsSDK.UserDefaultsSerializable {
+  public let key: Swift.String
+  public var wrappedValue: T {
+    get
+    set
+  }
+  public init(wrappedValue: T, key keyName: Swift.String, userDefaults: Foundation.UserDefaults = .standard)
+}
+extension RingsSDK.RelativeFormatter {
+  public enum PluralForm : Swift.String {
+    case zero, one, two, few, many, other
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public struct Style {
+    public var flavours: [RingsSDK.RelativeFormatter.Flavour]
+    public var gradation: RingsSDK.RelativeFormatter.Gradation
+    public var allowedUnits: [RingsSDK.RelativeFormatter.Unit]?
+    public init(flavours: [RingsSDK.RelativeFormatter.Flavour], gradation: RingsSDK.RelativeFormatter.Gradation, allowedUnits units: [RingsSDK.RelativeFormatter.Unit]? = nil)
+  }
+  public static func defaultStyle() -> RingsSDK.RelativeFormatter.Style
+  public static func timeStyle() -> RingsSDK.RelativeFormatter.Style
+  public static func twitterStyle() -> RingsSDK.RelativeFormatter.Style
+}
+extension RingsSDK.RelativeFormatter {
+  public enum Flavour : Swift.String {
+    case long
+    case longTime
+    case longConvenient
+    case short
+    case shortTime
+    case shortConvenient
+    case narrow
+    case tiny
+    case quantify
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+extension RingsSDK.RelativeFormatter {
+  public struct Gradation {
+    public struct Rule {
+      public enum ThresholdType {
+        case value(Swift.Double?)
+        case function(((Foundation.TimeInterval) -> (Swift.Double?)))
+      }
+      public enum RoundingStrategy {
+        case regularRound
+        case ceiling
+        case flooring
+        case custom((Swift.Double) -> Swift.Double)
+      }
+      public var unit: RingsSDK.RelativeFormatter.Unit
+      public var threshold: RingsSDK.RelativeFormatter.Gradation.Rule.ThresholdType?
+      public var granularity: Swift.Double?
+      public var roundingStrategy: RingsSDK.RelativeFormatter.Gradation.Rule.RoundingStrategy
+      public var thresholdPrevious: [RingsSDK.RelativeFormatter.Unit : Swift.Double]?
+      public typealias CustomFormatter = ((any RingsSDK.DateRepresentable) -> (Swift.String))
+      public var customFormatter: RingsSDK.RelativeFormatter.Gradation.Rule.CustomFormatter?
+      public init(_ unit: RingsSDK.RelativeFormatter.Unit, threshold: RingsSDK.RelativeFormatter.Gradation.Rule.ThresholdType?, granularity: Swift.Double? = nil, roundingStrategy: RingsSDK.RelativeFormatter.Gradation.Rule.RoundingStrategy = .regularRound, prev: [RingsSDK.RelativeFormatter.Unit : Swift.Double]? = nil, formatter: RingsSDK.RelativeFormatter.Gradation.Rule.CustomFormatter? = nil)
+    }
+    public subscript(unit: RingsSDK.RelativeFormatter.Unit) -> RingsSDK.RelativeFormatter.Gradation.Rule? {
+      get
+    }
+    public subscript(index: Swift.Int) -> RingsSDK.RelativeFormatter.Gradation.Rule? {
+      get
+    }
+    public init(_ rules: [RingsSDK.RelativeFormatter.Gradation.Rule])
+    public func filtered(byUnits units: [RingsSDK.RelativeFormatter.Unit]) -> RingsSDK.RelativeFormatter.Gradation
+    public static func canonical() -> RingsSDK.RelativeFormatter.Gradation
+    public static func convenient() -> RingsSDK.RelativeFormatter.Gradation
+    public static func twitter() -> RingsSDK.RelativeFormatter.Gradation
+  }
+}
+extension RingsSDK.RelativeFormatter {
+  public enum Unit : Swift.String {
+    case now
+    case second
+    case minute
+    case hour
+    case halfHour
+    case day
+    case week
+    case month
+    case year
+    case quarter
+    case other
+    public var factor: Swift.Double {
+      get
+    }
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+extension Foundation.DateFormatter {
+  public static func sharedFormatter(forRegion region: RingsSDK.Region?, format: Swift.String? = nil) -> Foundation.DateFormatter
+  @available(iOS 9.0, macOS 10.11, *)
+  public static func sharedOrdinalNumberFormatter(locale: any RingsSDK.LocaleConvertible) -> Foundation.NumberFormatter
+}
+public enum SymbolFormatStyle {
+  case `default`
+  case defaultStandalone
+  case short
+  case veryShort
+  case standaloneShort
+  case standaloneVeryShort
+  public static func == (a: RingsSDK.SymbolFormatStyle, b: RingsSDK.SymbolFormatStyle) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct DateFormats {
+  public static var autoFormats: [Swift.String]
+  public static let iso8601: Swift.String
+  public static let extended: Swift.String
+  public static let altRSS: Swift.String
+  public static let rss: Swift.String
+  public static let httpHeader: Swift.String
+  public static let standard: Swift.String
+  public static let sql: Swift.String
+  public static func resetAutoFormats()
+  public static func parse(string: Swift.String, format: Swift.String?, region: RingsSDK.Region) -> Foundation.Date?
+  public static func parse(string: Swift.String, formats: [Swift.String], region: RingsSDK.Region) -> Foundation.Date?
+}
+public enum RoundDateMode {
+  case to5Mins
+  case to10Mins
+  case to30Mins
+  case toMins(Swift.Int)
+  case toCeil5Mins
+  case toCeil10Mins
+  case toCeil30Mins
+  case toCeilMins(Swift.Int)
+  case toFloor5Mins
+  case toFloor10Mins
+  case toFloor30Mins
+  case toFloorMins(Swift.Int)
+}
+public enum DateRelatedType {
+  case startOfDay
+  case endOfDay
+  case startOfWeek
+  case endOfWeek
+  case startOfMonth
+  case endOfMonth
+  case tomorrow
+  case tomorrowAtStart
+  case yesterday
+  case yesterdayAtStart
+  case nearestMinute(minute: Swift.Int)
+  case nearestHour(hour: Swift.Int)
+  case nextWeekday(RingsSDK.WeekDay)
+  case nextDSTDate
+  case prevMonth
+  case nextMonth
+  case prevWeek
+  case nextWeek
+  case nextYear
+  case prevYear
+  case nextDSTTransition
+}
+public struct TimeCalculationOptions {
+  public var matchingPolicy: Foundation.Calendar.MatchingPolicy
+  public var repeatedTimePolicy: Foundation.Calendar.RepeatedTimePolicy
+  public var direction: Foundation.Calendar.SearchDirection
+  public init(matching: Foundation.Calendar.MatchingPolicy = .nextTime, timePolicy: Foundation.Calendar.RepeatedTimePolicy = .first, direction: Foundation.Calendar.SearchDirection = .forward)
+}
+public let BDLogger: RingsSDK.SwiftyBeaver.Type
+public let defaultLogDirectoryPath: Swift.String
+public func BDSetUpLogger(_ directoryPath: Swift.String = defaultLogDirectoryPath)
+@_inheritsConvenienceInitializers @objc public class BDLog : ObjectiveC.NSObject {
+  @objc public class func info(_ message: Swift.String)
+  @objc public class func debug(_ message: Swift.String)
+  @objc public class func warning(_ message: Swift.String)
+  @objc public class func error(_ message: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol UserDefaultsSerializable {
+  associatedtype StoredValue
+  var storedValue: Self.StoredValue { get }
+  init(storedValue: Self.StoredValue)
+}
+extension Swift.Bool : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.Bool {
+    get
+  }
+  public init(storedValue: Swift.Bool)
+  public typealias StoredValue = Swift.Bool
+}
+extension Swift.Int : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.Int {
+    get
+  }
+  public init(storedValue: Swift.Int)
+  public typealias StoredValue = Swift.Int
+}
+extension Swift.UInt : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.UInt {
+    get
+  }
+  public init(storedValue: Swift.UInt)
+  public typealias StoredValue = Swift.UInt
+}
+extension Swift.Float : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.Float {
+    get
+  }
+  public init(storedValue: Swift.Float)
+  public typealias StoredValue = Swift.Float
+}
+extension Swift.Double : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.Double {
+    get
+  }
+  public init(storedValue: Swift.Double)
+  public typealias StoredValue = Swift.Double
+}
+extension Swift.String : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Swift.String {
+    get
+  }
+  public init(storedValue: Swift.String)
+  public typealias StoredValue = Swift.String
+}
+extension Foundation.URL : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Foundation.URL {
+    get
+  }
+  public init(storedValue: Foundation.URL)
+  @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.10, *)
+  public typealias StoredValue = Foundation.URL
+}
+extension Foundation.Date : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Foundation.Date {
+    get
+  }
+  public init(storedValue: Foundation.Date)
+  @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.10, *)
+  public typealias StoredValue = Foundation.Date
+}
+extension Foundation.Data : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Foundation.Data {
+    get
+  }
+  public init(storedValue: Foundation.Data)
+  @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.10, *)
+  public typealias StoredValue = Foundation.Data
+}
+extension Swift.Array : RingsSDK.UserDefaultsSerializable where Element : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: [Element.StoredValue] {
+    get
+  }
+  public init(storedValue: [Element.StoredValue])
+  public typealias StoredValue = [Element.StoredValue]
+}
+extension Swift.Set : RingsSDK.UserDefaultsSerializable where Element : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: [Element.StoredValue] {
+    get
+  }
+  public init(storedValue: [Element.StoredValue])
+  public typealias StoredValue = [Element.StoredValue]
+}
+extension Swift.Dictionary : RingsSDK.UserDefaultsSerializable where Key == Swift.String, Value : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: [Swift.String : Value.StoredValue] {
+    get
+  }
+  public init(storedValue: [Swift.String : Value.StoredValue])
+  public typealias StoredValue = [Swift.String : Value.StoredValue]
+}
+extension RingsSDK.UserDefaultsSerializable where Self : Swift.RawRepresentable, Self.RawValue : RingsSDK.UserDefaultsSerializable {
+  public var storedValue: Self.RawValue.StoredValue {
+    get
+  }
+  public init(storedValue: Self.RawValue.StoredValue)
+}
+extension Foundation.Date {
+  public static func oldestIn(list: [Foundation.Date]) -> Foundation.Date?
+  public static func newestIn(list: [Foundation.Date]) -> Foundation.Date?
+  public static func enumerateDates(from startDate: Foundation.Date, to endDate: Foundation.Date, increment: ((Foundation.Date) -> (Foundation.DateComponents))) -> [Foundation.Date]
+  public static func enumerateDates(from startDate: Foundation.Date, to endDate: Foundation.Date, increment: Foundation.DateComponents) -> [Foundation.Date]
+  public func dateRoundedAt(at style: RingsSDK.RoundDateMode) -> Foundation.Date
+  public func dateAtStartOf(_ unit: Foundation.Calendar.Component) -> Foundation.Date
+  public func dateAtStartOf(_ units: [Foundation.Calendar.Component]) -> Foundation.Date
+  public func dateAtEndOf(_ unit: Foundation.Calendar.Component) -> Foundation.Date
+  public func dateAtEndOf(_ units: [Foundation.Calendar.Component]) -> Foundation.Date
+  public func dateBySet(_ components: [Foundation.Calendar.Component : Swift.Int]) -> Foundation.Date?
+  public func dateBySet(hour: Swift.Int?, min: Swift.Int?, secs: Swift.Int?, ms: Swift.Int? = nil, options: RingsSDK.TimeCalculationOptions = TimeCalculationOptions()) -> Foundation.Date?
+  public func dateTruncated(_ components: [Foundation.Calendar.Component]) -> Foundation.Date?
+  public func dateTruncated(from component: Foundation.Calendar.Component) -> Foundation.Date?
+  public func dateByAdding(_ count: Swift.Int, _ component: Foundation.Calendar.Component) -> RingsSDK.DateInRegion
+  public func dateAt(_ type: RingsSDK.DateRelatedType) -> Foundation.Date
+  public static func nowAt(_ type: RingsSDK.DateRelatedType) -> Foundation.Date
+  public static func datesForWeekday(_ weekday: RingsSDK.WeekDay, inMonth month: Swift.Int, ofYear year: Swift.Int, region: RingsSDK.Region = SwiftDate.defaultRegion) -> [Foundation.Date]
+  public static func datesForWeekday(_ weekday: RingsSDK.WeekDay, from startDate: Foundation.Date, to endDate: Foundation.Date, region: RingsSDK.Region = SwiftDate.defaultRegion) -> [Foundation.Date]
+  public func dateAt(weekdayOrdinal: Swift.Int, weekday: RingsSDK.WeekDay, monthNumber: Swift.Int? = nil, yearNumber: Swift.Int? = nil) -> Foundation.Date
+  public func nextWeekday(_ weekday: RingsSDK.WeekDay, region: RingsSDK.Region = SwiftDate.defaultRegion) -> Foundation.Date
+}
+extension RingsSDK.DateInRegion {
+  public var isLeapMonth: Swift.Bool {
+    get
+  }
+  public var isLeapYear: Swift.Bool {
+    get
+  }
+  public var julianDay: Swift.Double {
+    get
+  }
+  public var modifiedJulianDay: Swift.Double {
+    get
+  }
+  public func getInterval(toDate: RingsSDK.DateInRegion?, component: Foundation.Calendar.Component) -> Swift.Int64
+  public func timeIntervalSince(_ date: RingsSDK.DateInRegion) -> Foundation.TimeInterval
+  public func componentsTo(_ rhs: RingsSDK.DateInRegion) -> Foundation.DateComponents
+  public func componentsSince(_ date: RingsSDK.DateInRegion, components: [Foundation.Calendar.Component]? = nil) -> Foundation.DateComponents
+}
+public protocol DateParsable {
+  func toDate(_ format: Swift.String?, region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  func toDate(_ formats: [Swift.String], region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  func toDate(style: RingsSDK.StringToDateStyles, region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  func toISODate(_ options: RingsSDK.ISOParser.Options?, region: RingsSDK.Region?) -> RingsSDK.DateInRegion?
+  func toDotNETDate(region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  func toRSSDate(alt: Swift.Bool, region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  func toSQLDate(region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+}
+extension Swift.String : RingsSDK.DateParsable {
+  public func toDate(_ format: Swift.String? = nil, region: RingsSDK.Region = SwiftDate.defaultRegion) -> RingsSDK.DateInRegion?
+  public func toDate(_ formats: [Swift.String], region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+  public func toDate(style: RingsSDK.StringToDateStyles, region: RingsSDK.Region = SwiftDate.defaultRegion) -> RingsSDK.DateInRegion?
+  public func toISODate(_ options: RingsSDK.ISOParser.Options? = nil, region: RingsSDK.Region? = nil) -> RingsSDK.DateInRegion?
+  public func toDotNETDate(region: RingsSDK.Region = Region.ISO) -> RingsSDK.DateInRegion?
+  public func toRSSDate(alt: Swift.Bool, region: RingsSDK.Region = Region.ISO) -> RingsSDK.DateInRegion?
+  public func toSQLDate(region: RingsSDK.Region = Region.ISO) -> RingsSDK.DateInRegion?
+  public func asLocale() -> Foundation.Locale
+}
+public func == (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Swift.Bool
+public func <= (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Swift.Bool
+public func >= (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Swift.Bool
+public func < (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Swift.Bool
+public func > (lhs: RingsSDK.DateInRegion, rhs: RingsSDK.DateInRegion) -> Swift.Bool
+public enum DateComparisonType {
+  case isToday
+  case isTomorrow
+  case isYesterday
+  case isSameDay(any RingsSDK.DateRepresentable)
+  case isThisWeek
+  case isNextWeek
+  case isLastWeek
+  case isSameWeek(any RingsSDK.DateRepresentable)
+  case isThisMonth
+  case isNextMonth
+  case isLastMonth
+  case isSameMonth(any RingsSDK.DateRepresentable)
+  case isThisYear
+  case isNextYear
+  case isLastYear
+  case isSameYear(any RingsSDK.DateRepresentable)
+  case isInTheFuture
+  case isInThePast
+  case isEarlier(than: any RingsSDK.DateRepresentable)
+  case isLater(than: any RingsSDK.DateRepresentable)
+  case isWeekday
+  case isWeekend
+  case isMorning
+  case isAfternoon
+  case isEvening
+  case isNight
+  case isInDST
+}
+extension RingsSDK.DateInRegion {
+  public func compareCloseTo(_ refDate: RingsSDK.DateInRegion, precision: Foundation.TimeInterval = 300) -> Swift.Bool
+  public func compare(_ compareType: RingsSDK.DateComparisonType) -> Swift.Bool
+  public func compare(toDate refDate: RingsSDK.DateInRegion, granularity: Foundation.Calendar.Component) -> Foundation.ComparisonResult
+  public func isBeforeDate(_ date: RingsSDK.DateInRegion, orEqual: Swift.Bool = false, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func isAfterDate(_ refDate: RingsSDK.DateInRegion, orEqual: Swift.Bool = false, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func isInside(date: RingsSDK.DateInRegion, granularity: Foundation.Calendar.Component) -> Swift.Bool
+  public func positionInRange(date startDate: RingsSDK.DateInRegion, and endDate: RingsSDK.DateInRegion) -> Swift.Double?
+  public func isInRange(date startDate: RingsSDK.DateInRegion, and endDate: RingsSDK.DateInRegion, orEqual: Swift.Bool = true, granularity: Foundation.Calendar.Component = .nanosecond) -> Swift.Bool
+  public func earlierDate(_ date: RingsSDK.DateInRegion) -> RingsSDK.DateInRegion
+  public func laterDate(_ date: RingsSDK.DateInRegion) -> RingsSDK.DateInRegion
+  public func difference(in component: Foundation.Calendar.Component, from other: RingsSDK.DateInRegion) -> Swift.Int?
+  public func differences(in components: Swift.Set<Foundation.Calendar.Component>, from other: RingsSDK.DateInRegion) -> [Foundation.Calendar.Component : Swift.Int]
+}
+public protocol DateToStringTrasformable {
+  static func format(_ date: any RingsSDK.DateRepresentable, options: Any?) -> Swift.String
+}
+public protocol StringToDateTransformable {
+  static func parse(_ string: Swift.String, region: RingsSDK.Region?, options: Any?) -> RingsSDK.DateInRegion?
+}
+public enum DateToStringStyles {
+  case iso(RingsSDK.ISOFormatter.Options)
+  case extended
+  case rss
+  case altRSS
+  case dotNet
+  case httpHeader
+  case sql
+  case date(Foundation.DateFormatter.Style)
+  case time(Foundation.DateFormatter.Style)
+  case dateTime(Foundation.DateFormatter.Style)
+  case dateTimeMixed(dateStyle: Foundation.DateFormatter.Style, timeStyle: Foundation.DateFormatter.Style)
+  case custom(Swift.String)
+  case standard
+  case relative(style: RingsSDK.RelativeFormatter.Style?)
+  public func toString(_ date: any RingsSDK.DateRepresentable) -> Swift.String
+}
+public enum StringToDateStyles {
+  case iso(RingsSDK.ISOParser.Options)
+  case extended
+  case rss
+  case altRSS
+  case dotNet
+  case sql
+  case httpHeader
+  case strict(Swift.String)
+  case custom(Swift.String)
+  case standard
+  public func toDate(_ string: Swift.String, region: RingsSDK.Region) -> RingsSDK.DateInRegion?
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RingManager : ObjectiveC.NSObject {
+  public static let shared: RingsSDK.RingManager
+  public var timeOut: Swift.Int
+  public var isDidConnect: Swift.Bool {
+    get
+  }
+  public var connectStateChangeBlock: ((Swift.Bool) -> Swift.Void)?
+  public var connectEndBlock: Swift.Void?
+  public var devices: [RingsSDK.DeviceInfo]
+  public var currentDevice: RingsSDK.DeviceInfo? {
+    get
+  }
+  public var ringPushBatteryBlock: ((Swift.Int) -> Swift.Void)?
+  @objc deinit
+}
+extension RingsSDK.RingManager : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  @objc dynamic public func centralManager(_: CoreBluetooth.CBCentralManager, didDiscover peripheral: CoreBluetooth.CBPeripheral, advertisementData: [Swift.String : Any], rssi RSSI: Foundation.NSNumber)
+  @objc dynamic public func centralManager(_: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, error err: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_: CoreBluetooth.CBCentralManager, didConnect peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func centralManager(_: CoreBluetooth.CBCentralManager, didFailToConnect _: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+}
+extension RingsSDK.RingManager : CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverServices _: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didReadRSSI RSSI: Foundation.NSNumber, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth.CBService, error err: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth.CBCharacteristic, error err: (any Swift.Error)?)
+}
+extension RingsSDK.RingManager {
+  public func configLogPath(directoryPath: Swift.String = defaultLogDirectoryPath)
+  public func calculateDistance(steps: Swift.Int, stepSize: Swift.Int) -> Swift.Float
+  public func startScan(callBackBlock: (([RingsSDK.DeviceInfo]?) -> Swift.Void)? = nil)
+  public func stopScan()
+  public func startConnect(deviceUUID: Swift.String, resultBlock: @escaping (Swift.Result<RingsSDK.DeviceInfo, RingsSDK.ReadError>) -> Swift.Void)
+  public func startConnect(mac: Swift.String, timeout: Foundation.TimeInterval = 10, resultBlock: @escaping (Swift.Result<RingsSDK.DeviceInfo, RingsSDK.ReadError>) -> Swift.Void)
+  public func disconnect()
+  public func reconnect(deviceUUID: Swift.String, resultBlock: @escaping (Swift.Result<RingsSDK.DeviceInfo, RingsSDK.ReadError>) -> Swift.Void)
+  public func startReConnect(deviceUUID: Swift.String, deviceName: Swift.String)
+  public func startConnect(device: CoreBluetooth.CBPeripheral)
+}
+extension RingsSDK.RingManager {
+  public func fetchSystemConfig(resultBlock: @escaping (Swift.Result<RingsSDK.RingSystemConfigModel, RingsSDK.ReadError>) -> Swift.Void)
+  public func readBattery(resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readChargeStatus(resultBlock: @escaping (Swift.Result<RingsSDK.ChargeStatus, RingsSDK.ReadError>) -> Swift.Void)
+  public func readSteps(resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func clearSteps(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func readDatas(progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
+  public func readAllHistoryDatas(targetTimeInterval: Foundation.TimeInterval = 0, progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
+  public func readNewHistoryDatas(targetTimeInterval: Foundation.TimeInterval = 0, progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHeartRate(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHeartRateWithRR(rrTime: Swift.UInt8, progressBlock: @escaping (Swift.Double) -> Swift.Void, inHeartRRBlock: @escaping (Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readO2(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHRV(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readTemperature(resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readAppVersion(resultBlock: @escaping (Swift.Result<Swift.String, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHardWareVersion(resultBlock: @escaping (Swift.Result<Swift.String, RingsSDK.ReadError>) -> Swift.Void)
+  public func clearRingData(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func reset(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func setFrequency(time: Swift.Int, resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func readFrequency(resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func syncTime(date: Foundation.Date, timeZone: RingsSDK.RingTimeZone = .East8, resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func syncTime(date: Foundation.Date, resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func readTime(resultBlock: @escaping (Swift.Result<Foundation.TimeInterval, RingsSDK.ReadError>) -> Swift.Void)
+  public func setBluetoothName(name: Swift.String, resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func readBluetoothName(resultBlock: @escaping (Swift.Result<Swift.String, RingsSDK.ReadError>) -> Swift.Void)
+  public func stopHeartRote(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func stopOxygenTest(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+  public func get_PPG_ShouShi(collectionTime: Swift.Int = 30, waveformConfiguration: Swift.Int = 1, progressConfiguration: Swift.Int = 1, waveformSetting: Swift.Int = 0, progressBlock: @escaping (Swift.Double) -> Swift.Void, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func stop_PPG_ShouShi(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
+}
+extension RingsSDK.RingManager {
+  public func startOTA(_ fileUrl: Foundation.URL, handle: ((RingsSDK.OTAStatus) -> Swift.Void)?)
+  public func startApolloOTA(fileUrl: Foundation.URL, handle: ((RingsSDK.ApolloOTAStatus) -> Swift.Void)?)
+  @discardableResult
+  public func startMonitorRSSI(updateBlock: @escaping (Swift.Result<Foundation.NSNumber, RingsSDK.ReadError>) -> Swift.Void) -> Swift.Bool
+  public func stopMonitorRSSI()
+}
+public struct RingSystemConfigModel {
+  public let firmwareVersion: Swift.String
+  public let hardwareVersion: Swift.String
+  public let batteryLevel: Swift.Int
+  public let chargeStatus: RingsSDK.ChargeStatus
+  public let collectionInterval: Swift.UInt32
+  public let stepCount: Swift.UInt32
+  public let selfCheck: Swift.UInt32
+  public init(firmwareVersion: Swift.String, hardwareVersion: Swift.String, batteryLevel: Swift.Int, chargeStatus: RingsSDK.ChargeStatus, collectionInterval: Swift.UInt32, stepCount: Swift.UInt32, selfCheck: Swift.UInt32)
+}
+public protocol TimePeriodProtocol {
+  var start: RingsSDK.DateInRegion? { get set }
+  var end: RingsSDK.DateInRegion? { get set }
+}
+extension RingsSDK.TimePeriodProtocol {
+  public var hasFiniteRange: Swift.Bool {
+    get
+  }
+  public var hasStart: Swift.Bool {
+    get
+  }
+  public var hasEnd: Swift.Bool {
+    get
+  }
+  public func equals(_ period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func isInside(_ period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func contains(date: RingsSDK.DateInRegion, interval: RingsSDK.IntervalType = .closed) -> Swift.Bool
+  public func contains(_ period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func overlaps(with period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func intersects(with period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func isBefore(_ period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func isAfter(_ period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func hasGap(between period: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  public func gap(between period: any RingsSDK.TimePeriodProtocol) -> Foundation.TimeInterval
+  public mutating func shift(by timeInterval: Foundation.TimeInterval)
+  public mutating func lengthen(by timeInterval: Foundation.TimeInterval, at anchor: RingsSDK.TimePeriodAnchor)
+  public mutating func shorten(by timeInterval: Foundation.TimeInterval, at anchor: RingsSDK.TimePeriodAnchor)
+  public func relation(to period: any RingsSDK.TimePeriodProtocol) -> RingsSDK.TimePeriodRelation
+  public func isMoment(precision: Foundation.TimeInterval = 0) -> Swift.Bool
+  public func durationIn(_ units: Swift.Set<Foundation.Calendar.Component>) -> Foundation.DateComponents?
+  public func durationIn(_ unit: Foundation.Calendar.Component) -> Swift.Int?
+  public var years: Swift.Int {
+    get
+  }
+  public var months: Swift.Int {
+    get
+  }
+  public var weeks: Swift.Int {
+    get
+  }
+  public var days: Swift.Int {
+    get
+  }
+  public var hours: Swift.Int {
+    get
+  }
+  public var minutes: Swift.Int {
+    get
+  }
+  public var seconds: Swift.Int {
+    get
+  }
+  public var duration: Foundation.TimeInterval {
+    get
+  }
+}
+@propertyWrapper public struct WrappedDefaultOptional<T> where T : RingsSDK.UserDefaultsSerializable {
+  public let key: Swift.String
+  public var wrappedValue: T? {
+    get
+    set
+  }
+  public init(key keyName: Swift.String, userDefaults: Foundation.UserDefaults = .standard)
+}
+public protocol ServerResponse {
+  var status: Swift.Int { get }
+  var message: Swift.String { get }
+}
+public enum RingNetworkError : Foundation.LocalizedError {
+  case invalidResponse
+  case networkError(Swift.String)
+  case serverError(Swift.Int, Swift.String)
+  case invalidParameters(Swift.String)
+  case httpError(Swift.Int)
+  case decodingError(any Swift.Error)
+  case tokenError(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct TokenResponse : Swift.Codable, RingsSDK.ServerResponse {
+  public let message: Swift.String
+  public let status: Swift.Int
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CheckVersionResponse : Swift.Codable, RingsSDK.ServerResponse {
+  public let result: RingsSDK.CheckVersionResponse.VersionResult
+  public let message: Swift.String
+  public let count: Swift.Int
+  public let status: Swift.Int
+  public struct VersionResult : Swift.Codable {
+    public let version: Swift.String?
+    public let download: Swift.String?
+    public let fileName: Swift.String?
+    public init(from decoder: any Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct VersionInfo {
+  public let hasNewVersion: Swift.Bool
+  public let version: Swift.String?
+  public let downloadUrl: Swift.String?
+  public let fileName: Swift.String?
+  public let message: Swift.String
+}
+@_hasMissingDesignatedInitializers final public class RingNetworkManager {
+  public static let shared: RingsSDK.RingNetworkManager
+  final public func createToken(apiKey: Swift.String, userIdentifier: Swift.String, completion: @escaping (Swift.Result<Swift.String, RingsSDK.RingNetworkError>) -> Swift.Void)
+  final public func checkDeviceVersion(version: Swift.String, completion: @escaping (Swift.Result<RingsSDK.VersionInfo, RingsSDK.RingNetworkError>) -> Swift.Void)
+  final public func downloadFile(url: Swift.String, fileName: Swift.String, destinationPath: Swift.String, progress: @escaping (Swift.Double) -> Swift.Void, completion: @escaping (Swift.Result<Swift.String, RingsSDK.RingNetworkError>) -> Swift.Void)
+  @objc deinit
+}
+extension Foundation.Date {
+  public var isLeapMonth: Swift.Bool {
+    get
+  }
+  public var isLeapYear: Swift.Bool {
+    get
+  }
+  public var julianDay: Swift.Double {
+    get
+  }
+  public var modifiedJulianDay: Swift.Double {
+    get
+  }
+  public func getInterval(toDate: Foundation.Date?, component: Foundation.Calendar.Component) -> Swift.Int64
+}
+public enum ChargeStatus {
+  case full
+  case charging
+  case normal
+  public static func == (a: RingsSDK.ChargeStatus, b: RingsSDK.ChargeStatus) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ReadError : Swift.Error {
+  case fail
+  case testing
+  case uploading
+  case clear
+  case noWear
+  case charging
+  case disconnect
+  case timeOut
+  case setCollectionCycleFail
+  case setBluetoothFail
+  case setBluetoothOutRange
+  case getBluetoothFail
+  case invalidData
+  case outOfArray
+  case dataCollectionTimeout
+  case connectTimeout
+  public static func == (a: RingsSDK.ReadError, b: RingsSDK.ReadError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ReadDataResult {
+  case empty
+  case complete
+  public static func == (a: RingsSDK.ReadDataResult, b: RingsSDK.ReadDataResult) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum OTAStatus {
+  case start
+  case progress(Swift.Float)
+  case success
+  case fail(Swift.String)
+}
+public enum OTAError : Swift.Error {
+  case notConnect
+  case OTAFileNotExist
+  public static func == (a: RingsSDK.OTAError, b: RingsSDK.OTAError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ApolloOTAStatus {
+  case preparing
+  case progress(Swift.Float)
+  case success
+  case error(Swift.String, Swift.Int)
+  case rebootSuccess
+  case rebootFailed
+}
+@objc public enum RingTimeZone : Swift.Int {
+  case UTC = 0x00
+  case East1 = 0x01
+  case East2 = 0x02
+  case East3 = 0x03
+  case East4 = 0x04
+  case East5 = 0x05
+  case East6 = 0x06
+  case East7 = 0x07
+  case East8 = 0x08
+  case East9 = 0x09
+  case East10 = 0x0A
+  case East11 = 0x0B
+  case East12 = 0x0C
+  case West12 = 0xF4
+  case West11 = 0xF5
+  case West10 = 0xF6
+  case West9 = 0xF7
+  case West8 = 0xF8
+  case West7 = 0xF9
+  case West6 = 0xFA
+  case West5 = 0xFB
+  case West4 = 0xFC
+  case West3 = 0xFD
+  case West2 = 0xFE
+  case West1 = 0xFF
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol LocaleConvertible {
+  func toLocale() -> Foundation.Locale
+}
+extension Foundation.Locale : RingsSDK.LocaleConvertible {
+  public func toLocale() -> Foundation.Locale
+}
+public enum Locales : Swift.String, RingsSDK.LocaleConvertible {
+  case current
+  case autoUpdating
+  case afrikaans
+  case afrikaansNamibia
+  case afrikaansSouthAfrica
+  case aghem
+  case aghemCameroon
+  case akan
+  case akanGhana
+  case albanian
+  case albanianAlbania
+  case albanianKosovo
+  case albanianMacedonia
+  case amharic
+  case amharicEthiopia
+  case arabic
+  case arabicAlgeria
+  case arabicBahrain
+  case arabicChad
+  case arabicComoros
+  case arabicDjibouti
+  case arabicEgypt
+  case arabicEritrea
+  case arabicIraq
+  case arabicIsrael
+  case arabicJordan
+  case arabicKuwait
+  case arabicLebanon
+  case arabicLibya
+  case arabicMauritania
+  case arabicMorocco
+  case arabicOman
+  case arabicPalestinianTerritories
+  case arabicQatar
+  case arabicSaudiArabia
+  case arabicSomalia
+  case arabicSouthSudan
+  case arabicSudan
+  case arabicSyria
+  case arabicTunisia
+  case arabicUnitedArabEmirates
+  case arabicWesternSahara
+  case arabicWorld
+  case arabicYemen
+  case armenian
+  case armenianArmenia
+  case assamese
+  case assameseIndia
+  case asu
+  case asuTanzania
+  case azerbaijani
+  case azerbaijaniAzerbaijan
+  case azerbaijaniCyrillic
+  case azerbaijaniCyrillicAzerbaijan
+  case bafia
+  case bafiaCameroon
+  case bambara
+  case bambaraMali
+  case basaa
+  case basaaCameroon
+  case basque
+  case basqueSpain
+  case belarusian
+  case belarusianBelarus
+  case bemba
+  case bembaZambia
+  case bena
+  case benaTanzania
+  case bengali
+  case bengaliBangladesh
+  case engaliIndia
+  case bodo
+  case bodoIndia
+  case bosnian
+  case bosnianBosniaHerzegovina
+  case bosnianCyrillic
+  case bosnianCyrillicBosniaHerzegovina
+  case breton
+  case bretonFrance
+  case bulgarian
+  case bulgarianBulgaria
+  case burmese
+  case burmeseMyanmarBurma
+  case catalan
+  case catalanAndorra
+  case catalanFrance
+  case catalanItaly
+  case catalanSpain
+  case centralAtlasTamazight
+  case centralAtlasTamazightMorocco
+  case centralKurdish
+  case centralKurdishIran
+  case centralKurdishIraq
+  case cherokee
+  case cherokeeUnitedStates
+  case chiga
+  case chigaUganda
+  case chinese
+  case chineseChina
+  case chineseHongKongSarChina
+  case chineseMacauSarChina
+  case chineseSimplified
+  case chineseSimplifiedHongKongSarChina
+  case chineseSimplifiedMacauSarChina
+  case chineseSingapore
+  case chineseTaiwan
+  case chineseTraditional
+  case colognian
+  case colognianGermany
+  case cornish
+  case cornishUnitedKingdom
+  case croatian
+  case croatianBosniaHerzegovina
+  case croatianCroatia
+  case czech
+  case czechCzechRepublic
+  case danish
+  case danishDenmark
+  case danishGreenland
+  case duala
+  case dualaCameroon
+  case dutch
+  case dutchAruba
+  case dutchBelgium
+  case dutchCaribbeanNetherlands
+  case dutchCuraao
+  case dutchNetherlands
+  case dutchSintMaarten
+  case dutchSuriname
+  case dzongkha
+  case dzongkhaBhutan
+  case embu
+  case embuKenya
+  case english
+  case englishAlbania
+  case englishAmericanSamoa
+  case englishAndorra
+  case englishAnguilla
+  case englishAntiguaBarbuda
+  case englishAustralia
+  case englishAustria
+  case englishBahamas
+  case englishBarbados
+  case englishBelgium
+  case englishBelize
+  case englishBermuda
+  case englishBosniaHerzegovina
+  case englishBotswana
+  case englishBritishIndianOceanTerritory
+  case englishBritishVirginIslands
+  case englishCameroon
+  case englishCanada
+  case englishCaymanIslands
+  case englishChristmasIsland
+  case englishCocosKeelingIslands
+  case englishCookIslands
+  case englishCroatia
+  case englishCyprus
+  case englishCzechRepublic
+  case englishDenmark
+  case englishDiegoGarcia
+  case englishDominica
+  case englishEritrea
+  case englishEstonia
+  case englishEurope
+  case englishFalklandIslands
+  case englishFiji
+  case englishFinland
+  case englishFrance
+  case englishGambia
+  case englishGermany
+  case englishGhana
+  case englishGibraltar
+  case englishGreece
+  case englishGrenada
+  case englishGuam
+  case englishGuernsey
+  case englishGuyana
+  case englishHongKongSarChina
+  case englishHungary
+  case englishIceland
+  case englishIndia
+  case englishIreland
+  case englishIsleOfMan
+  case englishIsrael
+  case englishItaly
+  case englishJamaica
+  case englishJersey
+  case englishKenya
+  case englishKiribati
+  case englishLatvia
+  case englishLesotho
+  case englishLiberia
+  case englishLithuania
+  case englishLuxembourg
+  case englishMacauSarChina
+  case englishMadagascar
+  case englishMalawi
+  case englishMalaysia
+  case englishMalta
+  case englishMarshallIslands
+  case englishMauritius
+  case englishMicronesia
+  case englishMontenegro
+  case englishMontserrat
+  case englishNamibia
+  case englishNauru
+  case englishNetherlands
+  case englishNewZealand
+  case englishNigeria
+  case englishNiue
+  case englishNorfolkIsland
+  case englishNorthernMarianaIslands
+  case englishNorway
+  case englishPakistan
+  case englishPalau
+  case englishPapuaNewGuinea
+  case englishPhilippines
+  case englishPitcairnIslands
+  case englishPoland
+  case englishPortugal
+  case englishPuertoRico
+  case englishRomania
+  case englishRussia
+  case englishRwanda
+  case englishSamoa
+  case englishSeychelles
+  case englishSierraLeone
+  case englishSingapore
+  case englishSintMaarten
+  case englishSlovakia
+  case englishSlovenia
+  case englishSolomonIslands
+  case englishSouthAfrica
+  case englishSouthSudan
+  case englishSpain
+  case englishStHelena
+  case englishStKittsNevis
+  case englishStLucia
+  case englishStVincentGrenadines
+  case englishSudan
+  case englishSwaziland
+  case englishSweden
+  case englishSwitzerland
+  case englishTanzania
+  case englishTokelau
+  case englishTonga
+  case englishTrinidadTobago
+  case englishTurkey
+  case englishTurksCaicosIslands
+  case englishTuvalu
+  case englishUSOutlyingIslands
+  case englishUSVirginIslands
+  case englishUganda
+  case englishUnitedKingdom
+  case englishUnitedStates
+  case englishUnitedStatesComputer
+  case englishVanuatu
+  case englishWorld
+  case englishZambia
+  case englishZimbabwe
+  case esperanto
+  case estonian
+  case estonianEstonia
+  case ewe
+  case eweGhana
+  case eweTogo
+  case ewondo
+  case ewondoCameroon
+  case faroese
+  case faroeseFaroeIslands
+  case filipino
+  case filipinoPhilippines
+  case finnish
+  case finnishFinland
+  case french
+  case frenchAlgeria
+  case frenchBelgium
+  case frenchBenin
+  case frenchBurkinaFaso
+  case frenchBurundi
+  case frenchCameroon
+  case frenchCanada
+  case frenchCentralAfricanRepublic
+  case frenchChad
+  case frenchComoros
+  case frenchCongoBrazzaville
+  case frenchCongoKinshasa
+  case frenchCteDivoire
+  case frenchDjibouti
+  case frenchEquatorialGuinea
+  case frenchFrance
+  case frenchFrenchGuiana
+  case frenchFrenchPolynesia
+  case frenchGabon
+  case frenchGuadeloupe
+  case frenchGuinea
+  case frenchHaiti
+  case frenchLuxembourg
+  case frenchMadagascar
+  case frenchMali
+  case frenchMartinique
+  case frenchMauritania
+  case frenchMauritius
+  case frenchMayotte
+  case frenchMonaco
+  case frenchMorocco
+  case frenchNewCaledonia
+  case frenchNiger
+  case frenchRunion
+  case frenchRwanda
+  case frenchSenegal
+  case frenchSeychelles
+  case frenchStBarthlemy
+  case frenchStMartin
+  case frenchStPierreMiquelon
+  case frenchSwitzerland
+  case frenchSyria
+  case frenchTogo
+  case frenchTunisia
+  case frenchVanuatu
+  case frenchWallisFutuna
+  case friulian
+  case friulianItaly
+  case fulah
+  case fulahCameroon
+  case fulahGuinea
+  case fulahMauritania
+  case fulahSenegal
+  case galician
+  case galicianSpain
+  case ganda
+  case gandaUganda
+  case georgian
+  case georgianGeorgia
+  case german
+  case germanAustria
+  case germanBelgium
+  case germanGermany
+  case germanLiechtenstein
+  case germanLuxembourg
+  case germanSwitzerland
+  case greek
+  case greekCyprus
+  case greekGreece
+  case gujarati
+  case gujaratiIndia
+  case gusii
+  case gusiiKenya
+  case hausa
+  case hausaGhana
+  case hausaNiger
+  case hausaNigeria
+  case hawaiian
+  case hawaiianUnitedStates
+  case hebrew
+  case hebrewIsrael
+  case hindi
+  case hindiIndia
+  case hungarian
+  case hungarianHungary
+  case icelandic
+  case icelandicIceland
+  case igbo
+  case igboNigeria
+  case inariSami
+  case inariSamiFinland
+  case indonesian
+  case indonesianIndonesia
+  case inuktitut
+  case inuktitutUnifiedCanadianAboriginalSyllabics
+  case inuktitutUnifiedCanadianAboriginalSyllabicsCanada
+  case irish
+  case irishIreland
+  case italian
+  case italianItaly
+  case italianSanMarino
+  case italianSwitzerland
+  case japanese
+  case japaneseJapan
+  case jolaFonyi
+  case jolaFonyiSenegal
+  case kabuverdianu
+  case kabuverdianuCapeVerde
+  case kabyle
+  case kabyleAlgeria
+  case kako
+  case kakoCameroon
+  case kalaallisut
+  case kalaallisutGreenland
+  case kalenjin
+  case kalenjinKenya
+  case kamba
+  case kambaKenya
+  case kannada
+  case kannadaIndia
+  case kashmiri
+  case kashmiriArabic
+  case kashmiriArabicIndia
+  case kazakh
+  case kazakhKazakhstan
+  case khmer
+  case khmerCambodia
+  case kikuyu
+  case kikuyuKenya
+  case kinyarwanda
+  case kinyarwandaRwanda
+  case konkani
+  case konkaniIndia
+  case korean
+  case koreanNorthKorea
+  case koreanSouthKorea
+  case koyraChiini
+  case koyraChiiniMali
+  case koyraboroSenni
+  case koyraboroSenniMali
+  case kwasio
+  case kwasioCameroon
+  case kyrgyz
+  case kyrgyzKyrgyzstan
+  case lakota
+  case lakotaUnitedStates
+  case langi
+  case langiTanzania
+  case lao
+  case laoLaos
+  case latvian
+  case latvianLatvia
+  case lingala
+  case lingalaAngola
+  case lingalaCentralAfricanRepublic
+  case lingalaCongoBrazzaville
+  case lingalaCongoKinshasa
+  case lithuanian
+  case lithuanianLithuania
+  case lowerSorbian
+  case lowerSorbianGermany
+  case lubaKatanga
+  case lubaKatangaCongoKinshasa
+  case luo
+  case luoKenya
+  case luxembourgish
+  case luxembourgishLuxembourg
+  case luyia
+  case luyiaKenya
+  case macedonian
+  case macedonianMacedonia
+  case machame
+  case machameTanzania
+  case makhuwaMeetto
+  case makhuwaMeettoMozambique
+  case makonde
+  case makondeTanzania
+  case malagasy
+  case malagasyMadagascar
+  case malay
+  case malayArabic
+  case malayArabicBrunei
+  case malayArabicMalaysia
+  case malayBrunei
+  case malayMalaysia
+  case malaySingapore
+  case malayalam
+  case malayalamIndia
+  case maltese
+  case malteseMalta
+  case manx
+  case manxIsleOfMan
+  case marathi
+  case marathiIndia
+  case masai
+  case masaiKenya
+  case masaiTanzania
+  case meru
+  case meruKenya
+  case meta
+  case metaCameroon
+  case mongolian
+  case mongolianMongolia
+  case morisyen
+  case morisyenMauritius
+  case mundang
+  case mundangCameroon
+  case nama
+  case namaNamibia
+  case nepali
+  case nepaliIndia
+  case nepaliNepal
+  case ngiemboon
+  case ngiemboonCameroon
+  case ngomba
+  case ngombaCameroon
+  case northNdebele
+  case northNdebeleZimbabwe
+  case northernSami
+  case northernSamiFinland
+  case northernSamiNorway
+  case northernSamiSweden
+  case norwegianBokml
+  case norwegianBokmlNorway
+  case norwegianBokmlSvalbardJanMayen
+  case norwegianNynorsk
+  case norwegianNynorskNorway
+  case nuer
+  case nuerSudan
+  case nyankole
+  case nyankoleUganda
+  case oriya
+  case oriyaIndia
+  case oromo
+  case oromoEthiopia
+  case oromoKenya
+  case ossetic
+  case osseticGeorgia
+  case osseticRussia
+  case pashto
+  case pashtoAfghanistan
+  case persian
+  case persianAfghanistan
+  case persianIran
+  case polish
+  case polishPoland
+  case portuguese
+  case portugueseAngola
+  case portugueseBrazil
+  case portugueseCapeVerde
+  case portugueseGuineaBissau
+  case portugueseMacauSarChina
+  case portugueseMozambique
+  case portuguesePortugal
+  case portugueseSoTomPrncipe
+  case portugueseTimorLeste
+  case punjabi
+  case punjabiArabic
+  case punjabiArabicPakistan
+  case punjabiIndia
+  case quechua
+  case quechuaBolivia
+  case quechuaEcuador
+  case quechuaPeru
+  case romanian
+  case romanianMoldova
+  case romanianRomania
+  case romansh
+  case romanshSwitzerland
+  case rombo
+  case romboTanzania
+  case rundi
+  case rundiBurundi
+  case russian
+  case russianBelarus
+  case russianKazakhstan
+  case russianKyrgyzstan
+  case russianMoldova
+  case russianRussia
+  case russianUkraine
+  case rwa
+  case rwaTanzania
+  case sakha
+  case sakhaRussia
+  case samburu
+  case samburuKenya
+  case sango
+  case sangoCentralAfricanRepublic
+  case sangu
+  case sanguTanzania
+  case scottishGaelic
+  case scottishGaelicUnitedKingdom
+  case sena
+  case senaMozambique
+  case serbian
+  case serbianBosniaHerzegovina
+  case serbianKosovo
+  case serbianLatin
+  case serbianLatinBosniaHerzegovina
+  case serbianLatinKosovo
+  case serbianLatinMontenegro
+  case serbianLatinSerbia
+  case serbianMontenegro
+  case serbianSerbia
+  case shambala
+  case shambalaTanzania
+  case shona
+  case shonaZimbabwe
+  case sichuanYi
+  case sichuanYiChina
+  case sinhala
+  case sinhalaSriLanka
+  case slovak
+  case slovakSlovakia
+  case slovenian
+  case slovenianSlovenia
+  case soga
+  case sogaUganda
+  case somali
+  case somaliDjibouti
+  case somaliEthiopia
+  case somaliKenya
+  case somaliSomalia
+  case spanish
+  case spanishArgentina
+  case spanishBolivia
+  case spanishCanaryIslands
+  case spanishCeutaMelilla
+  case spanishChile
+  case spanishColombia
+  case spanishCostaRica
+  case spanishCuba
+  case spanishDominicanRepublic
+  case spanishEcuador
+  case spanishElSalvador
+  case spanishEquatorialGuinea
+  case spanishGuatemala
+  case spanishHonduras
+  case spanishLatinAmerica
+  case spanishMexico
+  case spanishNicaragua
+  case spanishPanama
+  case spanishParaguay
+  case spanishPeru
+  case spanishPhilippines
+  case spanishPuertoRico
+  case spanishSpain
+  case spanishUnitedStates
+  case spanishUruguay
+  case spanishVenezuela
+  case standardMoroccanTamazight
+  case standardMoroccanTamazightMorocco
+  case swahili
+  case swahiliCongoKinshasa
+  case swahiliKenya
+  case swahiliTanzania
+  case swahiliUganda
+  case swedish
+  case swedishlandIslands
+  case swedishFinland
+  case swedishSweden
+  case swissGerman
+  case swissGermanFrance
+  case swissGermanLiechtenstein
+  case swissGermanSwitzerland
+  case tachelhit
+  case tachelhitMorocco
+  case tachelhitTifinagh
+  case tachelhitTifinaghMorocco
+  case taita
+  case taitaKenya
+  case tajik
+  case tajikTajikistan
+  case tamil
+  case tamilIndia
+  case tamilMalaysia
+  case tamilSingapore
+  case tamilSriLanka
+  case tasawaq
+  case tasawaqNiger
+  case telugu
+  case teluguIndia
+  case teso
+  case tesoKenya
+  case tesoUganda
+  case thai
+  case thaiThailand
+  case tibetan
+  case tibetanChina
+  case tibetanIndia
+  case tigrinya
+  case tigrinyaEritrea
+  case tigrinyaEthiopia
+  case tongan
+  case tonganTonga
+  case turkish
+  case turkishCyprus
+  case turkishTurkey
+  case turkmen
+  case turkmenTurkmenistan
+  case ukrainian
+  case ukrainianUkraine
+  case upperSorbian
+  case upperSorbianGermany
+  case urdu
+  case urduIndia
+  case urduPakistan
+  case uyghur
+  case uyghurArabic
+  case uyghurArabicChina
+  case uzbek
+  case uzbekArabic
+  case uzbekArabicAfghanistan
+  case uzbekLatin
+  case uzbekLatinUzbekistan
+  case uzbekUzbekistan
+  case vai
+  case vaiLatin
+  case vaiLatinLiberia
+  case vaiLiberia
+  case vietnamese
+  case vietnameseVietnam
+  case vunjo
+  case vunjoTanzania
+  case walser
+  case walserSwitzerland
+  case welsh
+  case welshUnitedKingdom
+  case westernFrisian
+  case westernFrisianNetherlands
+  case yangben
+  case yangbenCameroon
+  case yiddish
+  case yiddishWorld
+  case yoruba
+  case yorubaBenin
+  case yorubaNigeria
+  case zarma
+  case zarmaNiger
+  case zulu
+  case zuluSouthAfrica
+  public func toLocale() -> Foundation.Locale
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension Foundation.Date : RingsSDK.DateRepresentable {
+  public var date: Foundation.Date {
+    get
+  }
+  public var region: RingsSDK.Region {
+    get
+  }
+  public var customFormatter: Foundation.DateFormatter? {
+    get
+    set
+  }
+  public var dateComponents: Foundation.DateComponents {
+    get
+  }
+  public init?(_ string: Swift.String, format: Swift.String? = nil, region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public init(seconds interval: Foundation.TimeInterval, region: RingsSDK.Region = Region.UTC)
+  public init(milliseconds interval: Swift.Int, region: RingsSDK.Region = Region.UTC)
+  public init?(components configuration: ((inout Foundation.DateComponents) -> Swift.Void), region: RingsSDK.Region? = SwiftDate.defaultRegion)
+  public init?(components: Foundation.DateComponents, region: RingsSDK.Region?)
+  public init(year: Swift.Int, month: Swift.Int, day: Swift.Int, hour: Swift.Int, minute: Swift.Int, second: Swift.Int = 0, nanosecond: Swift.Int = 0, region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public func inDefaultRegion() -> RingsSDK.DateInRegion
+  public func `in`(region: RingsSDK.Region) -> RingsSDK.DateInRegion
+  public static func past() -> Foundation.Date
+  public static func future() -> Foundation.Date
+}
+@_hasMissingDesignatedInitializers public class ISOFormatter : RingsSDK.DateToStringTrasformable {
+  public struct Options : Swift.OptionSet {
+    public let rawValue: Swift.Int
+    public init(rawValue: Swift.Int)
+    public static let withYear: RingsSDK.ISOFormatter.Options
+    public static let withMonth: RingsSDK.ISOFormatter.Options
+    public static let withWeekOfYear: RingsSDK.ISOFormatter.Options
+    public static let withDay: RingsSDK.ISOFormatter.Options
+    public static let withTime: RingsSDK.ISOFormatter.Options
+    public static let withTimeZone: RingsSDK.ISOFormatter.Options
+    public static let withSpaceBetweenDateAndTime: RingsSDK.ISOFormatter.Options
+    public static let withDashSeparatorInDate: RingsSDK.ISOFormatter.Options
+    public static let withFullDate: RingsSDK.ISOFormatter.Options
+    public static let withFullTime: RingsSDK.ISOFormatter.Options
+    public static let withInternetDateTime: RingsSDK.ISOFormatter.Options
+    public static let withInternetDateTimeExtended: RingsSDK.ISOFormatter.Options
+    public static let withoutTZSeparators: RingsSDK.ISOFormatter.Options
+    public var dateFormat: Swift.String {
+      get
+    }
+    public typealias ArrayLiteralElement = RingsSDK.ISOFormatter.Options
+    public typealias Element = RingsSDK.ISOFormatter.Options
+    public typealias RawValue = Swift.Int
+  }
+  public static func format(_ date: any RingsSDK.DateRepresentable, options: Any?) -> Swift.String
+  @objc deinit
+}
+public struct SwiftDate {
+  public static var defaultRegion: RingsSDK.Region
+  public static var autoFormats: [Swift.String] {
+    get
+    set
+  }
+  public static func resetAutoFormats()
+}
+extension Swift.Int {
+  public var nanoseconds: Foundation.DateComponents {
+    get
+  }
+  public var seconds: Foundation.DateComponents {
+    get
+  }
+  public var minutes: Foundation.DateComponents {
+    get
+  }
+  public var hours: Foundation.DateComponents {
+    get
+  }
+  public var days: Foundation.DateComponents {
+    get
+  }
+  public var weeks: Foundation.DateComponents {
+    get
+  }
+  public var months: Foundation.DateComponents {
+    get
+  }
+  public var years: Foundation.DateComponents {
+    get
+  }
+  public var quarters: Foundation.DateComponents {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class DOTNETParser : RingsSDK.StringToDateTransformable {
+  public static func parse(_ string: Swift.String) -> (seconds: Foundation.TimeInterval, tz: Foundation.TimeZone)?
+  public static func parse(_ string: Swift.String, region: RingsSDK.Region?, options: Any?) -> RingsSDK.DateInRegion?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class DOTNETFormatter : RingsSDK.DateToStringTrasformable {
+  public static func format(_ date: any RingsSDK.DateRepresentable, options: Any?) -> Swift.String
+  @objc deinit
+}
+extension Foundation.FileManager {
+  public func shareFile(filePath: Swift.String, resultBlock: @escaping ((_ result: Swift.Bool) -> Swift.Void))
+}
+@_inheritsConvenienceInitializers @objc final public class RingDataModel : ObjectiveC.NSObject {
+  @objc final public var total: Swift.UInt32
+  @objc final public var serialNum: Swift.UInt32
+  @objc final public var timestamp: Swift.UInt32
+  @objc final public var stepsOfTheDay: Swift.UInt16
+  @objc final public var rate: Swift.Int
+  @objc final public var O2: Swift.Int
+  @objc final public var hrv: Swift.Int
+  @objc final public var mentalStress: Swift.Int
+  @objc final public var temp: Swift.Float
+  @objc final public var isRunning: Swift.Int
+  @objc final public var sleepType: Swift.Int
+  @objc final public var RRNums: Swift.Int
+  @objc final public var rrs: Foundation.Data?
+  @objc override dynamic public init()
+  @objc public init(bytes: [Swift.UInt8])
+  @objc override final public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+public struct Region : Swift.Decodable, Swift.Encodable, Swift.Equatable, Swift.Hashable, Swift.CustomStringConvertible {
+  public let calendar: Foundation.Calendar
+  public var locale: Foundation.Locale {
+    get
+  }
+  public var timeZone: Foundation.TimeZone {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+  public init(calendar: any RingsSDK.CalendarConvertible = SwiftDate.defaultRegion.calendar, zone: any RingsSDK.ZoneConvertible = SwiftDate.defaultRegion.timeZone, locale: any RingsSDK.LocaleConvertible = SwiftDate.defaultRegion.locale)
+  public init(fromDateComponents components: Foundation.DateComponents)
+  public static var UTC: RingsSDK.Region {
+    get
+  }
+  public static var local: RingsSDK.Region {
+    get
+  }
+  public static var ISO: RingsSDK.Region {
+    get
+  }
+  public static var current: RingsSDK.Region {
+    get
+  }
+  public static func currentIn(locale: (any RingsSDK.LocaleConvertible)? = nil, calendar: (any RingsSDK.CalendarConvertible)? = nil) -> RingsSDK.Region
+  public func nowInThisRegion() -> RingsSDK.DateInRegion
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+  public static func == (lhs: RingsSDK.Region, rhs: RingsSDK.Region) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol FilterType : AnyObject {
+  func apply(_ value: Swift.String?) -> Swift.Bool
+  func getTarget() -> RingsSDK.Filter.TargetType
+  func isRequired() -> Swift.Bool
+  func isExcluded() -> Swift.Bool
+  func reachedMinLevel(_ level: RingsSDK.SwiftyBeaver.Level) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class Filters {
+  public static let Path: RingsSDK.PathFilterFactory.Type
+  public static let Function: RingsSDK.FunctionFilterFactory.Type
+  public static let Message: RingsSDK.MessageFilterFactory.Type
+  @objc deinit
+}
+public class Filter {
+  public enum TargetType {
+    case Path(RingsSDK.Filter.ComparisonType)
+    case Function(RingsSDK.Filter.ComparisonType)
+    case Message(RingsSDK.Filter.ComparisonType)
+  }
+  public enum ComparisonType {
+    case StartsWith([Swift.String], Swift.Bool)
+    case Contains([Swift.String], Swift.Bool)
+    case Excludes([Swift.String], Swift.Bool)
+    case EndsWith([Swift.String], Swift.Bool)
+    case Equals([Swift.String], Swift.Bool)
+    case Custom((Swift.String) -> Swift.Bool)
+  }
+  public init(_ target: RingsSDK.Filter.TargetType, required: Swift.Bool, minLevel: RingsSDK.SwiftyBeaver.Level)
+  public func getTarget() -> RingsSDK.Filter.TargetType
+  public func isRequired() -> Swift.Bool
+  public func isExcluded() -> Swift.Bool
+  public func reachedMinLevel(_ level: RingsSDK.SwiftyBeaver.Level) -> Swift.Bool
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class CompareFilter : RingsSDK.Filter, RingsSDK.FilterType {
+  override public init(_ target: RingsSDK.Filter.TargetType, required: Swift.Bool, minLevel: RingsSDK.SwiftyBeaver.Level)
+  public func apply(_ value: Swift.String?) -> Swift.Bool
+  override public func isExcluded() -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class FunctionFilterFactory {
+  public static func startsWith(_ prefixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func contains(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func excludes(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func endsWith(_ suffixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func equals(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func custom(required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (Swift.String) -> Swift.Bool) -> any RingsSDK.FilterType
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MessageFilterFactory {
+  public static func startsWith(_ prefixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func contains(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func excludes(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func endsWith(_ suffixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func equals(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func custom(required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (Swift.String) -> Swift.Bool) -> any RingsSDK.FilterType
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class PathFilterFactory {
+  public static func startsWith(_ prefixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func contains(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func excludes(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func endsWith(_ suffixes: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func equals(_ strings: Swift.String..., caseSensitive: Swift.Bool = false, required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose) -> any RingsSDK.FilterType
+  public static func custom(required: Swift.Bool = false, minLevel: RingsSDK.SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (Swift.String) -> Swift.Bool) -> any RingsSDK.FilterType
+  @objc deinit
+}
+extension RingsSDK.Filter.TargetType : Swift.Equatable {
+}
+public func == (lhs: RingsSDK.Filter.TargetType, rhs: RingsSDK.Filter.TargetType) -> Swift.Bool
+@_inheritsConvenienceInitializers public class ConsoleDestination : RingsSDK.BaseDestination {
+  public var useNSLog: Swift.Bool
+  public var useTerminalColors: Swift.Bool {
+    get
+    set
+  }
+  override public var defaultHashValue: Swift.Int {
+    get
+  }
+  override public init()
+  override public func send(_ level: RingsSDK.SwiftyBeaver.Level, msg: Swift.String, thread: Swift.String, file: Swift.String, function: Swift.String, line: Swift.Int, context: Any? = nil) -> Swift.String?
+  @objc deinit
+}
+public enum SortMode {
+  case ascending
+  case descending
+  public static func == (a: RingsSDK.SortMode, b: RingsSDK.SortMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum SortType {
+  case start(RingsSDK.SortMode)
+  case end(RingsSDK.SortMode)
+  case duration(RingsSDK.SortMode)
+  case custom(((any RingsSDK.TimePeriodProtocol, any RingsSDK.TimePeriodProtocol) -> Swift.Bool))
+}
+@_inheritsConvenienceInitializers open class TimePeriodCollection : RingsSDK.TimePeriodGroup {
+  public func append(_ period: any RingsSDK.TimePeriodProtocol)
+  public func append(_ periodArray: [any RingsSDK.TimePeriodProtocol])
+  public func append<C>(contentsOf newPeriods: C) where C : RingsSDK.TimePeriodGroup
+  public func insert(_ newElement: any RingsSDK.TimePeriodProtocol, at index: Swift.Int)
+  public func remove(at: Swift.Int)
+  public func removeAll()
+  public func sort(by type: RingsSDK.SortType)
+  public func sorted(by type: RingsSDK.SortType) -> RingsSDK.TimePeriodCollection
+  public func periodsInside(period: any RingsSDK.TimePeriodProtocol) -> RingsSDK.TimePeriodCollection
+  public func periodsIntersected(by date: RingsSDK.DateInRegion) -> RingsSDK.TimePeriodCollection
+  public func periodsIntersected(by period: any RingsSDK.TimePeriodProtocol) -> RingsSDK.TimePeriodCollection
+  public func periodsOverlappedBy(_ period: any RingsSDK.TimePeriodProtocol) -> RingsSDK.TimePeriodCollection
+  public func map(_ transform: (any RingsSDK.TimePeriodProtocol) throws -> any RingsSDK.TimePeriodProtocol) rethrows -> RingsSDK.TimePeriodCollection
+  override public init(_ periods: [any RingsSDK.TimePeriodProtocol]? = nil)
+  @objc deinit
+}
+final public class GoogleCloudDestination : RingsSDK.BaseDestination {
+  public init(serviceName: Swift.String)
+  override final public var asynchronously: Swift.Bool {
+    get
+    set
+  }
+  override final public func send(_ level: RingsSDK.SwiftyBeaver.Level, msg: Swift.String, thread: Swift.String, file: Swift.String, function: Swift.String, line: Swift.Int, context: Any? = nil) -> Swift.String?
+  @objc deinit
+}
+@objc public class DeviceInfo : ObjectiveC.NSObject {
+  @objc override dynamic public var hash: Swift.Int {
+    @objc get
+  }
+  @objc public var advertisementData: [Swift.String : Any]
+  @objc public var rssi: Foundation.NSNumber
+  @objc public var uuidString: Swift.String {
+    @objc get
+  }
+  @objc public var macAddress: Swift.String {
+    @objc get
+  }
+  @objc public var peripheralName: Swift.String? {
+    @objc get
+  }
+  @objc public var peripheral: CoreBluetooth.CBPeripheral
+  @objc public init(peripheral: CoreBluetooth.CBPeripheral, advertisementData: [Swift.String : Any], rssi: Foundation.NSNumber)
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+}
+open class TimePeriodGroup : Swift.Sequence, Swift.Equatable {
+  public var start: RingsSDK.DateInRegion? {
+    get
+  }
+  public var end: RingsSDK.DateInRegion? {
+    get
+  }
+  public var duration: Foundation.TimeInterval? {
+    get
+  }
+  public var count: Swift.Int {
+    get
+  }
+  public static func == (lhs: RingsSDK.TimePeriodGroup, rhs: RingsSDK.TimePeriodGroup) -> Swift.Bool
+  public init(_ periods: [any RingsSDK.TimePeriodProtocol]? = nil)
+  public func makeIterator() -> Swift.IndexingIterator<[any RingsSDK.TimePeriodProtocol]>
+  public func map<T>(_ transform: (any RingsSDK.TimePeriodProtocol) throws -> T) rethrows -> [T]
+  public func filter(_ isIncluded: (any RingsSDK.TimePeriodProtocol) throws -> Swift.Bool) rethrows -> [any RingsSDK.TimePeriodProtocol]
+  public func forEach(_ body: (any RingsSDK.TimePeriodProtocol) throws -> Swift.Void) rethrows
+  public func split(maxSplits: Swift.Int, omittingEmptySubsequences: Swift.Bool, whereSeparator isSeparator: (any RingsSDK.TimePeriodProtocol) throws -> Swift.Bool) rethrows -> [Swift.AnySequence<any RingsSDK.TimePeriodProtocol>]
+  public subscript(index: Swift.Int) -> any RingsSDK.TimePeriodProtocol {
+    get
+  }
+  public typealias Element = Swift.IndexingIterator<[any RingsSDK.TimePeriodProtocol]>.Element
+  public typealias Iterator = Swift.IndexingIterator<[any RingsSDK.TimePeriodProtocol]>
+  @objc deinit
+}
+public class SBPlatformDestination : RingsSDK.BaseDestination {
+  public var appID: Swift.String
+  public var appSecret: Swift.String
+  public var encryptionKey: Swift.String
+  public var analyticsUserName: Swift.String
+  public var analyticsUUID: Swift.String {
+    get
+  }
+  public struct SendingPoints {
+    public var verbose: Swift.Int
+    public var debug: Swift.Int
+    public var info: Swift.Int
+    public var warning: Swift.Int
+    public var error: Swift.Int
+    public var threshold: Swift.Int
+  }
+  public var sendingPoints: RingsSDK.SBPlatformDestination.SendingPoints
+  public var showNSLog: Swift.Bool
+  public var serverURL: Foundation.URL?
+  public var entriesFileURL: Foundation.URL
+  public var sendingFileURL: Foundation.URL
+  public var analyticsFileURL: Foundation.URL
+  override public var defaultHashValue: Swift.Int {
+    get
+  }
+  public init(appID: Swift.String, appSecret: Swift.String, encryptionKey: Swift.String, serverURL: Foundation.URL? = URL(string: "https://api.swiftybeaver.com/api/entries/"), entriesFileName: Swift.String = "sbplatform_entries.json", sendingfileName: Swift.String = "sbplatform_entries_sending.json", analyticsFileName: Swift.String = "sbplatform_analytics.json")
+  override public func send(_ level: RingsSDK.SwiftyBeaver.Level, msg: Swift.String, thread: Swift.String, file: Swift.String, function: Swift.String, line: Swift.Int, context: Any? = nil) -> Swift.String?
+  public func sendNow()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class RingSleepModel : ObjectiveC.NSObject {
+  @objc public var hours: Swift.Int
+  @objc public var minutes: Swift.Int
+  @objc public var allHours: Swift.Int
+  @objc public var allMinutes: Swift.Int
+  @objc public var sleepHours: Swift.Int
+  @objc public var sleepMinutes: Swift.Int
+  @objc public var highTime: Swift.Int64
+  @objc public var lowTime: Swift.Int64
+  @objc public var ydTime: Swift.Int64
+  @objc public var qxTime: Swift.Int64
+  @objc public var startTime: Swift.Int64
+  @objc public var endTime: Swift.Int64
+  @objc public var sleepDataList: [RingsSDK.RingDataModel]
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers open class TimePeriodChain : RingsSDK.TimePeriodGroup {
+  public func append(_ period: any RingsSDK.TimePeriodProtocol)
+  public func append<G>(contentsOf group: G) where G : RingsSDK.TimePeriodGroup
+  public func insert(_ period: any RingsSDK.TimePeriodProtocol, at index: Swift.Int)
+  public func remove(at index: Swift.Int)
+  public func removeAll()
+  public func shift(by duration: Foundation.TimeInterval)
+  override public func map<T>(_ transform: (any RingsSDK.TimePeriodProtocol) throws -> T) rethrows -> [T]
+  override public func filter(_ isIncluded: (any RingsSDK.TimePeriodProtocol) throws -> Swift.Bool) rethrows -> [any RingsSDK.TimePeriodProtocol]
+  public func pop() -> (any RingsSDK.TimePeriodProtocol)?
+  override public init(_ periods: [any RingsSDK.TimePeriodProtocol]? = nil)
+  @objc deinit
+}
+open class TimePeriod : RingsSDK.TimePeriodProtocol {
+  public var start: RingsSDK.DateInRegion?
+  public var end: RingsSDK.DateInRegion?
+  public init()
+  public init(start: RingsSDK.DateInRegion?, end: RingsSDK.DateInRegion?)
+  public init(start: RingsSDK.DateInRegion, duration: Foundation.TimeInterval)
+  public init(end: RingsSDK.DateInRegion, duration: Foundation.TimeInterval)
+  public init(start: RingsSDK.DateInRegion, duration: Foundation.DateComponents)
+  public init(end: RingsSDK.DateInRegion, duration: Foundation.DateComponents)
+  public static func infinity() -> RingsSDK.TimePeriod
+  public func shifted(by timeInterval: Foundation.TimeInterval) -> RingsSDK.TimePeriod
+  public func shifted(by components: Foundation.DateComponents) -> RingsSDK.TimePeriod
+  public func lengthened(by timeInterval: Foundation.TimeInterval, at anchor: RingsSDK.TimePeriodAnchor) -> RingsSDK.TimePeriod
+  public func shortened(by timeInterval: Foundation.TimeInterval, at anchor: RingsSDK.TimePeriodAnchor) -> RingsSDK.TimePeriod
+  public static func + (leftAddend: RingsSDK.TimePeriod, rightAddend: Foundation.TimeInterval) -> RingsSDK.TimePeriod
+  public static func - (minuend: RingsSDK.TimePeriod, subtrahend: Foundation.TimeInterval) -> RingsSDK.TimePeriod
+  public static func == (left: RingsSDK.TimePeriod, right: any RingsSDK.TimePeriodProtocol) -> Swift.Bool
+  @objc deinit
+}
+extension RingsSDK.TimePeriod {
+  public var startDate: Foundation.Date? {
+    get
+  }
+  public var endDate: Foundation.Date? {
+    get
+  }
+  convenience public init(startDate: Foundation.Date, endDate: Foundation.Date, region: RingsSDK.Region = Region.UTC)
+}
+public typealias Calendars = Foundation.Calendar.Identifier
+public protocol CalendarConvertible {
+  func toCalendar() -> Foundation.Calendar
+}
+extension Foundation.Calendar : RingsSDK.CalendarConvertible {
+  public func toCalendar() -> Foundation.Calendar
+}
+extension Foundation.Calendar.Identifier : RingsSDK.CalendarConvertible {
+  public func toCalendar() -> Foundation.Calendar
+}
+extension Foundation.Calendar.Identifier : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public init(_ rawValue: Swift.String)
+}
+extension Swift.Double {
+  public struct ComponentsFormatterOptions {
+    public var allowsFractionalUnits: Swift.Bool?
+    public var allowedUnits: Foundation.NSCalendar.Unit?
+    public var collapsesLargestUnit: Swift.Bool?
+    public var maximumUnitCount: Swift.Int?
+    public var zeroFormattingBehavior: Foundation.DateComponentsFormatter.ZeroFormattingBehavior?
+    public var unitsStyle: Foundation.DateComponentsFormatter.UnitsStyle?
+    public var locale: (any RingsSDK.LocaleConvertible)? {
+      get
+      set
+    }
+    public var calendar: Foundation.Calendar
+    public func apply(toFormatter formatter: Foundation.DateComponentsFormatter)
+    public init()
+  }
+  public func toString(options callback: ((inout Swift.Double.ComponentsFormatterOptions) -> Swift.Void)? = nil) -> Swift.String
+  public func toIntervalString(options callback: ((inout Swift.Double.ComponentsFormatterOptions) -> Swift.Void)? = nil) -> Swift.String
+  public func toString(options: Swift.Double.ComponentsFormatterOptions) -> Swift.String
+  public func toClock(zero: Foundation.DateComponentsFormatter.ZeroFormattingBehavior = [.pad, .dropLeading]) -> Swift.String
+  public func toUnits(_ units: Swift.Set<Foundation.Calendar.Component>, to refDate: RingsSDK.DateInRegion? = nil) -> [Foundation.Calendar.Component : Swift.Int]
+  public func toUnit(_ component: Foundation.Calendar.Component, to refDate: RingsSDK.DateInRegion? = nil) -> Swift.Int?
+}
+public enum ApolloOTAError : Swift.Int, Swift.Error, Swift.CustomStringConvertible {
+  case unknown
+  case crcError
+  case invalidHeaderInfo
+  case invalidPktLength
+  case insufficientBuffer
+  case insufficientFlash
+  case max
+  case fileReadError
+  case fileConvertError
+  case custom
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloOTATool : ObjectiveC.NSObject {
+  public static let shared: RingsSDK.ApolloOTATool
+  public var onProgress: ((Swift.Float) -> Swift.Void)?
+  public var onSuccess: (() -> Swift.Void)?
+  public var onError: ((RingsSDK.ApolloOTAError, Swift.Int) -> Swift.Void)?
+  public var onReboot: ((Swift.Bool) -> Swift.Void)?
+  public func startOTAUpdate(withFile url: Foundation.URL, device: CoreBluetooth.CBPeripheral)
+  public func verifyAndReboot()
+  @objc deinit
+}
+extension RingsSDK.ApolloOTATool : amOtaApi.AmotaApiUpdateAppDataDelegate {
+  @objc dynamic public func didAmOtaFwHeaderRsp(_ status: amOtaApi.eAmotaStatus)
+  @objc dynamic public func didAmOtaFwDataRsp(_ status: amOtaApi.eAmotaStatus, withDataLengthSent length: Swift.UInt32)
+  @objc dynamic public func didAmOtaUserCmdRsp(_ cmd: amOtaApi.eAmotaUserCmd, with status: amOtaApi.eAmotaStatus)
+}
+open class BaseDestination : Swift.Hashable, Swift.Equatable {
+  open var format: Swift.String
+  open var asynchronously: Swift.Bool
+  open var minLevel: RingsSDK.SwiftyBeaver.Level
+  open var levelString: RingsSDK.BaseDestination.LevelString
+  open var levelColor: RingsSDK.BaseDestination.LevelColor
+  public struct LevelString {
+    public var verbose: Swift.String
+    public var debug: Swift.String
+    public var info: Swift.String
+    public var warning: Swift.String
+    public var error: Swift.String
+  }
+  public struct LevelColor {
+    public var verbose: Swift.String
+    public var debug: Swift.String
+    public var info: Swift.String
+    public var warning: Swift.String
+    public var error: Swift.String
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+  open var defaultHashValue: Swift.Int {
+    get
+  }
+  public init()
+  open func send(_ level: RingsSDK.SwiftyBeaver.Level, msg: Swift.String, thread: Swift.String, file: Swift.String, function: Swift.String, line: Swift.Int, context: Any? = nil) -> Swift.String?
+  public func execute(synchronously: Swift.Bool, block: @escaping () -> Swift.Void)
+  public func executeSynchronously<T>(block: @escaping () throws -> T) rethrows -> T
+  public func addFilter(_ filter: any RingsSDK.FilterType)
+  public func removeFilter(_ filter: any RingsSDK.FilterType)
+  @objc deinit
+  open var hashValue: Swift.Int {
+    get
+  }
+}
+public func == (lhs: RingsSDK.BaseDestination, rhs: RingsSDK.BaseDestination) -> Swift.Bool
+public enum WeekDay : Swift.Int {
+  case sunday, monday, tuesday, wednesday, thursday, friday, saturday
+  public func name(style: RingsSDK.SymbolFormatStyle = .`default`, locale: any RingsSDK.LocaleConvertible = SwiftDate.defaultRegion.locale) -> Swift.String
+  public func add(days: Swift.Int) -> RingsSDK.WeekDay
+  public func subtract(days: Swift.Int) -> RingsSDK.WeekDay
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct Year : Swift.CustomStringConvertible, Swift.Equatable {
+  public var description: Swift.String {
+    get
+  }
+  public init(_ year: Swift.Int)
+  public func isLeap() -> Swift.Bool
+  public func numberOfDays() -> Swift.Int
+  public static func == (a: RingsSDK.Year, b: RingsSDK.Year) -> Swift.Bool
+}
+public enum Month : Swift.Int, Swift.CustomStringConvertible, Swift.Equatable {
+  case january, february, march, april, may, june, july, august, september, october, november, december
+  public var description: Swift.String {
+    get
+  }
+  public func name(style: RingsSDK.SymbolFormatStyle = .`default`, locale: any RingsSDK.LocaleConvertible = SwiftDate.defaultRegion.locale) -> Swift.String
+  public func add(months: Swift.Int) -> RingsSDK.Month
+  public func subtract(months: Swift.Int) -> RingsSDK.Month
+  public func numberOfDays(year: Swift.Int) -> Swift.Int
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum ISO8601ParserError : Swift.Error {
+  case eof
+  case notDigit
+  case notDouble
+  case invalid
+  public static func == (a: RingsSDK.ISO8601ParserError, b: RingsSDK.ISO8601ParserError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class ISOParser : RingsSDK.StringToDateTransformable {
+  public struct Options {
+    public init(strict: Swift.Bool = false)
+  }
+  public typealias ISOString = Swift.String.UnicodeScalarView
+  public typealias ISOIndex = Swift.String.UnicodeScalarView.Index
+  public typealias ISOChar = Swift.UnicodeScalar
+  public typealias ISOParsedDate = (date: Foundation.Date?, timezone: Foundation.TimeZone?)
+  public struct ParsedDate {
+    public enum DateStyle {
+      case monthAndDate
+      case week
+      case dateOnly
+      public static func == (a: RingsSDK.ISOParser.ParsedDate.DateStyle, b: RingsSDK.ISOParser.ParsedDate.DateStyle) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+  }
+  public init?(_ src: Swift.String, options: RingsSDK.ISOParser.Options? = nil)
+  @discardableResult
+  public func seek(_ offset: Swift.Int = 1) -> RingsSDK.ISOParser.ISOChar?
+  @discardableResult
+  public func current(_ next: Swift.Bool = false) -> RingsSDK.ISOParser.ISOChar?
+  public static func date(from string: Swift.String) -> RingsSDK.ISOParser.ISOParsedDate?
+  public static func parse(_ string: Swift.String, region: RingsSDK.Region?, options: Any?) -> RingsSDK.DateInRegion?
+  @objc deinit
+}
+public enum TimePeriodRelation {
+  case after
+  case startTouching
+  case startInside
+  case insideStartTouching
+  case enclosingStartTouching
+  case enclosing
+  case enclosingEndTouching
+  case exactMatch
+  case inside
+  case insideEndTouching
+  case endInside
+  case endTouching
+  case before
+  case none
+  public static func == (a: RingsSDK.TimePeriodRelation, b: RingsSDK.TimePeriodRelation) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum IntervalType {
+  case open
+  case closed
+  public static func == (a: RingsSDK.IntervalType, b: RingsSDK.IntervalType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TimePeriodAnchor {
+  case beginning
+  case center
+  case end
+  public static func == (a: RingsSDK.TimePeriodAnchor, b: RingsSDK.TimePeriodAnchor) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension RingsSDK.DateInRegion {
+  public static func randomDates(count: Swift.Int, between initial: RingsSDK.DateInRegion, and final: RingsSDK.DateInRegion, region: RingsSDK.Region = SwiftDate.defaultRegion) -> [RingsSDK.DateInRegion]
+  public static func randomDate(withinDaysBeforeToday days: Swift.Int, region: RingsSDK.Region = SwiftDate.defaultRegion) -> RingsSDK.DateInRegion
+  public static func randomDate(region: RingsSDK.Region = SwiftDate.defaultRegion) -> RingsSDK.DateInRegion
+  public static func randomDate(between initial: RingsSDK.DateInRegion, and final: RingsSDK.DateInRegion, region: RingsSDK.Region = SwiftDate.defaultRegion) -> RingsSDK.DateInRegion
+  public static func oldestIn(list: [RingsSDK.DateInRegion]) -> RingsSDK.DateInRegion?
+  public static func sortedByOldest(list: [RingsSDK.DateInRegion]) -> [RingsSDK.DateInRegion]
+  public static func sortedByNewest(list: [RingsSDK.DateInRegion]) -> [RingsSDK.DateInRegion]
+  public static func newestIn(list: [RingsSDK.DateInRegion]) -> RingsSDK.DateInRegion?
+  public static func enumerateDates(from startDate: RingsSDK.DateInRegion, to endDate: RingsSDK.DateInRegion, increment: Foundation.DateComponents) -> [RingsSDK.DateInRegion]
+  public static func enumerateDates(from startDate: RingsSDK.DateInRegion, to endDate: RingsSDK.DateInRegion, increment: ((RingsSDK.DateInRegion) -> (Foundation.DateComponents))) -> [RingsSDK.DateInRegion]
+  public func dateAtStartOf(_ unit: Foundation.Calendar.Component) -> RingsSDK.DateInRegion
+  public func dateAtStartOf(_ units: [Foundation.Calendar.Component]) -> RingsSDK.DateInRegion
+  public func dateAtEndOf(_ unit: Foundation.Calendar.Component) -> RingsSDK.DateInRegion
+  public func dateAtEndOf(_ units: [Foundation.Calendar.Component]) -> RingsSDK.DateInRegion
+  public func dateBySet(_ components: [Foundation.Calendar.Component : Swift.Int?]) -> RingsSDK.DateInRegion?
+  public func dateBySet(hour: Swift.Int?, min: Swift.Int?, secs: Swift.Int?, ms: Swift.Int? = nil, options: RingsSDK.TimeCalculationOptions = TimeCalculationOptions()) -> RingsSDK.DateInRegion?
+  public func dateTruncated(at components: [Foundation.Calendar.Component]) -> RingsSDK.DateInRegion?
+  public func dateTruncated(from component: Foundation.Calendar.Component) -> RingsSDK.DateInRegion?
+  public func dateRoundedAt(_ style: RingsSDK.RoundDateMode) -> RingsSDK.DateInRegion
+  public func dateByAdding(_ count: Swift.Int, _ component: Foundation.Calendar.Component) -> RingsSDK.DateInRegion
+  public func dateAt(_ type: RingsSDK.DateRelatedType) -> RingsSDK.DateInRegion
+  public func addingTimeInterval(_ interval: Foundation.TimeInterval) -> RingsSDK.DateInRegion
+  public func convertTo(calendar: (any RingsSDK.CalendarConvertible)? = nil, timezone: (any RingsSDK.ZoneConvertible)? = nil, locale: (any RingsSDK.LocaleConvertible)? = nil) -> RingsSDK.DateInRegion
+  public static func datesForWeekday(_ weekday: RingsSDK.WeekDay, inMonth month: Swift.Int, ofYear year: Swift.Int, region: RingsSDK.Region = SwiftDate.defaultRegion) -> [RingsSDK.DateInRegion]
+  public static func datesForWeekday(_ weekday: RingsSDK.WeekDay, from startDate: RingsSDK.DateInRegion, to endDate: RingsSDK.DateInRegion, region: RingsSDK.Region = SwiftDate.defaultRegion) -> [RingsSDK.DateInRegion]
+}
+extension RingsSDK.DateInRegion {
+  public func dateAt(weekdayOrdinal: Swift.Int, weekday: RingsSDK.WeekDay, monthNumber: Swift.Int? = nil, yearNumber: Swift.Int? = nil) -> RingsSDK.DateInRegion
+  public func dateAt(dayOfMonth: Swift.Int, monthNumber: Swift.Int? = nil, yearNumber: Swift.Int? = nil) -> RingsSDK.DateInRegion
+  public func dateAfter(weeks count: Swift.Int, on weekday: RingsSDK.WeekDay) -> RingsSDK.DateInRegion
+  public func nextWeekday(_ weekday: RingsSDK.WeekDay) -> RingsSDK.DateInRegion
+  public func next(_ weekday: RingsSDK.WeekDay, withWeekOfMonth weekNumber: Swift.Int, andMonthNumber monthNumber: Swift.Int? = nil) -> RingsSDK.DateInRegion
+  public func next(dayOfMonth: Swift.Int, monthOfYear: Swift.Int? = nil) -> RingsSDK.DateInRegion
+}
+public struct DateInRegion : RingsSDK.DateRepresentable, Swift.Decodable, Swift.Encodable, Swift.CustomStringConvertible, Swift.Comparable, Swift.Hashable {
+  public var date: Foundation.Date {
+    get
+  }
+  public let region: RingsSDK.Region
+  public var customFormatter: Foundation.DateFormatter?
+  public var dateComponents: Foundation.DateComponents {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public var timeIntervalSince1970: Foundation.TimeInterval {
+    get
+  }
+  public init(_ date: Foundation.Date = Date(), region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public init?(_ string: Swift.String, format: Swift.String? = nil, region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public init?(_ string: Swift.String, formats: [Swift.String]?, region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public init(seconds interval: Foundation.TimeInterval, region: RingsSDK.Region = Region.UTC)
+  public init(milliseconds interval: Swift.Int, region: RingsSDK.Region = Region.UTC)
+  public init?(components configuration: ((inout Foundation.DateComponents) -> Swift.Void), region: RingsSDK.Region? = SwiftDate.defaultRegion)
+  public init?(components: Foundation.DateComponents, region: RingsSDK.Region?)
+  public init(year: Swift.Int, month: Swift.Int, day: Swift.Int, hour: Swift.Int = 0, minute: Swift.Int = 0, second: Swift.Int = 0, nanosecond: Swift.Int = 0, region: RingsSDK.Region = SwiftDate.defaultRegion)
+  public static func past() -> RingsSDK.DateInRegion
+  public static func future() -> RingsSDK.DateInRegion
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension RingsSDK.RingManager {
+  public func caculateSleep(targetDate: Foundation.Date) -> RingsSDK.RingSleepModel
+  public func caculateSleepData(targetDate: Foundation.Date) -> ([RingsSDK.RingDataModel], [[RingsSDK.RingDataModel]])
+  public func calculateSleepTimes(sleepDatas: [RingsSDK.RingDataModel]) -> Swift.Int
+  public class func isHourInRange(timestamp: Foundation.TimeInterval, hourCondition1: Swift.Int, hourCondition2: Swift.Int) -> Swift.Bool
+}
+public protocol ZoneConvertible {
+  func toTimezone() -> Foundation.TimeZone
+}
+extension Foundation.TimeZone : RingsSDK.ZoneConvertible {
+  public func toTimezone() -> Foundation.TimeZone
+}
+public enum Zones : Swift.String, RingsSDK.ZoneConvertible {
+  case current
+  case autoUpdating
+  case africaAbidjan
+  case africaAccra
+  case africaAddisAbaba
+  case africaAlgiers
+  case africaAsmara
+  case africaBamako
+  case africaBangui
+  case africaBanjul
+  case africaBissau
+  case africaBlantyre
+  case africaBrazzaville
+  case africaBujumbura
+  case africaCairo
+  case africaCasablanca
+  case africaCeuta
+  case africaConakry
+  case africaDakar
+  case africaDarEsSalaam
+  case africaDjibouti
+  case africaDouala
+  case africaElAaiun
+  case africaFreetown
+  case africaGaborone
+  case africaHarare
+  case africaJohannesburg
+  case africaJuba
+  case africaKampala
+  case africaKhartoum
+  case fricaKigali
+  case africaKinshasa
+  case africaLagos
+  case africaLibreville
+  case africaLome
+  case africaLuanda
+  case africaLubumbashi
+  case africaLusaka
+  case africaMalabo
+  case africaMaputo
+  case africaMaseru
+  case africaMbabane
+  case africaMogadishu
+  case africaMonrovia
+  case africaNairobi
+  case africaNdjamena
+  case africaNiamey
+  case africaNouakchott
+  case africaOuagadougou
+  case africaPortoNovo
+  case africaSaoTome
+  case africaTripoli
+  case africaTunis
+  case africaWindhoek
+  case americaAdak
+  case americaAnchorage
+  case americaAnguilla
+  case americaAntigua
+  case americaAraguaina
+  case americaArgentinaBuenosAires
+  case americaArgentinaCatamarca
+  case americaArgentinaCordoba
+  case americaArgentinaJujuy
+  case americaArgentinaLaRioja
+  case americaArgentinaMendoza
+  case americaArgentinaRioGallegos
+  case americaArgentinaSalta
+  case americaArgentinaSanJuan
+  case americaArgentinaSanLuis
+  case americaArgentinaTucuman
+  case americaArgentinaUshuaia
+  case americaAruba
+  case americaAsuncion
+  case americaAtikokan
+  case americaBahia
+  case americaBahiaBanderas
+  case americaBarbados
+  case americaBelem
+  case americaBelize
+  case americaBlancSablon
+  case americaBoaVista
+  case americaBogota
+  case americaBoise
+  case americaCambridgeBay
+  case americaCampoGrande
+  case americaCancun
+  case americaCaracas
+  case americaCayenne
+  case americaCayman
+  case americaChicago
+  case americaChihuahua
+  case americaCostaRica
+  case americaCreston
+  case americaCuiaba
+  case americaCuracao
+  case americaDanmarkshavn
+  case americaDawson
+  case americaDawsonCreek
+  case americaDenver
+  case americaDetroit
+  case americaDominica
+  case americaEdmonton
+  case americaEirunepe
+  case americaElSalvador
+  case americaFortNelson
+  case americaFortaleza
+  case americaGlaceBay
+  case americaGodthab
+  case americaGooseBay
+  case americaGrandTurk
+  case americaGrenada
+  case americaGuadeloupe
+  case americaGuatemala
+  case americaGuayaquil
+  case americaGuyana
+  case americaHalifax
+  case americaHavana
+  case americaHermosillo
+  case americaIndianaIndianapolis
+  case americaIndianaKnox
+  case americaIndianaMarengo
+  case americaIndianaPetersburg
+  case americaIndianaTellCity
+  case americaIndianaVevay
+  case americaIndianaVincennes
+  case americaIndianaWinamac
+  case americaInuvik
+  case americaIqaluit
+  case americaJamaica
+  case americaJuneau
+  case americaKentuckyLouisville
+  case americaKentuckyMonticello
+  case americaKralendijk
+  case americaLaPaz
+  case americaLima
+  case americaLosAngeles
+  case americaLowerPrinces
+  case americaMaceio
+  case americaManagua
+  case americaManaus
+  case americaMarigot
+  case americaMartinique
+  case americaMatamoros
+  case americaMazatlan
+  case americaMenominee
+  case americaMerida
+  case americaMetlakatla
+  case americaMexicoCity
+  case americaMiquelon
+  case americaMoncton
+  case americaMonterrey
+  case americaMontevideo
+  case americaMontreal
+  case americaMontserrat
+  case americaNassau
+  case americaNewYork
+  case americaNipigon
+  case americaNome
+  case americaNoronha
+  case americaNorthDakotaBeulah
+  case americaNorthDakotaCenter
+  case americaNorthDakotaNewSalem
+  case americaOjinaga
+  case americaPanama
+  case americaPangnirtung
+  case americaParamaribo
+  case americaPhoenix
+  case americaPortAuPrince
+  case americaPortOfSpain
+  case americaPortoVelho
+  case americaPuertoRico
+  case americaRainyRiver
+  case americaRankinInlet
+  case americaRecife
+  case americaRegina
+  case americaResolute
+  case americaRioBranco
+  case americaSantaIsabel
+  case americaSantarem
+  case americaSantiago
+  case americaSantoDomingo
+  case americaSaoPaulo
+  case americaScoresbysund
+  case americaShiprock
+  case americaSitka
+  case americaStBarthelemy
+  case americaStJohns
+  case americaStKitts
+  case americaStLucia
+  case americaStThomas
+  case americaStVincent
+  case americaSwiftCurrent
+  case americaTegucigalpa
+  case americaThule
+  case americaThunderBay
+  case americaTijuana
+  case americaToronto
+  case americaTortola
+  case americaVancouver
+  case americaWhitehorse
+  case americaWinnipeg
+  case americaYakutat
+  case americaYellowknife
+  case antarcticaCasey
+  case antarcticaDavis
+  case antarcticaDumontdurville
+  case antarcticaMacquarie
+  case antarcticaMawson
+  case antarcticaMcmurdo
+  case antarcticaPalmer
+  case antarcticaRothera
+  case antarcticaSouthPole
+  case antarcticaSyowa
+  case antarcticaTroll
+  case antarcticaVostok
+  case arcticLongyearbyen
+  case asiaAden
+  case asiaAlmaty
+  case asiaAmman
+  case asiaAnadyr
+  case asiaAqtau
+  case asiaAqtobe
+  case asiaAshgabat
+  case asiaBaghdad
+  case asiaBahrain
+  case asiaBaku
+  case asiaBangkok
+  case asiaBeirut
+  case asiaBishkek
+  case asiaBrunei
+  case asiaChita
+  case asiaChoibalsan
+  case asiaChongqing
+  case asiaColombo
+  case asiaDamascus
+  case asiaDhaka
+  case asiaDili
+  case asiaDubai
+  case asiaDushanbe
+  case asiaGaza
+  case asiaHarbin
+  case asiaHebron
+  case asiaHoChiMinh
+  case asiaSaigon
+  case asiaHongKong
+  case asiaHovd
+  case asiaIrkutsk
+  case asiaJakarta
+  case asiaJayapura
+  case asiaJerusalem
+  case asiaKabul
+  case asiaKamchatka
+  case asiaKarachi
+  case asiaKashgar
+  case asiaKathmandu
+  case asiaKatmandu
+  case asiaKhandyga
+  case asiaKolkata
+  case asiaKrasnoyarsk
+  case asiaKualaLumpur
+  case asiaKuching
+  case asiaKuwait
+  case asiaMacau
+  case asiaMagadan
+  case asiaMakassar
+  case asiaManila
+  case asiaMuscat
+  case asiaNicosia
+  case asiaNovokuznetsk
+  case asiaNovosibirsk
+  case asiaOmsk
+  case asiaOral
+  case asiaPhnomPenh
+  case asiaPontianak
+  case asiaPyongyang
+  case asiaQatar
+  case asiaQyzylorda
+  case asiaRangoon
+  case asiaRiyadh
+  case asiaSakhalin
+  case asiaSamarkand
+  case asiaSeoul
+  case asiaShanghai
+  case asiaSingapore
+  case asiaSrednekolymsk
+  case asiaTaipei
+  case asiaTashkent
+  case asiaTbilisi
+  case asiaTehran
+  case asiaThimphu
+  case asiaTokyo
+  case asiaUlaanbaatar
+  case asiaUrumqi
+  case asiaUstNera
+  case asiaVientiane
+  case asiaVladivostok
+  case asiaYakutsk
+  case asiaYekaterinburg
+  case asiaYerevan
+  case atlanticAzores
+  case atlanticBermuda
+  case atlanticCanary
+  case atlanticCapeVerde
+  case atlanticFaroe
+  case atlanticMadeira
+  case atlanticReykjavik
+  case atlanticSouthGeorgia
+  case atlanticStHelena
+  case atlanticStanley
+  case australiaAdelaide
+  case australiaBrisbane
+  case australiaBrokenHill
+  case australiaCurrie
+  case australiaDarwin
+  case australiaEucla
+  case australiaHobart
+  case australiaLindeman
+  case australiaLordHowe
+  case australiaMelbourne
+  case australiaPerth
+  case australiaSydney
+  case europeAmsterdam
+  case europeAndorra
+  case europeAthens
+  case europeBelgrade
+  case europeBerlin
+  case europeBratislava
+  case europeBrussels
+  case europeBucharest
+  case europeBudapest
+  case europeBusingen
+  case europeChisinau
+  case europeCopenhagen
+  case europeDublin
+  case europeGibraltar
+  case europeGuernsey
+  case europeHelsinki
+  case europeIsleOfMan
+  case europeIstanbul
+  case europeJersey
+  case europeKaliningrad
+  case europeKiev
+  case europeLisbon
+  case europeLjubljana
+  case europeLondon
+  case europeLuxembourg
+  case europeMadrid
+  case europeMalta
+  case europeMariehamn
+  case europeMinsk
+  case europeMonaco
+  case europeMoscow
+  case europeOslo
+  case europeParis
+  case europePodgorica
+  case europePrague
+  case europeRiga
+  case europeRome
+  case europeSamara
+  case europeSanMarino
+  case europeSarajevo
+  case europeSimferopol
+  case europeSkopje
+  case europeSofia
+  case europeStockholm
+  case europeTallinn
+  case europeTirane
+  case europeUzhgorod
+  case europeVaduz
+  case europeVatican
+  case europeVienna
+  case europeVilnius
+  case europeVolgograd
+  case europeWarsaw
+  case europeZagreb
+  case europeZaporozhye
+  case europeZurich
+  case gmt
+  case indianAntananarivo
+  case indianChagos
+  case indianChristmas
+  case indianCocos
+  case indianComoro
+  case indianKerguelen
+  case indianMahe
+  case indianMaldives
+  case indianMauritius
+  case indianMayotte
+  case indianReunion
+  case pacificApia
+  case pacificAuckland
+  case pacificBougainville
+  case pacificChatham
+  case pacificChuuk
+  case pacificEaster
+  case pacificEfate
+  case pacificEnderbury
+  case pacificFakaofo
+  case pacificFiji
+  case pacificFunafuti
+  case pacificGalapagos
+  case pacificGambier
+  case pacificGuadalcanal
+  case pacificGuam
+  case pacificHonolulu
+  case pacificJohnston
+  case pacificKiritimati
+  case pacificKosrae
+  case pacificKwajalein
+  case pacificMajuro
+  case pacificMarquesas
+  case pacificMidway
+  case pacificNauru
+  case pacificNiue
+  case pacificNorfolk
+  case pacificNoumea
+  case pacificPagoPago
+  case pacificPalau
+  case pacificPitcairn
+  case pacificPohnpei
+  case pacificPonape
+  case pacificPortMoresby
+  case pacificRarotonga
+  case pacificSaipan
+  case pacificTahiti
+  case pacificTarawa
+  case pacificTongatapu
+  case pacificTruk
+  case pacificWake
+  case pacificWallis
+  public func toTimezone() -> Foundation.TimeZone
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public func - (lhs: Foundation.Date, rhs: Foundation.Date) -> Foundation.DateComponents
+public func + (lhs: Foundation.Date, rhs: Foundation.DateComponents) -> Foundation.Date
+public func + (lhs: Foundation.DateComponents, rhs: Foundation.Date) -> Foundation.Date
+public func - (lhs: Foundation.Date, rhs: Foundation.DateComponents) -> Foundation.Date
+public func + (lhs: Foundation.Date, rhs: Foundation.TimeInterval) -> Foundation.Date
+extension Foundation.Calendar.Component {
+  public var timeInterval: Swift.Double? {
+    get
+  }
+}
+extension Foundation.DateComponents {
+  public static var allComponentsSet: Swift.Set<Foundation.Calendar.Component> {
+    get
+  }
+  public var timeInterval: Foundation.TimeInterval {
+    get
+  }
+  public static func create(_ builder: ((inout Foundation.DateComponents) -> Swift.Void)) -> Foundation.DateComponents
+  public var fromNow: Foundation.Date {
+    get
+  }
+  public var ago: Foundation.Date {
+    get
+  }
+  public func from(_ date: any RingsSDK.DateRepresentable) -> Foundation.Date?
+  public var isZero: Swift.Bool {
+    get
+  }
+  public static func + (lhs: Foundation.DateComponents, rhs: Foundation.DateComponents) -> Foundation.DateComponents
+  public static func - (lhs: Foundation.DateComponents, rhs: Foundation.DateComponents) -> Foundation.DateComponents
+  prefix public static func - (rhs: Foundation.DateComponents) -> Foundation.DateComponents
+  public subscript(component: Foundation.Calendar.Component) -> Swift.Int? {
+    get
+  }
+  public func `in`(_ component: Foundation.Calendar.Component, of calendar: (any RingsSDK.CalendarConvertible)? = nil) -> Swift.Int?
+  public func `in`(_ components: Swift.Set<Foundation.Calendar.Component>, of calendar: (any RingsSDK.CalendarConvertible)? = nil) -> [Foundation.Calendar.Component : Swift.Int]
+}
+public protocol DateRepresentable {
+  var year: Swift.Int { get }
+  var month: Swift.Int { get }
+  func monthName(_ style: RingsSDK.SymbolFormatStyle) -> Swift.String
+  var monthDays: Swift.Int { get }
+  var day: Swift.Int { get }
+  var dayOfYear: Swift.Int { get }
+  @available(iOS 9.0, macOS 10.11, *)
+  var ordinalDay: Swift.String { get }
+  var hour: Swift.Int { get }
+  var nearestHour: Swift.Int { get }
+  var minute: Swift.Int { get }
+  var second: Swift.Int { get }
+  var nanosecond: Swift.Int { get }
+  var msInDay: Swift.Int { get }
+  var weekday: Swift.Int { get }
+  func weekdayName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)?) -> Swift.String
+  var weekOfYear: Swift.Int { get }
+  var weekOfMonth: Swift.Int { get }
+  var weekdayOrdinal: Swift.Int { get }
+  var firstDayOfWeek: Swift.Int { get }
+  var lastDayOfWeek: Swift.Int { get }
+  var yearForWeekOfYear: Swift.Int { get }
+  var quarter: Swift.Int { get }
+  func quarterName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)?) -> Swift.String
+  var era: Swift.Int { get }
+  func eraName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)?) -> Swift.String
+  var DSTOffset: Foundation.TimeInterval { get }
+  var date: Foundation.Date { get }
+  var region: RingsSDK.Region { get }
+  var calendar: Foundation.Calendar { get }
+  var dateComponents: Foundation.DateComponents { get }
+  var isToday: Swift.Bool { get }
+  var isYesterday: Swift.Bool { get }
+  var isTomorrow: Swift.Bool { get }
+  var isInWeekend: Swift.Bool { get }
+  var isInPast: Swift.Bool { get }
+  var isInFuture: Swift.Bool { get }
+  func formatter(format: Swift.String?, configuration: ((Foundation.DateFormatter) -> Swift.Void)?) -> Foundation.DateFormatter
+  func formatterForRegion(format: Swift.String?, configuration: ((inout Foundation.DateFormatter) -> Swift.Void)?) -> Foundation.DateFormatter
+  var customFormatter: Foundation.DateFormatter? { get set }
+  var sharedFormatter: Foundation.DateFormatter { get }
+  init?(_ string: Swift.String, format: Swift.String?, region: RingsSDK.Region)
+  init(seconds interval: Foundation.TimeInterval, region: RingsSDK.Region)
+  init(milliseconds interval: Swift.Int, region: RingsSDK.Region)
+  init?(components configuration: ((inout Foundation.DateComponents) -> Swift.Void), region: RingsSDK.Region?)
+  init?(components: Foundation.DateComponents, region: RingsSDK.Region?)
+  init(year: Swift.Int, month: Swift.Int, day: Swift.Int, hour: Swift.Int, minute: Swift.Int, second: Swift.Int, nanosecond: Swift.Int, region: RingsSDK.Region)
+  func convertTo(region: RingsSDK.Region) -> RingsSDK.DateInRegion
+  func toString(_ style: RingsSDK.DateToStringStyles?) -> Swift.String
+  func toFormat(_ format: Swift.String, locale: (any RingsSDK.LocaleConvertible)?) -> Swift.String
+  func toRelative(since: RingsSDK.DateInRegion?, style: RingsSDK.RelativeFormatter.Style?, locale: (any RingsSDK.LocaleConvertible)?) -> Swift.String
+  func toISO(_ options: RingsSDK.ISOFormatter.Options?) -> Swift.String
+  func toDotNET() -> Swift.String
+  func toSQL() -> Swift.String
+  func toRSS(alt: Swift.Bool) -> Swift.String
+  func toUnits(_ units: Swift.Set<Foundation.Calendar.Component>, to refDate: any RingsSDK.DateRepresentable) -> [Foundation.Calendar.Component : Swift.Int]
+  func toUnit(_ unit: Foundation.Calendar.Component, to refDate: any RingsSDK.DateRepresentable) -> Swift.Int
+}
+extension RingsSDK.DateRepresentable {
+  public var calendar: Foundation.Calendar {
+    get
+  }
+  public var year: Swift.Int {
+    get
+  }
+  public var month: Swift.Int {
+    get
+  }
+  public var monthDays: Swift.Int {
+    get
+  }
+  public func monthName(_ style: RingsSDK.SymbolFormatStyle) -> Swift.String
+  public var day: Swift.Int {
+    get
+  }
+  public var dayOfYear: Swift.Int {
+    get
+  }
+  @available(iOS 9.0, macOS 10.11, *)
+  public var ordinalDay: Swift.String {
+    get
+  }
+  public var hour: Swift.Int {
+    get
+  }
+  public var nearestHour: Swift.Int {
+    get
+  }
+  public var minute: Swift.Int {
+    get
+  }
+  public var second: Swift.Int {
+    get
+  }
+  public var nanosecond: Swift.Int {
+    get
+  }
+  public var msInDay: Swift.Int {
+    get
+  }
+  public var weekday: Swift.Int {
+    get
+  }
+  public func weekdayName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)? = nil) -> Swift.String
+  public var weekOfYear: Swift.Int {
+    get
+  }
+  public var weekOfMonth: Swift.Int {
+    get
+  }
+  public var weekdayOrdinal: Swift.Int {
+    get
+  }
+  public var yearForWeekOfYear: Swift.Int {
+    get
+  }
+  public var firstDayOfWeek: Swift.Int {
+    get
+  }
+  public var lastDayOfWeek: Swift.Int {
+    get
+  }
+  public var quarter: Swift.Int {
+    get
+  }
+  public var isToday: Swift.Bool {
+    get
+  }
+  public var isYesterday: Swift.Bool {
+    get
+  }
+  public var isTomorrow: Swift.Bool {
+    get
+  }
+  public var isInWeekend: Swift.Bool {
+    get
+  }
+  public var isInPast: Swift.Bool {
+    get
+  }
+  public var isInFuture: Swift.Bool {
+    get
+  }
+  public func quarterName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)? = nil) -> Swift.String
+  public var era: Swift.Int {
+    get
+  }
+  public func eraName(_ style: RingsSDK.SymbolFormatStyle, locale: (any RingsSDK.LocaleConvertible)? = nil) -> Swift.String
+  public var DSTOffset: Foundation.TimeInterval {
+    get
+  }
+  public func formatter(format: Swift.String? = nil, configuration: ((Foundation.DateFormatter) -> Swift.Void)? = nil) -> Foundation.DateFormatter
+  public func formatterForRegion(format: Swift.String? = nil, configuration: ((inout Foundation.DateFormatter) -> Swift.Void)? = nil) -> Foundation.DateFormatter
+  public var sharedFormatter: Foundation.DateFormatter {
+    get
+  }
+  public func toString(_ style: RingsSDK.DateToStringStyles? = nil) -> Swift.String
+  public func toFormat(_ format: Swift.String, locale: (any RingsSDK.LocaleConvertible)? = nil) -> Swift.String
+  public func toRelative(since: RingsSDK.DateInRegion? = nil, style: RingsSDK.RelativeFormatter.Style? = nil, locale: (any RingsSDK.LocaleConvertible)? = nil) -> Swift.String
+  public func toISO(_ options: RingsSDK.ISOFormatter.Options? = nil) -> Swift.String
+  public func toDotNET() -> Swift.String
+  public func toRSS(alt: Swift.Bool) -> Swift.String
+  public func toSQL() -> Swift.String
+  public func convertTo(region: RingsSDK.Region) -> RingsSDK.DateInRegion
+  public func toUnits(_ units: Swift.Set<Foundation.Calendar.Component>, to refDate: any RingsSDK.DateRepresentable) -> [Foundation.Calendar.Component : Swift.Int]
+  public func toUnit(_ unit: Foundation.Calendar.Component, to refDate: any RingsSDK.DateRepresentable) -> Swift.Int
+}
+@_hasMissingDesignatedInitializers public class RelativeFormatter : RingsSDK.DateToStringTrasformable {
+  public static var allLanguages: [RingsSDK.RelativeFormatterLanguage] {
+    get
+  }
+  public static func format(_ date: any RingsSDK.DateRepresentable, options: Any?) -> Swift.String
+  public static func format(date: any RingsSDK.DateRepresentable, to toDate: (any RingsSDK.DateRepresentable)? = nil, style: RingsSDK.RelativeFormatter.Style?, locale fixedLocale: Foundation.Locale? = nil) -> Swift.String
+  @objc deinit
+}
+open class FileDestination : RingsSDK.BaseDestination {
+  public var logFileURL: Foundation.URL?
+  public var syncAfterEachWrite: Swift.Bool
+  public var colored: Swift.Bool {
+    get
+    set
+  }
+  public var logFileMaxSize: (Swift.Int)
+  public var logFileAmount: Swift.Int
+  override public var defaultHashValue: Swift.Int {
+    get
+  }
+  public init(logFileURL: Foundation.URL? = nil)
+  override public func send(_ level: RingsSDK.SwiftyBeaver.Level, msg: Swift.String, thread: Swift.String, file: Swift.String, function: Swift.String, line: Swift.Int, context: Any? = nil) -> Swift.String?
+  public func deleteLogFile() -> Swift.Bool
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RingDBManager : ObjectiveC.NSObject {
+  public static let shared: RingsSDK.RingDBManager
+  @discardableResult
+  public func insert(model: RingsSDK.RingDataModel) -> Swift.Bool
+  public func getObjects(from timestamp: Foundation.TimeInterval) -> [RingsSDK.RingDataModel]
+  public func getObjects(of date: Foundation.Date) -> [RingsSDK.RingDataModel]
+  public func getSleepObjects(of date: Foundation.Date) -> [RingsSDK.RingDataModel]
+  public func getLatestObject() -> RingsSDK.RingDataModel?
+  @discardableResult
+  public func deleteAll() -> Swift.Bool
+  public func addRRsColumnIfNeeded()
+  @objc deinit
+}
+extension RingsSDK.RelativeFormatterLanguage : Swift.Equatable {}
+extension RingsSDK.RelativeFormatterLanguage : Swift.Hashable {}
+extension RingsSDK.RelativeFormatterLanguage : Swift.RawRepresentable {}
+extension RingsSDK.SwiftyBeaver.Level : Swift.Equatable {}
+extension RingsSDK.SwiftyBeaver.Level : Swift.Hashable {}
+extension RingsSDK.SwiftyBeaver.Level : Swift.RawRepresentable {}
+extension RingsSDK.RelativeFormatter.PluralForm : Swift.Equatable {}
+extension RingsSDK.RelativeFormatter.PluralForm : Swift.Hashable {}
+extension RingsSDK.RelativeFormatter.PluralForm : Swift.RawRepresentable {}
+extension RingsSDK.RelativeFormatter.Flavour : Swift.Equatable {}
+extension RingsSDK.RelativeFormatter.Flavour : Swift.Hashable {}
+extension RingsSDK.RelativeFormatter.Flavour : Swift.RawRepresentable {}
+extension RingsSDK.RelativeFormatter.Unit : Swift.Equatable {}
+extension RingsSDK.RelativeFormatter.Unit : Swift.Hashable {}
+extension RingsSDK.RelativeFormatter.Unit : Swift.RawRepresentable {}
+extension RingsSDK.SymbolFormatStyle : Swift.Equatable {}
+extension RingsSDK.SymbolFormatStyle : Swift.Hashable {}
+extension RingsSDK.ChargeStatus : Swift.Equatable {}
+extension RingsSDK.ChargeStatus : Swift.Hashable {}
+extension RingsSDK.ReadError : Swift.Equatable {}
+extension RingsSDK.ReadError : Swift.Hashable {}
+extension RingsSDK.ReadDataResult : Swift.Equatable {}
+extension RingsSDK.ReadDataResult : Swift.Hashable {}
+extension RingsSDK.OTAError : Swift.Equatable {}
+extension RingsSDK.OTAError : Swift.Hashable {}
+extension RingsSDK.RingTimeZone : Swift.Equatable {}
+extension RingsSDK.RingTimeZone : Swift.Hashable {}
+extension RingsSDK.RingTimeZone : Swift.RawRepresentable {}
+extension RingsSDK.Locales : Swift.Equatable {}
+extension RingsSDK.Locales : Swift.Hashable {}
+extension RingsSDK.Locales : Swift.RawRepresentable {}
+extension RingsSDK.SortMode : Swift.Equatable {}
+extension RingsSDK.SortMode : Swift.Hashable {}
+extension RingsSDK.ApolloOTAError : Swift.Equatable {}
+extension RingsSDK.ApolloOTAError : Swift.Hashable {}
+extension RingsSDK.ApolloOTAError : Swift.RawRepresentable {}
+extension RingsSDK.WeekDay : Swift.Equatable {}
+extension RingsSDK.WeekDay : Swift.Hashable {}
+extension RingsSDK.WeekDay : Swift.RawRepresentable {}
+extension RingsSDK.Month : Swift.Hashable {}
+extension RingsSDK.Month : Swift.RawRepresentable {}
+extension RingsSDK.ISO8601ParserError : Swift.Equatable {}
+extension RingsSDK.ISO8601ParserError : Swift.Hashable {}
+extension RingsSDK.ISOParser.ParsedDate.DateStyle : Swift.Equatable {}
+extension RingsSDK.ISOParser.ParsedDate.DateStyle : Swift.Hashable {}
+extension RingsSDK.TimePeriodRelation : Swift.Equatable {}
+extension RingsSDK.TimePeriodRelation : Swift.Hashable {}
+extension RingsSDK.IntervalType : Swift.Equatable {}
+extension RingsSDK.IntervalType : Swift.Hashable {}
+extension RingsSDK.TimePeriodAnchor : Swift.Equatable {}
+extension RingsSDK.TimePeriodAnchor : Swift.Hashable {}
+extension RingsSDK.Zones : Swift.Equatable {}
+extension RingsSDK.Zones : Swift.Hashable {}
+extension RingsSDK.Zones : Swift.RawRepresentable {}

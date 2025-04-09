@@ -1,0 +1,6 @@
+framework module Pods_OCRingsSDKDemo {
+  umbrella header "Pods-OCRingsSDKDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}

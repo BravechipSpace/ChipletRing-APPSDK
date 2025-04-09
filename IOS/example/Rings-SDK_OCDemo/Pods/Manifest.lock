@@ -1,0 +1,33 @@
+PODS:
+  - ApolloOTA (0.1.0)
+  - RingsSDK (1.0.11)
+  - RxRelay (6.8.0):
+    - RxSwift (= 6.8.0)
+  - RxSwift (6.8.0)
+
+DEPENDENCIES:
+  - ApolloOTA (from `Frameworks/ApolloSDK`)
+  - RingsSDK (from `Frameworks/RingsSDK`)
+  - RxRelay (~> 6.8.0)
+  - RxSwift (~> 6.8.0)
+
+SPEC REPOS:
+  trunk:
+    - RxRelay
+    - RxSwift
+
+EXTERNAL SOURCES:
+  ApolloOTA:
+    :path: Frameworks/ApolloSDK
+  RingsSDK:
+    :path: Frameworks/RingsSDK
+
+SPEC CHECKSUMS:
+  ApolloOTA: a4ca4104448ea065815e0c71b18b521fd8710c54
+  RingsSDK: fc6144787f144d4fe2aa8954ec01e9f339626da5
+  RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
+  RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
+
+PODFILE CHECKSUM: 972468b79ce5a168b46ba41242e37ec7e5dccdb8
+
+COCOAPODS: 1.16.2

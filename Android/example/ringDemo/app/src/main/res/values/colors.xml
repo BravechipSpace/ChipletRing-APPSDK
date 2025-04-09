@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#191F48</color>
+    <color name="colorPrimaryDark">#1B1D25</color>
+    <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="main_menu">#106bd8</color>
+    <color name="main_menu2">#55106bd8</color>
+    <color name="gray_q">#E5E5E5</color>
+    <color name="line_bg">#39AAAAAA</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="ksw_md_solid_shadow">#33000000</color>
+
+
+    <!-- 常用颜色 -->
+    <color name="red">#ff0000</color>
+    <color name="cheng">#ff4000</color>
+    <color name="yellow">#ffff00</color>
+    <color name="green">#00ff00</color>
+    <color name="q_blue">#46ffff</color>
+    <color name="blue">#0000ff</color>
+    <color name="zi">#8b00ff</color>
+    <color name="jv">#ff0020</color>
+    <color name="pink">#ff00ff</color>
+    <color name="white">#ffffff</color>
+    <color name="color_1">#00ff80</color>
+    <color name="color_2">#51FFAE</color>
+    <color name="color_3">#FF2C40</color>
+    <color name="color_4">#c1FF98</color>
+    <color name="color_5">#596eff</color>
+
+
+    <color name="zi_se">#9549F3</color>
+    <color name="lv_se">#5FCE99</color>
+    <color name="lv_se_bg">#E9FAF4</color>
+    <color name="cheng_se">#ED7A4E</color>
+    <color name="lan_se">#4C56F5</color>
+    <color name="lan_se_press">#554C56F5</color>
+    <color name="red_heath">#FF2C40</color>
+    <color name="text_gray">#AAAAAA</color>
+    <color name="text_gray_small">#CCCCCC</color>
+    <color name="text_gray_small2">#DDDDDD</color>
+</resources>
