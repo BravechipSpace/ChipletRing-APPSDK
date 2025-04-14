@@ -51,30 +51,75 @@
 * 执行操作：蓝牙扫描，设备过滤，设备连接，发送“绑定事件”请求，等待接收“绑定事件”应答。
 * 说明：戒指收到绑定事件后，会自动将戒指恢复出厂设置，清空出厂时候测试的数据记录，设置当前时间时区，清空步数等。
 * 安卓相关API：
+  ```java
+  LmAPI.APP_BIND()
+  ```
 * IOS相关API：
+  ```Swift
+  /// APP事件-绑定戒指
+  /// - Parameters:
+  ///   - date: 当前时间
+  ///   - timeZone: 时区
+  /// - Parameter completion: 绑定戒指回调
+  BCLRingManager.shared.appEventBindRing(date: Date, timeZone: BCLRingTimeZone, completion: @escaping (Result<BCLBindRingResponse, BCLError>) -> Void)
+  ```
 ##### 2.2.2.设备连接
 * 触发条件：在账户已经绑定过戒指的情况下打开APP。
 * 执行操作：设备连接，发送“连接事件”请求，等待接受“连接事件”应答。
 * 说明：获取设备在未连接状态下产生的数据记录，同步事件，软硬件版本号，当前步数，电量，功能配置。
 * 安卓相关API：
+  ```java
+  LmAPI.APP_CONNECT()
+  ```
 * IOS相关API：
+    ```Swift
+    /// APP事件-连接戒指
+    /// - Parameters:
+    ///   - date: 当前时间
+    ///   - timeZone: 时区
+    ///   - callbacks: 回调集合
+    /// - Parameter completion: 连接戒指回调
+    BCLRingManager.shared.appEventConnectRing(date: Date, timeZone: BCLRingTimeZone, callbacks: BCLDataSyncCallbacks, completion: @escaping (Result<BCLConnectRingResponse, BCLError>) -> Void)
+    ```
 ##### 2.2.3.设备刷新
 * 触发条件：在APP打开的情况下，APP下拉刷新
 * 执行操作：发送“刷新事件”请求，等待接收“刷新事件”应答。
 * 说明：获取设备在未连接状态下产生的数据记录，同步事件，软硬件版本号，当前步数，电量，功能配置。此指令和设备连接指令类似。
 * 安卓相关API：
+   ```java
+  BLEUtils.connectLockByBLE
+  ```
 * IOS相关API：
+  ```Swift
+    /// APP事件-刷新戒指
+    /// - Parameters:
+    ///   - date: 当前时间
+    ///   - timeZone: 时区
+    ///   - callbacks: 回调集合
+    /// - Parameter completion: 刷新戒指回调
+    BCLRingManager.shared.appEventRefreshRing(date: Date, timeZone: BCLRingTimeZone, callbacks: BCLDataSyncCallbacks, completion: @escaping (Result<BCLRefreshRingResponse, BCLError>) -> Void)
+  ```
 ##### 2.2.4.设备断连重连
 * 触发条件：在APP打开或者APP在后台的情况下，发生了蓝牙的断开。**戒指充电的时候蓝牙一定会断开。**
 * 执行操作：设备连接，发送“连接事件”请求，等待接收“连接事件”应答。
 * 说明：由于戒指的体积，结构，材料限制，射频性能不如蓝牙耳机好，重连机制是必要的，可以增加稳定性。
 * 安卓相关API：
+  ```java
+  LmAPI.APP_REFRESH()
+  ```
 * IOS相关API：
+  ```Swift
+    /// 当蓝牙断开时，是否自动重连（默认为false,不自动重连）
+    BCLRingManager.shared.isAutoReconnectEnabled = true
+  ```
 ##### 2.2.5.设备解绑
 * 触发条件：用户手动解绑。
 * 执行操作：如果蓝牙连接中，则发送“解绑事件”请求，等待“解绑事情”应答。
 * 说明：此指令不是必要的，在“解绑事件”请求发出后，戒指会主动关闭健康模块，进入低功耗模式。
 * 安卓相关API：
+  ```java
+  BLEUtils.disconnectBLE
+  ```
 * IOS相关API：
 ##### 2.2.6.绑定配对
 智能戒指的蓝牙连接分为两种情况：
@@ -107,42 +152,168 @@
 数据来源：数据库，筛选掉睡眠状态为0的记录，1：清醒，2：浅睡，3：深睡，4：眼动期
 调用算法API获取入睡时间，唤醒时间和分期表。
 * 安卓相关API：
+  ```java
+    LogicalApi.calculateSleep();
+  ```
 * IOS相关API：
 #### 2.4.其他常规功能设计
 本小节的功能需要蓝牙连接状态才能够正常使用。
 ##### 2.4.1.主动心率测量
 触发主动测量有三个可选项配置：是否上传rawdata，是否上传测量进度，是否上传RR间期结果。开发者可以根据自己的算法需求进行配置。
 * 安卓相关API：
+  ```java
+  LmAPI.GET_HEART_ROTA
+  ```
 * IOS相关API：
+  ```Swift
+  /// 心率测量
+  /// - Parameters:
+  ///   - collectTime: 采集时间(单位：秒)
+  ///   - collectFrequency: 采集频率(单位：次/秒)
+  ///   - waveformConfig: 波形配置(0:不上传 1:上传)
+  ///   - progressConfig: 进度配置(0:不上传 1:上传)
+  ///   - intervalConfig: 间期配置(0:不上传 1:上传)
+  /// - Result: 测量结果
+  /// - BCLHeartRateResponse: 包含测量结果的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.startHeartRate(collectTime: Int, collectFrequency: Int, waveformConfig: Int, progressConfig: Int, intervalConfig: Int, completion: @escaping (Result<BCLHeartRateResponse, BCLError>) -> Void)
+  ```
 ##### 2.4.2.主动血氧测量
 触发主动测量有三个可选项配置：是否上传rawdata，是否上传测量进度。开发者可以根据自己的算法需求进行配置。
 * 安卓相关API：
+  ```java
+  LmAPI.GET_HEART_ROTA
+  LmAPI.STOP_HEART()
+  ```
 * IOS相关API：
+  ```Swift
+  /// 血氧测量
+  /// - Parameters:
+  ///   - collectTime: 采集时间(单位：秒)
+  ///   - collectFrequency: 采集频率(单位：次/秒)
+  ///   - waveformConfig: 波形配置(0:不上传 1:上传)
+  ///   - progressConfig: 进度配置(0:不上传 1:上传)
+  /// - Result: 测量结果
+  /// - BCLBloodOxygenResponse: 包含测量结果的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.startBloodOxygen(collectTime: Int, collectFrequency: Int, waveformConfig: Int, progressConfig: Int, completion: @escaping (Result<BCLBloodOxygenResponse, BCLError>) -> Void)
+  ```
 ##### 2.4.3.主动心电图测量
 心电图测量的UI界面设计是复杂的，我们开发了绘图方法，在./sourece/文件夹下。
 * 安卓相关API：
+   ```java
+  LmAPI.STAR_ELEC()//开启心电测量
+  LmAPI.STOP_ELECTROCARDIOGRAM();//结束心电测量
+  ```
 * IOS相关API：
 ##### 2.4.4.触摸手势设置
 触摸手势的设置不是一直保持的，当戒指充电或者低电量关机后再次开机的时候，功能是默认关闭的。
 * 安卓相关API：
+    ```java
+  LmAPI.GET_HID_CODE//获取HID功能码
+  LmAPI.SET_HID;//设置戒指的HID模式
+  LmAPI.GET_HID;//获取HID模式
+  ```
 * IOS相关API：
 ##### 2.4.5.实时语音传输
 有两种传输模式：
 1.APP下发实时语音的开始和停止。
 2.触摸控制实时语音的采集和推送。
 * 安卓相关API：
+  ```java
+  LmAPI.GET_HID_CODE//获取HID功能码
+  LmAPI.SET_HID;//设置戒指的HID模式
+  LmAPI.GET_HID;//获取HID模式
+  ```
 * IOS相关API：
-##### 2.4.6.OTA无线升级
+##### 2.4.6.血压测量
+* 安卓相关API：
+  ```java
+  LmAPI.BLOOD_PRESSURE_APP//开始测量血压
+  LmAPI.STOP_BLOOD_PRESSURE_APP;//停止血压测量
+  ```
+* IOS相关API：
+##### 2.4.7.震动闹钟设置
+可以按照闹钟的方式设置戒指震动，最多设置5个闹钟
+* 安卓相关API：
+  ```java
+  LmAPI.ALARM_CLOCK_SETTING//闹钟设置
+  LmAPI.GET_ALARM_CLOCK;//读取闹钟设置
+  ```
+* IOS相关API：
+##### 2.4.8.OTA无线升级
 本SDK封装了OTA文件服务器的网络接口和OTA蓝牙协议。
 * 安卓相关API：
+  ```java
+  LogicalApi.createToken //申请token
+  OtaApi.otaUpdateWithCheckVersion//ota升级
+  ```
 * IOS相关API：
-##### 2.4.6.个性化设置
-###### 2.4.6.1蓝牙名字
+##### 2.4.9.个性化设置
+###### 2.4.9.1蓝牙名字
 * 安卓相关API：
+  ```java
+  LmAPI.Set_BlueTooth_Name//设置蓝牙名称
+  LmAPI.Get_BlueTooth_Name//获取蓝牙名称
+  ```
 * IOS相关API：
-###### 2.4.6.2测量间隔
+  ```Swift
+  /// 设置蓝牙名称
+  /// - Parameter name: 蓝牙名称
+  /// - Parameter completion: 设置蓝牙名称回调
+  /// - Result: 设置结果
+  /// - BCLSetBluetoothNameResponse: 包含设置结果的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.setBluetoothName(name: String, completion: @escaping (Result<BCLSetBluetoothNameResponse, BCLError>) -> Void)
+
+  /// 获取蓝牙名称
+  /// - Parameter completion: 获取蓝牙名称回调
+  /// - Result: 获取结果
+  /// - BCLReadBluetoothNameResponse: 包含获取结果的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.getBluetoothName(completion: @escaping (Result<BCLReadBluetoothNameResponse, BCLError>) -> Void)
+  ```
+###### 2.4.9.2测量间隔
 * 安卓相关API：
+  ```java
+  LmAPI.SET_COLLECTION//设置
+  LmAPI.GET_COLLECTION//读取
+  ```
 * IOS相关API：
+  ```Swift
+  /// 设置采集周期
+  /// - Parameter period: 采集周期（单位：秒）最小值为60
+  /// - Parameter completion: 设置采集周期回调
+  /// - Result: 设置结果
+  /// - BCLSetCollectPeriodResponse: 包含设置结果的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.setCollectPeriod(period: Int, completion: @escaping (Result<BCLSetCollectPeriodResponse, BCLError>) -> Void)
+
+  /// 获取采集周期
+  /// - Parameter completion: 获取采集周期回调
+  /// - Result: 获取结果
+  /// - BCLGetCollectPeriodResponse: 包含采集周期的响应模型
+  /// - BCLError: 错误信息
+  BCLRingManager.shared.getCollectPeriod(completion: @escaping (Result<BCLGetCollectPeriodResponse, BCLError>) -> Void)
+  
+  ```
+
+  ###### 2.4.9.3用户信息
+* 安卓相关API：
+  ```java
+      /**
+     *  设置个人信息
+     * @param sex 性别，0女，1男
+     * @param height 身高，单位1cm
+     * @param weight 体重，单位0.1kg
+     * @param age 年龄，单位月
+     */
+  LmAPI.SET_USER_INFO(int sex,int height,int weight,int age) //设置用户信息
+  
+  LmAPI.GET_USER_INFO//获取个人信息
+  ```
+* IOS相关API：
+ 
 ### 3.智能戒指SDK移植
 #### 3.1.环境要求
 ##### 安卓：
@@ -153,7 +324,7 @@
 ##### IOS：
 * IOS系统版本：13.0以上
 * 语言版本：Swift 5.0以上
-* IDE版本：xcode 15以上
+* IDE版本：xcode 16以上
 * 蓝牙版本：5.0以上
 #### 3.2.库文件添加
 ##### 安卓：
@@ -170,6 +341,11 @@ implementation  'com.google.code.gson:gson:2.11.0'
 implementation 'com.zhy:okhttputils:2.6.2'
 ```
 ##### IOS：
+1、手动集成：将./IOS/library/iOS_New_Framework/BCLRingSDK.framework文件夹拖入到Xcode的项目中，选择“Copy items if needed”选项。
+
+2、Cocoapods集成：待支持
+
+3、Swift Package Manager集成：待支持
 #### 3.3.权限设置
 ##### 安卓：
 配置所需权限（在程序中也需要动态检测权限），在Manifest.xml中加入以下代码:
@@ -181,7 +357,11 @@ implementation 'com.zhy:okhttputils:2.6.2'
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 ##### IOS：
-
+```xml
+# Info.plist 增加蓝牙权限
+Privacy - Bluetooth Peripheral Usage Description
+Privacy - Bluetooth Always Usage Description
+```
 #### 3.4.SDK使用
 ##### 安卓：
 1.在Application的onCreate方法中进行初始化
@@ -196,36 +376,6 @@ LmAPILite.setDebug(true);
 **注：若重复调用监听LmAPI.addWLSCmdListener(this, this)会出现重复现象**
 ```java
 LmAPI.addWLSCmdListener(this, this);
-// 监视蓝牙设备与APP连接的状态
-IntentFilter intentFilter = new IntentFilter();
-intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-registerReceiver(broadcastReceiver,intentFilter);
-//使用蓝牙之前，先申请去权限
-if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-    if (!checkPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_ADVERTISE})) {
-        new XPopup.Builder(this).asConfirm(getRsString(R.string.hint), getString(R.string.localtion_auth),
-                new OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        requestPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_ADVERTISE}, 100);
-                    }
-                }).show();
-        return;
-    }
-} else {
-    if (!checkPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})) {
-        new XPopup.Builder(this).asConfirm(getRsString(R.string.hint), getString(R.string.localtion_auth),
-                new OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        requestPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-                    }
-                }).show();
-        return;
-    }
-}
 ```
 ##### IOS：
 
@@ -308,98 +458,7 @@ public void lmBleConnectionFailed(int code) {
 BLEUtils.setConnecting//蓝牙是否在连接中，防止重复连接
 BLEUtils.setGetToken//是否已连接到蓝牙，这个按自己项目需求调用，公版app是在连接过后，指令走完，才算连接成功
 
-蓝牙连接状态(仅供状态参考，不需要自己监听)：
-```java
-BroadcastReceiver mBLEStateChangeBroadcast = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent != null) {
-                    int state = intent.getIntExtra(BLEService.BROADCAST_CONNECT_STATE_VALUE, 0);
-                    switch (state) {
-                        case BLEService.CONNECT_STATE_GATT_CONNECTING:
-                            //链接状态--GATT通道--连接中
-                        case BLEService.CONNECT_STATE_GATT_CONNECTED:
-                            // 链接状态--GATT通道--已连接
-                        case BLEService.CONNECT_STATE_SERVICE_CONNECTING:
-                            //链接状态--设备服务--连接中
-                        case BLEService.CONNECT_STATE_SERVICE_CONNECTED:
-                            // 链接状态--设备服务--已连接
-                        case BLEService.CONNECT_STATE_WRITE_CONNECTING:
-                            //链接状态--写入Character--连接中
-                        case BLEService.CONNECT_STATE_RESPOND_CONNECTING:
-                            //链接状态--响应Character--连接中
-                            ibleResponse.lmBleConnecting(state);
-                            break;
-                        case BLEService.CONNECT_STATE_SUCCESS:
-                            // 链接状态--BLE所有连接--连接成功--等待输入指令
-                            ibleResponse.lmBleConnectionSucceeded(state);
-                            break;
-                        case BLEService.CONNECT_STATE_SERVICE_DISCONNECTED:
-                            //链接状态--设备服务--连接失败
-                            ibleResponse.lmBleConnectionFailed(state);
-                        case BLEService.CONNECT_STATE_WRITE_DISCONNECTED:
-                            //链接状态--写入Character--连接失败
-                        case BLEService.CONNECT_STATE_RESPOND_DISCONNECTED:
-                            //链接状态--响应Character--连接失败
-                        case BLEService.CONNECT_STATE_DISCONNECTED:
-                            //链接状态--断开
-                            ibleResponse.lmBleConnectionFailed(state);
-                            break;
-                        default:
-                            break;
-                    }
-                }
 
-            }
-        };
-```
-```java
- /**
-     * 链接状态--GATT通道--连接中
-     */
-    public static final int CONNECT_STATE_GATT_CONNECTING = 1;
-    /**
-     * 链接状态--GATT通道--已连接
-     */
-    public static final int CONNECT_STATE_GATT_CONNECTED = 2;
-
-    /**
-     * 链接状态--设备服务--连接中
-     */
-    public static final int CONNECT_STATE_SERVICE_CONNECTING = 3;
-    /**
-     * 链接状态--设备服务--已连接
-     */
-    public static final int CONNECT_STATE_SERVICE_CONNECTED = 4;
-    /**
-     * 链接状态--写入Character--连接中
-     */
-    public static final int CONNECT_STATE_WRITE_CONNECTING = 5;
-    /**
-     * 链接状态--响应Character--连接中
-     */
-    public static final int CONNECT_STATE_RESPOND_CONNECTING = 6;
-    /**
-     * 链接状态--BLE所有连接--连接成功--等待输入指令
-     */
-    public static final int CONNECT_STATE_SUCCESS = 7;
-    /**
-     * 链接状态--设备服务--连接失败
-     */
-    public static final int CONNECT_STATE_SERVICE_DISCONNECTED = 8;
-    /**
-     * 链接状态--写入Character--连接失败
-     */
-    public static final int CONNECT_STATE_WRITE_DISCONNECTED = 9;
-    /**
-     * 链接状态--响应Character--连接失败
-     */
-    public static final int CONNECT_STATE_RESPOND_DISCONNECTED = 10;
-    /**
-     * 链接状态--断开
-     */
-    public static final int CONNECT_STATE_DISCONNECTED = 11;
-```
 ##### 3.1.4 断开蓝牙
 接口功能：断开设备。  
 接口声明：
@@ -1810,8 +1869,51 @@ LmAPI.GET_HID();
 ```java
  public static void GET_HID(IHIDListenerLite listenerLite)
 ```
+##### 3.2.27 血压测量
+接口功能：测量血压  
+接口声明：
+```java
+  /**
+     *
+     * @param collectionTime 采集时间，默认30
+     * @param waveformConfiguration 波形配置0:不上传 1:上传
+     * @param progressConfiguration 进度配置0:不上传 1:上传
+     * @param iBloodPressureAPPListener
+     */
+LmAPI.BLOOD_PRESSURE_APP(byte collectionTime,byte waveformConfiguration,byte progressConfiguration,IBloodPressureAPPListener iBloodPressureAPPListener);
+/**
+*停止测量
+**/
+LmAPI.STOP_BLOOD_PRESSURE_APP();
+```
+##### 3.2.27 震动闹钟设置
+接口功能：通过定制闹钟的方式，让戒指定时震动，只支持5个闹钟  
+接口声明：
+```java
+/**
+*设置闹钟
+**/
+LmAPI.ALARM_CLOCK_SETTING(List<AlarmClockBean> alarmClockBeans);
+/**
+*获取闹钟配置
+**/
+LmAPI.GET_ALARM_CLOCK();
+```
+AlarmClockBean说明：
+```java
+    /**
+     * time 时间戳
+     * repetitiveType 重复类型 0：仅一次 1：每天 2：智能节假日 3：智能工作日
+     * vibrationEffect 震动效果 0：强 1：弱 2：渐变
+     * onOrOff 闹钟开关 0：关闭 1：打开
+     */
+    private  long time;
+    private  byte repetitiveType;
+    private  byte vibrationEffect;
+    private  byte onOrOff;
+```
 
-##### 3.2.27 获取RSSI
+##### 3.2.28 获取RSSI
 RSSI是信号强度的意思，一般用于ota升级前对戒指的信号检测，建议 > -70  
 ```java
     BLEService.readRomoteRssi();
@@ -1832,7 +1934,7 @@ BLEService.setCallback(new BluetoothConnectCallback() {
         });
 ```
 需要注意rssi变化略微延迟，数字越大，信号越强，如 -52 > -60
-##### 3.2.28 二代协议
+##### 3.2.29 二代协议
 二代协议是一个协议，返回多个指令，大大加快了连接速度，二代协议只有支持的设备才能发送，判断设备是否支持参考(3.2.0 广播解析)：
 
 绑定指令:（绑定指令是在设备绑定后调用，是复合操作，戒指收到这条指令执行，恢复出厂设置（清空历史记录，清除步数)，同步时间，HID功能获取。）
@@ -1909,7 +2011,7 @@ public class SystemControlBean {
  }
 ```
 
-##### 3.2.29 心电图
+##### 3.2.30 心电图
 心电图功能只支持心电戒指，可以通过BLEUtils.isSupportElectrocardiogram()判断是否支持,可以通过
 ```java
 LogicalApi.startECGActivity(TestActivity2.this);
