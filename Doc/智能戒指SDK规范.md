@@ -628,7 +628,7 @@ BLEUtils.disconnectBLE(Context context);
 ```
 #### 3.2 通讯协议
 此类是使用戒指功能的公共类，戒指的功能通过该类直接调用即可,数据反馈除了特殊说明外 统一由IResponseListener接口反馈。(1.0.35版本后新增简化版本，入参和返回都做了封装，不再使用byte类型，通过LmAPILite调用，并且将指令返回接口按照功能分成多个小接口，职责更清晰，回调更少，之前监听LmAPI的地方换成LmAPILite即可)
-调用此类的接口 ，需保证与戒指处于连接状态  
+调用此类的接口 ，需保证与戒指处于连接状态，戒指连接以后，要延时3s左右再发送指令，每个指令都需要有几百ms的间隔，防止指令冲突，导致没有回应  
 ##### 3.2.0 广播解析
 sdk封装根据蓝牙扫描广播，获取是否符合条件的戒指，并返回该戒指的设备信息的方法LogicalApi.getBleDeviceInfoWhenBleScan，设备信息包括是否HID戒指(hidDevice:1是0非，兼容老版本戒指)，是否支持二代协议(communicationProtocolVersion:1不支持2支持)，是否支持绑定(bindingIndicatorBit,0不支持绑定、配对(仅软连接) 1绑定和配对 2仅支持配对)，充电指示位(chargingIndicator,1代表未充电 2代表充电中)
 ```java
