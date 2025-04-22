@@ -1,0 +1,42 @@
+{
+  "originHash" : "6aee36bbc74c574cee5dba39b1983ea56d37ed59e20400969ff46477723967d8",
+  "pins" : [
+    {
+      "identity" : "foil",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jessesquires/Foil",
+      "state" : {
+        "revision" : "b7839568d23a05614d97d053a450ca88541fe4a5",
+        "version" : "6.0.0"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift",
+      "state" : {
+        "revision" : "5dd1907d64f0d36f158f61a466bab75067224893",
+        "version" : "6.9.0"
+      }
+    },
+    {
+      "identity" : "swiftdate",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/malcommac/SwiftDate",
+      "state" : {
+        "revision" : "5d943224c3bb173e6ecf27295611615eba90c80e",
+        "version" : "7.0.0"
+      }
+    },
+    {
+      "identity" : "swiftybeaver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
+      "state" : {
+        "revision" : "8cba041db09596183331d123f337d0eb2e6e8e91",
+        "version" : "2.1.1"
+      }
+    }
+  ],
+  "version" : 3
+}
