@@ -536,7 +536,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="141"/>
+                                                <state key="normal" title="Phy固件升级"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uhq-7d-2Qq"/>
                                                 </connections>
