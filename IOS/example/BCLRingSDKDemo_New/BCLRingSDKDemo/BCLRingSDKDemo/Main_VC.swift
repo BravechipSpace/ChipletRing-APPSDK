@@ -14,6 +14,7 @@ import UIKit
 public enum FirmwareUpgradeType {
     case apollo // 阿波罗（Ambiq）升级
     case nordic // Nordic DFU 升级
+    case phy // Phy 固件升级
 }
 
 class Main_VC: UIViewController {
@@ -387,8 +388,8 @@ class Main_VC: UIViewController {
             }
             break
         case 123: //    固件版本更新检查
-            // 7.1.5.3Z3R / 7.1.7.0Z3R  (RH18:2.7.5.2Z3N)
-            BCLRingManager.shared.checkFirmwareUpdate(version: "6.0.2.7Z2W") { result in
+            // 7.1.5.3Z3R / 7.1.7.0Z3R / (RH18:2.7.5.2Z3N) / 2.7.4.8Z27
+            BCLRingManager.shared.checkFirmwareUpdate(version: "2.7.4.0Z27") { result in
                 switch result {
                 case let .success(versionInfo):
                     if versionInfo.hasNewVersion {
@@ -425,18 +426,23 @@ class Main_VC: UIViewController {
             }
             break
         case 124: //    固件文件下载
-            // fileName:7.1.7.0Z3R.bin
-            // downloadUrl:https://image.lmyiot.com/FiaeMmw7OwXNwtKWoaQM2HsNhi4z
-            // documentDirectory
+//            let fileName = "7.1.7.0Z3R.bin"
+//            let downloadUrl = "https://image.lmyiot.com/FiaeMmw7OwXNwtKWoaQM2HsNhi4z"
 
-            // fileName:7.1.9.2Z3R.bin
-            // downloadUrl:http://221.226.159.58:22222/profile/upload/2025/04/15/7.1.9.2Z3R.bin
+//            let fileName = "7.1.9.2Z3R.bin"
+//            let downloadUrl = "http://221.226.159.58:22222/profile/upload/2025/04/15/7.1.9.2Z3R.bin"
 
-            // fileName:6.0.2.7Z2W.zip
-            // downloadUrl:http://221.226.159.58:22222/profile/upload/2025/04/01/6.0.3.9Z2W.zip
+//            let fileName = "6.0.2.7Z2W.zip"
+//            let downloadUrl = "http://221.226.159.58:22222/profile/upload/2025/04/01/6.0.3.9Z2W.zip"
+
+//            let fileName = "2.7.4.8Z27.hex16"
+//            let downloadUrl = "http://221.226.159.58:22222/profile/upload/2025/04/01/2.7.4.8Z27.hex16"
+
+            let fileName = "2.7.4.8Z27.hex16"
+            let downloadUrl = "http://221.226.159.58:22222/profile/upload/2025/04/01/2.7.4.8Z27.hex16"
 
             let destinationPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            BCLRingManager.shared.downloadFirmware(url: "http://221.226.159.58:22222/profile/upload/2025/04/01/6.0.3.9Z2W.zip", fileName: "6.0.2.7Z2W.zip", destinationPath: destinationPath, progress: { progress in
+            BCLRingManager.shared.downloadFirmware(url: downloadUrl, fileName: fileName, destinationPath: destinationPath, progress: { progress in
                 BDLogger.info("固件下载进度：\(progress)")
             }, completion: { result in
                 switch result {
@@ -848,7 +854,7 @@ class Main_VC: UIViewController {
         case 139: // 停止Apollo固件升级
             BCLRingManager.shared.stopApolloUpgrade()
             break
-        case 140: // NRF固件升级
+        case 140: // Nordic 固件升级
             curFirmwareUpgradeType = .nordic
             // 实现打开文件选择器
             let filePicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
@@ -856,8 +862,13 @@ class Main_VC: UIViewController {
             filePicker.allowsMultipleSelection = false
             present(filePicker, animated: true, completion: nil)
             break
-        case 141:
-
+        case 141: // Phy 固件升级
+            curFirmwareUpgradeType = .phy
+            // 实现打开文件选择器
+            let filePicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
+            filePicker.delegate = self
+            filePicker.allowsMultipleSelection = false
+            present(filePicker, animated: true, completion: nil)
             break
         case 142: //
 
@@ -1245,7 +1256,7 @@ extension Main_VC: UIDocumentPickerDelegate {
                 }
             )
         } else if curFirmwareUpgradeType == .nordic {
-            // 检查文件扩展名是否为.bin
+            // 检查文件扩展名是否为.zip
             guard fileURL.pathExtension.lowercased() == "zip" else {
                 BDLogger.error("请选择.zip格式的固件文件")
                 return
@@ -1285,6 +1296,27 @@ extension Main_VC: UIDocumentPickerDelegate {
                     if let rootView = UIApplication.shared.windows.first?.rootViewController?.view {
                         QMUITips.show(withText: "固件升级失败：\(error)", in: rootView)
                     }
+                    break
+                }
+            }
+        } else if curFirmwareUpgradeType == .phy {
+            // 检查文件扩展名是否为.hex16
+            guard fileURL.pathExtension.lowercased() == "hex16" else {
+                BDLogger.error("请选择.hex16格式的固件文件")
+                return
+            }
+            BDLogger.info("选择的文件：\(fileURL)")
+            BDLogger.info("文件名称：\(fileURL.lastPathComponent)")
+            BDLogger.info("开始Phy固件升级...")
+            BCLRingManager.shared.phyUpgradeFirmware(filePath: fileURL.path) { progress in
+                BDLogger.info("升级进度：\(progress)")
+            } completion: { res in
+                switch res {
+                case let .success(state):
+                    BDLogger.error("升级成功：\(state)")
+                    break
+                case let .failure(error):
+                    BDLogger.error("升级失败：\(error)")
                     break
                 }
             }
