@@ -618,6 +618,28 @@ BLEUtils.disconnectBLE(Context context);
 BLEUtils.disconnectBLE(Context context);
 ```
 断开连接，否则蓝牙一直连接，功耗很大，电量消耗很快
+可以通过设置BLEUtils.pendingIntent，可以响应前台服务通知点击事件，如果app在后台，点击前台服务，跳转到指定页面（ChipletRing1.0.64新增）
+例如：
+```java
+        // 创建返回首页的Intent
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        notificationIntent.setAction(Long.toString(System.currentTimeMillis())); // 确保每次都是唯一的
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        BLEUtils.pendingIntent=pendingIntent;
+```
+```java
+ <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation" />
+```
 ##### 3.1.6 解除绑定
  注意 换绑戒指时，建议将之前戒指解除绑定，调用指令，清理掉历史数据，否则有可能出现A戴过的戒指，B去戴，造成B的数据里有A的数据，或者一个人戴多个戒指睡眠，最后睡眠数据重叠的情况
 ```java
