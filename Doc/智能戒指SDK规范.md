@@ -637,7 +637,6 @@ BLEUtils.disconnectBLE(Context context);
 ```java
  <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation" />
 ```
 ##### 3.1.6 解除绑定
