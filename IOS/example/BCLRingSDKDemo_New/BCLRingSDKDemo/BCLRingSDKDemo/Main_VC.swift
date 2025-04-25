@@ -40,6 +40,8 @@ class Main_VC: UIViewController {
     // 历史数据
     private var historyData: [BCLRingDBModel] = []
 
+    // 血压波形数据
+    private var bloodPressureWaveData: [(Int, Int, Int, Int, Int)] = []
     private var curFirmwareUpgradeType: FirmwareUpgradeType = .apollo
 
     override func viewDidLoad() {
@@ -870,10 +872,8 @@ class Main_VC: UIViewController {
             filePicker.allowsMultipleSelection = false
             present(filePicker, animated: true, completion: nil)
             break
-        case 142: //
-
-            break
-        case 143: // 血压测量
+        case 142: // 血压测量
+            bloodPressureWaveData = []
             // 设置回调
             BCLBloodPressureResponse.setCallbacks(BCLBloodPressureCallbacks(
                 onProgress: { progress in
@@ -904,7 +904,14 @@ class Main_VC: UIViewController {
                 onWaveform: { seq, num, datas in
                     // 处理波形数据
                     BDLogger.info("波形数据: 序号\(seq), 数量\(num)")
-                    BDLogger.info("波形数据: \(datas)")
+                    switch datas {
+                    case let .redAndInfrared(waveData):
+                        BDLogger.info("波形数据: \(waveData)")
+                        // 将波形数据添加到数组中
+                        self.bloodPressureWaveData.append(contentsOf: waveData)
+                    default:
+                        BDLogger.error("不支持的波形数据类型")
+                    }
                 },
                 onError: { error in
                     BDLogger.info("错误: \(error)")
@@ -912,7 +919,7 @@ class Main_VC: UIViewController {
             ))
 
             // 开始测量
-            BCLRingManager.shared.startBloodPressure(collectTime: 10, waveformConfig: 1, progressConfig: 1, waveformSetting: 0) { result in
+            BCLRingManager.shared.startBloodPressure(collectTime: 30, waveformConfig: 1, progressConfig: 1, waveformSetting: 0) { result in
                 switch result {
                 case .success:
                     break
@@ -923,13 +930,24 @@ class Main_VC: UIViewController {
                 }
             }
             break
-        case 144: // 停止血压测量
+        case 143: // 停止血压测量
             BCLRingManager.shared.stopBloodPressure { res in
                 switch res {
                 case .success:
                     BDLogger.info("停止血压测量成功")
                 case let .failure(error):
                     BDLogger.error("停止血压测量失败: \(error)")
+                }
+            }
+            break
+        case 144: // 血压数据上传
+            let macAddress = BCLRingManager.shared.currentConnectedDevice?.macAddress ?? ""
+            BCLRingManager.shared.uploadBloodPressureData(mac: macAddress, waveData: bloodPressureWaveData) { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("收缩压：\(data.0)、舒张压：\(data.1)")
+                case let .failure(error):
+                    BDLogger.error("数据计算失败: \(error.localizedDescription)")
                 }
             }
             break
@@ -1170,7 +1188,7 @@ class Main_VC: UIViewController {
         )
 
         // 调用读取方法
-        BCLRingManager.shared.readUnUploadData(callbacks: callbacks) { result in
+        BCLRingManager.shared.readUnUploadData(timestamp: 0, callbacks: callbacks) { result in
             switch result {
             case .success:
                 BDLogger.info("开始数据同步")

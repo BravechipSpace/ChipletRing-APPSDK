@@ -549,7 +549,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="142"/>
+                                                <state key="normal" title="血压测量"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ItI-s1-aJ0"/>
                                                 </connections>
@@ -562,7 +562,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="血压测量"/>
+                                                <state key="normal" title="停止血压测量"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jzw-Ys-b17"/>
                                                 </connections>
@@ -575,7 +575,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="停止血压测量"/>
+                                                <state key="normal" title="上传血压数据"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JpE-ED-HQA"/>
                                                 </connections>

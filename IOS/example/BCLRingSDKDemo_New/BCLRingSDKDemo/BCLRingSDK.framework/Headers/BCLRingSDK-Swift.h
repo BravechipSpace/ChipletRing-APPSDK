@@ -306,6 +306,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+/// 设备信息模型
 SWIFT_CLASS("_TtC10BCLRingSDK18BCLDeviceInfoModel")
 @interface BCLDeviceInfoModel : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -313,6 +314,7 @@ SWIFT_CLASS("_TtC10BCLRingSDK18BCLDeviceInfoModel")
 @end
 
 
+/// 戒指数据库模型
 SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingDBModel")
 @interface BCLRingDBModel : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -322,6 +324,7 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingDBModel")
 /// 蓝牙管理类
 SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 @interface BCLRingManager : NSObject
+/// 初始化
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -408,6 +411,7 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 ///
 - (void)centralManager:(CBCentralManager * _Nonnull)central didDisconnectPeripheral:(CBPeripheral * _Nonnull)peripheral timestamp:(CFAbsoluteTime)timestamp isReconnecting:(BOOL)isReconnecting error:(NSError * _Nullable)error;
 @end
+
 
 
 @class CBService;
@@ -517,6 +521,7 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 
 
 
+/// 睡眠模型
 SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @interface BCLRingSleepModel : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
