@@ -2297,6 +2297,27 @@ public class SleepBean{
     private List<HistoryDataBean> historyDataBeanList;
 }
 ```
+```java
+public class Sleep2thBean {
+    List<HistoryDataBean> sleepDataBeanList;
+    long startTime;//第一次入睡时间
+    long endTime;//最后一次醒来时间
+    long sleepTime;//睡眠时长
+    long deepTime ;//深睡眠时长
+    long lowTime ;//浅睡眠时长
+    long ydTime ;//眼动时间
+    long qxTime;//清醒时长
+    long seconds;//睡眠时长(秒)
+    int hours;//睡眠时长(小时)
+    int minutes;//睡眠时长(分钟)
+    long sjTime;//实际睡眠时长
+    double xiaolv;//睡眠效率
+    double shenshui;//深睡比例
+    int score ;//睡眠评分
+    int wakeupCount;//清醒次数
+    String tips;//评价(保留)
+}
+```
 数据库中数据
 ```java
 public class HistoryDataBean{
