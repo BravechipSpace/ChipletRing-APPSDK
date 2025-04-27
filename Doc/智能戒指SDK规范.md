@@ -2055,7 +2055,45 @@ LogicalApi.startECGActivity(TestActivity2.this);
  }
 
 ```
+##### 3.2.31 文件系统
+部分戒指支持文件系统，在戒指内保存文件，通过指令获取文件列表，然后通过对应文件名的字节数组，获取到文件具体的内容
+```java
+//获取文件列表，
+LmAPI.GET_FILE_LIST(IFileListListener listener)
+public interface IFileListListener {
 
+    /**
+     * 文件
+     * @param fileCount 文件总个数
+     * @param fileIndex 文件序号
+     * @param fileSize 文件大小
+     * @param fileName 文件名称
+     * @param rawDataByte 文件名称原始数组
+     */
+    void file( int fileCount,int fileIndex,int fileSize,String fileName,byte[] rawDataByte);
+
+
+    /**
+     * 文件内容
+     * @param content
+     */
+    void fileContent(String content);
+}
+```
+根据文件名，获取文件类型，输入文件名的字节数组和类型，进行解析
+```java
+  //类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
+ LmAPI.GET_FILE_CONTENT(8,fileNameByte,new IFileListListener() {
+                    @Override
+                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                    }
+
+                    @Override
+                    public void fileContent(String content) {
+                        postView("\nGET_FILE_CONTENT：" +content);
+                    }
+                });
+```
 #### 3.3 固件升级（OTA）
 **注：目前不建议使用，可以参考四、升级服务里的OTA升级**
 ![alt text](image/f66e099fc52821fbc43ecd7803e0633.png)
