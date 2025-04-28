@@ -1,0 +1,6 @@
+framework module Foil {
+  umbrella header "Foil-umbrella.h"
+
+  export *
+  module * { export * }
+}

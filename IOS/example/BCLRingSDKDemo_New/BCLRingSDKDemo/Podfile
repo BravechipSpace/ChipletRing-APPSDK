@@ -6,7 +6,13 @@ target 'BCLRingSDKDemo' do
   use_frameworks!
   pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
   pod 'QMUIKit','4.8.0'
-  
+  pod 'SwiftyBeaver', '1.9.5'   # 日志
+  pod 'SwiftyJSON', '~> 5.0.2'  # json解析
+  pod 'RxCocoa', '~> 6.9.0'     # rx
+  pod 'RxSwift', '~> 6.9.0'     # rx
+  pod 'SwiftDate'               # 时间处理
+  pod 'Foil', '~> 5.1.2'        # userDefault
+  pod 'iOSDFULibrary'           # 固件升级
 
   # Pods for BCLRingSDKDemo
 

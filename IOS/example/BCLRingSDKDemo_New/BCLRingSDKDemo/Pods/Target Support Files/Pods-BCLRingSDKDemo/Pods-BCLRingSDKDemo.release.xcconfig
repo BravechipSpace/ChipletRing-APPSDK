@@ -1,10 +1,12 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Foil" "${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit" "${PODS_CONFIGURATION_BUILD_DIR}/RxCocoa" "${PODS_CONFIGURATION_BUILD_DIR}/RxRelay" "${PODS_CONFIGURATION_BUILD_DIR}/RxSwift" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftDate" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON" "${PODS_CONFIGURATION_BUILD_DIR}/ZIPFoundation" "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit/QMUIKit.framework/Headers"
-LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "AVFoundation" -framework "CoreGraphics" -framework "CoreImage" -framework "CoreMedia" -framework "CoreServices" -framework "Foundation" -framework "ImageIO" -framework "Photos" -framework "PhotosUI" -framework "QMUIKit" -framework "QuartzCore" -framework "UIKit"
-OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Foil/Foil.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit/QMUIKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/RxCocoa/RxCocoa.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/RxRelay/RxRelay.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/RxSwift/RxSwift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftDate/SwiftDate.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ZIPFoundation/ZIPFoundation.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary/NordicDFU.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -framework "AVFoundation" -framework "CoreGraphics" -framework "CoreImage" -framework "CoreMedia" -framework "CoreServices" -framework "Foil" -framework "Foundation" -framework "ImageIO" -framework "NordicDFU" -framework "Photos" -framework "PhotosUI" -framework "QMUIKit" -framework "QuartzCore" -framework "RxCocoa" -framework "RxRelay" -framework "RxSwift" -framework "SwiftDate" -framework "SwiftyBeaver" -framework "SwiftyJSON" -framework "UIKit" -framework "ZIPFoundation"
+OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/Foil" "-F${PODS_CONFIGURATION_BUILD_DIR}/QMUIKit" "-F${PODS_CONFIGURATION_BUILD_DIR}/RxCocoa" "-F${PODS_CONFIGURATION_BUILD_DIR}/RxRelay" "-F${PODS_CONFIGURATION_BUILD_DIR}/RxSwift" "-F${PODS_CONFIGURATION_BUILD_DIR}/SwiftDate" "-F${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" "-F${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON" "-F${PODS_CONFIGURATION_BUILD_DIR}/ZIPFoundation" "-F${PODS_CONFIGURATION_BUILD_DIR}/iOSDFULibrary"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
