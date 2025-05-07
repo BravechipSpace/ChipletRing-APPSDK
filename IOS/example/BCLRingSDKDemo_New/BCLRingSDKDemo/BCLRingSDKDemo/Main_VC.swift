@@ -93,7 +93,7 @@ class Main_VC: UIViewController {
 //                break
 //            }
 //        }
-
+        BDLogger.info("设备连接状态：\(BCLRingManager.shared.deviceIsDidConnected)")
         //  蓝牙设备连接状态
         BCLRingManager.shared.bluetoothConnectStateObservable.subscribe(onNext: { state in
             switch state {
@@ -1018,7 +1018,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startBloodOxygen(collectTime: 10,
+        BCLRingManager.shared.startBloodOxygen(collectTime: 30,
                                                collectFrequency: 25,
                                                waveformConfig: 1,
                                                progressConfig: 1) { result in
@@ -1079,7 +1079,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 10,
+        BCLRingManager.shared.startHeartRate(collectTime: 30,
                                              collectFrequency: 25,
                                              waveformConfig: 1,
                                              progressConfig: 1,
@@ -1141,7 +1141,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 10,
+        BCLRingManager.shared.startHeartRate(collectTime: 30,
                                              collectFrequency: 50,
                                              waveformConfig: 1,
                                              progressConfig: 1,
