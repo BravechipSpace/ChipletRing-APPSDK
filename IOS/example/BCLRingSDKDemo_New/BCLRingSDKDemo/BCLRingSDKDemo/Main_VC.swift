@@ -991,6 +991,17 @@ class Main_VC: UIViewController {
                 }
             }
             break
+        case 148: // SDK本地计算睡眠数据
+            BDLogger.info("使用SDK内置计算睡眠数据方法获取睡眠数据")
+            let date = Date("2025-05-09", format: "yyyy-MM-dd")
+            // BCLRingLocalSleepModel
+            let sleepModel = BCLRingManager.shared.calculateSleepLocally(targetDate: date!, macString: nil)
+            BDLogger.info("睡眠数据\(sleepModel.description)")
+            break
+        case 149: //
+            break
+        case 150: //
+            break
         default:
             break
         }

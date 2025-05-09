@@ -320,6 +320,40 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingDBModel")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class NSString;
+
+SWIFT_CLASS("_TtC10BCLRingSDK22BCLRingLocalSleepModel")
+@interface BCLRingLocalSleepModel : NSObject
+/// 零星睡眠小时
+@property (nonatomic) NSInteger hours;
+/// 零星睡眠分钟
+@property (nonatomic) NSInteger minutes;
+/// 全部睡眠小时
+@property (nonatomic) NSInteger allHours;
+/// 全部睡眠分钟
+@property (nonatomic) NSInteger allMinutes;
+/// 睡眠小时
+@property (nonatomic) NSInteger sleepHours;
+/// 睡眠分钟
+@property (nonatomic) NSInteger sleepMinutes;
+/// 深度睡眠时间
+@property (nonatomic) int64_t highTime;
+/// 浅度睡眠时间
+@property (nonatomic) int64_t lowTime;
+/// 眼动时间
+@property (nonatomic) int64_t ydTime;
+/// 清醒时间
+@property (nonatomic) int64_t qxTime;
+/// 入睡时间戳
+@property (nonatomic) int64_t startTime;
+/// 清醒时间戳
+@property (nonatomic) int64_t endTime;
+/// 睡眠数据
+@property (nonatomic, copy) NSArray<BCLRingDBModel *> * _Nonnull sleepDataList;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 /// 蓝牙管理类
 SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
@@ -336,7 +370,6 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 
 @class CBCentralManager;
 @class CBPeripheral;
-@class NSString;
 @class NSNumber;
 
 @interface BCLRingManager (SWIFT_EXTENSION(BCLRingSDK)) <CBCentralManagerDelegate>
