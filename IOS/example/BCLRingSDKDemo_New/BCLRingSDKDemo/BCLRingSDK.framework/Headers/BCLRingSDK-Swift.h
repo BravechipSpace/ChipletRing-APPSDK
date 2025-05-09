@@ -333,6 +333,7 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 
 
 
+
 @class CBCentralManager;
 @class CBPeripheral;
 @class NSString;

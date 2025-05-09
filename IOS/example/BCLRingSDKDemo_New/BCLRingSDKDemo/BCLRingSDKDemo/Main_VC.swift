@@ -93,7 +93,7 @@ class Main_VC: UIViewController {
 //                break
 //            }
 //        }
-        BDLogger.info("设备连接状态：\(BCLRingManager.shared.deviceIsDidConnected)")
+
         //  蓝牙设备连接状态
         BCLRingManager.shared.bluetoothConnectStateObservable.subscribe(onNext: { state in
             switch state {
@@ -951,6 +951,46 @@ class Main_VC: UIViewController {
                 }
             }
             break
+        case 145: // 日志压缩
+            QMUITips.showLoading(in: view)
+            BCLRingManager.shared.compressLogAndDataFiles { res in
+                QMUITips.hideAllTips()
+                switch res {
+                case let .success(result):
+                    BDLogger.info("文件路径：\(result.0)")
+                    BDLogger.info("文件：\(result.1)")
+                case let .failure(error):
+                    BDLogger.error("压缩文件失败：\(error)")
+                }
+            }
+            break
+        case 146: // 清理压缩文件
+            BCLRingManager.shared.cleanCompressedFiles { res in
+                switch res {
+                case .success:
+                    BDLogger.info("清理压缩文件成功")
+                case let .failure(error):
+                    BDLogger.error("清理压缩文件失败: \(error)")
+                }
+            }
+            break
+        case 147: // 刷新Token
+            BCLRingManager.shared.refreshToken { res in
+                switch res {
+                case .success:
+                    BDLogger.info("刷新Token成功")
+                case let .failure(error):
+                    switch error {
+                    case let .network(.tokenError(message)):
+                        // 处理 Token 错误
+                        BDLogger.error("Token已失效，需要重新登录: \(message)")
+                    default:
+                        // 处理其他错误
+                        BDLogger.error("刷新Token失败: \(error)")
+                    }
+                }
+            }
+            break
         default:
             break
         }
@@ -1018,7 +1058,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startBloodOxygen(collectTime: 30,
+        BCLRingManager.shared.startBloodOxygen(collectTime: 10,
                                                collectFrequency: 25,
                                                waveformConfig: 1,
                                                progressConfig: 1) { result in
@@ -1079,7 +1119,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 30,
+        BCLRingManager.shared.startHeartRate(collectTime: 10,
                                              collectFrequency: 25,
                                              waveformConfig: 1,
                                              progressConfig: 1,
@@ -1141,7 +1181,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 30,
+        BCLRingManager.shared.startHeartRate(collectTime: 10,
                                              collectFrequency: 50,
                                              waveformConfig: 1,
                                              progressConfig: 1,
