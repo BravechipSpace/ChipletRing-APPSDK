@@ -2539,6 +2539,70 @@ DataApi.instance.deleteHistoryErrorBatch();
                     }
 
                 });
+
+//根据日期组合，批量获取睡眠记录，日期格式类似于 "2025-05-11"
+
+LogicalApi.getSleepDataBatchFromService(List<String> dates, IWebSleepResult webApiResult)
+//返回的数据结构
+
+public class SleepBean {
+    /**
+     * 零星睡眠小时
+     */
+    int hours = 0;
+    /**
+     * 零星睡眠分钟
+     */
+    int minutes = 0;
+    /**
+     * 全部睡眠小时
+     */
+    int allHours = 0;
+    /**
+     * 全部睡眠分钟
+     */
+    int allMinutes =0;
+    /**
+     * 睡眠小时
+     */
+    int sleepHours = 0;
+    /**
+     * 睡眠分钟
+     */
+    int sleepMinutes =0;
+    /**
+     * 深度睡眠时间
+     */
+    long highTime = 0;
+    /**
+     * 浅度睡眠时间
+     */
+    long lowTime = 0;
+    /**
+     * 眼动时间
+     */
+    long ydTime = 0;
+    /**
+     * 清醒时间
+     */
+    long qxTime = 0;
+    /**
+     * 入睡时间戳
+     */
+    long startTime = 0;
+    /**
+     * 清醒时间戳
+     */
+    long endTime = 0;
+
+    /**
+     * 睡眠评分
+     */
+    long score = 0;
+    /**
+     * 睡眠数据
+     */
+    private List<HistoryDataBean> historyDataBeanList;
 ```
 ##### 2、ota升级
 该服务支持从云端拉取最新的固件，需保证与戒指处于连接状态,建议rssi > -70(参考3.2.27 获取RSSI)并且电量>50 ，目前提供三个接口，根据不同情况调用
