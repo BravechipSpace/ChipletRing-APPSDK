@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="595"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yok-QN-M64">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1018"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1431"/>
                                         <subviews>
                                             <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Noo-Ca-sE4" userLabel="0_Btn">
                                                 <rect key="frame" x="15" y="15" width="111" height="44"/>
@@ -625,7 +625,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="jIy-iD-mbm"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="SDK本地计算睡眠数据"/>
                                                 <connections>
@@ -640,7 +640,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="149"/>
+                                                <state key="normal" title="停止心率测量"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cmY-9R-3Ux"/>
                                                 </connections>
@@ -651,34 +651,315 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="EVZ-P4-wtr"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="150"/>
+                                                <state key="normal" title="PPG波形透传输"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bqb-s7-wzI"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="151" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byf-c7-okc" userLabel="51_Btn">
+                                                <rect key="frame" x="15" y="1018" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="QhB-jH-deW"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="PPG波形透传输-停止"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p5h-Ey-9C6"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="152" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDY-5e-HkD" userLabel="52_Btn">
+                                                <rect key="frame" x="141" y="1018" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="f8h-E6-lSS"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-加速度-单次"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GDk-bo-kxe"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="153" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAE-hU-f6A" userLabel="53_Btn">
+                                                <rect key="frame" x="267" y="1018" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="KJX-4I-bDG"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-陀螺仪-单次"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="haH-1b-XRo"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="154" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0O0-kD-6fX" userLabel="54_Btn">
+                                                <rect key="frame" x="15" y="1077" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="rh4-bp-wGo"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-加、陀-单次"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o7s-1G-oWb"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="155" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEb-E7-xeZ" userLabel="55_Btn">
+                                                <rect key="frame" x="141" y="1077" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="NY5-Tm-ZYV"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-加速度-持续"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A2c-jb-wam"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="156" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlQ-XV-YZB" userLabel="56_Btn">
+                                                <rect key="frame" x="267" y="1077" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="S9z-T5-isB"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-陀螺仪-持续"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A2V-QJ-bMQ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="157" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1fc-zw-n0K" userLabel="57_Btn">
+                                                <rect key="frame" x="15" y="1136" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="s7n-1J-RID"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-加、陀-持续"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hMi-dH-qii"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="158" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGC-yk-ej5" userLabel="58_Btn">
+                                                <rect key="frame" x="141" y="1136" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="9Ad-dA-79B"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴-停止测量"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eDe-I0-D3Z"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="159" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggT-2Q-fCw" userLabel="59_Btn">
+                                                <rect key="frame" x="267" y="1136" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="aEa-ol-fVH"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="设置六轴传感器频率"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WEn-hO-crv"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="160" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Xr-5S-TL3" userLabel="60_Btn">
+                                                <rect key="frame" x="15" y="1195" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="ZKe-Or-8OF"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="读六轴传感器频率"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wAT-Yd-pnm"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="161" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bm-T4-7fP" userLabel="61_Btn">
+                                                <rect key="frame" x="141" y="1195" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="D83-QL-sET"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="六轴传感器省电模式"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="62N-cf-VvO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="162" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wt8-Vh-gC8" userLabel="62_Btn">
+                                                <rect key="frame" x="267" y="1195" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="3X7-oh-hZB"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="批量获取睡眠数据"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r4R-9S-KyD"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="163" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqN-wD-Tll" userLabel="63_Btn">
+                                                <rect key="frame" x="15" y="1254" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="AXx-Jo-Glo"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取文件系统列表"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TLL-Ve-jwE"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="164" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-bV-Uqd" userLabel="64_Btn">
+                                                <rect key="frame" x="141" y="1254" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="EIo-79-SPd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="请求文件的数据"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XQN-LR-Ttf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="165" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kg0-QZ-brP" userLabel="65_Btn">
+                                                <rect key="frame" x="267" y="1254" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="RfI-Iy-cIp"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="删除文件"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J8J-88-G2P"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="166" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGi-1L-Twq" userLabel="66_Btn">
+                                                <rect key="frame" x="15" y="1313" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="zQV-ON-LOZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="格式化文件系统"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Rp-VF-i6Y"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="167" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKL-JY-FBl" userLabel="67_Btn">
+                                                <rect key="frame" x="141" y="1313" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="fM9-Nr-EuF"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取文件系统空间信息"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cVV-cq-ZLk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="168" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbQ-WA-Ul3" userLabel="68_Btn">
+                                                <rect key="frame" x="267" y="1313" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="XVR-xw-IjJ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="设置自动记录采集数据模式"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8ew-PA-Cg7"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="169" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSv-t0-0bi" userLabel="69_Btn">
+                                                <rect key="frame" x="15" y="1372" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="x04-wB-ELL"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取自动记录采集数据模式"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bvJ-qQ-d9c"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="170" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1O-B1-P9Y" userLabel="70_Btn">
+                                                <rect key="frame" x="141" y="1372" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="T5R-k5-R51"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取文件系统状态"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="voF-wJ-7aK"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="171" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGz-Jz-3JB" userLabel="71_Btn">
+                                                <rect key="frame" x="267" y="1372" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="qoI-SU-Q3O"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取固件升级类型"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6v6-Fj-I89"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.93333333330000001" green="0.75686274509999996" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstItem="b1O-B1-P9Y" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="0CQ-rl-MDG"/>
                                             <constraint firstItem="abb-rn-53a" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="0Jj-oa-oHv"/>
+                                            <constraint firstItem="Kg0-QZ-brP" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="0tv-Wu-1U0"/>
                                             <constraint firstItem="Gyc-tZ-GF4" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="0wi-F1-2bU"/>
                                             <constraint firstItem="sRm-gU-ct5" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="1CY-zp-443"/>
                                             <constraint firstItem="g1k-Dn-RxJ" firstAttribute="centerY" secondItem="FOu-Cf-lOv" secondAttribute="centerY" id="1Du-zp-6dA"/>
                                             <constraint firstItem="vaw-sR-HOZ" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="1Fl-MQ-gqf"/>
+                                            <constraint firstItem="uGz-Jz-3JB" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="1sl-vj-KyY"/>
                                             <constraint firstItem="oSr-lR-2zX" firstAttribute="top" secondItem="d7Z-G5-72x" secondAttribute="bottom" constant="15" id="1xu-oO-IoO"/>
+                                            <constraint firstItem="DlQ-XV-YZB" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="2LN-oC-20P"/>
+                                            <constraint firstItem="wt8-Vh-gC8" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="2bw-e2-9Or"/>
                                             <constraint firstItem="V87-4X-ugf" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="2cP-IY-cMr"/>
                                             <constraint firstItem="2xA-6s-U1H" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="2ck-X7-tcc"/>
                                             <constraint firstItem="3yb-ne-9X7" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="37a-fM-Ttf"/>
+                                            <constraint firstItem="TSv-t0-0bi" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="3OJ-4L-GuN"/>
                                             <constraint firstItem="cyW-Fm-CL4" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="42q-w7-Rvt"/>
                                             <constraint firstItem="cpT-ea-uhE" firstAttribute="top" secondItem="VwH-49-m8w" secondAttribute="bottom" constant="15" id="44c-U3-zht"/>
                                             <constraint firstItem="egg-cp-66j" firstAttribute="top" secondItem="vaw-sR-HOZ" secondAttribute="bottom" constant="15" id="49x-ds-MCb"/>
                                             <constraint firstItem="fxL-Jm-PKe" firstAttribute="top" secondItem="xp4-rk-u3O" secondAttribute="bottom" constant="15" id="5Ba-Ys-1zQ"/>
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5IA-Za-oge"/>
+                                            <constraint firstItem="mbQ-WA-Ul3" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="5ZX-c4-u2u"/>
                                             <constraint firstItem="Cmx-mp-c6c" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5fg-0j-aS1"/>
                                             <constraint firstItem="moQ-3X-8Li" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5yX-bf-DTk"/>
                                             <constraint firstItem="sRm-gU-ct5" firstAttribute="centerY" secondItem="wjE-gH-fAB" secondAttribute="centerY" id="64T-TE-zgz"/>
                                             <constraint firstItem="1zi-oL-jQP" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="68F-mi-wpm"/>
+                                            <constraint firstItem="bGi-1L-Twq" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="6KI-IH-DBH"/>
                                             <constraint firstItem="asR-RB-cd6" firstAttribute="leading" secondItem="Noo-Ca-sE4" secondAttribute="trailing" constant="15" id="6ar-Lt-GHf"/>
                                             <constraint firstItem="zaG-1R-adB" firstAttribute="top" secondItem="Gyc-tZ-GF4" secondAttribute="bottom" constant="15" id="6hi-Nn-Xel"/>
                                             <constraint firstItem="KRi-Xy-7eu" firstAttribute="centerY" secondItem="jSx-Pq-6uA" secondAttribute="centerY" id="7Ms-ll-f4O"/>
@@ -687,17 +968,29 @@
                                             <constraint firstItem="3yb-ne-9X7" firstAttribute="centerY" secondItem="Qng-Ee-vFu" secondAttribute="centerY" id="8lk-aG-ZMN"/>
                                             <constraint firstItem="KuG-e0-Kb5" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="94C-Ka-IUY"/>
                                             <constraint firstItem="d7Z-G5-72x" firstAttribute="top" secondItem="jSx-Pq-6uA" secondAttribute="bottom" constant="15" id="9CI-jy-F8K"/>
+                                            <constraint firstItem="xAE-hU-f6A" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="9Zo-g6-qfv"/>
+                                            <constraint firstItem="byf-c7-okc" firstAttribute="top" secondItem="tmi-p9-VCa" secondAttribute="bottom" constant="15" id="9o3-y8-SaT"/>
+                                            <constraint firstItem="TSv-t0-0bi" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="9zo-Ku-Ien"/>
                                             <constraint firstItem="YZB-JN-EUC" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="AP3-qh-0Ht"/>
                                             <constraint firstItem="2xA-6s-U1H" firstAttribute="centerY" secondItem="vHr-Xv-77A" secondAttribute="centerY" id="ART-dU-Bw5"/>
                                             <constraint firstAttribute="trailing" secondItem="VwH-49-m8w" secondAttribute="trailing" constant="15" id="AfV-BB-ytS"/>
+                                            <constraint firstItem="VDY-5e-HkD" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="AhE-cq-F0F"/>
+                                            <constraint firstItem="sf1-bV-Uqd" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="AjS-Lm-5SQ"/>
                                             <constraint firstItem="Cmx-mp-c6c" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="BB7-Gf-mNP"/>
                                             <constraint firstItem="tmi-p9-VCa" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="BVm-uU-byk"/>
+                                            <constraint firstItem="VDY-5e-HkD" firstAttribute="centerY" secondItem="byf-c7-okc" secondAttribute="centerY" id="BkB-Fu-w3H"/>
                                             <constraint firstItem="Qng-Ee-vFu" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="ByV-dn-hFG"/>
                                             <constraint firstItem="2Z4-nr-Y9t" firstAttribute="centerY" secondItem="FOu-Cf-lOv" secondAttribute="centerY" id="CAq-cH-QKg"/>
+                                            <constraint firstItem="wqN-wD-Tll" firstAttribute="top" secondItem="5Xr-5S-TL3" secondAttribute="bottom" constant="15" id="Cwu-8x-4xu"/>
+                                            <constraint firstItem="aEb-E7-xeZ" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="Cz0-uQ-A9z"/>
                                             <constraint firstItem="VwH-49-m8w" firstAttribute="centerY" secondItem="Noo-Ca-sE4" secondAttribute="centerY" id="D74-kd-uTX"/>
+                                            <constraint firstItem="sf1-bV-Uqd" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="DAi-xs-MFn"/>
                                             <constraint firstItem="jSx-Pq-6uA" firstAttribute="top" secondItem="FOu-Cf-lOv" secondAttribute="bottom" constant="15" id="DjL-UT-EUY"/>
                                             <constraint firstItem="IqO-vz-1W6" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="E5n-28-rzH"/>
+                                            <constraint firstItem="EKL-JY-FBl" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="EA5-Qe-r2c"/>
+                                            <constraint firstItem="0O0-kD-6fX" firstAttribute="top" secondItem="byf-c7-okc" secondAttribute="bottom" constant="15" id="EGd-ce-2WL"/>
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Eg6-RF-ujY"/>
+                                            <constraint firstItem="0O0-kD-6fX" firstAttribute="centerY" secondItem="DlQ-XV-YZB" secondAttribute="centerY" id="Ewd-1p-A5z"/>
                                             <constraint firstItem="Ihp-iF-qjp" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Fgg-it-f4u"/>
                                             <constraint firstItem="egg-cp-66j" firstAttribute="centerY" secondItem="9V5-r4-NMP" secondAttribute="centerY" id="FmA-kL-jES"/>
                                             <constraint firstItem="IqO-vz-1W6" firstAttribute="centerY" secondItem="jSx-Pq-6uA" secondAttribute="centerY" id="FqA-Wu-2V1"/>
@@ -715,28 +1008,40 @@
                                             <constraint firstItem="Qng-Ee-vFu" firstAttribute="centerY" secondItem="2AI-dz-4h7" secondAttribute="centerY" id="JGw-gC-sN2"/>
                                             <constraint firstItem="cyW-Fm-CL4" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="JVZ-YW-4Gd"/>
                                             <constraint firstItem="sMY-KW-Gfw" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="JVl-ar-wdV"/>
+                                            <constraint firstItem="bGi-1L-Twq" firstAttribute="top" secondItem="wqN-wD-Tll" secondAttribute="bottom" constant="15" id="Jic-Sf-HY3"/>
                                             <constraint firstItem="5ta-rW-gVH" firstAttribute="centerY" secondItem="1zi-oL-jQP" secondAttribute="centerY" id="JxU-DP-2se"/>
+                                            <constraint firstItem="byf-c7-okc" firstAttribute="centerY" secondItem="xAE-hU-f6A" secondAttribute="centerY" id="KHj-QX-UcB"/>
                                             <constraint firstItem="Noo-Ca-sE4" firstAttribute="leading" secondItem="Yok-QN-M64" secondAttribute="leading" constant="15" id="KbR-52-8ew"/>
                                             <constraint firstItem="fxL-Jm-PKe" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Kfs-hE-sGi"/>
                                             <constraint firstItem="5ta-rW-gVH" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="LIV-Op-2Hw"/>
+                                            <constraint firstItem="wt8-Vh-gC8" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="LNM-Zd-lr8"/>
+                                            <constraint firstItem="TSv-t0-0bi" firstAttribute="top" secondItem="bGi-1L-Twq" secondAttribute="bottom" constant="15" id="Lm8-v9-rhv"/>
+                                            <constraint firstItem="DlQ-XV-YZB" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="LqB-zW-7d1"/>
+                                            <constraint firstItem="ggT-2Q-fCw" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="MFU-D4-vVT"/>
+                                            <constraint firstItem="uGz-Jz-3JB" firstAttribute="centerY" secondItem="TSv-t0-0bi" secondAttribute="centerY" id="MWc-aW-WY1"/>
                                             <constraint firstItem="asR-RB-cd6" firstAttribute="centerX" secondItem="Yok-QN-M64" secondAttribute="centerX" id="MYx-bU-ijJ"/>
                                             <constraint firstItem="1zi-oL-jQP" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Mf9-G3-fjc"/>
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="top" secondItem="egg-cp-66j" secondAttribute="bottom" constant="15" id="NAX-pk-CgD"/>
                                             <constraint firstItem="d7Z-G5-72x" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="NIj-aP-5pW"/>
                                             <constraint firstItem="cyW-Fm-CL4" firstAttribute="top" secondItem="oSr-lR-2zX" secondAttribute="bottom" constant="15" id="Nre-lt-4KH"/>
-                                            <constraint firstAttribute="bottom" secondItem="tmi-p9-VCa" secondAttribute="bottom" constant="15" id="OOd-G2-6AE"/>
                                             <constraint firstItem="k5i-Gd-Erd" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="OZX-Ie-TNJ"/>
+                                            <constraint firstItem="wt8-Vh-gC8" firstAttribute="centerY" secondItem="5Xr-5S-TL3" secondAttribute="centerY" id="Ovb-4M-kSZ"/>
+                                            <constraint firstItem="1fc-zw-n0K" firstAttribute="top" secondItem="0O0-kD-6fX" secondAttribute="bottom" constant="15" id="P80-oi-SDk"/>
                                             <constraint firstItem="J6J-6B-mL2" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="PJN-cc-8wS"/>
                                             <constraint firstItem="asR-RB-cd6" firstAttribute="centerY" secondItem="Noo-Ca-sE4" secondAttribute="centerY" id="PJi-Nk-rfy"/>
                                             <constraint firstItem="abb-rn-53a" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="PV2-v7-lC9"/>
                                             <constraint firstItem="xp4-rk-u3O" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="PW6-Wm-wgl"/>
                                             <constraint firstItem="fzp-C8-ej3" firstAttribute="centerY" secondItem="oSr-lR-2zX" secondAttribute="centerY" id="PXD-Vd-Cj9"/>
+                                            <constraint firstItem="5Xr-5S-TL3" firstAttribute="centerY" secondItem="6bm-T4-7fP" secondAttribute="centerY" id="PjK-GF-aYn"/>
+                                            <constraint firstItem="AGC-yk-ej5" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Pkq-M3-tcf"/>
                                             <constraint firstItem="vHr-Xv-77A" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="PvJ-2Z-t5A"/>
                                             <constraint firstItem="KRi-Xy-7eu" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Q8U-xt-PKd"/>
                                             <constraint firstItem="jSx-Pq-6uA" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="QVX-k3-hAn"/>
                                             <constraint firstItem="sMY-KW-Gfw" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Qfw-Vd-djS"/>
+                                            <constraint firstItem="byf-c7-okc" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="Qgw-Iz-RFv"/>
                                             <constraint firstItem="VwH-49-m8w" firstAttribute="leading" secondItem="asR-RB-cd6" secondAttribute="trailing" constant="15" id="Qo9-oS-ITO"/>
                                             <constraint firstItem="0qL-Nl-PaP" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="RD5-1j-c3n"/>
+                                            <constraint firstItem="AGC-yk-ej5" firstAttribute="centerY" secondItem="1fc-zw-n0K" secondAttribute="centerY" id="RFm-9X-dpO"/>
                                             <constraint firstItem="V87-4X-ugf" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="RVb-Bg-DRe"/>
                                             <constraint firstItem="Qg0-mI-ryr" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Rjg-MK-Hzn"/>
                                             <constraint firstItem="2AI-dz-4h7" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="S1s-mi-YTN"/>
@@ -749,32 +1054,45 @@
                                             <constraint firstItem="J6J-6B-mL2" firstAttribute="centerY" secondItem="d7Z-G5-72x" secondAttribute="centerY" id="ULO-aa-aPx"/>
                                             <constraint firstItem="zaG-1R-adB" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="URb-ev-EaU"/>
                                             <constraint firstItem="cpT-ea-uhE" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Ug5-c8-w8J"/>
+                                            <constraint firstItem="wqN-wD-Tll" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Ukh-jl-Pix"/>
                                             <constraint firstItem="FOu-Cf-lOv" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Ux7-Wa-v0c"/>
+                                            <constraint firstItem="bGi-1L-Twq" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="VAa-wP-Pve"/>
                                             <constraint firstItem="Qng-Ee-vFu" firstAttribute="top" secondItem="vHr-Xv-77A" secondAttribute="bottom" constant="15" id="Vzx-Jp-5sy"/>
+                                            <constraint firstItem="Kg0-QZ-brP" firstAttribute="centerY" secondItem="wqN-wD-Tll" secondAttribute="centerY" id="WCl-z2-Ljg"/>
+                                            <constraint firstItem="wqN-wD-Tll" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="WJb-Fi-ma1"/>
+                                            <constraint firstItem="6bm-T4-7fP" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Wbe-ar-muD"/>
                                             <constraint firstItem="dHo-Ck-Sj5" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Wdw-3Z-1gz"/>
                                             <constraint firstItem="2Z4-nr-Y9t" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Wjd-WI-myU"/>
                                             <constraint firstItem="vHr-Xv-77A" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="Wvc-5s-370"/>
+                                            <constraint firstItem="1fc-zw-n0K" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="XDZ-PI-LUJ"/>
                                             <constraint firstItem="3yb-ne-9X7" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="XWV-Bb-pxs"/>
                                             <constraint firstItem="IDs-09-wSQ" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Xex-mF-KS9"/>
                                             <constraint firstItem="tmi-p9-VCa" firstAttribute="centerY" secondItem="abb-rn-53a" secondAttribute="centerY" id="Xwz-gg-uEM"/>
                                             <constraint firstItem="fzp-C8-ej3" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Xy1-Xu-UWj"/>
                                             <constraint firstItem="KRi-Xy-7eu" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Yib-sb-aHN"/>
                                             <constraint firstItem="Ihp-iF-qjp" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="Yvz-5F-drp"/>
+                                            <constraint firstItem="mbQ-WA-Ul3" firstAttribute="centerY" secondItem="bGi-1L-Twq" secondAttribute="centerY" id="YxG-B5-j29"/>
                                             <constraint firstItem="2AI-dz-4h7" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="Z4H-bt-HN5"/>
                                             <constraint firstItem="0qL-Nl-PaP" firstAttribute="centerY" secondItem="zaG-1R-adB" secondAttribute="centerY" id="ZEi-uf-PHk"/>
                                             <constraint firstItem="xp4-rk-u3O" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="ZnT-Aa-qgq"/>
                                             <constraint firstItem="Gyc-tZ-GF4" firstAttribute="top" secondItem="Qg0-mI-ryr" secondAttribute="bottom" constant="15" id="aMo-TQ-VMw"/>
                                             <constraint firstItem="SkX-f9-LxJ" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="aVU-UI-HZb"/>
+                                            <constraint firstItem="1fc-zw-n0K" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="abh-8m-pls"/>
+                                            <constraint firstItem="byf-c7-okc" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="bG7-nd-xMR"/>
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="centerY" secondItem="k5i-Gd-Erd" secondAttribute="centerY" id="c2b-lz-nEW"/>
                                             <constraint firstItem="jSx-Pq-6uA" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="cIJ-sY-vA2"/>
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="d8t-ze-SAs"/>
                                             <constraint firstItem="Qg0-mI-ryr" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="dgV-27-ESz"/>
+                                            <constraint firstItem="6bm-T4-7fP" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="dhj-QB-umK"/>
                                             <constraint firstItem="0qL-Nl-PaP" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="e95-OH-vL6"/>
                                             <constraint firstItem="FOu-Cf-lOv" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="eGC-nN-rA1"/>
                                             <constraint firstItem="Gyc-tZ-GF4" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="eZh-se-fRG"/>
                                             <constraint firstItem="YZB-JN-EUC" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="eeB-mr-Agj"/>
                                             <constraint firstItem="k5i-Gd-Erd" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="fJt-bs-352"/>
+                                            <constraint firstItem="TSv-t0-0bi" firstAttribute="centerY" secondItem="b1O-B1-P9Y" secondAttribute="centerY" id="fS6-CQ-Ajw"/>
                                             <constraint firstItem="d7Z-G5-72x" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="fVx-jq-YOz"/>
+                                            <constraint firstItem="5Xr-5S-TL3" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="fhN-Qi-Ore"/>
+                                            <constraint firstAttribute="bottom" secondItem="TSv-t0-0bi" secondAttribute="bottom" constant="15" id="g21-sT-D3s"/>
                                             <constraint firstItem="SkX-f9-LxJ" firstAttribute="centerY" secondItem="d7Z-G5-72x" secondAttribute="centerY" id="gFC-py-STR"/>
                                             <constraint firstItem="fzp-C8-ej3" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="gXv-0n-Oww"/>
                                             <constraint firstItem="dHo-Ck-Sj5" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="gak-Z6-Tgw"/>
@@ -786,17 +1104,27 @@
                                             <constraint firstItem="egg-cp-66j" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="hiZ-fc-v8A"/>
                                             <constraint firstItem="vaw-sR-HOZ" firstAttribute="top" secondItem="5ta-rW-gVH" secondAttribute="bottom" constant="15" id="ieC-26-GnD"/>
                                             <constraint firstItem="xp4-rk-u3O" firstAttribute="top" secondItem="asR-RB-cd6" secondAttribute="bottom" constant="15" id="imP-WP-xpK"/>
+                                            <constraint firstItem="VDY-5e-HkD" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="ioe-XS-hb5"/>
                                             <constraint firstItem="Cmx-mp-c6c" firstAttribute="centerY" secondItem="zaG-1R-adB" secondAttribute="centerY" id="jID-ik-YTR"/>
                                             <constraint firstItem="moQ-3X-8Li" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="jL9-f5-YA7"/>
                                             <constraint firstItem="Ihp-iF-qjp" firstAttribute="centerY" secondItem="Gyc-tZ-GF4" secondAttribute="centerY" id="l6u-bP-Jal"/>
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="centerY" secondItem="5ta-rW-gVH" secondAttribute="centerY" id="m2B-BA-fOu"/>
+                                            <constraint firstItem="aEb-E7-xeZ" firstAttribute="centerY" secondItem="0O0-kD-6fX" secondAttribute="centerY" id="mHS-3N-GZH"/>
+                                            <constraint firstItem="5Xr-5S-TL3" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="mQf-hA-1Be"/>
+                                            <constraint firstItem="ggT-2Q-fCw" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="mZN-aM-SzO"/>
+                                            <constraint firstItem="b1O-B1-P9Y" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="nEO-L3-JDa"/>
                                             <constraint firstItem="zaG-1R-adB" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="nFl-rp-NgS"/>
+                                            <constraint firstItem="bGi-1L-Twq" firstAttribute="centerY" secondItem="EKL-JY-FBl" secondAttribute="centerY" id="nl6-ak-pR7"/>
                                             <constraint firstItem="VwH-49-m8w" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="o77-za-Auy"/>
+                                            <constraint firstItem="uGz-Jz-3JB" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="oLK-4P-EIj"/>
                                             <constraint firstItem="5ta-rW-gVH" firstAttribute="top" secondItem="Qng-Ee-vFu" secondAttribute="bottom" constant="15" id="op5-Ys-kXK"/>
                                             <constraint firstItem="egg-cp-66j" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="ouF-y6-fRx"/>
                                             <constraint firstItem="Noo-Ca-sE4" firstAttribute="top" secondItem="Yok-QN-M64" secondAttribute="top" constant="15" id="pD1-aC-VUE"/>
                                             <constraint firstItem="IDs-09-wSQ" firstAttribute="leading" secondItem="Noo-Ca-sE4" secondAttribute="leading" id="q03-LB-de3"/>
+                                            <constraint firstItem="Kg0-QZ-brP" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="q9e-yA-795"/>
                                             <constraint firstItem="moQ-3X-8Li" firstAttribute="top" secondItem="xp4-rk-u3O" secondAttribute="bottom" constant="15" id="qdW-c2-5gJ"/>
+                                            <constraint firstItem="EKL-JY-FBl" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="qe1-3w-nzZ"/>
+                                            <constraint firstItem="wqN-wD-Tll" firstAttribute="centerY" secondItem="sf1-bV-Uqd" secondAttribute="centerY" id="qfU-SH-oz2"/>
                                             <constraint firstItem="oSr-lR-2zX" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="qfp-6R-hiS"/>
                                             <constraint firstItem="vHr-Xv-77A" firstAttribute="top" secondItem="cyW-Fm-CL4" secondAttribute="bottom" constant="15" id="qo7-eP-OUq"/>
                                             <constraint firstItem="Qng-Ee-vFu" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="rVJ-on-OU6"/>
@@ -805,15 +1133,23 @@
                                             <constraint firstItem="IDs-09-wSQ" firstAttribute="top" secondItem="Noo-Ca-sE4" secondAttribute="bottom" constant="15" id="sBp-5B-uIu"/>
                                             <constraint firstItem="ZoP-Kp-DM3" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="sRw-g1-I5s"/>
                                             <constraint firstItem="IqO-vz-1W6" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="sUl-re-TwK"/>
+                                            <constraint firstItem="5Xr-5S-TL3" firstAttribute="top" secondItem="1fc-zw-n0K" secondAttribute="bottom" constant="15" id="sei-nR-OKD"/>
+                                            <constraint firstItem="aEb-E7-xeZ" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="t70-BU-HZW"/>
+                                            <constraint firstItem="mbQ-WA-Ul3" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="tCh-Lb-V28"/>
                                             <constraint firstItem="9V5-r4-NMP" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="tuu-Rs-pLZ"/>
+                                            <constraint firstItem="xAE-hU-f6A" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="uUn-ye-Etn"/>
                                             <constraint firstItem="G39-cp-RQ1" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="ue7-kY-h96"/>
+                                            <constraint firstItem="0O0-kD-6fX" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="v2H-gM-4CS"/>
                                             <constraint firstItem="fxL-Jm-PKe" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="vB2-7j-zGi"/>
                                             <constraint firstItem="G39-cp-RQ1" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="wLp-YH-FUO"/>
                                             <constraint firstItem="Noo-Ca-sE4" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="wXr-Ek-bYn"/>
                                             <constraint firstItem="vaw-sR-HOZ" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="wc1-kV-mKw"/>
                                             <constraint firstItem="2xA-6s-U1H" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="wcZ-sB-rjR"/>
                                             <constraint firstItem="Qg0-mI-ryr" firstAttribute="top" secondItem="IDs-09-wSQ" secondAttribute="bottom" constant="15" id="wpM-EG-1VB"/>
+                                            <constraint firstItem="AGC-yk-ej5" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="x70-xL-m9d"/>
                                             <constraint firstItem="V87-4X-ugf" firstAttribute="centerY" secondItem="cyW-Fm-CL4" secondAttribute="centerY" id="xUW-5n-XAn"/>
+                                            <constraint firstItem="0O0-kD-6fX" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="xeG-qb-Hhl"/>
+                                            <constraint firstItem="1fc-zw-n0K" firstAttribute="centerY" secondItem="ggT-2Q-fCw" secondAttribute="centerY" id="xlf-gO-ADk"/>
                                             <constraint firstItem="g1k-Dn-RxJ" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="zC3-5d-SEk"/>
                                             <constraint firstItem="FOu-Cf-lOv" firstAttribute="top" secondItem="zaG-1R-adB" secondAttribute="bottom" constant="15" id="zPJ-Zu-eF9"/>
                                             <constraint firstItem="dHo-Ck-Sj5" firstAttribute="centerY" secondItem="tmi-p9-VCa" secondAttribute="centerY" id="zhX-Vg-GAa"/>

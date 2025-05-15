@@ -998,9 +998,292 @@ class Main_VC: UIViewController {
             let sleepModel = BCLRingManager.shared.calculateSleepLocally(targetDate: date!, macString: nil)
             BDLogger.info("睡眠数据\(sleepModel.description)")
             break
-        case 149: //
+        case 149: // 停止心率测量
+            BDLogger.info("停止心率测量")
+            BCLRingManager.shared.stopHeartRate { res in
+                switch res {
+                case .success:
+                    BDLogger.info("停止心率测量成功")
+                case let .failure(error):
+                    BDLogger.error("停止心率测量失败: \(error)")
+                }
+            }
             break
-        case 150: //
+        case 150: // PPG波形透传输
+            BDLogger.info("开始-PPG波形透传输")
+            let waveSetting = 0
+            BCLRingManager.shared.ppgWaveFormMeasurement(collectTime: 30, waveConfig: 0, progressConfig: 0, waveSetting: waveSetting) { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("PPG波形透传输成功: \(response)")
+                    BDLogger.info("PPG波形透传输进度: \(String(describing: response.progressData))")
+                    BDLogger.info("PPG波形透传输-心率: \(String(describing: response.heartRate))")
+                    BDLogger.info("PPG波形透传输-血氧: \(String(describing: response.oxygen))")
+                    if waveSetting == 0 {
+                        if let waveData = response.waveform0 {
+                            BDLogger.info("波形数据: 序号\(waveData.0), 数量\(waveData.1)")
+                            BDLogger.info("波形数据-绿色: \(waveData.2)")
+                        }
+                    } else if waveSetting == 1 {
+                        if let waveData = response.waveform1 {
+                            BDLogger.info("波形数据: 序号\(waveData.0), 数量\(waveData.1)")
+                            BDLogger.info("波形数据-(绿色+红外): \(waveData.2)")
+                        }
+                    } else if waveSetting == 2 {
+                        BDLogger.info("PPG波形透传输-佩戴检测")
+                    }
+                    break
+                case let .failure(error):
+                    BDLogger.error("PPG波形透传输失败: \(error)")
+                    break
+                }
+            }
+            break
+        case 151: // PPG波形透传输停止
+            BDLogger.info("停止-PPG波形透传输")
+            BCLRingManager.shared.ppgWaveFormStop { res in
+                switch res {
+                case .success:
+                    BDLogger.info("停止PPG波形透传输成功")
+                case let .failure(error):
+                    BDLogger.error("停止PPG波形透传输失败: \(error)")
+                }
+            }
+            break
+        case 152: // 六轴-加速度-单次
+            BDLogger.info("六轴-加速度-单次")
+            BCLRingManager.shared.getSixAxisAccelerationData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-加速度-单次数据: \(data)")
+                    BDLogger.info("六轴-加速度-单次数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-加速度-单次数据-X: \(data.xAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度-单次数据-Y: \(data.yAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度-单次数据-Z: \(data.zAcceleration ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-加速度-单次数据失败: \(error)")
+                }
+            }
+            break
+        case 153: // 六轴-陀螺仪-单次
+            BDLogger.info("六轴-陀螺仪-单次")
+            BCLRingManager.shared.getSixAxisGyroscopeData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-陀螺仪-单次数据: \(data)")
+                    BDLogger.info("六轴-陀螺仪-单次数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-单次数据-X: \(data.xGyroscope ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-单次数据-Y: \(data.yGyroscope ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-单次数据-Z: \(data.zGyroscope ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-陀螺仪-单次数据失败: \(error)")
+                }
+            }
+            break
+        case 154: // 六轴-加速度、陀螺仪-单次
+            BDLogger.info("六轴-加速度、陀螺仪-单次")
+            BCLRingManager.shared.getSixAxisAccelerationAndGyroscopeData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据: \(data)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-xAcceleration: \(data.xAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-yAcceleration: \(data.yAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-zAcceleration: \(data.zAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-xGyroscope: \(data.xGyroscope ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-yGyroscope: \(data.yGyroscope ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-单次数据-zGyroscope: \(data.zGyroscope ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-加速度、陀螺仪-单次数据失败: \(error)")
+                }
+            }
+            break
+        case 155: // 六轴-加速度-持续
+            BDLogger.info("六轴-加速度-持续")
+            BCLRingManager.shared.getSixAxisRealTimeAccelerationData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-加速度-持续数据: \(data)")
+                    BDLogger.info("六轴-加速度-持续数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-加速度-持续数据-X: \(data.xAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度-持续数据-Y: \(data.yAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度-持续数据-Z: \(data.zAcceleration ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-加速度-持续数据失败: \(error)")
+                }
+            }
+            break
+        case 156: // 六轴-陀螺仪-持续
+            BDLogger.info("六轴-陀螺仪-持续")
+            BCLRingManager.shared.getSixAxisRealTimeGyroscopeData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-陀螺仪-持续数据: \(data)")
+                    BDLogger.info("六轴-陀螺仪-持续数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-持续数据-X: \(data.xGyroscope ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-持续数据-Y: \(data.yGyroscope ?? 0)")
+                    BDLogger.info("六轴-陀螺仪-持续数据-Z: \(data.zGyroscope ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-陀螺仪-持续数据失败: \(error)")
+                }
+            }
+            break
+        case 157: // 六轴-加速度、陀螺仪-持续
+            BDLogger.info("六轴-加速度、陀螺仪-持续")
+            BCLRingManager.shared.getSixAxisRealTimeAccelerationAndGyroscopeData { res in
+                switch res {
+                case let .success(data):
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据: \(data)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-状态: \(data.status ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-xAcceleration: \(data.xAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-yAcceleration: \(data.yAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-zAcceleration: \(data.zAcceleration ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-xGyroscope: \(data.xGyroscope ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-yGyroscope: \(data.yGyroscope ?? 0)")
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据-zGyroscope: \(data.zGyroscope ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("六轴-加速度、陀螺仪-持续数据失败: \(error)")
+                }
+            }
+            break
+        case 158: // 六轴-停止测量
+            BDLogger.info("六轴-停止测量")
+            BCLRingManager.shared.stopSixAxisData { res in
+                switch res {
+                case .success:
+                    BDLogger.info("停止采集获取六轴数据成功")
+                case let .failure(error):
+                    BDLogger.error("停止采集获取六轴数据失败: \(error)")
+                }
+            }
+            break
+        case 159: // 设置六轴传感器工作频率 (暂不支持分开设置，需保证加速度、陀螺仪频率一致)
+            BDLogger.info("设置六轴传感器工作频率")
+            // 频率25hz，50hz，100hz，150hz，200hz
+            BCLRingManager.shared.setSixAxisWorkFrequency(accelerationFrequency: 25, gyroscopeFrequency: 25) { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("设置六轴传感器工作频率返回数据: \(response)")
+                    if let status = response.status, status == 1 {
+                        BDLogger.info("设置六轴传感器工作频率成功")
+                    } else {
+                        BDLogger.info("设置六轴传感器工作频率失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置六轴传感器工作频率失败: \(error)")
+                }
+            }
+
+            break
+        case 160: // 获取六轴传感器工作频率
+            BDLogger.info("获取六轴传感器工作频率")
+            BCLRingManager.shared.getSixAxisWorkFrequency { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取六轴传感器工作频率返回数据: \(response)")
+                    BDLogger.info("加速度频率: \(response.accelerationFrequency ?? 0)")
+                    BDLogger.info("陀螺仪频率: \(response.gyroscopeFrequency ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("获取六轴传感器工作频率失败: \(error)")
+                }
+            }
+            break
+        case 161: // 设置六轴传感器省电模式
+            BDLogger.info("设置六轴传感器省电模式")
+            BCLRingManager.shared.setSixAxisPowerSavingMode { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("设置六轴传感器省电模式返回数据: \(response)")
+                    if let status = response.status, status == 1 {
+                        BDLogger.info("设置六轴传感器省电模式-成功")
+                    } else {
+                        BDLogger.info("设置六轴传感器省电模式-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置六轴传感器省电模式失败: \(error)")
+                }
+            }
+            break
+        case 162: // 批量获取睡眠数据
+            BDLogger.info("批量获取睡眠数据")
+            let dates = ["2025-05-01", "2025-05-02", "2025-05-03", "2025-05-04", "2025-05-05", "2025-05-06", "2025-05-07", "2025-05-08", "2025-05-09", "2025-05-10", "2025-05-11", "2025-05-12", "2025-05-13"]
+            BCLRingManager.shared.getSleepDataByTimeRange(datas: dates) { res in
+                switch res {
+                case let .success(datas):
+                    BDLogger.info("批量获取睡眠数据成功: \(datas)")
+                case let .failure(error):
+                    BDLogger.error("批量获取睡眠数据失败: \(error)")
+                }
+            }
+            break
+
+        case 163: // 获取文件系统列表
+            BDLogger.info("获取文件系统列表")
+            BCLRingManager.shared.getFileList { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取文件系统列表成功: \(response)")
+                    BDLogger.info("文件系统列表-总个数: \(response.fileTotalCount ?? 0)")
+                    BDLogger.info("文件系统列表-当前索引: \(response.fileIndex ?? 0)")
+                    BDLogger.info("文件系统列表-文件大小: \(response.fileSize ?? 0)")
+                    BDLogger.info("文件系统列表-文件名: \(response.fileName ?? "")")
+                    BDLogger.info("文件系统列表-文件类型: \(response.fileType ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("获取文件系统列表失败: \(error)")
+                }
+            }
+            break
+        case 164: // 请求文件的数据
+            BDLogger.info("请求文件的数据")
+            break
+        case 165: // 删除文件
+            BDLogger.info("删除文件")
+            break
+        case 166: // 格式化文件系统
+            BDLogger.info("格式化文件系统")
+            break
+        case 167: // 获取文件系统空间信息
+            BDLogger.info("获取文件系统空间信息")
+            break
+        case 168: // 设置自动记录采集数据模式
+            BDLogger.info("设置自动记录采集数据模式")
+            break
+        case 169: // 获取自动记录采集数据模式
+            BDLogger.info("获取自动记录采集数据模式")
+            break
+        case 170: // 获取文件系统状态
+            BDLogger.info("获取文件系统状态")
+            break
+        case 171: // 根据固件版本号，返回固件升级类型
+            BDLogger.info("根据固件版本号，返回固件升级类型")
+//                        let fileName = "7.1.9.2Z3R.bin"
+//                        let fileName = "6.0.2.7Z2W.zip"
+//                        let fileName = "2.7.4.8Z27.hex16"
+            BCLRingManager.shared.getOTAType(firmwareVersion: "6.0.2.7Z2W") { response in
+                BDLogger.info("固件升级类型:\(response.rawValue)")
+                switch response.rawValue {
+                case 0:
+                    BDLogger.error("固件升级类型: 未知")
+                    break
+                case 1:
+                    BDLogger.info("固件升级类型: Apollo")
+                    // Apollo固件升级 查看以下方法
+//                    func apolloUpgradeFirmware(filePath: String, progressHandler: ((Float) -> Void)? = nil, completion: @escaping (Result<Void, BCLError>) -> Void)
+                    break
+                case 2:
+                    BDLogger.info("固件升级类型: Nordic")
+                    // Nordic固件升级 查看以下方法
+//                    func nrfUpgradeFirmware(filePath: String, fileName: String, progressHandler: ((Int) -> Void)? = nil, completion: @escaping (Result<BCLNrfUpgradeState.Stage, BCLError>) -> Void)
+                    break
+                case 3:
+                    BDLogger.info("固件升级类型: Phy")
+                    // Phy固件升级 查看以下方法
+//                    func phyUpgradeFirmware(filePath: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Result<BCLPhyUpgradeState, BCLError>) -> Void)
+                    break
+                default:
+                    break
+                }
+            }
             break
         default:
             break
