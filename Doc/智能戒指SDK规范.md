@@ -2484,7 +2484,7 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
 DataApi.instance.deleteHistoryErrorBatch();
 ```
 ```java
-   //如需使用更精准的睡眠算法，获取戒指历史数据时，请调用该指令(LmAPI.READ_HISTORY不支持上传服务器操作)
+   //如需使用更精准的睡眠算法，获取戒指历史数据时，请调用该指令(LmAPI.READ_HISTORY不支持上传服务器操作)，这个支持一代协议
    LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x01,  mac, new IHistoryListener() {
                     @Override
                     public void error(int code) {
@@ -2514,6 +2514,10 @@ DataApi.instance.deleteHistoryErrorBatch();
                         postView("\n历史数据上传服务器完成");
                     }
                 });
+```
+如果使用的是二代协议，除非需要读取特定时间以后的历史数据，或者需要在特定场合，主动读取历史数据，否则不需要使用READ_HISTORY_UPDATE_TO_SERVER。因为二代协议是会自动上传历史数据的，需要在页面上设置监听，使用下述方法上传历史数据
+```java
+READ_HISTORY_AUTO_UPDATE_TO_SERVER(  String mMac, IHistoryListenerLite listenerLite, IWebHistoryResult mWebHistoryResult)
 ```
 获取睡眠数据，需要在updateHistoryFinish回调里获取，保证云端数据已经保存，才能计算出睡眠数据，可以延时1s左右，保证能准确获取
 ```java
