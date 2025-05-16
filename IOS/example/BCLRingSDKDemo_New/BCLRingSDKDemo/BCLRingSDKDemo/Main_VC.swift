@@ -1235,24 +1235,161 @@ class Main_VC: UIViewController {
             break
         case 164: // 请求文件的数据
             BDLogger.info("请求文件的数据")
+            // 临时测试文件名
+            let fileName = "010203040506_749D2668_8.txt"
+            BCLRingManager.shared.getFileData(fileName: fileName) { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取文件数据成功: \(response)")
+                    BDLogger.info("文件数据-状态: \(response.fileSystemStatus ?? 0)")
+                    BDLogger.info("文件数据-大小: \(response.fileSize ?? 0)")
+                    BDLogger.info("文件数据-总包数: \(response.totalNumber ?? 0)")
+                    BDLogger.info("文件数据-当前包号: \(response.currentNumber ?? 0)")
+                    BDLogger.info("文件数据-当前包长度: \(response.currentLength ?? 0)")
+                    guard let fileType = response.fileType, fileType >= 1 || fileType <= 8 else {
+                        BDLogger.info("未知的文件类型")
+                        return
+                    }
+                    if fileType == 1 {
+                        BDLogger.info("文件类型:三轴数据-数据：\(response.fileDataType1 ?? [])")
+                    } else if fileType == 2 {
+                        BDLogger.info("文件类型:六轴数据-数据：\(response.fileDataType2 ?? [])")
+                    } else if fileType == 3 {
+                        BDLogger.info("文件类型:PPG数据红外+红色+三轴(spo2)-数据：\(response.fileDataType3 ?? [])")
+                    } else if fileType == 4 {
+                        BDLogger.info("文件类型:PPG数据绿色-数据：\(response.fileDataType4 ?? [])")
+                    } else if fileType == 5 {
+                        BDLogger.info("文件类型:PPG数据红外-数据：\(response.fileDataType5 ?? [])")
+                    } else if fileType == 6 {
+                        BDLogger.info("文件类型:温度数据红外-数据：\(response.fileDataType6 ?? [])")
+                    } else if fileType == 7 {
+                        BDLogger.info("文件类型:红外+红色+绿色+温度+三轴-数据：\(response.fileDataType7 ?? [])")
+                    } else if fileType == 8 {
+                        BDLogger.info("文件类型:PPG数据绿色+三轴(hr)-数据：\(response.fileDataType8 ?? [])")
+                    }
+                case let .failure(error):
+                    BDLogger.error("获取文件数据失败: \(error)")
+                }
+            }
             break
         case 165: // 删除文件
             BDLogger.info("删除文件")
+            // 临时测试文件名
+            let fileName = "010203040506_749D2668_8.txt"
+            BCLRingManager.shared.deleteFile(fileName: fileName) { res in
+                switch res {
+                case let .success(response):
+                    if let result = response.deleteResult, result == 1 {
+                        BDLogger.info("删除文件成功: \(response)")
+                    } else {
+                        BDLogger.info("删除文件失败: \(response)")
+                    }
+                case let .failure(error):
+                    BDLogger.error("删除文件失败: \(error)")
+                }
+            }
             break
         case 166: // 格式化文件系统
             BDLogger.info("格式化文件系统")
+            BCLRingManager.shared.formatFileSystem { res in
+                switch res {
+                case let .success(response):
+                    if let result = response.formatResult, result == 1 {
+                        BDLogger.info("格式化文件系统成功: \(response)")
+                    } else {
+                        BDLogger.info("格式化文件系统失败: \(response)")
+                    }
+                case let .failure(error):
+                    BDLogger.error("格式化文件系统失败: \(error)")
+                }
+            }
             break
         case 167: // 获取文件系统空间信息
             BDLogger.info("获取文件系统空间信息")
+            BCLRingManager.shared.getFileSystemInfo { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取文件系统空间信息成功: \(response)")
+                    BDLogger.info("文件系统空间信息-总空间: \(response.totalSize ?? 0)")
+                    BDLogger.info("文件系统空间信息-可用空间: \(response.freeSize ?? 0)")
+                    BDLogger.info("文件系统空间信息-已用空间: \(response.usedSize ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("获取文件系统空间信息失败: \(error)")
+                }
+            }
             break
         case 168: // 设置自动记录采集数据模式
             BDLogger.info("设置自动记录采集数据模式")
+            BCLRingManager.shared.setAutoRecordDataMode(type: 1) { res in
+                switch res {
+                case let .success(response):
+                    if let result = response.result, result == 1 {
+                        BDLogger.info("设置自动记录采集数据模式成功")
+                    } else {
+                        BDLogger.info("设置自动记录采集数据模式失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置自动记录采集数据模式失败: \(error)")
+                }
+            }
+
             break
         case 169: // 获取自动记录采集数据模式
             BDLogger.info("获取自动记录采集数据模式")
+            BCLRingManager.shared.getAutoRecordDataMode { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取自动记录采集数据模式成功: \(response)")
+                    // 0：停止自动记录采集信息、1：开启自动记录三轴信息、2：开启自动记录六轴信息、3：开启自动记录spo2信息、4：开启自动记录hr信息、5：开启自动记录红外信息、6：开启自动记温度信息
+                    if let mode = response.status {
+                        switch mode {
+                        case 0:
+                            BDLogger.info("停止自动记录采集信息")
+                        case 1:
+                            BDLogger.info("开启自动记录三轴信息")
+                        case 2:
+                            BDLogger.info("开启自动记录六轴信息")
+                        case 3:
+                            BDLogger.info("开启自动记录spo2信息")
+                        case 4:
+                            BDLogger.info("开启自动记录hr信息")
+                        case 5:
+                            BDLogger.info("开启自动记录红外信息")
+                        case 6:
+                            BDLogger.info("开启自动记温度信息")
+                        default:
+                            BDLogger.info("未知的自动记录采集数据模式")
+                        }
+                    }
+                case let .failure(error):
+                    BDLogger.error("获取自动记录采集数据模式失败: \(error)")
+                }
+            }
+
             break
         case 170: // 获取文件系统状态
             BDLogger.info("获取文件系统状态")
+
+            BCLRingManager.shared.getFileSystemStatus { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("获取文件系统状态成功: \(response)")
+                    if let status = response.status, status == 0 {
+                        BDLogger.info("文件系统状态: 空闲")
+                    } else if let status = response.status, status == 1 {
+                        BDLogger.info("文件系统状态: 上传文件状态")
+                    } else if let status = response.status, status == 2 {
+                        BDLogger.info("文件系统状态: 写状态")
+                    } else if let status = response.status, status == 3 {
+                        BDLogger.info("文件系统状态: 忙")
+                    } else {
+                        BDLogger.info("未知的文件系统状态")
+                    }
+                case let .failure(error):
+                    BDLogger.error("获取文件系统状态失败: \(error)")
+                }
+            }
+
             break
         case 171: // 根据固件版本号，返回固件升级类型
             BDLogger.info("根据固件版本号，返回固件升级类型")

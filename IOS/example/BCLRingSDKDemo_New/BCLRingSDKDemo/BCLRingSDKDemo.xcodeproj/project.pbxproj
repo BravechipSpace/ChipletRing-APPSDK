@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		AE91A958C1B761A8BD0A4065 /* Pods_BCLRingSDKDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297FCE826090771123910266 /* Pods_BCLRingSDKDemo.framework */; };
-		FDC510BD2DD5CAA6006E2976 /* BCLRingSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD68C3302DD5C970001A1054 /* BCLRingSDK.framework */; };
-		FDC510BE2DD5CAA6006E2976 /* BCLRingSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FD68C3302DD5C970001A1054 /* BCLRingSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FD23F26D2DD7266D0018CB62 /* BCLRingSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD23F26C2DD7266D0018CB62 /* BCLRingSDK.framework */; };
+		FD23F26E2DD7266D0018CB62 /* BCLRingSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FD23F26C2DD7266D0018CB62 /* BCLRingSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FDC510BF2DD5CAA6006E2976 /* Embed Frameworks */ = {
+		FD6965972D89518F00B68E44 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FDC510BE2DD5CAA6006E2976 /* BCLRingSDK.framework in Embed Frameworks */,
+				FD23F26E2DD7266D0018CB62 /* BCLRingSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,7 +31,7 @@
 		E78A8C6FAB05023431874FA6 /* Pods-BCLRingSDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCLRingSDKDemo.release.xcconfig"; path = "Target Support Files/Pods-BCLRingSDKDemo/Pods-BCLRingSDKDemo.release.xcconfig"; sourceTree = "<group>"; };
 		FAFA4FC162F21EC5936C3AB6 /* Pods-BCLRingSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCLRingSDKDemo.debug.xcconfig"; path = "Target Support Files/Pods-BCLRingSDKDemo/Pods-BCLRingSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		FD09947E2D894A5C00379104 /* BCLRingSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCLRingSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD68C3302DD5C970001A1054 /* BCLRingSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCLRingSDK.framework; sourceTree = "<group>"; };
+		FD23F26C2DD7266D0018CB62 /* BCLRingSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCLRingSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -61,7 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE91A958C1B761A8BD0A4065 /* Pods_BCLRingSDKDemo.framework in Frameworks */,
-				FDC510BD2DD5CAA6006E2976 /* BCLRingSDK.framework in Frameworks */,
+				FD23F26D2DD7266D0018CB62 /* BCLRingSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 		FDE8AD202D895169004CADA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FD68C3302DD5C970001A1054 /* BCLRingSDK.framework */,
+				FD23F26C2DD7266D0018CB62 /* BCLRingSDK.framework */,
 				297FCE826090771123910266 /* Pods_BCLRingSDKDemo.framework */,
 			);
 			name = Frameworks;
@@ -115,8 +115,8 @@
 				FD09947A2D894A5C00379104 /* Sources */,
 				FD09947B2D894A5C00379104 /* Frameworks */,
 				FD09947C2D894A5C00379104 /* Resources */,
+				FD6965972D89518F00B68E44 /* Embed Frameworks */,
 				B172BAF50C5EC10A2B77DDEF /* [CP] Embed Pods Frameworks */,
-				FDC510BF2DD5CAA6006E2976 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,6 +127,7 @@
 			);
 			name = BCLRingSDKDemo;
 			packageProductDependencies = (
+				FD98F9B22DA649F70015EED1 /* BCLRingSDK */,
 			);
 			productName = BCLRingSDKDemo;
 			productReference = FD09947E2D894A5C00379104 /* BCLRingSDKDemo.app */;
@@ -446,6 +447,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FD98F9B22DA649F70015EED1 /* BCLRingSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BCLRingSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FD0994762D894A5C00379104 /* Project object */;
 }

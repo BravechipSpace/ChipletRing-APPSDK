@@ -794,7 +794,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="D83-QL-sET"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="六轴传感器省电模式"/>
                                                 <connections>
