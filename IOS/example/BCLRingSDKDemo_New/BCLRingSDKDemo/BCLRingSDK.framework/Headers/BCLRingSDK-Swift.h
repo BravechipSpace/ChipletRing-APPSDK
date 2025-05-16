@@ -305,10 +305,38 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 
 #if defined(__OBJC__)
+@class CBPeripheral;
+@class NSString;
+@class NSNumber;
+@class NSData;
 
 /// 设备信息模型
 SWIFT_CLASS("_TtC10BCLRingSDK18BCLDeviceInfoModel")
 @interface BCLDeviceInfoModel : NSObject
+/// 外设对象
+@property (nonatomic, strong) CBPeripheral * _Nonnull peripheral;
+/// 外设的名称
+@property (nonatomic, readonly, copy) NSString * _Nullable peripheralName;
+/// 外设的UUID
+@property (nonatomic, readonly, copy) NSString * _Nonnull uuidString;
+/// 外设的MAC地址
+@property (nonatomic, copy) NSString * _Nullable macAddress;
+/// 外设的RSSI值
+@property (nonatomic, strong) NSNumber * _Nullable rssi;
+/// 设备在扫描阶段是否已经被检索到并且是连接状态
+@property (nonatomic) BOOL isScannedAndConnected;
+/// 外设的广播数据
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable advertisementData;
+/// 外设的广播数据中的制造商数据
+@property (nonatomic, readonly, copy) NSData * _Nonnull advDataManufacturerData;
+/// 是否支持二代协议:0、不支持，1、支持
+@property (nonatomic, readonly) NSInteger communicationProtocolVersion;
+/// 是否支持绑定：0、不支持绑定、配对(仅软连接)，1、绑定和配对，2、仅支持配对
+@property (nonatomic, readonly) NSInteger bindingIndicatorBit;
+/// 充电指示位：0、代表未充电，1、代表充电中,2、代表充电完成
+@property (nonatomic, readonly) NSInteger chargingIndicator;
+/// 初始化方法
+- (nonnull instancetype)initWithPeripheral:(CBPeripheral * _Nonnull)peripheral peripheralName:(NSString * _Nullable)peripheralName rssi:(NSNumber * _Nullable)rssi macAddress:(NSString * _Nullable)macAddress advertisementData:(NSDictionary<NSString *, id> * _Nullable)advertisementData isScannedAndConnected:(BOOL)isScannedAndConnected OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -318,9 +346,9 @@ SWIFT_CLASS("_TtC10BCLRingSDK18BCLDeviceInfoModel")
 SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingDBModel")
 @interface BCLRingDBModel : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithBytes:(NSArray<NSNumber *> * _Nonnull)bytes OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class NSString;
 
 SWIFT_CLASS("_TtC10BCLRingSDK22BCLRingLocalSleepModel")
 @interface BCLRingLocalSleepModel : NSObject
@@ -369,8 +397,6 @@ SWIFT_CLASS("_TtC10BCLRingSDK14BCLRingManager")
 
 
 @class CBCentralManager;
-@class CBPeripheral;
-@class NSNumber;
 
 @interface BCLRingManager (SWIFT_EXTENSION(BCLRingSDK)) <CBCentralManagerDelegate>
 /// 蓝牙状态更新
@@ -563,6 +589,36 @@ SWIFT_CLASS("_TtC10BCLRingSDK20BCLRingSleepDayModel")
 /// 睡眠模型
 SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @interface BCLRingSleepModel : NSObject
+/// 睡眠时长（小时）
+@property (nonatomic) NSInteger hours;
+/// 睡眠时长（分钟）
+@property (nonatomic) NSInteger minutes;
+/// 睡眠总时长（秒）
+@property (nonatomic) int64_t sleepTime;
+/// 深度睡眠时间
+@property (nonatomic) int64_t deepTime;
+/// 浅度睡眠时间
+@property (nonatomic) int64_t lowTime;
+/// 眼动时间
+@property (nonatomic) int64_t ydTime;
+/// 清醒时间
+@property (nonatomic) int64_t qxTime;
+/// 入睡时间戳
+@property (nonatomic) int64_t startTime;
+/// 清醒时间戳
+@property (nonatomic) int64_t endTime;
+/// 睡眠效率
+@property (nonatomic) double xiaolv;
+/// 深睡比例
+@property (nonatomic) double shenshui;
+/// 睡眠得分
+@property (nonatomic) NSInteger score;
+/// 清醒次数
+@property (nonatomic) NSInteger wakeupCount;
+/// 睡眠数据类型
+@property (nonatomic) NSInteger sleepDataType;
+/// 睡眠数据列表
+@property (nonatomic, copy) NSArray<BCLRingDBModel *> * _Nonnull sleepDataList;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end

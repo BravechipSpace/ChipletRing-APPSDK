@@ -1422,6 +1422,25 @@ class Main_VC: UIViewController {
                 }
             }
             break
+
+        case 172: // 检查是否需要迁移数据
+            BDLogger.info("检查是否需要迁移数据:\(BCLRingManager.shared.checkNeedMigrateHistoryData())")
+            break
+        case 173: // 查询需要迁移数据的条数
+            BDLogger.info("查询需要迁移数据的条数:\(BCLRingManager.shared.getOldDatabaseRecordCount())")
+            break
+        case 174: // 开始迁移数据
+            BDLogger.info("开始迁移数据")
+            let macAddress = BCLRingManager.shared.currentConnectedDevice?.macAddress ?? ""
+            BCLRingManager.shared.migrateHistoryData(mac: macAddress) { res in
+                switch res {
+                case .success:
+                    BDLogger.info("迁移数据成功")
+                case let .failure(error):
+                    BDLogger.error("迁移数据失败: \(error)")
+                }
+            }
+            break
         default:
             break
         }
