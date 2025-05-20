@@ -1441,6 +1441,126 @@ class Main_VC: UIViewController {
                 }
             }
             break
+        case 175: // ECG采集人体心电信号
+            BDLogger.info("ECG采集人体心电信号")
+            BCLRingManager.shared.startTakeECG { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("开始ECG采集人体心电-HeadTypeSize: \(response.headTypeSize)")
+                    BDLogger.info("开始ECG采集人体心电-HeadType: \(response.headType)")
+                    BDLogger.info("开始ECG采集人体心电-DeviceType: \(response.deviceType)")
+                    BDLogger.info("开始ECG采集人体心电-seq: \(response.seq)")
+                    BDLogger.info("开始ECG采集人体心电-hr: \(response.hr)")
+                    BDLogger.info("开始ECG采集人体心电-dataLength: \(response.dataLength)")
+                    BDLogger.info("开始ECG采集人体心电-ecgValues: \(response.ecgValues)")
+                case let .failure(error):
+                    BDLogger.error("开始ECG采集人体心电信号失败: \(error)")
+                }
+            }
+
+            break
+        case 176: // ECG采集模拟信号
+            BDLogger.info("ECG采集模拟信号")
+
+            BCLRingManager.shared.startTakeECGSimulator { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("开始ECG采集模拟信号-HeadTypeSize: \(response.headTypeSize)")
+                    BDLogger.info("开始ECG采集模拟信号-HeadType: \(response.headType)")
+                    BDLogger.info("开始ECG采集模拟信号-DeviceType: \(response.deviceType)")
+                    BDLogger.info("开始ECG采集模拟信号-seq: \(response.seq)")
+                    BDLogger.info("开始ECG采集模拟信号-hr: \(response.hr)")
+                    BDLogger.info("开始ECG采集模拟信号-dataLength: \(response.dataLength)")
+                    BDLogger.info("开始ECG采集模拟信号-ecgValues: \(response.ecgValues)")
+                case let .failure(error):
+                    BDLogger.error("开始ECG采集模拟信号失败: \(error)")
+                }
+            }
+            break
+        case 177: // 停止ECG采集
+            BDLogger.info("停止ECG采集")
+
+            BCLRingManager.shared.stopECG { res in
+                switch res {
+                case .success:
+                    BDLogger.info("停止ECG采集成功")
+                case let .failure(error):
+                    BDLogger.error("停止ECG采集失败: \(error)")
+                }
+            }
+            break
+        case 178: // 十米-六轴三轴协议-六轴开始采集
+            BDLogger.info("十米-六轴三轴协议-六轴开始采集")
+            BCLRingManager.shared.startSixAxis { res in
+                switch res {
+                case let .success(response):
+                    if let status = response.deviceStatus, status == 0 { // 正常
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-轴实时转向：\(response.axisRealTurn ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-轴实时俯仰：\(response.axisRealPitch ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-实时速度：\(response.realSpeed ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-瞬间转向：\(response.instantTurn ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-瞬间俯仰：\(response.instantPitch ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-Z轴加速度计：\(response.zAxisAccelerometer ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-Y轴加速度计：\(response.yAxisAccelerometer ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-X轴加速度计：\(response.xAxisAccelerometer ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集数据-计数：\(response.count ?? 0)")
+                    } else {
+                        BDLogger.info("十米-六轴三轴协议-六轴开始采集-设备繁忙")
+                    }
+                case let .failure(error):
+                    BDLogger.error("十米-六轴三轴协议-六轴开始采集失败: \(error)")
+                }
+            }
+            break
+        case 179: // 十米-六轴三轴协议-三轴开始采集
+            BDLogger.info("十米-六轴三轴协议-三轴开始采集")
+            BCLRingManager.shared.startThreeAxis { res in
+                switch res {
+                case let .success(response):
+                    if let status = response.deviceStatus, status == 0 { // 正常
+                        BDLogger.info("十米-六轴三轴协议-三轴开始采集数据-Z轴加速度计：\(response.zAxisAccelerometer ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-三轴开始采集数据-Y轴加速度计：\(response.yAxisAccelerometer ?? 0)")
+                        BDLogger.info("十米-六轴三轴协议-三轴开始采集数据-X轴加速度计：\(response.xAxisAccelerometer ?? 0)")
+                    } else {
+                        BDLogger.info("十米-六轴三轴协议-三轴开始采集-设备繁忙")
+                    }
+                case let .failure(error):
+                    BDLogger.error("十米-六轴三轴协议-三轴开始采集失败: \(error)")
+                }
+            }
+            break
+        case 180: // 十米-六轴三轴协议-停止
+            BDLogger.info("十米-六轴三轴协议-停止")
+            BCLRingManager.shared.stop { res in
+                switch res {
+                case .success:
+                    BDLogger.info("十米-六轴三轴协议-停止-成功")
+                case let .failure(error):
+                    BDLogger.error("十米-六轴三轴协议-停止失败: \(error)")
+                }
+            }
+            break
+        case 181: // 十米-六轴三轴协议-加速度计校准
+            BDLogger.info("十米-六轴三轴协议-加速度计校准")
+            BCLRingManager.shared.accelerationCalibration { res in
+                switch res {
+                case let .success(response):
+                    if let status = response.calibrationResult, status == 0 {
+                        BDLogger.info("十米-六轴三轴协议-加速度计校准-成功")
+                    } else {
+                        BDLogger.info("十米-六轴三轴协议-加速度计校准-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("十米-六轴三轴协议-加速度计校准失败: \(error)")
+                }
+            }
+            break
+        case 182: //
+            BDLogger.info("")
+            break
+        case 183: //
+            BDLogger.info("")
+            break
         default:
             break
         }

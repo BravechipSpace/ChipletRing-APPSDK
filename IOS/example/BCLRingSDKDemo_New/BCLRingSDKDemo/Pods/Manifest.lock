@@ -1,4 +1,7 @@
 PODS:
+  - Foil (5.1.2)
+  - iOSDFULibrary (4.15.3):
+    - ZIPFoundation (= 0.9.19)
   - LookinServer/Core (1.2.8)
   - LookinServer/Swift (1.2.8):
     - LookinServer/Core
@@ -318,20 +321,45 @@ PODS:
     - QMUIKit/QMUILog
   - QMUIKit/QMUIResources (4.8.0)
   - QMUIKit/QMUIWeakObjectContainer (4.8.0)
+  - RxSwift (6.9.0)
+  - SwiftDate (7.0.0)
+  - SwiftyBeaver (1.9.5)
+  - Zip (2.1.2)
+  - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
+  - Foil (~> 5.1.2)
+  - iOSDFULibrary
   - LookinServer/Swift
   - QMUIKit (= 4.8.0)
+  - RxSwift (~> 6.9.0)
+  - SwiftDate
+  - SwiftyBeaver (= 1.9.5)
+  - Zip
 
 SPEC REPOS:
   trunk:
+    - Foil
+    - iOSDFULibrary
     - LookinServer
     - QMUIKit
+    - RxSwift
+    - SwiftDate
+    - SwiftyBeaver
+    - Zip
+    - ZIPFoundation
 
 SPEC CHECKSUMS:
+  Foil: 4c86d5cc74b811061f5d98649d1ea06365f684fd
+  iOSDFULibrary: 198c36ebe5a31bf2ca04ee8fb40837176a423e85
   LookinServer: 1b2b61c6402ae29fa22182d48f5cd067b4e99e80
   QMUIKit: 3c622fe3c55c0dccfad750634bd9ee5e7ade9a53
+  RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
+  SwiftDate: bbc26e26fc8c0c33fbee8c140c5e8a68293a148a
+  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
+  ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 1769a170b588e6840a5806b1273be8d21ffc0e01
+PODFILE CHECKSUM: 28aa47cdd9e059a66df1909ebafb7d8060895d1b
 
 COCOAPODS: 1.16.2

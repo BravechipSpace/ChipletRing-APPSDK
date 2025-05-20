@@ -7,6 +7,12 @@ target 'BCLRingSDKDemo' do
   pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
   pod 'QMUIKit','4.8.0'
   
+  pod 'Foil', '~> 5.1.2'
+  pod 'iOSDFULibrary'
+  pod 'RxSwift', '~> 6.9.0'
+  pod 'SwiftDate'
+  pod 'SwiftyBeaver', '1.9.5'
+  pod 'Zip'
 
   # Pods for BCLRingSDKDemo
 
