@@ -2055,11 +2055,17 @@ LogicalApi.startECGActivity(TestActivity2.this);
  }
 
 ```
-##### 3.2.31 文件系统
-部分戒指支持文件系统，在戒指内保存文件，通过指令获取文件列表，然后通过对应文件名的字节数组，获取到文件具体的内容
+##### 3.2.31 读取本地的原始数据
+通过指令，可以获取戒指本地的文件列表，然后通过文件名，解析文件的内容(需要戒指支持指令)
+对应的指令是：
 ```java
-//获取文件列表，
-LmAPI.GET_FILE_LIST(IFileListListener listener)
+ LmAPI.GET_FILE_LIST( IFileListListener listenerLite) //文件列表
+ LmAPI.GET_FILE_CONTENT( int mFileType,byte[] fileName,IFileListListener listenerLite);//根据类型和文件名原始数据，获取文件内容
+```
+GET_FILE_CONTENT的参数需要依赖GET_FILE_LIST的file回调，根据String fileName解析最后一个下划线后的类型，传给mFileType，比如：类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
+byte[] fileName是file回调里的byte[] rawDataByte
+回调
+```java
 public interface IFileListListener {
 
     /**
@@ -2079,21 +2085,129 @@ public interface IFileListListener {
      */
     void fileContent(String content);
 }
-```
-根据文件名，获取文件类型，输入文件名的字节数组和类型，进行解析
-```java
-  //类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
- LmAPI.GET_FILE_CONTENT(8,fileNameByte,new IFileListListener() {
-                    @Override
-                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
-                    }
 
-                    @Override
-                    public void fileContent(String content) {
-                        postView("\nGET_FILE_CONTENT：" +content);
-                    }
-                });
 ```
+目前支持的文件类型：
+1:三轴数据
+2:六轴数据
+3:PPG数据红外+红色+三轴(spo2)
+4:PPG数据绿色
+5:PPG数据红外
+6:温度数据红外
+7:红外+红色+绿色+温度+三轴
+8:PPG数据绿色+三轴(hr)
+
+##### 3.2.32 6轴协议
+部分厂家定制
+
+对应的指令是：
+```java
+ LmAPI.TURN_OFF_6_AXIS_SENSORS( I6axisListener listenerLite) //关闭6轴传感器数据上报
+ LmAPI.READ_6_AXIS_SENSORS(I6axisListener listenerLite);//读6轴传感器加速度数据（单次）
+ LmAPI.READ_6_AXIS_ACCELERATION(I6axisListener listenerLite);//请求：读6轴传感器实时加速度数据（开启后一直上传直至接收到停止指令）
+```
+回调
+```java
+public interface I6axisListener {
+    /**
+     * 关闭传感器
+     */
+    void turnOff();
+
+    /**
+     * 传感器数据
+
+     */
+    void sensorsData(String bpData);
+
+}
+
+```
+##### 3.2.33 寿世PPG波形传输
+部分厂家定制
+
+对应的指令是：
+```java
+    /**
+     * 寿世PPG波形传输（0x3D
+     * @param collectionTime 采集时间，默认30(0为一直采集)
+     * @param waveformConfiguration 波形配置0:不上传 1:上传
+     * @param progressConfiguration 进度配置0:不上传 1:上传
+     * @param waveformSetting 波形配置0：125hz，绿色,1:25hz，绿色+红外 2:佩戴检测(无波形响应)
+     * @param iHeartListener
+     */
+ LmAPI. GET_PPG_SHOUSHI(byte collectionTime,byte waveformConfiguration,byte progressConfiguration,byte waveformSetting,IHeartListener iHeartListener) 
+
+ LmAPI.STOP_PPG_SHOUSHI(IHeartListener iHeartListener);//停止寿世PPG波形传输（0x3D)
+```
+回调
+```java
+public interface IHeartListener {
+
+    /**
+     * 进度
+     * @param progress
+     */
+    void progress(int progress);
+
+
+    /**
+     * 常规设备的心率监测
+     * @param heart 心率
+     * @param heartRota 心率变异性
+     * @param yaLi 压力
+     * @param temp 温度
+     */
+    void resultData(int heart,int heartRota,int yaLi,int temp);
+
+    /**
+     * 波形图
+     * @param seq 序号
+     * @param number 数据个数
+     * @param waveData 波形数据
+     */
+    void waveformData(byte seq,byte number,String waveData);
+
+    /**
+     * 间期响应
+     * @param seq 序号
+     * @param number 数据个数
+     * @param data RR间期
+     */
+    void rriData(byte seq,byte number,String data);
+
+    /**
+     * 错误
+     * 0	未佩戴
+     * 1	佩戴(保留)
+     * 2	充电不允许采集
+     * 4	繁忙，不执行
+     * 5	数据采集超时
+     * @param code
+     */
+    void error(int code);
+
+    /**
+     * 采集完成
+     */
+    void success();
+
+    /**
+     * 停止测量
+     */
+    void stop();
+
+    /**
+     * 寿世定制的ppg返回
+     * @param heart 心率
+     * @param bloodOxygen 血氧
+     */
+    void resultDataSHOUSHI(int heart,int bloodOxygen);
+
+}
+
+```
+定制化功能，涉及到的回调返回有error，resultDataSHOUSHI，waveformData，progress，success，stop
 #### 3.3 固件升级（OTA）
 **注：目前不建议使用，可以参考四、升级服务里的OTA升级**
 ![alt text](image/f66e099fc52821fbc43ecd7803e0633.png)
