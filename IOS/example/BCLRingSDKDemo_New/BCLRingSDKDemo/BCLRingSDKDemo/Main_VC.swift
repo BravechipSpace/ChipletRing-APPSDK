@@ -925,8 +925,6 @@ class Main_VC: UIViewController {
                     break
                 case let .failure(error):
                     BDLogger.error("启动心率测量失败: \(error)")
-                    // 发生错误时清理回调
-                    BCLHeartRateResponse.cleanupCurrentMeasurement()
                 }
             }
             break
@@ -1555,8 +1553,16 @@ class Main_VC: UIViewController {
                 }
             }
             break
-        case 182: //
-            BDLogger.info("")
+        case 182: // 清除戒指内历史数据
+            BDLogger.info("清除戒指内历史数据")
+            BCLRingManager.shared.deleteRingAllHistoryData { res in
+                switch res {
+                case .success:
+                    BDLogger.info("清除戒指内历史数据成功")
+                case let .failure(error):
+                    BDLogger.error("清除戒指内历史数据失败: \(error)")
+                }
+            }
             break
         case 183: //
             BDLogger.info("")
@@ -1628,7 +1634,7 @@ class Main_VC: UIViewController {
         ))
 
         // 开始测量
-        BCLRingManager.shared.startBloodOxygen(collectTime: 10,
+        BCLRingManager.shared.startBloodOxygen(collectTime: 30,
                                                collectFrequency: 25,
                                                waveformConfig: 1,
                                                progressConfig: 1) { result in
@@ -1645,8 +1651,7 @@ class Main_VC: UIViewController {
 
     // 心率测量
     func startHeartRateMeasurement() {
-        // 设置回调
-        BCLHeartRateResponse.setCallbacks(BCLHeartRateCallbacks(
+        let callBacks = BCLHeartRateCallbacks(
             onProgress: { progress in
                 // 更新进度UI
                 BDLogger.info("测量进度: \(progress)%")
@@ -1686,29 +1691,27 @@ class Main_VC: UIViewController {
             onError: { error in
                 BDLogger.info("错误: \(error)")
             }
-        ))
+        )
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 10,
+        BCLRingManager.shared.startHeartRate(collectTime: 30,
                                              collectFrequency: 25,
                                              waveformConfig: 1,
                                              progressConfig: 1,
-                                             intervalConfig: 1) { result in
+                                             intervalConfig: 0,
+                                             callbacks: callBacks) { result in
             switch result {
             case .success:
                 break
             case let .failure(error):
                 BDLogger.error("启动心率测量失败: \(error)")
-                // 发生错误时清理回调
-                BCLHeartRateResponse.cleanupCurrentMeasurement()
             }
         }
     }
 
     // 心率变异性测量
     func startHeartRateVariabilityMeasurement() {
-        // 设置回调
-        BCLHeartRateResponse.setCallbacks(BCLHeartRateCallbacks(
+        let callBacks = BCLHeartRateCallbacks(
             onProgress: { progress in
                 // 更新进度UI
                 BDLogger.info("测量进度: \(progress)%")
@@ -1748,21 +1751,20 @@ class Main_VC: UIViewController {
             onError: { error in
                 BDLogger.info("错误: \(error)")
             }
-        ))
+        )
 
         // 开始测量
-        BCLRingManager.shared.startHeartRate(collectTime: 10,
-                                             collectFrequency: 50,
+        BCLRingManager.shared.startHeartRate(collectTime: 30,
+                                             collectFrequency: 25,
                                              waveformConfig: 1,
                                              progressConfig: 1,
-                                             intervalConfig: 1) { result in
+                                             intervalConfig: 1,
+                                             callbacks: callBacks) { result in
             switch result {
             case .success:
                 break
             case let .failure(error):
                 BDLogger.error("启动心率变异性测量失败: \(error)")
-                // 发生错误时清理回调
-                BCLHeartRateResponse.cleanupCurrentMeasurement()
             }
         }
     }

@@ -59,7 +59,7 @@ class DeviceTableVC: UIViewController {
 
     func connectDevice(device: BCLDeviceInfoModel) {
         QMUITips.showLoading("Device Connecting...", in: view)
-        
+        BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
         BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
             switch result {
             case .success:
