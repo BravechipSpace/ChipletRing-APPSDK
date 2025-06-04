@@ -2590,7 +2590,7 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
 
 ```
 ### 3、调用服务
-根据token，调用服务，目前提供获取用户睡眠数据的服务，ota升级服务，血压和血糖算法，所有固件信息,timeline(时间线，包括行走和跑步)
+根据token，调用服务，目前提供获取用户睡眠数据的服务，ota升级服务，血压和血糖算法，根据固件类别获取固件信息,timeline(时间线，包括行走和跑步)
 ### 4、支持的服务
 ##### 1、睡眠结果数据（仅为部分厂家提供支持，需要联系我司对接key）
 可以根据开始时间和结束时间，获取当前用户的睡眠结果数据，系统根据历史数据，自动区分一代睡眠和二代睡眠，调用该服务的前提，是需要在获取戒指历史数据的时候，将历史数据上传，否则无法计算，这个接口会把之前调用这个接口，由于服务器原因，没能上传成功的数据上传上去，所以如果存在切换用户的需求，可以在切换之前，清除一下上传错误的数据，或者上传一下，否则有可能把之前登录人员的数据，同步到当前登录人数据中
@@ -2860,10 +2860,11 @@ BLOOD_PRESSURE_APP(byte collectionTime,byte waveformConfiguration,byte progressC
      */
 getBloodPressureOrSugar(String mac, String waveFormValue, String testType,IWebBloodPressureAndSugarResult webApiResult)
 ```
-##### 4、所有固件信息
+##### 4、根据固件类别获取固件信息
 这个列表，除非有用户想回退固件，或者戒指升级到指定固件，才会用到，其他用户，直接使用最新固件即可
 ```java
-LogicalApi.firmwareList(new IWebFirmwareListResult() {
+//String category, 对应固件类别，比如Z3R，Z2W之类，不传不会返回固件信息
+LogicalApi.firmwareList( category,new IWebFirmwareListResult() {
                     @Override
                     public void firmwareListResult(List<Firmware> firmwareList) {
                         
@@ -2892,7 +2893,7 @@ public class Firmware {
     private String fileUrl;
 }
 ```
-##### 5、所有固件信息
+##### 5、时间线
 根据开始时间和结束时间，获取时间线，包括跑步和行走，前提是需要上传历史数据到服务器(READ_HISTORY_UPDATE_TO_SERVER)
 ```java
 
