@@ -2784,7 +2784,7 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
                     }
                 });
 ```
-##### 3、血压和血糖算法
+##### 3、血压和血糖算法(部分戒指支持)
 基于戒指传输的波形值，经过python算法，给出具体的血压值或者血糖值，调用样例
 ```java
 
