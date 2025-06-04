@@ -2590,7 +2590,7 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
 
 ```
 ### 3、调用服务
-根据token，调用服务，目前提供获取用户睡眠数据的服务，ota升级服务，血压算法
+根据token，调用服务，目前提供获取用户睡眠数据的服务，ota升级服务，血压和血糖算法，所有固件信息,timeline(时间线，包括行走和跑步)
 ### 4、支持的服务
 ##### 1、睡眠结果数据（仅为部分厂家提供支持，需要联系我司对接key）
 可以根据开始时间和结束时间，获取当前用户的睡眠结果数据，系统根据历史数据，自动区分一代睡眠和二代睡眠，调用该服务的前提，是需要在获取戒指历史数据的时候，将历史数据上传，否则无法计算，这个接口会把之前调用这个接口，由于服务器原因，没能上传成功的数据上传上去，所以如果存在切换用户的需求，可以在切换之前，清除一下上传错误的数据，或者上传一下，否则有可能把之前登录人员的数据，同步到当前登录人数据中
@@ -2784,13 +2784,14 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
                     }
                 });
 ```
-##### 3、血压算法
-基于戒指传输的波形值，经过python算法，给出具体的血压值，调用样例
+##### 3、血压和血糖算法
+基于戒指传输的波形值，经过python算法，给出具体的血压值或者血糖值，调用样例
 ```java
-         LmAPI.BLOOD_PRESSURE_APP((byte) 30, (byte) 1, (byte) 1, new IBloodPressureAPPListener() {
+
+         LmAPI.BLOOD_PRESSURE_APP((byte) 60, (byte) 1, (byte) 1, new IBloodPressureAPPListener() {
                     @Override
                     public void progress(int progress) {
-                        postView("\n血压测量:"+progress );
+                        postView("\n血压或血糖测量:"+progress );
                     }
 
                     @Override
@@ -2806,23 +2807,29 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
 
                     @Override
                     public void error(int code) {
-                        postView("\n血压测量:"+code);
+                        postView("\n血压或血糖测量:"+code);
                     }
 
                     @Override
                     public void success() {
-                        postView("\n血压测量:success");
-                        LogicalApi.getBloodPressureWithWaveform(App.getInstance().getDeviceBean().getDevice().getAddress(), waveString.toString(), new IWebBloodPressureResult() {
-                            @Override
-                            public void bloodPressureResult(String diastolic, String systolic) {
-                                postView("\n血压测量:"+systolic+"/"+diastolic+" mmHg");
-                            }
-
-                            @Override
-                            public void serviceError(String errorMsg) {
-
-                            }
-                        });
+                        postView("\n血压或血糖测量:success");
+                        //根据测量要求，testType 测量类型，输入"血压"或者"血糖"
+                        LogicalApi.getBloodPressureOrSugar(App.getInstance().getDeviceBean().getDevice().getAddress(), waveString.toString(),"血压", new IWebBloodPressureResult() {
+                              @Override
+                              public void bloodPressureResult(String diastolic, String systolic) {
+                                  //血压结果
+                              }
+          
+                              @Override
+                              public void bloodSugarResult(String sugar) {
+                                  //血糖结果
+                              }
+          
+                              @Override
+                              public void serviceError(String errorMsg) {
+                                //接口出错
+                              }
+                          });
                     }
 
                     @Override
@@ -2834,8 +2841,8 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
 参数说明：
 ```java
  /**
-     *
-     * @param collectionTime 采集时间，默认30
+     *血压或血糖测量
+     * @param collectionTime 采集时间，默认30，血糖血压需要60s的波形
      * @param waveformConfiguration 波形配置0:不上传 1:上传
      * @param progressConfiguration 进度配置0:不上传 1:上传
      * @param iBloodPressureAPPListener
@@ -2844,14 +2851,110 @@ BLOOD_PRESSURE_APP(byte collectionTime,byte waveformConfiguration,byte progressC
 ```
 服务接口说明：
 ```java
-  /**
-     * 根据血压波形值获取血压值
+ /**
+     * 根据血压波形值获取血压值或者血糖值
      * @param mac 连接蓝牙的mac
      * @param waveFormValue 波形值
+     * @param testType 测量类型，输入"血压"或者"血糖"
      * @param webApiResult
      */
-getBloodPressureWithWaveform( String mac,String waveFormValue,IWebBloodPressureResult webApiResult)
+getBloodPressureOrSugar(String mac, String waveFormValue, String testType,IWebBloodPressureAndSugarResult webApiResult)
 ```
+##### 4、所有固件信息
+这个列表，除非有用户想回退固件，或者戒指升级到指定固件，才会用到，其他用户，直接使用最新固件即可
+```java
+LogicalApi.firmwareList(new IWebFirmwareListResult() {
+                    @Override
+                    public void firmwareListResult(List<Firmware> firmwareList) {
+                        
+                    }
+
+                    @Override
+                    public void serviceError(String errorMsg) {
+
+                    }
+                });
+```
+对应的实体类
+```java
+public class Firmware {
+    /**
+     *固件名称
+     */
+    private String fileName;
+    /**
+     * 固件相对路径
+     */
+    private String filePath;
+    /**
+     * 固件下载地址
+     */
+    private String fileUrl;
+}
+```
+##### 5、所有固件信息
+根据开始时间和结束时间，获取时间线，包括跑步和行走，前提是需要上传历史数据到服务器(READ_HISTORY_UPDATE_TO_SERVER)
+```java
+
+ LogicalApi.getTimeLineWithHistory(startTime, endTime, new IWebTimeLineResult() {
+                    @Override
+                    public void timelineResult(List<MovementSegment> movementSegments) {
+                        
+                    }
+
+                    @Override
+                    public void serviceError(String errorMsg) {
+
+                    }
+                });
+
+startTime和endTime是秒级时间戳，比如传递当天的0点到24点
+       // 获取当前日期(不含时间)
+        LocalDate today = LocalDate.now();
+        // 获取系统默认时区
+        ZoneId zoneId = ZoneId.systemDefault();
+        // 当天0点(00:00:00)
+        LocalDateTime startOfDay = today.atStartOfDay();
+        // 当天24点(实际上是次日的00:00:00)
+        LocalDateTime endOfDay = today.plusDays(1).atStartOfDay();
+        // 转换为秒级时间戳
+        long startTimestamp = startOfDay.atZone(zoneId).toEpochSecond();
+        long endTimestamp = endOfDay.atZone(zoneId).toEpochSecond();
+
+```
+对应的实体类：
+```java
+public class MovementSegment {
+    private  long startTime;    //运动段起始时间
+    private  long endTime;      //运动段结束时间
+    private  String type;       //"walk" or "run"
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+}
+```
+
 
 ## 五、其他
 **注：使用戒指API前，应先查看戒指状态**
