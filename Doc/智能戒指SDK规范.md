@@ -2568,6 +2568,79 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
 3：深睡
 4：快速眼动
 用户可以根据这些类别，按照时间排序，计算出清醒等的开始时间和结束时间
+
+如果有午睡，可以算成零星小睡
+```java
+ /**
+     * 计算零星睡眠
+     */
+    private void otherSleep(long startTime, long endTime, long  sleep, List<HistoryDataBean> historyDataBeanList) {
+        long preTime = 0;
+        boolean otherIsexist = false;
+        boolean otherIsover = false;
+        long showTimeStart = 0;
+        long showTimeEnd = 0;
+
+        for (HistoryDataBean historyDataBean : historyDataBeanList) {
+            int sleepType = historyDataBean.getSleepType();
+            if (sleepType == 0) {
+                continue;
+            }
+            String time = DateUtils.longToString(historyDataBean.getTime() * 1000, "yyyy-MM-dd HH:mm");
+         //   Logger.show("xiaoshui", "type=" + sleepType + ";" + time);
+
+            if (otherIsover){//零星小睡已经结束
+                continue;
+            }
+            if (!otherIsexist){//未发现小睡
+                if (sleepType <= 1){
+                    continue;
+                }
+
+                LocalDateTime thisTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(historyDataBean.getTime() * 1000l), ZoneId.systemDefault());
+                if (thisTime.getHour() >= 12 & thisTime.getHour() <= 14){                    //在合法的入睡范围内
+                    showTimeStart = historyDataBean.getTime();
+                    showTimeEnd = historyDataBean.getTime();
+                    preTime = showTimeStart;
+                    otherIsexist = true;
+                    otherIsover = false;
+                 //   Logger.show("xiaoshui", "开始零星小睡");
+                }else {
+                    continue;//不在合法的入睡范围内
+                }
+            }else {//已经进小睡
+                if (historyDataBean.getTime() - preTime >= 12 * 60){                    //漏数据的恢复处理
+                    otherIsexist = false;
+                    continue;
+                }
+                preTime = historyDataBean.getTime();
+
+                if (sleepType > 1){
+                    showTimeEnd = historyDataBean.getTime();
+                }else {
+                    if (showTimeEnd - showTimeStart >= 20 * 60){
+                        otherIsover = true;
+                   //     Logger.show("xiaoshui", "零星小睡有效");
+                    }else{
+                        otherIsexist = false;
+                   //     Logger.show("xiaoshui", "零星小睡无效");
+                    }
+                }
+            }
+        }
+
+        if (otherIsover) {
+            tv_all_hour.setText((TimeUtils.date2String(new Date(showTimeStart * 1000), TimeUtils.HH_MM)));
+            tv_all_min.setText((TimeUtils.date2String(new Date(showTimeEnd * 1000), TimeUtils.HH_MM)));
+
+            long seconds = showTimeEnd - showTimeStart;
+            int hours = (int) (seconds / 3600);
+            int minutes = (int) ((seconds % 3600) / 60);
+            tv_other_hour.setText(String.format("%02d", hours));
+            tv_other_min.setText(String.format("%02d", minutes));
+        } 
+    }
+```
 ## 四、升级服务
 ### 1、服务介绍
 为了进一步简化用户对接流程，提高算法质量，共享固件资源，将公版app所用的服务进行共享(1.0.34版本后新增)，仅需要3个步骤，就可以使用升级服务(服务的接口是http的，如果调用方使用的是https，需要同时兼容两种模式，如调用服务无响应，可能是因为CLEARTEXT communication to XX not permitted by network security policy 这样的错误)
