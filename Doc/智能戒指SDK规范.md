@@ -2574,7 +2574,7 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
  /**
      * 计算零星睡眠
      */
-    private void otherSleep(long startTime, long endTime, long  sleep, List<HistoryDataBean> historyDataBeanList) {
+    private void otherSleep( List<HistoryDataBean> historyDataBeanList) {
         long preTime = 0;
         boolean otherIsexist = false;
         boolean otherIsover = false;
