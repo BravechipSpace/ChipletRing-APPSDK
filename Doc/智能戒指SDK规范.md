@@ -2574,7 +2574,7 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
 ### 1、申请key
 合作方可以联系我们，提供贵公司的名称，我们分配调用服务的key
 ### 2、申请token
-根据key，和使用sdk的用户的手机号或者邮箱，就可以申请token，token会自动保存在本地，不需要用户保存
+根据key，和使用sdk的用户的手机号或者邮箱，就可以申请token，token会自动保存在本地，不需要用户保存，尽量在合适的时候，调用这个接口，刷新一下Token，防止被踢或者Token过期
 ```java
  LogicalApi.createToken("","", new ICreateToken() {
             @Override
