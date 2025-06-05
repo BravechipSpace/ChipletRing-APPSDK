@@ -410,6 +410,9 @@ SWIFT_CLASS("_TtC8RingsSDK11RingManager")
 @class CBCentralManager;
 
 @interface RingManager (SWIFT_EXTENSION(RingsSDK)) <CBCentralManagerDelegate>
+/// 蓝牙状态更新
+/// \param central 中心设备
+///
 - (void)centralManagerDidUpdateState:(CBCentralManager * _Nonnull)central;
 - (void)centralManager:(CBCentralManager * _Nonnull)_ didDiscoverPeripheral:(CBPeripheral * _Nonnull)peripheral advertisementData:(NSDictionary<NSString *, id> * _Nonnull)advertisementData RSSI:(NSNumber * _Nonnull)RSSI;
 - (void)centralManager:(CBCentralManager * _Nonnull)_ didDisconnectPeripheral:(CBPeripheral * _Nonnull)peripheral error:(NSError * _Nullable)err;

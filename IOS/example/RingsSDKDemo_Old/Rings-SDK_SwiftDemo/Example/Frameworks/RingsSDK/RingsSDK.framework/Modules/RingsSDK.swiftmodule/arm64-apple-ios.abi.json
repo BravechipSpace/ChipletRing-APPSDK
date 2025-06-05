@@ -14160,6 +14160,153 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "systemBluetoothStateBlock",
+            "printedName": "systemBluetoothStateBlock",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((RingsSDK.BCLCentralManagerBluetoothState) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(RingsSDK.BCLCentralManagerBluetoothState) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvp",
+            "mangledName": "$s8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvp",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((RingsSDK.BCLCentralManagerBluetoothState) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(RingsSDK.BCLCentralManagerBluetoothState) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLCentralManagerBluetoothState",
+                            "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvg",
+                "mangledName": "$s8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvg",
+                "moduleName": "RingsSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((RingsSDK.BCLCentralManagerBluetoothState) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(RingsSDK.BCLCentralManagerBluetoothState) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLCentralManagerBluetoothState",
+                            "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvs",
+                "mangledName": "$s8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvs",
+                "moduleName": "RingsSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvM",
+                "mangledName": "$s8RingsSDK11RingManagerC25systemBluetoothStateBlockyAA010BCLCentraldfG0OcSgvM",
+                "moduleName": "RingsSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
             "kind": "Function",
             "name": "centralManagerDidUpdateState",
             "printedName": "centralManagerDidUpdateState(_:)",
@@ -14184,7 +14331,8 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
@@ -14245,8 +14393,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
-              "AccessControl",
-              "RawDocComment"
+              "AccessControl"
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
@@ -24969,6 +25116,387 @@
             ],
             "usr": "s:SY",
             "mangledName": "$sSY"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "BCLCentralManagerBluetoothState",
+        "printedName": "BCLCentralManagerBluetoothState",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "unknown",
+            "printedName": "unknown",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO7unknownyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO7unknownyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "resetting",
+            "printedName": "resetting",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO9resettingyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO9resettingyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unsupported",
+            "printedName": "unsupported",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO11unsupportedyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO11unsupportedyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "poweredOn",
+            "printedName": "poweredOn",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO9poweredOnyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO9poweredOnyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "poweredOff",
+            "printedName": "poweredOff",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO10poweredOffyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO10poweredOffyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unauthorized",
+            "printedName": "unauthorized",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(RingsSDK.BCLCentralManagerBluetoothState.Type) -> RingsSDK.BCLCentralManagerBluetoothState",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLCentralManagerBluetoothState",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                    "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "RingsSDK.BCLCentralManagerBluetoothState.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLCentralManagerBluetoothState",
+                        "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO12unauthorizedyA2CmF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO12unauthorizedyA2CmF",
+            "moduleName": "RingsSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "BCLCentralManagerBluetoothState",
+                "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "BCLCentralManagerBluetoothState",
+                "printedName": "RingsSDK.BCLCentralManagerBluetoothState",
+                "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO2eeoiySbAC_ACtFZ",
+            "moduleName": "RingsSDK",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO9hashValueSivp",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO9hashValueSivp",
+            "moduleName": "RingsSDK",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO9hashValueSivg",
+                "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO9hashValueSivg",
+                "moduleName": "RingsSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO4hash4intoys6HasherVz_tF",
+            "moduleName": "RingsSDK",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:8RingsSDK31BCLCentralManagerBluetoothStateO",
+        "mangledName": "$s8RingsSDK31BCLCentralManagerBluetoothStateO",
+        "moduleName": "RingsSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
           }
         ]
       },
@@ -115344,119 +115872,91 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4149,
+      "offset": 4271,
       "length": 38,
       "value": "\"BAE80001-4F05-4503-8E65-3AF1F7329D1F\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4216,
+      "offset": 4338,
       "length": 38,
       "value": "\"BAE80010-4F05-4503-8E65-3AF1F7329D1F\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4284,
+      "offset": 4406,
       "length": 38,
       "value": "\"BAE80011-4F05-4503-8E65-3AF1F7329D1F\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4474,
+      "offset": 4596,
       "length": 38,
       "value": "\"5833FF01-9B8B-5191-6142-22A4536EF123\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4547,
+      "offset": 4669,
       "length": 38,
       "value": "\"5833FF02-9B8B-5191-6142-22A4536EF123\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4618,
+      "offset": 4740,
       "length": 38,
       "value": "\"5833FF03-9B8B-5191-6142-22A4536EF123\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4692,
+      "offset": 4814,
       "length": 38,
       "value": "\"5833FF04-9B8B-5191-6142-22A4536EF123\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 4932,
+      "offset": 5054,
       "length": 38,
       "value": "\"00002760-08C2-11E1-9073-0E8AC72E1001\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 5011,
+      "offset": 5133,
       "length": 38,
       "value": "\"00002760-08C2-11E1-9073-0E8AC72E0001\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "StringLiteral",
-      "offset": 5091,
+      "offset": 5213,
       "length": 38,
       "value": "\"00002760-08C2-11E1-9073-0E8AC72E0002\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 5159,
+      "offset": 5281,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 5195,
+      "offset": 5317,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5234,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5262,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5291,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5324,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5357,
+      "offset": 5356,
       "length": 1,
       "value": "0"
     },
@@ -115471,181 +115971,209 @@
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
       "offset": 5413,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5446,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5479,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5506,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5535,
       "length": 3,
       "value": "127"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5451,
+      "offset": 5573,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5485,
+      "offset": 5607,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5513,
+      "offset": 5635,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5542,
+      "offset": 5664,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5578,
+      "offset": 5700,
       "length": 3,
       "value": "500"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5614,
+      "offset": 5736,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 5647,
+      "offset": 5769,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "Dictionary",
-      "offset": 5689,
+      "offset": 5811,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "Dictionary",
-      "offset": 5736,
+      "offset": 5858,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "Array",
-      "offset": 5963,
+      "offset": 6085,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "Dictionary",
-      "offset": 6203,
+      "offset": 6325,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "FloatLiteral",
-      "offset": 6254,
+      "offset": 6376,
       "length": 3,
       "value": "0.3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 6338,
+      "offset": 6460,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 6363,
+      "offset": 6485,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 49690,
+      "offset": 50689,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 61652,
+      "offset": 62651,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 63070,
+      "offset": 64069,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 64924,
+      "offset": 65923,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 67190,
+      "offset": 68189,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 68203,
+      "offset": 69202,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 74675,
+      "offset": 75674,
       "length": 2,
       "value": "30"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 74708,
+      "offset": 75707,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 74740,
+      "offset": 75739,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 74766,
+      "offset": 75765,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/RingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 76158,
+      "offset": 77157,
       "length": 4,
       "value": "true"
     },
@@ -115899,180 +116427,180 @@
       "kind": "StringLiteral",
       "offset": 308,
       "length": 8,
-      "value": "\"1.0.19\""
+      "value": "\"1.0.20\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2201,
+      "offset": 2200,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2236,
+      "offset": 2235,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2271,
+      "offset": 2270,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2306,
+      "offset": 2305,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2341,
+      "offset": 2340,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2376,
+      "offset": 2375,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2411,
+      "offset": 2410,
       "length": 4,
       "value": "0x06"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2446,
+      "offset": 2445,
       "length": 4,
       "value": "0x07"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2481,
+      "offset": 2480,
       "length": 4,
       "value": "0x08"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2516,
+      "offset": 2515,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2552,
+      "offset": 2551,
       "length": 4,
       "value": "0x0A"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2588,
+      "offset": 2587,
       "length": 4,
       "value": "0x0B"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2627,
+      "offset": 2626,
       "length": 4,
       "value": "0x0C"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2666,
+      "offset": 2665,
       "length": 4,
       "value": "0xF4"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2705,
+      "offset": 2704,
       "length": 4,
       "value": "0xF5"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2744,
+      "offset": 2743,
       "length": 4,
       "value": "0xF6"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2779,
+      "offset": 2778,
       "length": 4,
       "value": "0xF7"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2814,
+      "offset": 2813,
       "length": 4,
       "value": "0xF8"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2849,
+      "offset": 2848,
       "length": 4,
       "value": "0xF9"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2884,
+      "offset": 2883,
       "length": 4,
       "value": "0xFA"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2919,
+      "offset": 2918,
       "length": 4,
       "value": "0xFB"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2954,
+      "offset": 2953,
       "length": 4,
       "value": "0xFC"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 2989,
+      "offset": 2988,
       "length": 4,
       "value": "0xFD"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 3024,
+      "offset": 3023,
       "length": 4,
       "value": "0xFE"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/RingsSDK_Old\/RingsSDK\/RingsSDK\/Classes\/RingManager\/EnumState.swift",
       "kind": "IntegerLiteral",
-      "offset": 3059,
+      "offset": 3058,
       "length": 4,
       "value": "0xFF"
     },

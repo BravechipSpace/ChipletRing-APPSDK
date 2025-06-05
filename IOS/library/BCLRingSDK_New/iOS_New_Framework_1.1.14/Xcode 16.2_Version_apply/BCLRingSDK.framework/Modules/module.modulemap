@@ -1,0 +1,4 @@
+framework module BCLRingSDK {
+  header "BCLRingSDK-Swift.h"
+  requires objc
+}

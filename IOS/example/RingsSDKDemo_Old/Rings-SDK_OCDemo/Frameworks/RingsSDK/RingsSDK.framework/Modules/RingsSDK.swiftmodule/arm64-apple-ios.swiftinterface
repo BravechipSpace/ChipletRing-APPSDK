@@ -660,6 +660,7 @@ public enum StringToDateStyles {
     get
   }
   public var ringPushBatteryBlock: ((Swift.Int) -> Swift.Void)?
+  public var systemBluetoothStateBlock: ((RingsSDK.BCLCentralManagerBluetoothState) -> Swift.Void)?
   @objc deinit
 }
 extension RingsSDK.RingManager : CoreBluetooth.CBCentralManagerDelegate {
@@ -696,11 +697,12 @@ extension RingsSDK.RingManager {
   public func readDatas(progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
   public func readAllHistoryDatas(targetTimeInterval: Foundation.TimeInterval = 0, progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
   public func readNewHistoryDatas(targetTimeInterval: Foundation.TimeInterval = 0, progressBlock: @escaping (Swift.Double, RingsSDK.RingDataModel) -> Swift.Void, resultBlock: @escaping (Swift.Result<RingsSDK.ReadDataResult, RingsSDK.ReadError>) -> Swift.Void)
-  public func readHeartRate(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
-  public func readHeartRateWithRR(rrTime: Swift.UInt8, progressBlock: @escaping (Swift.Double) -> Swift.Void, inHeartRRBlock: @escaping (Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
-  public func readO2(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
-  public func readHRV(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHeartRate(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<(Swift.Int, Swift.Int, Swift.Int, Swift.Int), RingsSDK.ReadError>) -> Swift.Void)
+  public func readHeartRateWithRR(rrTime: Swift.UInt8, progressBlock: @escaping (Swift.Double) -> Swift.Void, inHeartRRBlock: @escaping (Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void, inHeartBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<(Swift.Int, Swift.Int, Swift.Int, Swift.Int), RingsSDK.ReadError>) -> Swift.Void)
+  public func readO2(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readHRV(progressBlock: @escaping (Swift.Double) -> Swift.Void, isOpenWave: Swift.Bool = false, tableBlock: @escaping (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void, resultBlock: @escaping (Swift.Result<(Swift.Int, Swift.Int, Swift.Int, Swift.Int), RingsSDK.ReadError>) -> Swift.Void)
   public func readTemperature(resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
+  public func readTemperature(progressBlock: @escaping (Swift.Int) -> Swift.Void, resultBlock: @escaping (Swift.Result<Swift.Int, RingsSDK.ReadError>) -> Swift.Void)
   public func readAppVersion(resultBlock: @escaping (Swift.Result<Swift.String, RingsSDK.ReadError>) -> Swift.Void)
   public func readHardWareVersion(resultBlock: @escaping (Swift.Result<Swift.String, RingsSDK.ReadError>) -> Swift.Void)
   public func clearRingData(resultBlock: @escaping (Swift.Result<Swift.Bool, RingsSDK.ReadError>) -> Swift.Void)
@@ -864,6 +866,11 @@ extension Foundation.Date {
   }
   public func getInterval(toDate: Foundation.Date?, component: Foundation.Calendar.Component) -> Swift.Int64
 }
+public struct BCLFrameworkInfo {
+  public static let name: Swift.String
+  public static let version: Swift.String
+  public static func description() -> Swift.String
+}
 public enum ChargeStatus {
   case full
   case charging
@@ -958,6 +965,19 @@ public enum ApolloOTAStatus {
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BCLCentralManagerBluetoothState {
+  case unknown
+  case resetting
+  case unsupported
+  case poweredOn
+  case poweredOff
+  case unauthorized
+  public static func == (a: RingsSDK.BCLCentralManagerBluetoothState, b: RingsSDK.BCLCentralManagerBluetoothState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
     get
   }
 }
@@ -1805,6 +1825,8 @@ extension Foundation.FileManager {
   @objc final public var temp: Swift.Float
   @objc final public var isRunning: Swift.Int
   @objc final public var sleepType: Swift.Int
+  @objc final public var measureMarker: Swift.Int
+  @objc final public var reserve: Swift.Int
   @objc final public var RRNums: Swift.Int
   @objc final public var rrs: Foundation.Data?
   @objc override dynamic public init()
@@ -3085,6 +3107,8 @@ open class FileDestination : RingsSDK.BaseDestination {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class RingDBManager : ObjectiveC.NSObject {
   public static let shared: RingsSDK.RingDBManager
+  public var migrationCompletionHandler: (() -> Swift.Void)?
+  public func setupInit()
   @discardableResult
   public func insert(model: RingsSDK.RingDataModel) -> Swift.Bool
   public func getObjects(from timestamp: Foundation.TimeInterval) -> [RingsSDK.RingDataModel]
@@ -3094,6 +3118,7 @@ open class FileDestination : RingsSDK.BaseDestination {
   @discardableResult
   public func deleteAll() -> Swift.Bool
   public func addRRsColumnIfNeeded()
+  public func addMeasureMarkerAndReserveColumnsIfNeeded()
   @objc deinit
 }
 extension RingsSDK.RelativeFormatterLanguage : Swift.Equatable {}
@@ -3124,6 +3149,8 @@ extension RingsSDK.OTAError : Swift.Hashable {}
 extension RingsSDK.RingTimeZone : Swift.Equatable {}
 extension RingsSDK.RingTimeZone : Swift.Hashable {}
 extension RingsSDK.RingTimeZone : Swift.RawRepresentable {}
+extension RingsSDK.BCLCentralManagerBluetoothState : Swift.Equatable {}
+extension RingsSDK.BCLCentralManagerBluetoothState : Swift.Hashable {}
 extension RingsSDK.Locales : Swift.Equatable {}
 extension RingsSDK.Locales : Swift.Hashable {}
 extension RingsSDK.Locales : Swift.RawRepresentable {}

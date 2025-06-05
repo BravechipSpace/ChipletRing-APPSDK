@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="595"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yok-QN-M64">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1667"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1785"/>
                                         <subviews>
                                             <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Noo-Ca-sE4" userLabel="0_Btn">
                                                 <rect key="frame" x="15" y="15" width="111" height="44"/>
@@ -1080,11 +1080,89 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="PzS-wx-oKQ"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="183"/>
+                                                <state key="normal" title="开始PCM音频传输"/>
                                                 <connections>
                                                     <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UWu-Rp-W8t"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="184" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nw5-HD-fka" userLabel="84_Btn">
+                                                <rect key="frame" x="15" y="1667" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="WPR-dz-UeN"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="关闭PCM音频传输"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wb4-T8-vqa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="185" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ad-qZ-Y8J" userLabel="85_Btn">
+                                                <rect key="frame" x="141" y="1667" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="DOP-8e-45z"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="开始ADPCM音频传输"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H0K-HI-GdP"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="186" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6E2-Ck-1tp" userLabel="86_Btn">
+                                                <rect key="frame" x="267" y="1667" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="rTy-dM-PJC"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="关闭ADPCM音频传输"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w23-FJ-YD5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="187" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zeP-o9-EiU" userLabel="87_Btn">
+                                                <rect key="frame" x="15" y="1726" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="Ag1-4C-qRb"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="设置主动推送音频信息"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T6c-95-Mtf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="188" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTd-3d-8mi" userLabel="88_Btn">
+                                                <rect key="frame" x="141" y="1726" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="hOF-LF-gtK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="获取主动推送音频信息"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dWD-wH-8w8"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="189" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxs-eg-VKM" userLabel="89_Btn">
+                                                <rect key="frame" x="267" y="1726" width="111" height="44"/>
+                                                <color key="backgroundColor" red="0.81960785390000002" green="0.84705877299999999" blue="0.85882353779999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="4YF-fZ-QME"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="HID触摸上传实时音频"/>
+                                                <connections>
+                                                    <action selector="btnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zWf-2N-DWC"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1105,9 +1183,11 @@
                                             <constraint firstItem="wt8-Vh-gC8" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="2bw-e2-9Or"/>
                                             <constraint firstItem="V87-4X-ugf" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="2cP-IY-cMr"/>
                                             <constraint firstItem="2xA-6s-U1H" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="2ck-X7-tcc"/>
+                                            <constraint firstItem="Nw5-HD-fka" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="2jw-cw-FS5"/>
                                             <constraint firstItem="3yb-ne-9X7" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="37a-fM-Ttf"/>
                                             <constraint firstItem="TSv-t0-0bi" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="3OJ-4L-GuN"/>
                                             <constraint firstItem="cyW-Fm-CL4" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="42q-w7-Rvt"/>
+                                            <constraint firstItem="LTd-3d-8mi" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="44O-37-AUJ"/>
                                             <constraint firstItem="cpT-ea-uhE" firstAttribute="top" secondItem="VwH-49-m8w" secondAttribute="bottom" constant="15" id="44c-U3-zht"/>
                                             <constraint firstItem="egg-cp-66j" firstAttribute="top" secondItem="vaw-sR-HOZ" secondAttribute="bottom" constant="15" id="49x-ds-MCb"/>
                                             <constraint firstItem="40Q-iX-hJD" firstAttribute="centerY" secondItem="Pc2-2i-4Jc" secondAttribute="centerY" id="4Aj-p5-52W"/>
@@ -1115,7 +1195,6 @@
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5IA-Za-oge"/>
                                             <constraint firstItem="mbQ-WA-Ul3" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="5ZX-c4-u2u"/>
                                             <constraint firstItem="Cmx-mp-c6c" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5fg-0j-aS1"/>
-                                            <constraint firstAttribute="bottom" secondItem="bUh-f1-3jN" secondAttribute="bottom" constant="15" id="5kp-MZ-PCA"/>
                                             <constraint firstItem="moQ-3X-8Li" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="5yX-bf-DTk"/>
                                             <constraint firstItem="sRm-gU-ct5" firstAttribute="centerY" secondItem="wjE-gH-fAB" secondAttribute="centerY" id="64T-TE-zgz"/>
                                             <constraint firstItem="1zi-oL-jQP" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="68F-mi-wpm"/>
@@ -1157,12 +1236,14 @@
                                             <constraint firstItem="0O0-kD-6fX" firstAttribute="top" secondItem="byf-c7-okc" secondAttribute="bottom" constant="15" id="EGd-ce-2WL"/>
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Eg6-RF-ujY"/>
                                             <constraint firstItem="0O0-kD-6fX" firstAttribute="centerY" secondItem="DlQ-XV-YZB" secondAttribute="centerY" id="Ewd-1p-A5z"/>
+                                            <constraint firstItem="zeP-o9-EiU" firstAttribute="top" secondItem="Nw5-HD-fka" secondAttribute="bottom" constant="15" id="F0q-3l-bAB"/>
                                             <constraint firstItem="Ihp-iF-qjp" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Fgg-it-f4u"/>
                                             <constraint firstItem="egg-cp-66j" firstAttribute="centerY" secondItem="9V5-r4-NMP" secondAttribute="centerY" id="FmA-kL-jES"/>
                                             <constraint firstItem="IqO-vz-1W6" firstAttribute="centerY" secondItem="jSx-Pq-6uA" secondAttribute="centerY" id="FqA-Wu-2V1"/>
                                             <constraint firstItem="cpT-ea-uhE" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Fzb-KD-hv3"/>
                                             <constraint firstItem="UQg-dP-efC" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="GNz-d9-Sxv"/>
                                             <constraint firstItem="dcB-H8-04l" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Gn0-wI-aIc"/>
+                                            <constraint firstItem="6E2-Ck-1tp" firstAttribute="centerY" secondItem="Nw5-HD-fka" secondAttribute="centerY" id="Gys-WH-QxG"/>
                                             <constraint firstItem="jcc-oL-gSK" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="H23-L9-iZh"/>
                                             <constraint firstItem="ZoP-Kp-DM3" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="H2e-8B-iXD"/>
                                             <constraint firstItem="tmi-p9-VCa" firstAttribute="top" secondItem="wjE-gH-fAB" secondAttribute="bottom" constant="15" id="H46-RB-aIV"/>
@@ -1178,6 +1259,7 @@
                                             <constraint firstItem="cyW-Fm-CL4" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="JVZ-YW-4Gd"/>
                                             <constraint firstItem="sMY-KW-Gfw" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="JVl-ar-wdV"/>
                                             <constraint firstItem="bGi-1L-Twq" firstAttribute="top" secondItem="wqN-wD-Tll" secondAttribute="bottom" constant="15" id="Jic-Sf-HY3"/>
+                                            <constraint firstItem="mxs-eg-VKM" firstAttribute="centerY" secondItem="zeP-o9-EiU" secondAttribute="centerY" id="Jpg-dK-IYo"/>
                                             <constraint firstItem="5ta-rW-gVH" firstAttribute="centerY" secondItem="1zi-oL-jQP" secondAttribute="centerY" id="JxU-DP-2se"/>
                                             <constraint firstItem="byf-c7-okc" firstAttribute="centerY" secondItem="xAE-hU-f6A" secondAttribute="centerY" id="KHj-QX-UcB"/>
                                             <constraint firstItem="Noo-Ca-sE4" firstAttribute="leading" secondItem="Yok-QN-M64" secondAttribute="leading" constant="15" id="KbR-52-8ew"/>
@@ -1190,6 +1272,8 @@
                                             <constraint firstItem="uGz-Jz-3JB" firstAttribute="centerY" secondItem="TSv-t0-0bi" secondAttribute="centerY" id="MWc-aW-WY1"/>
                                             <constraint firstItem="asR-RB-cd6" firstAttribute="centerX" secondItem="Yok-QN-M64" secondAttribute="centerX" id="MYx-bU-ijJ"/>
                                             <constraint firstItem="1zi-oL-jQP" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Mf9-G3-fjc"/>
+                                            <constraint firstItem="7ad-qZ-Y8J" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Mor-c3-rYO"/>
+                                            <constraint firstItem="7ad-qZ-Y8J" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="N6y-er-7zQ"/>
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="top" secondItem="egg-cp-66j" secondAttribute="bottom" constant="15" id="NAX-pk-CgD"/>
                                             <constraint firstItem="d7Z-G5-72x" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="NIj-aP-5pW"/>
                                             <constraint firstItem="JT0-fb-IyB" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="NOl-1V-YeW"/>
@@ -1199,6 +1283,7 @@
                                             <constraint firstItem="7O7-RY-cHx" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Opq-nU-eyD"/>
                                             <constraint firstItem="wt8-Vh-gC8" firstAttribute="centerY" secondItem="5Xr-5S-TL3" secondAttribute="centerY" id="Ovb-4M-kSZ"/>
                                             <constraint firstItem="1fc-zw-n0K" firstAttribute="top" secondItem="0O0-kD-6fX" secondAttribute="bottom" constant="15" id="P80-oi-SDk"/>
+                                            <constraint firstAttribute="bottom" secondItem="zeP-o9-EiU" secondAttribute="bottom" constant="15" id="PFF-6X-6Ji"/>
                                             <constraint firstItem="J6J-6B-mL2" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="PJN-cc-8wS"/>
                                             <constraint firstItem="asR-RB-cd6" firstAttribute="centerY" secondItem="Noo-Ca-sE4" secondAttribute="centerY" id="PJi-Nk-rfy"/>
                                             <constraint firstItem="abb-rn-53a" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="PV2-v7-lC9"/>
@@ -1207,6 +1292,7 @@
                                             <constraint firstItem="5Xr-5S-TL3" firstAttribute="centerY" secondItem="6bm-T4-7fP" secondAttribute="centerY" id="PjK-GF-aYn"/>
                                             <constraint firstItem="AGC-yk-ej5" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="Pkq-M3-tcf"/>
                                             <constraint firstItem="vHr-Xv-77A" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="PvJ-2Z-t5A"/>
+                                            <constraint firstItem="mxs-eg-VKM" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Q85-bk-acf"/>
                                             <constraint firstItem="KRi-Xy-7eu" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Q8U-xt-PKd"/>
                                             <constraint firstItem="lng-ul-qp1" firstAttribute="centerY" secondItem="ht7-cM-84i" secondAttribute="centerY" id="QPO-WU-zPO"/>
                                             <constraint firstItem="jSx-Pq-6uA" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="QVX-k3-hAn"/>
@@ -1220,12 +1306,14 @@
                                             <constraint firstItem="2AI-dz-4h7" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="S1s-mi-YTN"/>
                                             <constraint firstItem="SkX-f9-LxJ" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="SSM-t9-Fx9"/>
                                             <constraint firstItem="g1k-Dn-RxJ" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="SgV-UE-zzX"/>
+                                            <constraint firstItem="6E2-Ck-1tp" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="Sq0-g0-RcC"/>
                                             <constraint firstItem="jcc-oL-gSK" firstAttribute="centerY" secondItem="cyW-Fm-CL4" secondAttribute="centerY" id="Syo-ck-lqe"/>
                                             <constraint firstItem="KuG-e0-Kb5" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="T5k-ti-dcq"/>
                                             <constraint firstItem="J6J-6B-mL2" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="TfV-3T-suC"/>
                                             <constraint firstItem="9V5-r4-NMP" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="U4s-4P-J6U"/>
                                             <constraint firstItem="J6J-6B-mL2" firstAttribute="centerY" secondItem="d7Z-G5-72x" secondAttribute="centerY" id="ULO-aa-aPx"/>
                                             <constraint firstItem="zaG-1R-adB" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="URb-ev-EaU"/>
+                                            <constraint firstItem="LTd-3d-8mi" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="UW4-wu-NQt"/>
                                             <constraint firstItem="cpT-ea-uhE" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="Ug5-c8-w8J"/>
                                             <constraint firstItem="wqN-wD-Tll" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Ukh-jl-Pix"/>
                                             <constraint firstItem="FOu-Cf-lOv" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="Ux7-Wa-v0c"/>
@@ -1251,6 +1339,7 @@
                                             <constraint firstItem="2AI-dz-4h7" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="Z4H-bt-HN5"/>
                                             <constraint firstItem="0qL-Nl-PaP" firstAttribute="centerY" secondItem="zaG-1R-adB" secondAttribute="centerY" id="ZEi-uf-PHk"/>
                                             <constraint firstItem="xp4-rk-u3O" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="ZnT-Aa-qgq"/>
+                                            <constraint firstItem="LTd-3d-8mi" firstAttribute="centerY" secondItem="mxs-eg-VKM" secondAttribute="centerY" id="aI5-h5-8Yg"/>
                                             <constraint firstItem="Gyc-tZ-GF4" firstAttribute="top" secondItem="Qg0-mI-ryr" secondAttribute="bottom" constant="15" id="aMo-TQ-VMw"/>
                                             <constraint firstItem="SkX-f9-LxJ" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="aVU-UI-HZb"/>
                                             <constraint firstItem="1fc-zw-n0K" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="abh-8m-pls"/>
@@ -1259,6 +1348,7 @@
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="centerY" secondItem="k5i-Gd-Erd" secondAttribute="centerY" id="c2b-lz-nEW"/>
                                             <constraint firstItem="jSx-Pq-6uA" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="cIJ-sY-vA2"/>
                                             <constraint firstItem="JjB-0y-dxC" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="caf-Nw-k1F"/>
+                                            <constraint firstItem="6E2-Ck-1tp" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="coR-O7-sJX"/>
                                             <constraint firstItem="wjE-gH-fAB" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="d8t-ze-SAs"/>
                                             <constraint firstItem="Qg0-mI-ryr" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="dgV-27-ESz"/>
                                             <constraint firstItem="6bm-T4-7fP" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="dhj-QB-umK"/>
@@ -1289,11 +1379,14 @@
                                             <constraint firstItem="ht7-cM-84i" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="kJ8-C2-yNt"/>
                                             <constraint firstItem="Ihp-iF-qjp" firstAttribute="centerY" secondItem="Gyc-tZ-GF4" secondAttribute="centerY" id="l6u-bP-Jal"/>
                                             <constraint firstItem="xPZ-cX-7G6" firstAttribute="centerY" secondItem="5ta-rW-gVH" secondAttribute="centerY" id="m2B-BA-fOu"/>
+                                            <constraint firstItem="zeP-o9-EiU" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="m7a-JI-LJo"/>
                                             <constraint firstItem="aEb-E7-xeZ" firstAttribute="centerY" secondItem="0O0-kD-6fX" secondAttribute="centerY" id="mHS-3N-GZH"/>
                                             <constraint firstItem="Aqh-8E-auB" firstAttribute="centerY" secondItem="peu-FI-HfH" secondAttribute="centerY" id="mMY-d0-qNl"/>
+                                            <constraint firstItem="Nw5-HD-fka" firstAttribute="top" secondItem="bUh-f1-3jN" secondAttribute="bottom" constant="15" id="mP9-7b-C8S"/>
                                             <constraint firstItem="5Xr-5S-TL3" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="mQf-hA-1Be"/>
                                             <constraint firstItem="ggT-2Q-fCw" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="mZN-aM-SzO"/>
                                             <constraint firstItem="ib4-Ei-1ly" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="mqr-Zt-vfj"/>
+                                            <constraint firstItem="mxs-eg-VKM" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="n7Z-UB-pRr"/>
                                             <constraint firstItem="b1O-B1-P9Y" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="nEO-L3-JDa"/>
                                             <constraint firstItem="zaG-1R-adB" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="nFl-rp-NgS"/>
                                             <constraint firstItem="bGi-1L-Twq" firstAttribute="centerY" secondItem="EKL-JY-FBl" secondAttribute="centerY" id="nl6-ak-pR7"/>
@@ -1329,11 +1422,14 @@
                                             <constraint firstItem="0O0-kD-6fX" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="v2H-gM-4CS"/>
                                             <constraint firstItem="fxL-Jm-PKe" firstAttribute="centerX" secondItem="VwH-49-m8w" secondAttribute="centerX" id="vB2-7j-zGi"/>
                                             <constraint firstItem="peu-FI-HfH" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="vPg-Ai-5n2"/>
+                                            <constraint firstItem="zeP-o9-EiU" firstAttribute="centerX" secondItem="Noo-Ca-sE4" secondAttribute="centerX" id="wLg-Ub-qAT"/>
                                             <constraint firstItem="G39-cp-RQ1" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="wLp-YH-FUO"/>
                                             <constraint firstItem="40Q-iX-hJD" firstAttribute="top" secondItem="peu-FI-HfH" secondAttribute="bottom" constant="15" id="wXk-D0-HPa"/>
                                             <constraint firstItem="Noo-Ca-sE4" firstAttribute="width" secondItem="VwH-49-m8w" secondAttribute="width" id="wXr-Ek-bYn"/>
+                                            <constraint firstItem="Nw5-HD-fka" firstAttribute="centerY" secondItem="7ad-qZ-Y8J" secondAttribute="centerY" id="wZi-q1-Uif"/>
                                             <constraint firstItem="vaw-sR-HOZ" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="wc1-kV-mKw"/>
                                             <constraint firstItem="2xA-6s-U1H" firstAttribute="width" secondItem="asR-RB-cd6" secondAttribute="width" id="wcZ-sB-rjR"/>
+                                            <constraint firstItem="Nw5-HD-fka" firstAttribute="width" secondItem="Noo-Ca-sE4" secondAttribute="width" id="wip-RD-nJS"/>
                                             <constraint firstItem="Qg0-mI-ryr" firstAttribute="top" secondItem="IDs-09-wSQ" secondAttribute="bottom" constant="15" id="wpM-EG-1VB"/>
                                             <constraint firstItem="bUh-f1-3jN" firstAttribute="top" secondItem="UQg-dP-efC" secondAttribute="bottom" constant="15" id="wzq-iO-xCA"/>
                                             <constraint firstItem="AGC-yk-ej5" firstAttribute="centerX" secondItem="asR-RB-cd6" secondAttribute="centerX" id="x70-xL-m9d"/>

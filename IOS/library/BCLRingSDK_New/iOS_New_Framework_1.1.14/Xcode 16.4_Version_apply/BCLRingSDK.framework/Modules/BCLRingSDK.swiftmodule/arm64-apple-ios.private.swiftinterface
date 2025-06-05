@@ -1,0 +1,2591 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BCLRingSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+import CoreBluetooth
+import Foil
+import Foundation
+import NordicDFU
+import RxRelay
+import RxSwift
+import SQLite3
+import Swift
+import SwiftDate
+import SwiftyBeaver
+import UIKit
+import ZIPFoundation
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import zlib
+@_inheritsConvenienceInitializers public class SystemSettingCommand : BCLRingSDK.BCLCommand {
+  public static func createCollectionPeriod(period: Swift.Int) -> BCLRingSDK.SystemSettingCommand
+  public static func createReadCollectionPeriod() -> BCLRingSDK.SystemSettingCommand
+  public static func createRestoreFactorySettings() -> BCLRingSDK.SystemSettingCommand
+  public static func createSetBluetoothName(newNameBytes: [Swift.UInt8]) -> BCLRingSDK.SystemSettingCommand
+  public static func createReadBluetoothName() -> BCLRingSDK.SystemSettingCommand
+  public static func createReadAllInformation() -> BCLRingSDK.SystemSettingCommand
+  public static func createSetPersonalInformation(sex: Swift.Int, age: Swift.Int, height: Swift.Int, weight: Swift.Int) -> BCLRingSDK.SystemSettingCommand
+  public static func createReadPersonalInformation() -> BCLRingSDK.SystemSettingCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetCollectPeriodResponse : BCLRingSDK.BCLResponse {
+  public var success: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetCollectPeriodResponse : BCLRingSDK.BCLResponse {
+  public var time: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRestoreFactorySettingsResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetBluetoothNameResponse : BCLRingSDK.BCLResponse {
+  public var success: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadBluetoothNameResponse : BCLRingSDK.BCLResponse {
+  public var name: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPersonalInformationResponse : BCLRingSDK.BCLResponse {
+  public var success: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadPersonalInformationResponse : BCLRingSDK.BCLResponse {
+  public var sex: Swift.Int
+  public var height: Swift.Int
+  public var weight: Swift.Int
+  public var age: Swift.Int
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class HeartRateCommand : BCLRingSDK.BCLCommand {
+  public static func createTake(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int, intervalConfig: Swift.Int) -> BCLRingSDK.HeartRateCommand
+  public static func createStop() -> BCLRingSDK.HeartRateCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLHeartRateMeasureStatus : Swift.UInt8 {
+  case notWearing
+  case wearing
+  case chargingNotAllowed
+  case measuring
+  case busy
+  case dataCollectionTimeout
+  case completed
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct BCLHeartRateCallbacks {
+  public var onProgress: ((Swift.Int) -> Swift.Void)?
+  public var onStatusChanged: ((BCLRingSDK.BCLHeartRateMeasureStatus) -> Swift.Void)?
+  public var onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)?
+  public var onWaveform: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void)?
+  public var onRRInterval: ((Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void)?
+  public var onError: ((BCLRingSDK.BCLError) -> Swift.Void)?
+  public init(onProgress: ((Swift.Int) -> Swift.Void)? = nil, onStatusChanged: ((BCLRingSDK.BCLHeartRateMeasureStatus) -> Swift.Void)? = nil, onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)? = nil, onWaveform: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void)? = nil, onRRInterval: ((Swift.Int, Swift.Int, [Swift.UInt8]) -> Swift.Void)? = nil, onError: ((BCLRingSDK.BCLError) -> Swift.Void)? = nil)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLHeartRateResponse : BCLRingSDK.BCLResponse {
+  public var status: BCLRingSDK.BCLHeartRateMeasureStatus
+  public var heartRate: Swift.Int?
+  public var heartRateVariability: Swift.Int?
+  public var stressIndex: Swift.Int?
+  public var temperature: Swift.Int?
+  public var waveformData: (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)])?
+  public var rrIntervalData: (Swift.Int, Swift.Int, [Swift.UInt8])?
+  public var progressData: Swift.Int?
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLHeartRateCallbacks, frameId: Swift.UInt8)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopHeartRateResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+public protocol BCLServerResponse {
+  var status: Swift.Int { get }
+  var message: Swift.String { get }
+}
+@_inheritsConvenienceInitializers public class CompositeCommand : BCLRingSDK.BCLCommand {
+  public static func createBind(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone) -> BCLRingSDK.CompositeCommand
+  public static func createConnect(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone) -> BCLRingSDK.CompositeCommand
+  public static func createRefresh(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone) -> BCLRingSDK.CompositeCommand
+  public static func createUnbind() -> BCLRingSDK.CompositeCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLBindRingResponse : BCLRingSDK.BCLResponse {
+  public var firmwareVersion: Swift.String
+  public var hardwareVersion: Swift.String
+  public var batteryLevel: Swift.UInt8
+  public var chargingState: BCLRingSDK.BCLChargingState
+  public var collectInterval: Swift.UInt32
+  public var stepCount: Swift.UInt16
+  public var selfInspectionFlag: Swift.UInt16
+  public var hasSelfInspectionError: Swift.Bool {
+    get
+  }
+  public var selfInspectionErrorDescription: Swift.String {
+    get
+  }
+  public typealias ErrorBit = BCLRingSDK.BCLFixtureTestingOneKeySelfInspectionResponse.ErrorBit
+  public func hasErrorBit(_ bit: Swift.UInt16) -> Swift.Bool
+  public var hasPPGCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasGsensorCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasPMICCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasBatAdcError: Swift.Bool {
+    get
+  }
+  public var hasTempAdcError: Swift.Bool {
+    get
+  }
+  public var hasPPGLedError: Swift.Bool {
+    get
+  }
+  public var hasGsensorError: Swift.Bool {
+    get
+  }
+  public var hasPufError: Swift.Bool {
+    get
+  }
+  public var hasTouchError: Swift.Bool {
+    get
+  }
+  public var hasError: Swift.Bool {
+    get
+  }
+  public var isHIDSupported: Swift.Bool
+  public var isTouchPhotoSupported: Swift.Bool
+  public var isTouchShortVideoSupported: Swift.Bool
+  public var isTouchMusicControlSupported: Swift.Bool
+  public var isTouchPPTControlSupported: Swift.Bool
+  public var isTouchAudioUploadSupported: Swift.Bool
+  public var isPinchPhotoSupported: Swift.Bool
+  public var isGestureShortVideoSupported: Swift.Bool
+  public var isGestureMusicControlSupported: Swift.Bool
+  public var isGesturePPTControlSupported: Swift.Bool
+  public var isSnapPhotoSupported: Swift.Bool
+  public var touchHIDMode: BCLRingSDK.BCLTouchHIDMode
+  public var gestureHIDMode: BCLRingSDK.BCLGestureHIDMode
+  public var systemType: BCLRingSDK.BCLSystemTypeHIDMode
+  public var isHeartRateCurveSupported: Swift.Bool
+  public var isOxygenCurveSupported: Swift.Bool
+  public var isVariabilityCurveSupported: Swift.Bool
+  public var isPressureCurveSupported: Swift.Bool
+  public var isTemperatureCurveSupported: Swift.Bool
+  public var isFemaleHealthSupported: Swift.Bool
+  public var isVibrationAlarmSupported: Swift.Bool
+  public var isEcgFunctionSupported: Swift.Bool
+  public var isMicrophoneSupported: Swift.Bool
+  public var isSportModeSupported: Swift.Bool
+  public var isBloodPressureMeasurementSupported: Swift.Bool
+  public var supportedFeaturesDescription: Swift.String {
+    get
+  }
+  public var parseErrorMessage: Swift.String {
+    get
+  }
+  public var parseErrorType: BCLRingSDK.BCLError {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLConnectRingResponse : BCLRingSDK.BCLResponse {
+  public var firmwareVersion: Swift.String
+  public var hardwareVersion: Swift.String
+  public var batteryLevel: Swift.UInt8
+  public var chargingState: BCLRingSDK.BCLChargingState
+  public var collectInterval: Swift.UInt32
+  public var stepCount: Swift.UInt16
+  public var selfInspectionFlag: Swift.UInt16
+  public var hasSelfInspectionError: Swift.Bool {
+    get
+  }
+  public var selfInspectionErrorDescription: Swift.String {
+    get
+  }
+  public typealias ErrorBit = BCLRingSDK.BCLFixtureTestingOneKeySelfInspectionResponse.ErrorBit
+  public func hasErrorBit(_ bit: Swift.UInt16) -> Swift.Bool
+  public var hasPPGCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasGsensorCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasPMICCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasBatAdcError: Swift.Bool {
+    get
+  }
+  public var hasTempAdcError: Swift.Bool {
+    get
+  }
+  public var hasPPGLedError: Swift.Bool {
+    get
+  }
+  public var hasGsensorError: Swift.Bool {
+    get
+  }
+  public var hasPufError: Swift.Bool {
+    get
+  }
+  public var hasTouchError: Swift.Bool {
+    get
+  }
+  public var hasError: Swift.Bool {
+    get
+  }
+  public var isHIDSupported: Swift.Bool
+  public var isTouchPhotoSupported: Swift.Bool
+  public var isTouchShortVideoSupported: Swift.Bool
+  public var isTouchMusicControlSupported: Swift.Bool
+  public var isTouchPPTControlSupported: Swift.Bool
+  public var isTouchAudioUploadSupported: Swift.Bool
+  public var isPinchPhotoSupported: Swift.Bool
+  public var isGestureShortVideoSupported: Swift.Bool
+  public var isGestureMusicControlSupported: Swift.Bool
+  public var isGesturePPTControlSupported: Swift.Bool
+  public var isSnapPhotoSupported: Swift.Bool
+  public var touchHIDMode: BCLRingSDK.BCLTouchHIDMode
+  public var gestureHIDMode: BCLRingSDK.BCLGestureHIDMode
+  public var systemType: BCLRingSDK.BCLSystemTypeHIDMode
+  public var isHeartRateCurveSupported: Swift.Bool
+  public var isOxygenCurveSupported: Swift.Bool
+  public var isVariabilityCurveSupported: Swift.Bool
+  public var isPressureCurveSupported: Swift.Bool
+  public var isTemperatureCurveSupported: Swift.Bool
+  public var isFemaleHealthSupported: Swift.Bool
+  public var isVibrationAlarmSupported: Swift.Bool
+  public var isEcgFunctionSupported: Swift.Bool
+  public var isMicrophoneSupported: Swift.Bool
+  public var isSportModeSupported: Swift.Bool
+  public var isBloodPressureMeasurementSupported: Swift.Bool
+  public var supportedFeaturesDescription: Swift.String {
+    get
+  }
+  public var parseErrorMessage: Swift.String {
+    get
+  }
+  public var parseErrorType: BCLRingSDK.BCLError {
+    get
+  }
+  public var currentSyncState: BCLRingSDK.BCLDataSyncStatus {
+    get
+  }
+  public var ringDBModel: BCLRingSDK.BCLRingDBModel?
+  public var totalNumber: Swift.Int
+  public var indexNumber: Swift.Int
+  public var progress: Swift.Int {
+    get
+  }
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLDataSyncCallbacks)
+  public static var completionCallback: (() -> Swift.Void)?
+  public static func cleanup()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRefreshRingResponse : BCLRingSDK.BCLResponse {
+  public var firmwareVersion: Swift.String
+  public var hardwareVersion: Swift.String
+  public var batteryLevel: Swift.UInt8
+  public var chargingState: BCLRingSDK.BCLChargingState
+  public var collectInterval: Swift.UInt32
+  public var stepCount: Swift.UInt16
+  public var selfInspectionFlag: Swift.UInt16
+  public var hasSelfInspectionError: Swift.Bool {
+    get
+  }
+  public var selfInspectionErrorDescription: Swift.String {
+    get
+  }
+  public typealias ErrorBit = BCLRingSDK.BCLFixtureTestingOneKeySelfInspectionResponse.ErrorBit
+  public func hasErrorBit(_ bit: Swift.UInt16) -> Swift.Bool
+  public var hasPPGCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasGsensorCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasPMICCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasBatAdcError: Swift.Bool {
+    get
+  }
+  public var hasTempAdcError: Swift.Bool {
+    get
+  }
+  public var hasPPGLedError: Swift.Bool {
+    get
+  }
+  public var hasGsensorError: Swift.Bool {
+    get
+  }
+  public var hasPufError: Swift.Bool {
+    get
+  }
+  public var hasTouchError: Swift.Bool {
+    get
+  }
+  public var hasError: Swift.Bool {
+    get
+  }
+  public var isHIDSupported: Swift.Bool
+  public var isTouchPhotoSupported: Swift.Bool
+  public var isTouchShortVideoSupported: Swift.Bool
+  public var isTouchMusicControlSupported: Swift.Bool
+  public var isTouchPPTControlSupported: Swift.Bool
+  public var isTouchAudioUploadSupported: Swift.Bool
+  public var isPinchPhotoSupported: Swift.Bool
+  public var isGestureShortVideoSupported: Swift.Bool
+  public var isGestureMusicControlSupported: Swift.Bool
+  public var isGesturePPTControlSupported: Swift.Bool
+  public var isSnapPhotoSupported: Swift.Bool
+  public var touchHIDMode: BCLRingSDK.BCLTouchHIDMode
+  public var gestureHIDMode: BCLRingSDK.BCLGestureHIDMode
+  public var systemType: BCLRingSDK.BCLSystemTypeHIDMode
+  public var isHeartRateCurveSupported: Swift.Bool
+  public var isOxygenCurveSupported: Swift.Bool
+  public var isVariabilityCurveSupported: Swift.Bool
+  public var isPressureCurveSupported: Swift.Bool
+  public var isTemperatureCurveSupported: Swift.Bool
+  public var isFemaleHealthSupported: Swift.Bool
+  public var isVibrationAlarmSupported: Swift.Bool
+  public var isEcgFunctionSupported: Swift.Bool
+  public var isMicrophoneSupported: Swift.Bool
+  public var isSportModeSupported: Swift.Bool
+  public var isBloodPressureMeasurementSupported: Swift.Bool
+  public var supportedFeaturesDescription: Swift.String {
+    get
+  }
+  public var parseErrorMessage: Swift.String {
+    get
+  }
+  public var parseErrorType: BCLRingSDK.BCLError {
+    get
+  }
+  public var currentSyncState: BCLRingSDK.BCLDataSyncStatus {
+    get
+  }
+  public var ringDBModel: BCLRingSDK.BCLRingDBModel?
+  public var totalNumber: Swift.Int
+  public var indexNumber: Swift.Int
+  public var progress: Swift.Int {
+    get
+  }
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLDataSyncCallbacks)
+  public static var completionCallback: (() -> Swift.Void)?
+  public static func cleanup()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class FixtureTestingCommand : BCLRingSDK.BCLCommand {
+  public static func createOneKeySelfInspection() -> BCLRingSDK.FixtureTestingCommand
+  public static func createCommunicationLoopback(dataLength: Swift.Int) -> BCLRingSDK.FixtureTestingCommand
+  public static func createCommunicationUpload(isStart: Swift.Bool = true) -> BCLRingSDK.FixtureTestingCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingOneKeySelfInspectionResponse : BCLRingSDK.BCLResponse {
+  public struct ErrorBit {
+    public static let ppgCommunication: Swift.UInt16
+    public static let gsensorCommunication: Swift.UInt16
+    public static let pmicCommunication: Swift.UInt16
+    public static let batAdc: Swift.UInt16
+    public static let tempAdc: Swift.UInt16
+    public static let ppgLed: Swift.UInt16
+    public static let gsensor: Swift.UInt16
+    public static let puf: Swift.UInt16
+    public static let touch: Swift.UInt16
+    public static let reserved: Swift.UInt16
+  }
+  public var errorCode: Swift.UInt16
+  public var hasError: Swift.Bool {
+    get
+  }
+  public func hasErrorBit(_ bit: Swift.UInt16) -> Swift.Bool
+  public var errorDescription: Swift.String {
+    get
+  }
+  public var hasPPGCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasGsensorCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasPMICCommunicationError: Swift.Bool {
+    get
+  }
+  public var hasBatAdcError: Swift.Bool {
+    get
+  }
+  public var hasTempAdcError: Swift.Bool {
+    get
+  }
+  public var hasPPGLedError: Swift.Bool {
+    get
+  }
+  public var hasGsensorError: Swift.Bool {
+    get
+  }
+  public var hasPufError: Swift.Bool {
+    get
+  }
+  public var hasTouchError: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingCommunicationLoopbackResponse : BCLRingSDK.BCLResponse {
+  public var dataLength: Swift.UInt8
+  public var dataContent: Foundation.Data
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingCommunicationUploadResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class BCLRingLocalSleepModel : ObjectiveC.NSObject {
+  @objc public var hours: Swift.Int
+  @objc public var minutes: Swift.Int
+  @objc public var allHours: Swift.Int
+  @objc public var allMinutes: Swift.Int
+  @objc public var sleepHours: Swift.Int
+  @objc public var sleepMinutes: Swift.Int
+  @objc public var highTime: Swift.Int64
+  @objc public var lowTime: Swift.Int64
+  @objc public var ydTime: Swift.Int64
+  @objc public var qxTime: Swift.Int64
+  @objc public var startTime: Swift.Int64
+  @objc public var endTime: Swift.Int64
+  @objc public var sleepDataList: [BCLRingSDK.BCLRingDBModel]
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension Swift.Double {
+  public func jd_rounded(toPlaces places: Swift.Int) -> Swift.Double
+}
+extension BCLRingSDK.BCLRingManager {
+  public func configLogPath(directoryPath: Swift.String = defaultLogDirectoryPath)
+  public func checkBluetoothPermission(completion: @escaping (CoreBluetooth.CBManagerAuthorization) -> Swift.Void)
+  public func startScan(scanResultBlock: @escaping (Swift.Result<[BCLRingSDK.BCLDeviceInfoModel], BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopScan()
+  public func startConnect(peripheral: CoreBluetooth.CBPeripheral, isAutoReconnect: Swift.Bool = false, autoReconnectTimeLimit: Foundation.TimeInterval = 300, autoReconnectMaxAttempts: Swift.Int = 3, connectResultBlock: @escaping (Swift.Result<BCLRingSDK.BCLDeviceInfoModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startConnect(device: BCLRingSDK.BCLDeviceInfoModel, isAutoReconnect: Swift.Bool = false, autoReconnectTimeLimit: Foundation.TimeInterval = 300, autoReconnectMaxAttempts: Swift.Int = 3, connectResultBlock: @escaping (Swift.Result<BCLRingSDK.BCLDeviceInfoModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startConnect(uuidString: Swift.String, isAutoReconnect: Swift.Bool = false, autoReconnectTimeLimit: Foundation.TimeInterval = 300, autoReconnectMaxAttempts: Swift.Int = 3, connectResultBlock: @escaping (Swift.Result<BCLRingSDK.BCLDeviceInfoModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startConnect(macAddress: Swift.String, isAutoReconnect: Swift.Bool = false, autoReconnectTimeLimit: Foundation.TimeInterval = 300, autoReconnectMaxAttempts: Swift.Int = 3, connectResultBlock: @escaping (Swift.Result<BCLRingSDK.BCLDeviceInfoModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func disconnect()
+  public func startReadRSSI(interval: Foundation.TimeInterval, readRSSIBlock: @escaping (Swift.Result<Foundation.NSNumber, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopReadRSSI()
+  public func syncTime(date: Foundation.Date = Date(), timeZone: BCLRingSDK.BCLRingTimeZone = .East8, completion: @escaping (Swift.Result<BCLRingSDK.BCLSyncTimeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readTime(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadTimeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readFirmware(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadFirmwareResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readHardware(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadHardwareResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readBattery(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadBatteryResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readChargingState(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadChargingStateResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readTemperature(completion: @escaping (Swift.Result<BCLRingSDK.BCLTemperatureResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readStepCount(completion: @escaping (Swift.Result<BCLRingSDK.BCLStepCountResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func clearStepCount(completion: @escaping (Swift.Result<BCLRingSDK.BCLClearStepCountResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setCollectPeriod(period: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetCollectPeriodResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getCollectPeriod(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetCollectPeriodResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func restoreFactorySettings(completion: @escaping (Swift.Result<BCLRingSDK.BCLRestoreFactorySettingsResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setBluetoothName(name: Swift.String, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetBluetoothNameResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getBluetoothName(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadBluetoothNameResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startBloodOxygen(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLBloodOxygenResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopBloodOxygen(completion: @escaping (Swift.Result<BCLRingSDK.BCLStopBloodOxygenResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startBloodPressure(collectTime: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int, waveformSetting: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLBloodPressureResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopBloodPressure(completion: @escaping (Swift.Result<BCLRingSDK.BCLStopBloodPressureResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startHeartRate(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int, intervalConfig: Swift.Int, callbacks: BCLRingSDK.BCLHeartRateCallbacks, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopHeartRate(completion: @escaping (Swift.Result<BCLRingSDK.BCLStopHeartRateResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func ppgWaveFormMeasurement(collectTime: Swift.Int, waveConfig: Swift.Int, progressConfig: Swift.Int, waveSetting: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLPPGWaveFormResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func ppgWaveFormStop(completion: @escaping (Swift.Result<BCLRingSDK.BCLPPGWaveFormStopResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setSixAxisWorkFrequency(accelerationFrequency: Swift.Int, gyroscopeFrequency: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetWorkFrequencyResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisWorkFrequency(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetWorkFrequencyResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisAccelerationData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadAccelerationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisGyroscopeData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadGyroscopeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisAccelerationAndGyroscopeData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadAccelerationAndGyroscopeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisRealTimeAccelerationData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadRealTimeAccelerationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisRealTimeGyroscopeData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadRealTimeGyroscopeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSixAxisRealTimeAccelerationAndGyroscopeData(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadRealTimeAccelerationAndGyroscopeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopSixAxisData(completion: @escaping (Swift.Result<BCLRingSDK.BCLCloseSixAxisResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setSixAxisPowerSavingMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLSetPowerSavingModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readUnUploadData(timestamp: Foundation.TimeInterval = 0, callbacks: BCLRingSDK.BCLDataSyncCallbacks, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readAllHistoryData(timestamp: Foundation.TimeInterval = 0, callbacks: BCLRingSDK.BCLDataSyncCallbacks, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func deleteRingAllHistoryData(completion: @escaping (Swift.Result<BCLRingSDK.BCLDeleteAllHistoryDataResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getFileList(completion: @escaping (Swift.Result<BCLRingSDK.BCLRequestFileListResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getFileData(fileName: Swift.String, completion: @escaping (Swift.Result<BCLRingSDK.BCLRequestFileDataResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func deleteFile(fileName: Swift.String, completion: @escaping (Swift.Result<BCLRingSDK.BCLDeleteFileResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func formatFileSystem(completion: @escaping (Swift.Result<BCLRingSDK.BCLFormatFileSystemResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getFileSystemInfo(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetFileSystemInfoResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getAutoRecordDataMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetAutoRecordDataModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setAutoRecordDataMode(type: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetAutoRecordDataModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getFileSystemStatus(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetFileSystemStatusResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func oneKeySelfInspection(completion: @escaping (Swift.Result<BCLRingSDK.BCLFixtureTestingOneKeySelfInspectionResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func communicationLoopRateTest(dataLength: Swift.Int = 10, completion: @escaping (Swift.Result<BCLRingSDK.BCLFixtureTestingCommunicationLoopbackResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func appEventBindRing(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone, completion: @escaping (Swift.Result<BCLRingSDK.BCLBindRingResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func appEventConnectRing(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone, callbacks: BCLRingSDK.BCLDataSyncCallbacks, completion: @escaping (Swift.Result<BCLRingSDK.BCLConnectRingResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func appEventRefreshRing(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone, callbacks: BCLRingSDK.BCLDataSyncCallbacks, completion: @escaping (Swift.Result<BCLRingSDK.BCLRefreshRingResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setHIDMode(touchMode: Swift.Int, gestureMode: Swift.Int, systemType: Swift.Int, deviceModelName: Swift.String, screenHeightPixel: Swift.Int, screenWidthPixel: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetHIDModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getHIDFunctionCode(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetHIDFunctionCodeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getCurrentHIDMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetCurrentHIDModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getMobileDeviceModelName() -> Swift.String
+  public func getMobileDeviceScreenWidthPixel() -> Swift.Int
+  public func getMobileDeviceScreenHeightPixel() -> Swift.Int
+  public func setGestureFunction(swipeUpGesture: Swift.Int, swipeDownGesture: Swift.Int, snapGesture: Swift.Int, pinchGesture: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetGestureFunctionResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readGestureFunction(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadGestureFunctionResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startTakeECG(completion: @escaping (Swift.Result<BCLRingSDK.BCLTakeECGResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startTakeECGSimulator(completion: @escaping (Swift.Result<BCLRingSDK.BCLTakeECGSimulatorResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopECG(completion: @escaping (Swift.Result<BCLRingSDK.BCLStopECGResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startPWTT(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLTakePWTTResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopPWTT(completion: @escaping (Swift.Result<BCLRingSDK.BCLStopPWTTResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startSixAxis(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameSixAxisDataGameStartResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func startThreeAxis(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameThreeAxisDataGameStartResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stop(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameStopResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func accelerationCalibration(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameAccelerationCalibrationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func controlPCMFormatAudio(isOpen: Swift.Bool, completion: @escaping (Swift.Result<BCLRingSDK.BCLControlPCMFormatResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func controlADPCMFormatAudio(isOpen: Swift.Bool, completion: @escaping (Swift.Result<BCLRingSDK.BCLControlADPCMFormatResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setActivePushAudioInfo(audioType: BCLRingSDK.BCLAudioType, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetActivePushAudioInfoResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getActivePushAudioInfo(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetActivePushAudioInfoResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func createToken(apiKey: Swift.String, userIdentifier: Swift.String, completion: @escaping (Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func refreshToken(completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func checkFirmwareUpdate(version: Swift.String, completion: @escaping (Swift.Result<BCLRingSDK.BCLFirmwareVersionInfo, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func downloadFirmware(url: Swift.String, fileName: Swift.String, destinationPath: Swift.String, progress: @escaping (Swift.Double) -> Swift.Void, completion: @escaping (Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func uploadHistory(historyData: [BCLRingSDK.BCLRingDBModel], mac: Swift.String, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSleepData(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone, completion: @escaping (Swift.Result<BCLRingSDK.BCLRingSleepModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getSleepDataByTimeRange(datas: [Swift.String], completion: @escaping (Swift.Result<[BCLRingSDK.BCLRingSleepDayModel], BCLRingSDK.BCLError>) -> Swift.Void)
+  public func uploadBloodPressureData(mac: Swift.String, waveData: [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)], completion: @escaping (Swift.Result<(Swift.Int, Swift.Int), BCLRingSDK.BCLError>) -> Swift.Void)
+  public func compressWaveData(waveData: Swift.String) -> Swift.String
+  public func decompressWaveData(compressWaveData: Swift.String) -> Swift.String
+}
+extension BCLRingSDK.BCLRingManager {
+  public func queryAllHistoryData(macString: Swift.String, completion: @escaping (Swift.Result<[BCLRingSDK.BCLRingDBModel], BCLRingSDK.BCLError>) -> Swift.Void)
+  public func queryHistoryData(startTime: Swift.Int64? = nil, endTime: Swift.Int64? = nil, macString: Swift.String, limit: Swift.Int = 1000, completion: @escaping (Swift.Result<[BCLRingSDK.BCLRingDBModel], BCLRingSDK.BCLError>) -> Swift.Void)
+  public func queryLastHistoryData(macString: Swift.String, completion: @escaping (Swift.Result<BCLRingSDK.BCLRingDBModel, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func insertHistoryData(dataModel: BCLRingSDK.BCLRingDBModel, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func insertHistoryDataSync(dataModel: BCLRingSDK.BCLRingDBModel, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func insertHistoryDataAsync(dataModels: [BCLRingSDK.BCLRingDBModel], completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func insertHistoryDataSync(dataModels: [BCLRingSDK.BCLRingDBModel], completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func deleteDBAllHistoryData(completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func deleteDBHistoryData(startTime: Swift.Int64, endTime: Swift.Int64, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func compressLogAndDataFiles(completion: @escaping (Swift.Result<(Swift.String, Foundation.Data), BCLRingSDK.BCLError>) -> Swift.Void)
+  public func cleanCompressedFiles(completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func getDatabaseVersion(completion: @escaping (Swift.Result<Swift.Int, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func upgradeDatabase(to newVersion: Swift.Int, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func checkAndUpgradeDatabase(to targetVersion: Swift.Int, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func checkNeedMigrateHistoryData() -> Swift.Bool
+  public func getOldDatabaseRecordCount() -> Swift.Int
+  public func migrateHistoryData(mac: Swift.String, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func getOTAType(firmwareVersion: Swift.String?, completion: @escaping (BCLRingSDK.BCLOTAType) -> Swift.Void)
+  public func apolloUpgradeFirmware(filePath: Swift.String, progressHandler: ((Swift.Float) -> Swift.Void)? = nil, completion: @escaping (Swift.Result<Swift.Void, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func stopApolloUpgrade()
+  public func setApolloUpgradeMTU(_ size: Swift.Int)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func nrfUpgradeFirmware(filePath: Swift.String, fileName: Swift.String, progressHandler: ((Swift.Int) -> Swift.Void)? = nil, completion: @escaping (Swift.Result<BCLRingSDK.BCLNrfUpgradeState.Stage, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func phyUpgradeFirmware(filePath: Swift.String, progressHandler: @escaping (Swift.Double) -> Swift.Void, completion: @escaping (Swift.Result<BCLRingSDK.BCLPhyUpgradeState, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func setAlarmClock(items: [BCLRingSDK.BCLAlarmClockData], completion: @escaping (Swift.Result<BCLRingSDK.BCLSetAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readAlarmClock(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+}
+extension BCLRingSDK.BCLRingManager {
+  public func localCalorieAndDistanceCounting(stepCount: Swift.Int, height: Swift.Double, weight: Swift.Double) -> (Swift.Double, Swift.Double)
+  public func calculateSleepLocally(targetDate: Foundation.Date, macString: Swift.String?) -> BCLRingSDK.BCLRingLocalSleepModel
+}
+public struct BCLApolloResponse {
+  public enum CharacteristicType {
+    case write
+    case notify
+    public static func == (a: BCLRingSDK.BCLApolloResponse.CharacteristicType, b: BCLRingSDK.BCLApolloResponse.CharacteristicType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public enum BCLFirmwareCommand : Swift.UInt8 {
+  case unknown
+  case header
+  case data
+  case verify
+  case reset
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLFirmwareState {
+  case idle
+  case preparing
+  case sendingHeader
+  case sendingData
+  case verifying
+  case resetting
+  case completed
+  case failed(any Swift.Error)
+}
+public struct BCLFirmwareProgress {
+}
+@_inheritsConvenienceInitializers public class BloodPressureCommand : BCLRingSDK.BCLCommand {
+  public static func createTake(collectTime: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int, waveformSetting: Swift.Int) -> BCLRingSDK.BloodPressureCommand
+  public static func createStop() -> BCLRingSDK.BloodPressureCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLBloodPressureMeasureStatus : Swift.UInt8 {
+  case notWearing
+  case wearing
+  case chargingNotAllowed
+  case measuring
+  case busy
+  case dataCollectionTimeout
+  case completed
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct BCLBloodPressureCallbacks {
+  public var onProgress: ((Swift.Int) -> Swift.Void)?
+  public var onStatusChanged: ((BCLRingSDK.BCLBloodPressureMeasureStatus) -> Swift.Void)?
+  public var onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)?
+  public var onWaveform: ((Swift.Int, Swift.Int, BCLRingSDK.WaveformDataType) -> Swift.Void)?
+  public var onError: ((BCLRingSDK.BCLError) -> Swift.Void)?
+  public init(onProgress: ((Swift.Int) -> Swift.Void)? = nil, onStatusChanged: ((BCLRingSDK.BCLBloodPressureMeasureStatus) -> Swift.Void)? = nil, onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)? = nil, onWaveform: ((Swift.Int, Swift.Int, BCLRingSDK.WaveformDataType) -> Swift.Void)? = nil, onError: ((BCLRingSDK.BCLError) -> Swift.Void)? = nil)
+}
+public enum WaveformDataType {
+  case greenOnly([Swift.Int])
+  case greenAndInfrared([(Swift.Int, Swift.Int)])
+  case redAndInfrared([(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)])
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLBloodPressureResponse : BCLRingSDK.BCLResponse {
+  public var status: BCLRingSDK.BCLBloodPressureMeasureStatus
+  public var heartRate: Swift.Int?
+  public var systolicPressure: Swift.Int?
+  public var diastolicPressure: Swift.Int?
+  public var waveformData: BCLRingSDK.WaveformDataType?
+  public var progressData: Swift.Int?
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLBloodPressureCallbacks)
+  public static func cleanupCurrentMeasurement()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopBloodPressureResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class StepCommand : BCLRingSDK.BCLCommand {
+  public static func createRead() -> BCLRingSDK.StepCommand
+  public static func createClearRealTimeStep() -> BCLRingSDK.StepCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStepCountResponse : BCLRingSDK.BCLResponse {
+  public var stepCount: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLClearStepCountResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class SixAxisCommand : BCLRingSDK.BCLCommand {
+  public static func createClose() -> BCLRingSDK.SixAxisCommand
+  public static func createReadAcceleration() -> BCLRingSDK.SixAxisCommand
+  public static func createReadGyroscope() -> BCLRingSDK.SixAxisCommand
+  public static func createReadAccelerationAndGyroscope() -> BCLRingSDK.SixAxisCommand
+  public static func createReadRealTimeAcceleration() -> BCLRingSDK.SixAxisCommand
+  public static func createReadRealTimeGyroscope() -> BCLRingSDK.SixAxisCommand
+  public static func createReadRealTimeAccelerationAndGyroscope() -> BCLRingSDK.SixAxisCommand
+  public static func createSetWorkFrequency(accelerationFrequency: Swift.Int, gyroscopeFrequency: Swift.Int) -> BCLRingSDK.SixAxisCommand
+  public static func createGetWorkFrequency() -> BCLRingSDK.SixAxisCommand
+  public static func createSetPowerSavingMode() -> BCLRingSDK.SixAxisCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLCloseSixAxisResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAccelerationResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xAcceleration: Swift.Int?
+  public var yAcceleration: Swift.Int?
+  public var zAcceleration: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadGyroscopeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xGyroscope: Swift.Int?
+  public var yGyroscope: Swift.Int?
+  public var zGyroscope: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAccelerationAndGyroscopeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xAcceleration: Swift.Int?
+  public var yAcceleration: Swift.Int?
+  public var zAcceleration: Swift.Int?
+  public var xGyroscope: Swift.Int?
+  public var yGyroscope: Swift.Int?
+  public var zGyroscope: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadRealTimeAccelerationResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xAcceleration: Swift.Int?
+  public var yAcceleration: Swift.Int?
+  public var zAcceleration: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadRealTimeGyroscopeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xGyroscope: Swift.Int?
+  public var yGyroscope: Swift.Int?
+  public var zGyroscope: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadRealTimeAccelerationAndGyroscopeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  public var xAcceleration: Swift.Int?
+  public var yAcceleration: Swift.Int?
+  public var zAcceleration: Swift.Int?
+  public var xGyroscope: Swift.Int?
+  public var yGyroscope: Swift.Int?
+  public var zGyroscope: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetWorkFrequencyResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetWorkFrequencyResponse : BCLRingSDK.BCLResponse {
+  public var accelerationFrequency: Swift.Int?
+  public var gyroscopeFrequency: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPowerSavingModeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BCLRingManager : ObjectiveC.NSObject {
+  @objc public static let shared: BCLRingSDK.BCLRingManager
+  public var setCustomToken: Swift.String? {
+    get
+    set
+  }
+  public var commandTimeout: Swift.Double {
+    get
+    set
+  }
+  public var systemBluetoothStateBlock: ((BCLRingSDK.BCLCentralManagerBluetoothState) -> Swift.Void)?
+  public var systemBluetoothStateObservable: RxSwift.Observable<BCLRingSDK.BCLCentralManagerBluetoothState> {
+    get
+  }
+  public var scannedDevicesRelayResultBlock: ((Swift.Result<[BCLRingSDK.BCLDeviceInfoModel], BCLRingSDK.BCLError>) -> Swift.Void)?
+  public var scannedDevicesRelay: RxRelay.BehaviorRelay<[BCLRingSDK.BCLDeviceInfoModel]>
+  public var connectResult: ((Swift.Result<BCLRingSDK.BCLDeviceInfoModel, BCLRingSDK.BCLError>) -> Swift.Void)?
+  public var bluetoothConnectStateBlock: ((BCLRingSDK.BCLBluetoothDeviceState.BCLState) -> Swift.Void)?
+  public var bluetoothConnectStateObservable: RxSwift.Observable<BCLRingSDK.BCLBluetoothDeviceState.BCLState> {
+    get
+  }
+  public var deviceIsDidConnected: Swift.Bool {
+    get
+  }
+  public var deviceIsDidConnectedBlock: ((BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState) -> Swift.Void)?
+  public var pendingPeripheralDeviceInfoObservable: RxSwift.Observable<BCLRingSDK.BCLDeviceInfoModel?> {
+    get
+  }
+  public var connectedPeripheralDeviceInfoObservable: RxSwift.Observable<BCLRingSDK.BCLDeviceInfoModel?> {
+    get
+  }
+  public var currentConnectedDevice: BCLRingSDK.BCLDeviceInfoModel? {
+    get
+  }
+  public var batteryNotifyObservable: RxSwift.Observable<Swift.Int> {
+    get
+  }
+  public var batteryNotifyBlock: ((Swift.Int) -> Swift.Void)?
+  public var hidTouchAudioDataBlock: ((Swift.Int, Swift.Int, [Swift.Int16], Swift.Bool) -> Swift.Void)?
+  public var isAutoReconnectEnabled: Swift.Bool
+  public var autoReconnectTimeLimit: Swift.Double
+  public var autoReconnectMaxAttempts: Swift.Int
+  @objc deinit
+}
+extension BCLRingSDK.BCLRingManager {
+  public func cleanupAllCommandQueue()
+  public func cleanupContinuousCommand()
+  public func handleContinuousCommandError(_ error: BCLRingSDK.BCLError)
+  public func stopContinuousCommandTimeout()
+}
+extension BCLRingSDK.BCLRingManager : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didConnect peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, willRestoreState dict: [Swift.String : Any])
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didFailToConnect peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDiscover peripheral: CoreBluetooth.CBPeripheral, advertisementData: [Swift.String : Any], rssi RSSI: Foundation.NSNumber)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, timestamp: CoreFoundation.CFAbsoluteTime, isReconnecting: Swift.Bool, error: (any Swift.Error)?)
+}
+extension BCLRingSDK.BCLRingManager : CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func peripheralDidUpdateName(_ peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didReadRSSI RSSI: Foundation.NSNumber, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverServices error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didModifyServices invalidatedServices: [CoreBluetooth.CBService])
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didWriteValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateNotificationStateFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didWriteValueFor descriptor: CoreBluetooth.CBDescriptor, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor descriptor: CoreBluetooth.CBDescriptor, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverDescriptorsFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didOpen channel: CoreBluetooth.CBL2CAPChannel?, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverIncludedServicesFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+}
+public enum BCLAudioType : Swift.UInt8 {
+  case pcm
+  case adpcm
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class AudioCommand : BCLRingSDK.BCLCommand {
+  public static func createControlPCMFormat(isOpen: Swift.Bool) -> BCLRingSDK.AudioCommand
+  public static func createControlADPCMFormat(isOpen: Swift.Bool) -> BCLRingSDK.AudioCommand
+  public static func createSetActivePushAudioInfo(audioType: BCLRingSDK.BCLAudioType) -> BCLRingSDK.AudioCommand
+  public static func createGetActivePushAudioInfo() -> BCLRingSDK.AudioCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLControlPCMFormatResponse : BCLRingSDK.BCLResponse {
+  public var audioDataLength: Swift.Int?
+  public var seq: Swift.Int?
+  public var audioData: [Swift.Int16]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLControlADPCMFormatResponse : BCLRingSDK.BCLResponse {
+  public var audioDataLength: Swift.Int
+  public var seq: Swift.Int
+  public var audioData: [Swift.Int16]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetActivePushAudioInfoResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetActivePushAudioInfoResponse : BCLRingSDK.BCLResponse {
+  public var audioType: BCLRingSDK.BCLAudioType
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRingActivePushAudioCompleteResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class TenMeterGameCommand : BCLRingSDK.BCLCommand {
+  public static func sixAxisDataGameStart() -> BCLRingSDK.TenMeterGameCommand
+  public static func threeAxisDataGameStart() -> BCLRingSDK.TenMeterGameCommand
+  public static func stop() -> BCLRingSDK.TenMeterGameCommand
+  public static func accelerationCalibration() -> BCLRingSDK.TenMeterGameCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTenMeterGameSixAxisDataGameStartResponse : BCLRingSDK.BCLResponse {
+  public var deviceStatus: Swift.Int?
+  public var axisRealTurn: Swift.Int?
+  public var axisRealPitch: Swift.Int?
+  public var realSpeed: Swift.Int?
+  public var instantTurn: Swift.Int?
+  public var instantPitch: Swift.Int?
+  public var zAxisAccelerometer: Swift.Int?
+  public var yAxisAccelerometer: Swift.Int?
+  public var xAxisAccelerometer: Swift.Int?
+  public var count: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTenMeterGameThreeAxisDataGameStartResponse : BCLRingSDK.BCLResponse {
+  public var deviceStatus: Swift.Int?
+  public var zAxisAccelerometer: Swift.Int?
+  public var yAxisAccelerometer: Swift.Int?
+  public var xAxisAccelerometer: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTenMeterGameStopResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTenMeterGameAccelerationCalibrationResponse : BCLRingSDK.BCLResponse {
+  public var calibrationResult: Swift.Int?
+  @objc deinit
+}
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor @preconcurrency public static var modelName: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public static var screenWidthPixel: Swift.Int {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public static var screenHeightPixel: Swift.Int {
+    get
+  }
+}
+public struct BCLFrameworkInfo {
+  public static let name: Swift.String
+  public static let version: Swift.String
+  public static let build: Swift.String
+  public static func description() -> Swift.String
+}
+@objc public enum BCLOTAType : Swift.UInt8 {
+  case unknown = 0
+  case Apollo = 1
+  case Nordic = 2
+  case Phy = 3
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLCentralManagerBluetoothState {
+  case unknown
+  case resetting
+  case unsupported
+  case poweredOn
+  case poweredOff
+  case unauthorized
+  public static func == (a: BCLRingSDK.BCLCentralManagerBluetoothState, b: BCLRingSDK.BCLCentralManagerBluetoothState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct BCLBluetoothDeviceState {
+  public enum BCLState {
+    case unknown
+    case initial
+    case scanning
+    case connecting
+    case connected
+    case disconnecting
+    case disconnected
+    case connectionFailed
+    case serviceProcessingCompleted
+    case characteristicProcessingCompleted
+    public static func == (a: BCLRingSDK.BCLBluetoothDeviceState.BCLState, b: BCLRingSDK.BCLBluetoothDeviceState.BCLState) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum BCLSimpleState {
+    case disconnected
+    case connecting
+    case connected
+    public static func from(_ state: BCLRingSDK.BCLBluetoothDeviceState.BCLState) -> BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState
+    public static func == (a: BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState, b: BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var state: BCLRingSDK.BCLBluetoothDeviceState.BCLState
+  public var simpleState: BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState {
+    get
+  }
+  public init(state: BCLRingSDK.BCLBluetoothDeviceState.BCLState)
+  public func isConnected() -> Swift.Bool
+}
+@objc public enum BCLTouchHIDMode : Swift.UInt8 {
+  case videoMode = 0
+  case photoMode = 1
+  case musicMode = 2
+  case pptMode = 3
+  case audioUploadMode = 4
+  case disabled = 0xFF
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc public enum BCLGestureHIDMode : Swift.UInt8 {
+  case videoMode = 0
+  case photoMode = 1
+  case musicMode = 2
+  case pptMode = 3
+  case snapPhotoMode = 4
+  case disabled = 0xFF
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLSystemTypeHIDMode : Swift.UInt8 {
+  case android
+  case iOS
+  case windows
+  case unknown
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@objc public enum BCLRingTimeZone : Swift.Int {
+  case UTC = 0x00
+  case East1 = 0x01
+  case East2 = 0x02
+  case East3 = 0x03
+  case East4 = 0x04
+  case East5 = 0x05
+  case East6 = 0x06
+  case East7 = 0x07
+  case East8 = 0x08
+  case East9 = 0x09
+  case East10 = 0x0A
+  case East11 = 0x0B
+  case East12 = 0x0C
+  case West12 = 0xF4
+  case West11 = 0xF5
+  case West10 = 0xF6
+  case West9 = 0xF7
+  case West8 = 0xF8
+  case West7 = 0xF9
+  case West6 = 0xFA
+  case West5 = 0xFB
+  case West4 = 0xFC
+  case West3 = 0xFD
+  case West2 = 0xFE
+  case West1 = 0xFF
+  public static func getCurrentSystemTimeZone() -> BCLRingSDK.BCLRingTimeZone
+  public var region: SwiftDate.Region {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class VersionCommand : BCLRingSDK.BCLCommand {
+  public static func createReadFirmware() -> BCLRingSDK.VersionCommand
+  public static func createReadHardware() -> BCLRingSDK.VersionCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadFirmwareResponse : BCLRingSDK.BCLResponse {
+  public var firmwareVersion: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadHardwareResponse : BCLRingSDK.BCLResponse {
+  public var hardwareVersion: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BCLFileManager {
+  public func copyFileFromBundle(fileName: Swift.String, fileExtension: Swift.String, toDirectory directory: Swift.String = "Files") throws -> Swift.String
+  public func getFiles(inDirectory directory: Swift.String = "Files") -> [Swift.String]
+  public func fileExists(fileName: Swift.String, fileExtension: Swift.String, inDirectory directory: Swift.String = "Files") -> Swift.Bool
+  public func getFilePath(fileName: Swift.String, fileExtension: Swift.String, inDirectory directory: Swift.String = "Files") -> Swift.String?
+  public func deleteFile(fileName: Swift.String, fileExtension: Swift.String, inDirectory directory: Swift.String = "Files") throws
+  public func getFileSize(fileName: Swift.String, fileExtension: Swift.String, inDirectory directory: Swift.String = "Files") -> Swift.UInt64?
+  public func readFile(fileName: Swift.String, fileExtension: Swift.String, inDirectory directory: Swift.String = "Files") -> Foundation.Data?
+  public func readFileFromPath(_ filePath: Swift.String) -> Foundation.Data?
+  public func fileExistsAtPath(_ filePath: Swift.String) -> Swift.Bool
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class SportModeCommand : BCLRingSDK.BCLCommand {
+  public static func createStart() -> BCLRingSDK.SportModeCommand
+  public static func createRequestMissingPoints() -> BCLRingSDK.SportModeCommand
+  public static func createStop() -> BCLRingSDK.SportModeCommand
+  public static func createPassiveStop() -> BCLRingSDK.SportModeCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public struct BCLTokenResponse : Swift.Codable, BCLRingSDK.BCLServerResponse {
+  public let message: Swift.String
+  public let status: Swift.Int
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BCLRefreshTokenResponse : Swift.Codable, BCLRingSDK.BCLServerResponse {
+  public var status: Swift.Int {
+    get
+  }
+  public var message: Swift.String {
+    get
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BCLCheckVersionResponse : Swift.Codable, BCLRingSDK.BCLServerResponse {
+  public let result: BCLRingSDK.BCLCheckVersionResponse.BCLVersionResult
+  public let message: Swift.String
+  public let count: Swift.Int
+  public let status: Swift.Int
+  public struct BCLVersionResult : Swift.Codable {
+    public let version: Swift.String?
+    public let download: Swift.String?
+    public let fileName: Swift.String?
+    public init(from decoder: any Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BCLFirmwareVersionInfo {
+  public let hasNewVersion: Swift.Bool
+  public let version: Swift.String?
+  public let downloadUrl: Swift.String?
+  public let fileName: Swift.String?
+  public let message: Swift.String
+}
+@_inheritsConvenienceInitializers public class PPGWaveFormCommand : BCLRingSDK.BCLCommand {
+  public static func createTake(collectTime: Swift.Int, waveConfig: Swift.Int, progressConfig: Swift.Int, waveSetting: Swift.Int) -> BCLRingSDK.PPGWaveFormCommand
+  public static func createStop() -> BCLRingSDK.PPGWaveFormCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLPPGWaveFormMeasureStatus : Swift.UInt8 {
+  case notWearing
+  case wearing
+  case chargingNotAllowed
+  case measuring
+  case busy
+  case dataCollectionTimeout
+  case completed
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct BCLPPGWaveFormCallbacks {
+  public var onProgress: ((Swift.Int) -> Swift.Void)?
+  public var onStatusChanged: ((BCLRingSDK.BCLPPGWaveFormMeasureStatus) -> Swift.Void)?
+  public var onMeasureValue: ((Swift.Int?, Swift.Int?) -> Swift.Void)?
+  public var onWaveform0: ((Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void)?
+  public var onWaveform1: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int)]) -> Swift.Void)?
+  public var onError: ((BCLRingSDK.BCLError) -> Swift.Void)?
+  public init(onProgress: ((Swift.Int) -> Swift.Void)? = nil, onStatusChanged: ((BCLRingSDK.BCLPPGWaveFormMeasureStatus) -> Swift.Void)? = nil, onMeasureValue: ((Swift.Int?, Swift.Int?) -> Swift.Void)? = nil, onWaveform0: ((Swift.Int, Swift.Int, [Swift.Int]) -> Swift.Void)? = nil, onWaveform1: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int)]) -> Swift.Void)? = nil, onError: ((BCLRingSDK.BCLError) -> Swift.Void)? = nil)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLPPGWaveFormResponse : BCLRingSDK.BCLResponse {
+  public var status: BCLRingSDK.BCLPPGWaveFormMeasureStatus
+  public var waveform0: (Swift.Int, Swift.Int, [Swift.Int])?
+  public var waveform1: (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int)])?
+  public var heartRate: Swift.Int?
+  public var oxygen: Swift.Int?
+  public var error: BCLRingSDK.BCLError?
+  public var progressData: Swift.Int?
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLPPGWaveFormCallbacks)
+  public static func cleanupCurrentMeasurement()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLPPGWaveFormStopResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+public enum BCLError : Swift.Error {
+  case network(BCLRingSDK.BCLError.NetworkError)
+  case rssiReading(BCLRingSDK.BCLError.RSSIError)
+  case scan(BCLRingSDK.BCLError.ScanError)
+  case connection(BCLRingSDK.BCLError.ConnectionError)
+  case commandSending(BCLRingSDK.BCLError.CommandError)
+  case responseParsing(BCLRingSDK.BCLError.ResponseParsingError)
+  case temperature(BCLRingSDK.BCLError.TemperatureError)
+  case bloodOxygen(BCLRingSDK.BCLError.BCLBloodOxygenError)
+  case bloodPressure(BCLRingSDK.BCLError.BCLBloodPressureError)
+  case heartRate(BCLRingSDK.BCLError.HeartRateError)
+  case dataSync(BCLRingSDK.BCLError.DataSyncError)
+  case historyDataMigration(BCLRingSDK.BCLError.HistoryDataMigrationError)
+  case apolloOTA(BCLRingSDK.BCLError.ApolloOTAError)
+  case nrfOTA(BCLRingSDK.BCLError.NrfOTAError)
+  case phyOTA(BCLRingSDK.BCLError.PhyOTAError)
+  case otaUpgrade(BCLRingSDK.BCLError.OTAError)
+  case database(BCLRingSDK.BCLError.DatabaseError)
+  case sixAxis(BCLRingSDK.BCLError.SixAxisError)
+  case ppgWaveForm(BCLRingSDK.BCLError.PPGWaveFormError)
+  case ecg(BCLRingSDK.BCLError.ECGError)
+  case pwtt(BCLRingSDK.BCLError.PWTTError)
+  case tenMeterGame(BCLRingSDK.BCLError.TenMeterGameError)
+  case unknown
+  public enum NetworkError : Swift.Error {
+    case invalidResponse
+    case networkError(Swift.String)
+    case serverError(Swift.Int, Swift.String)
+    case invalidParameters(Swift.String)
+    case httpError(Swift.Int)
+    case decodingError(any Swift.Error)
+    case tokenError(Swift.String)
+    public var localizedDescription: Swift.String? {
+      get
+    }
+  }
+  public enum ScanError : Swift.Error {
+    case scanFailed
+    case scanTimeout
+    case noDeviceFound
+    public static func == (a: BCLRingSDK.BCLError.ScanError, b: BCLRingSDK.BCLError.ScanError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum RSSIError : Swift.Error {
+    case readFailed
+    case peripheralDisconnected
+    case systemBluetoothNotAvailable
+    case invalidRSSIValue
+    public static func == (a: BCLRingSDK.BCLError.RSSIError, b: BCLRingSDK.BCLError.RSSIError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ConnectionError : Swift.Error {
+    case connectionFailed
+    case connectionTimeout
+    case bluetoothPoweredOff
+    case bluetoothUnauthorized
+    case bluetoothNotAvailable
+    case disconnected
+    case unsupportedDevice
+    case notConnected
+    case invalidUUID
+    case invalidMACAddress
+    public static func == (a: BCLRingSDK.BCLError.ConnectionError, b: BCLRingSDK.BCLError.ConnectionError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum CommandError : Swift.Error {
+    case busy
+    case sendFailed
+    case invalidResponse
+    case timeout
+    case invalidCommandFormat
+    case characteristicNotFound
+    public static func == (a: BCLRingSDK.BCLError.CommandError, b: BCLRingSDK.BCLError.CommandError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ResponseParsingError : Swift.Error {
+    case invalidResponse
+    case timeout
+    case unknown
+    case invalidDataFormat
+    public static func == (a: BCLRingSDK.BCLError.ResponseParsingError, b: BCLRingSDK.BCLError.ResponseParsingError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum TemperatureError : Swift.Error {
+    case notWearing
+    case busy
+    case charging
+    case invalid
+    case measuring
+    public static func == (a: BCLRingSDK.BCLError.TemperatureError, b: BCLRingSDK.BCLError.TemperatureError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum BCLBloodOxygenError : Swift.Error {
+    case notWearing
+    case chargingNotAllowed
+    case busy
+    case dataCollectionTimeout
+    case deviceError
+    case unknown
+    case measurementStopped
+    public static func == (a: BCLRingSDK.BCLError.BCLBloodOxygenError, b: BCLRingSDK.BCLError.BCLBloodOxygenError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum BCLBloodPressureError : Swift.Error {
+    case notWearing
+    case chargingNotAllowed
+    case busy
+    case dataCollectionTimeout
+    case deviceError
+    case unknown
+    case measurementStopped
+    case invalidDataFormat
+    public static func == (a: BCLRingSDK.BCLError.BCLBloodPressureError, b: BCLRingSDK.BCLError.BCLBloodPressureError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum HeartRateError : Swift.Error {
+    case notWearing
+    case busy
+    case chargingNotAllowed
+    case dataCollectionTimeout
+    case deviceError
+    case unknown
+    case measurementStopped
+    public static func == (a: BCLRingSDK.BCLError.HeartRateError, b: BCLRingSDK.BCLError.HeartRateError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum DataSyncError : Swift.Error {
+    case syncFailed
+    case syncTimeout
+    case syncError
+    case syncCancelled
+    case dataFormatError
+    public static func == (a: BCLRingSDK.BCLError.DataSyncError, b: BCLRingSDK.BCLError.DataSyncError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum HistoryDataMigrationError : Swift.Error {
+    case oldDatabaseNotFound
+    case openFailed
+    case migrationFailed
+    case deleteOldDatabaseFailed
+    case invalidData
+    case indexOperationFailed
+    case cleanupFailed
+    public static func == (a: BCLRingSDK.BCLError.HistoryDataMigrationError, b: BCLRingSDK.BCLError.HistoryDataMigrationError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ApolloOTAError : Swift.Error {
+    case unknown
+    case disconnected
+    case characteristicNotFound
+    case deviceNotFound
+    case invalidResponse
+    case commandWriteFailed
+    case writeNotPermitted
+    case firmwareFileNotFound
+    case firmwareFileParseFailed
+    case firmwareFileSizeInvalid
+    case firmwareFileHeaderInvalid
+    case firmwareFileCRCFailed
+    case firmwareHeaderInvalid
+    case insufficientBuffer
+    case firmwarePacketLengthInvalid
+    case invalidParameter
+    case responseTimeout
+    public static func == (a: BCLRingSDK.BCLError.ApolloOTAError, b: BCLRingSDK.BCLError.ApolloOTAError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum NrfOTAError : Swift.Error {
+    case unknown
+    case failed
+    case aborted
+    case rebooting
+    case disconnected
+    case firmwareFileNotFound
+    case firmwareFileParseFailed
+    public static func == (a: BCLRingSDK.BCLError.NrfOTAError, b: BCLRingSDK.BCLError.NrfOTAError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum PhyOTAError : Swift.Error {
+    case fileNotFound
+    case fileFormatError
+    case commandError
+    case connectionFailed
+    case connectionTimeout
+    case connectionDisconnected
+    case characteristicNotFound
+    case deviceMacAddressError
+    public static func == (a: BCLRingSDK.BCLError.PhyOTAError, b: BCLRingSDK.BCLError.PhyOTAError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum OTAError : Swift.Error {
+    case upgradeFailed
+    case versionMismatch
+    case interrupted
+    case corruptedFile
+    public static func == (a: BCLRingSDK.BCLError.OTAError, b: BCLRingSDK.BCLError.OTAError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum DatabaseError : Swift.Error {
+    case databaseFilePathError
+    case queryFailed
+    case insertFailed
+    case updateFailed
+    case deleteFailed
+    case dataFormatError
+    case dataEmpty
+    case dataAlreadyExists
+    case dataNotFound
+    case upgradeFailed
+    case compressFailed(Swift.String)
+    case cleanFailed(Swift.String)
+  }
+  public enum SixAxisError : Swift.Error {
+    case unknown
+    case busy
+    case dataFormatError
+    case dataEmpty
+    case measurementStopped
+    public static func == (a: BCLRingSDK.BCLError.SixAxisError, b: BCLRingSDK.BCLError.SixAxisError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum PPGWaveFormError : Swift.Error {
+    case notWearing
+    case busy
+    case chargingNotAllowed
+    case dataCollectionTimeout
+    case deviceError
+    case unknown
+    case measurementStopped
+    public static func == (a: BCLRingSDK.BCLError.PPGWaveFormError, b: BCLRingSDK.BCLError.PPGWaveFormError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ECGError : Swift.Error {
+    case unknown
+    case busy
+    case dataFormatError
+    case dataEmpty
+    case measurementStopped
+    public static func == (a: BCLRingSDK.BCLError.ECGError, b: BCLRingSDK.BCLError.ECGError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum PWTTError : Swift.Error {
+    case notWearing
+    case chargingNotAllowed
+    case busy
+    case dataCollectionTimeout
+    case deviceError
+    case unknown
+    case measurementStopped
+    case dataFormatError
+    case dataEmpty
+    public static func == (a: BCLRingSDK.BCLError.PWTTError, b: BCLRingSDK.BCLError.PWTTError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum TenMeterGameError : Swift.Error {
+    case unknown
+    case busy
+    case dataFormatError
+    case dataEmpty
+    case measurementStopped
+    case dataCollectionTimeout
+    case deviceError
+    public static func == (a: BCLRingSDK.BCLError.TenMeterGameError, b: BCLRingSDK.BCLError.TenMeterGameError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public protocol BCLCommandProtocol {
+  var frameType: Swift.UInt8 { get }
+  var frameId: Swift.UInt8 { get }
+  var cmd: Swift.UInt8 { get }
+  var subCmd: Swift.UInt8 { get }
+  var data: Foundation.Data? { get }
+  var serviceType: BCLRingSDK.BCLServiceType { get }
+  func getCommandData() -> Foundation.Data
+}
+extension BCLRingSDK.BCLCommandProtocol {
+  public func getCommandData() -> Foundation.Data
+}
+public protocol CommandIdentifiable {
+  static func nextFrameId() -> Swift.UInt8
+}
+extension BCLRingSDK.CommandIdentifiable {
+  public static func nextFrameId() -> Swift.UInt8
+}
+public enum BCLServiceType {
+  case base
+  case ota
+  case ecg
+  case apollo
+  public static func == (a: BCLRingSDK.BCLServiceType, b: BCLRingSDK.BCLServiceType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CommandPriority {
+  case high
+  case normal
+  public static func == (a: BCLRingSDK.CommandPriority, b: BCLRingSDK.CommandPriority) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class BCLCommand : BCLRingSDK.BCLCommandProtocol, BCLRingSDK.CommandIdentifiable {
+  final public let frameType: Swift.UInt8
+  final public let frameId: Swift.UInt8
+  final public let cmd: Swift.UInt8
+  final public let subCmd: Swift.UInt8
+  final public let data: Foundation.Data?
+  public var serviceType: BCLRingSDK.BCLServiceType
+  final public let priority: BCLRingSDK.CommandPriority
+  public var isContinuous: Swift.Bool
+  public init(frameType: Swift.UInt8 = 0x00, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = .base, isContinuous: Swift.Bool = false, priority: BCLRingSDK.CommandPriority = .normal)
+  public static func == (lhs: BCLRingSDK.BCLCommand, rhs: BCLRingSDK.BCLCommand) -> Swift.Bool
+  public var hexString: Swift.String {
+    get
+  }
+  @objc deinit
+}
+extension BCLRingSDK.BCLCommand {
+  public struct CmdType {
+    public static let time: Swift.UInt8
+    public static let version: Swift.UInt8
+    public static let battery: Swift.UInt8
+    public static let heartRate: Swift.UInt8
+    public static let bloodOxygen: Swift.UInt8
+    public static let pwtt: Swift.UInt8
+    public static let temperature: Swift.UInt8
+    public static let bloodPressure: Swift.UInt8
+    public static let step: Swift.UInt8
+    public static let ringData: Swift.UInt8
+    public static let systemSetting: Swift.UInt8
+    public static let sportMode: Swift.UInt8
+    public static let hidMode: Swift.UInt8
+    public static let alarmClock: Swift.UInt8
+    public static let composite: Swift.UInt8
+    public static let fixtureTesting: Swift.UInt8
+    public static let sixAxis: Swift.UInt8
+    public static let ppgWaveForm: Swift.UInt8
+    public static let ecg: Swift.UInt8
+    public static let ecgSimulator: Swift.UInt8
+    public static let ecgStop: Swift.UInt8
+    public static let tenMeterGame: Swift.UInt8
+    public static let audio: Swift.UInt8
+  }
+  public struct SubCmdType {
+    public struct Time {
+      public static let sync: Swift.UInt8
+      public static let read: Swift.UInt8
+    }
+    public struct Version {
+      public static let readFirmware: Swift.UInt8
+      public static let readHardware: Swift.UInt8
+      public static let versionInfo: Swift.UInt8
+    }
+    public struct Battery {
+      public static let read: Swift.UInt8
+      public static let chargeStatus: Swift.UInt8
+      public static let push: Swift.UInt8
+    }
+    public struct HeartRate {
+      public static let take: Swift.UInt8
+      public static let waveForm: Swift.UInt8
+      public static let rrIntervalResponse: Swift.UInt8
+      public static let progress: Swift.UInt8
+      public static let push: Swift.UInt8
+      public static let stop: Swift.UInt8
+    }
+    public struct BloodOxygen {
+      public static let take: Swift.UInt8
+      public static let waveForm: Swift.UInt8
+      public static let perfusionRate: Swift.UInt8
+      public static let progress: Swift.UInt8
+      public static let push: Swift.UInt8
+      public static let stop: Swift.UInt8
+      public static let bloodPressure: Swift.UInt8
+    }
+    public struct PWTT {
+      public static let take: Swift.UInt8
+      public static let takeResult: Swift.UInt8
+      public static let bloodPressure: Swift.UInt8
+      public static let ppgWaveForm: Swift.UInt8
+      public static let stop: Swift.UInt8
+    }
+    public struct Temperature {
+      public static let fast: Swift.UInt8
+      public static let accurate: Swift.UInt8
+      public static let calibration: Swift.UInt8
+      public static let calibrationStatus: Swift.UInt8
+    }
+    public struct BloodPressure {
+      public static let take: Swift.UInt8
+      public static let progress: Swift.UInt8
+      public static let waveForm: Swift.UInt8
+      public static let stop: Swift.UInt8
+    }
+    public struct Step {
+      public static let read: Swift.UInt8
+      public static let clearRealTimeStep: Swift.UInt8
+    }
+    public struct RingData {
+      public static let readLocalData: Swift.UInt8
+      public static let readAllLocalData: Swift.UInt8
+      public static let stopUploadLocalData: Swift.UInt8
+      public static let deleteAllLocalData: Swift.UInt8
+      public static let readLocalDataMemory: Swift.UInt8
+      public static let negativeResponse: Swift.UInt8
+      public static let requestFileList: Swift.UInt8
+      public static let requestFileData: Swift.UInt8
+      public static let deleteFile: Swift.UInt8
+      public static let formatFileSystem: Swift.UInt8
+      public static let getFileSystemSpaceInfo: Swift.UInt8
+      public static let setAutoRecordMode: Swift.UInt8
+      public static let getAutoRecordMode: Swift.UInt8
+      public static let getFileSystemStatus: Swift.UInt8
+      public static let writeHistoryRecord: Swift.UInt8
+    }
+    public struct SystemSetting {
+      public static let collectionPeriod: Swift.UInt8
+      public static let readCollectionPeriod: Swift.UInt8
+      public static let restoreFactorySettings: Swift.UInt8
+      public static let setBluetoothName: Swift.UInt8
+      public static let readBluetoothName: Swift.UInt8
+      public static let readAllInformation: Swift.UInt8
+      public static let setPersonalInformation: Swift.UInt8
+      public static let readPersonalInformation: Swift.UInt8
+    }
+    public struct SportMode {
+      public static let start: Swift.UInt8
+      public static let requestMissingPoints: Swift.UInt8
+      public static let stop: Swift.UInt8
+      public static let passiveStop: Swift.UInt8
+    }
+    public struct HIDMode {
+      public static let set: Swift.UInt8
+      public static let read: Swift.UInt8
+      public static let getFunctionCode: Swift.UInt8
+      public static let setGestureFunction: Swift.UInt8
+      public static let readGestureFunction: Swift.UInt8
+    }
+    public struct AlarmClock {
+      public static let set: Swift.UInt8
+      public static let read: Swift.UInt8
+    }
+    public struct Composite {
+      public static let bind: Swift.UInt8
+      public static let connect: Swift.UInt8
+      public static let refresh: Swift.UInt8
+      public static let unbind: Swift.UInt8
+    }
+    public struct FixtureTesting {
+      public static let oneKeySelfInspection: Swift.UInt8
+      public static let communicationLoopback: Swift.UInt8
+      public static let communicationUpload: Swift.UInt8
+    }
+    public struct SixAxis {
+      public static let close: Swift.UInt8
+      public static let readAcceleration: Swift.UInt8
+      public static let readGyroscope: Swift.UInt8
+      public static let readAccelerationAndGyroscope: Swift.UInt8
+      public static let readRealTimeAcceleration: Swift.UInt8
+      public static let readRealTimeGyroscope: Swift.UInt8
+      public static let readRealTimeAccelerationAndGyroscope: Swift.UInt8
+      public static let setWorkFrequency: Swift.UInt8
+      public static let getWorkFrequency: Swift.UInt8
+      public static let setPowerSavingMode: Swift.UInt8
+    }
+    public struct PPGWaveForm {
+      public static let take: Swift.UInt8
+      public static let ppgWaveForm: Swift.UInt8
+      public static let progress: Swift.UInt8
+      public static let stop: Swift.UInt8
+    }
+    public struct ECG {
+      public static let take: Swift.UInt8
+    }
+    public struct ECGSimulator {
+      public static let take: Swift.UInt8
+    }
+    public struct ECGStop {
+      public static let stop: Swift.UInt8
+    }
+    public struct TenMeterGame {
+      public static let sixAxisDataGameStart: Swift.UInt8
+      public static let threeAxisDataGameStart: Swift.UInt8
+      public static let stop: Swift.UInt8
+      public static let accelerationCalibration: Swift.UInt8
+    }
+    public struct Audio {
+      public static let controlPCMFormat: Swift.UInt8
+      public static let controlADPCMFormat: Swift.UInt8
+      public static let setActivePushAudioInfo: Swift.UInt8
+      public static let getActivePushAudioInfo: Swift.UInt8
+      public static let ringActivePushAudioComplete: Swift.UInt8
+    }
+  }
+}
+@_inheritsConvenienceInitializers public class BloodOxygenCommand : BCLRingSDK.BCLCommand {
+  public static func createTake(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int, progressConfig: Swift.Int) -> BCLRingSDK.BloodOxygenCommand
+  public static func createStop() -> BCLRingSDK.BloodOxygenCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLBloodOxygenMeasureStatus : Swift.UInt8 {
+  case notWearing
+  case wearing
+  case chargingNotAllowed
+  case measuring
+  case busy
+  case dataCollectionTimeout
+  case completed
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct BCLBloodOxygenCallbacks {
+  public var onProgress: ((Swift.Int) -> Swift.Void)?
+  public var onStatusChanged: ((BCLRingSDK.BCLBloodOxygenMeasureStatus) -> Swift.Void)?
+  public var onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)?
+  public var onPerfusionRate: ((Swift.Int) -> Swift.Void)?
+  public var onBloodPressure: ((Swift.Int, Swift.Int) -> Swift.Void)?
+  public var onWaveform: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void)?
+  public var onError: ((BCLRingSDK.BCLError) -> Swift.Void)?
+  public init(onProgress: ((Swift.Int) -> Swift.Void)? = nil, onStatusChanged: ((BCLRingSDK.BCLBloodOxygenMeasureStatus) -> Swift.Void)? = nil, onMeasureValue: ((Swift.Int?, Swift.Int?, Swift.Int?) -> Swift.Void)? = nil, onPerfusionRate: ((Swift.Int) -> Swift.Void)? = nil, onBloodPressure: ((Swift.Int, Swift.Int) -> Swift.Void)? = nil, onWaveform: ((Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)]) -> Swift.Void)? = nil, onError: ((BCLRingSDK.BCLError) -> Swift.Void)? = nil)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLBloodOxygenResponse : BCLRingSDK.BCLResponse {
+  public var status: BCLRingSDK.BCLBloodOxygenMeasureStatus
+  public var bloodOxygen: Swift.Int?
+  public var heartRate: Swift.Int?
+  public var temperature: Swift.Int?
+  public var perfusionRate: Swift.Int?
+  public var diastolicPressure: Swift.Int?
+  public var systolicPressure: Swift.Int?
+  public var waveformData: (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)])?
+  public var progressData: Swift.Int?
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLBloodOxygenCallbacks)
+  public static func cleanupCurrentMeasurement()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopBloodOxygenResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class TimeCommand : BCLRingSDK.BCLCommand {
+  public static func createSync(date: Foundation.Date, timeZone: BCLRingSDK.BCLRingTimeZone) -> BCLRingSDK.TimeCommand
+  public static func createRead() -> BCLRingSDK.TimeCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSyncTimeResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadTimeResponse : BCLRingSDK.BCLResponse {
+  public var timestamp: Swift.UInt64
+  public var ringTimeZone: BCLRingSDK.BCLRingTimeZone
+  public var utcDate: Foundation.Date {
+    get
+  }
+  public var localDate: Foundation.Date {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class TemperatureCommand : BCLRingSDK.BCLCommand {
+  public static func createFast() -> BCLRingSDK.TemperatureCommand
+  public static func createAccurate() -> BCLRingSDK.TemperatureCommand
+  public static func createCalibration() -> BCLRingSDK.TemperatureCommand
+  public static func createCalibrationStatus() -> BCLRingSDK.TemperatureCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLTemperatureMeasureStatus : Swift.UInt8 {
+  case measuring
+  case completed
+  case notWearing
+  case busy
+  case charging
+  case invalid
+  public var error: BCLRingSDK.BCLError? {
+    get
+  }
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTemperatureResponse : BCLRingSDK.BCLResponse {
+  final public let status: BCLRingSDK.BCLTemperatureMeasureStatus
+  final public let temperature: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class ECGCommand : BCLRingSDK.BCLCommand {
+  public static func createTake() -> BCLRingSDK.ECGCommand
+  public static func createTakeSimulator() -> BCLRingSDK.ECGCommand
+  public static func createStop() -> BCLRingSDK.ECGCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTakeECGResponse : BCLRingSDK.BCLResponse {
+  public var headTypeSize: Swift.Int
+  public var headType: Swift.Int
+  public var deviceType: Swift.Int
+  public var seq: Swift.Int
+  public var hr: Swift.Int
+  public var dataLength: Swift.Int
+  public var ecgValues: [Swift.Int]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTakeECGSimulatorResponse : BCLRingSDK.BCLResponse {
+  public var headTypeSize: Swift.Int
+  public var headType: Swift.Int
+  public var deviceType: Swift.Int
+  public var seq: Swift.Int
+  public var hr: Swift.Int
+  public var dataLength: Swift.Int
+  public var ecgValues: [Swift.Int]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopECGResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+public enum BCLPhyUpgradeState : Swift.Equatable {
+  case preparing
+  case preparingToBootMode
+  case bootModeDisconnected
+  case bootModeConnected
+  case preparingToAppMode
+  case appModeDisconnected
+  case appModeConnected
+  case upgrading
+  case failed(Swift.String)
+  case success
+  public static func == (a: BCLRingSDK.BCLPhyUpgradeState, b: BCLRingSDK.BCLPhyUpgradeState) -> Swift.Bool
+}
+public struct BCLPhyUpgradeResponse {
+  public enum CharacteristicType {
+    case write
+    case data
+    case notify
+    public static func == (a: BCLRingSDK.BCLPhyUpgradeResponse.CharacteristicType, b: BCLRingSDK.BCLPhyUpgradeResponse.CharacteristicType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public class BCLPhyUpgrade {
+  public init()
+  public func startUpgrade(filePath: Swift.String, progress: @escaping (Swift.Int, Swift.Int) -> Swift.Void, completion: @escaping (Swift.Result<BCLRingSDK.BCLPhyUpgradeState, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setupFirmwareFile(filePath: Swift.String)
+  @objc deinit
+}
+@objc public class BCLRingSleepDayModel : ObjectiveC.NSObject, Swift.Codable {
+  final public let dayString: Swift.String?
+  final public let highCount: Swift.Int?
+  final public let lowCount: Swift.Int?
+  final public let ksCount: Swift.Int?
+  final public let qxCount: Swift.Int?
+  final public let dayCount: Swift.Int?
+  final public let time: Swift.Int?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class BCLResponse {
+  final public let frameType: Swift.UInt8
+  final public let frameId: Swift.UInt8
+  final public let cmd: Swift.UInt8
+  final public let subCmd: Swift.UInt8
+  final public let data: Foundation.Data?
+  public var requestCommand: BCLRingSDK.BCLCommand? {
+    get
+  }
+  public func setRequestCommand(_ requestCommand: BCLRingSDK.BCLCommand?)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PWTTCommand : BCLRingSDK.BCLCommand {
+  public static func createTake(collectTime: Swift.Int, collectFrequency: Swift.Int, waveformConfig: Swift.Int) -> BCLRingSDK.PWTTCommand
+  public static func createStop() -> BCLRingSDK.PWTTCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLTakePWTTStatus : Swift.UInt8 {
+  case notWearing
+  case wearing
+  case chargingNotAllowed
+  case measuring
+  case busy
+  case dataCollectionTimeout
+  case completed
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLTakePWTTResponse : BCLRingSDK.BCLResponse {
+  public var status: BCLRingSDK.BCLTakePWTTStatus
+  public var progress: Swift.Int?
+  public var ppgHeartRate: Swift.Int?
+  public var bloodOxygen: Swift.Int?
+  public var ecgHeartRate: Swift.Int?
+  public var bloodPressure: (Swift.Int, Swift.Int)?
+  public var waveformData: (Swift.Int, Swift.Int, [(Swift.Int, Swift.Int, Swift.Int)])?
+  public var error: BCLRingSDK.BCLError?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopPWTTResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+public struct BCLNrfUpgradeState {
+  public enum Stage {
+    case preparing
+    case connecting
+    case starting
+    case enablingDfuMode
+    case uploading
+    case validating
+    case disconnecting
+    case rebooting
+    case completed
+    case failed
+    case aborted
+    case unknown
+    public static func == (a: BCLRingSDK.BCLNrfUpgradeState.Stage, b: BCLRingSDK.BCLNrfUpgradeState.Stage) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var stage: BCLRingSDK.BCLNrfUpgradeState.Stage
+  public var progress: Swift.Int
+  public var errorMessage: Swift.String?
+  public var isInProgress: Swift.Bool {
+    get
+  }
+  public var isCompleted: Swift.Bool {
+    get
+  }
+  public var isFailed: Swift.Bool {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class BCLRingDBModel : ObjectiveC.NSObject, Swift.Codable {
+  public var id: Swift.Int64?
+  public var mac: Swift.String?
+  public var totalNumber: Swift.Int?
+  public var indexNumber: Swift.Int?
+  public var time: Swift.Int64?
+  public var stepCount: Swift.Int?
+  public var heartRate: Swift.Int?
+  public var bloodOxygen: Swift.Int?
+  public var heartRateVariability: Swift.Int?
+  public var stressIndex: Swift.Int?
+  public var temperature: Swift.Int?
+  public var exerciseIntensity: Swift.Int?
+  public var sleepType: Swift.Int?
+  public var measureMarker: Swift.Int?
+  public var reserve: Swift.Int?
+  public var rrCount: Swift.Int?
+  public var rrBytes: Foundation.Data?
+  @objc override dynamic public init()
+  @objc public init(bytes: [Swift.UInt8])
+  public init(id: Swift.Int64? = nil, mac: Swift.String? = nil, totalNumber: Swift.Int = 0, indexNumber: Swift.Int = 0, time: Swift.Int64 = 0, stepCount: Swift.Int = 0, heartRate: Swift.Int = 0, bloodOxygen: Swift.Int = 0, heartRateVariability: Swift.Int = 0, stressIndex: Swift.Int = 0, temperature: Swift.Int = 0, exerciseIntensity: Swift.Int = 0, sleepType: Swift.Int = 0, measureMarker: Swift.Int = 0, reserve: Swift.Int = 0, rrCount: Swift.Int = 0, rrBytes: Foundation.Data? = nil)
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc public func toDictionary() -> [Swift.String : Any]
+  public var localizedDescription: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@objc public class BCLDeviceInfoModel : ObjectiveC.NSObject {
+  @objc public var peripheral: CoreBluetooth.CBPeripheral
+  @objc public var peripheralName: Swift.String? {
+    @objc get
+  }
+  @objc public var uuidString: Swift.String {
+    @objc get
+  }
+  @objc public var macAddress: Swift.String?
+  @objc public var rssi: Foundation.NSNumber?
+  @objc public var isScannedAndConnected: Swift.Bool
+  @objc public var advertisementData: [Swift.String : Any]?
+  @objc public var advDataManufacturerData: Foundation.Data {
+    @objc get
+  }
+  @objc public var communicationProtocolVersion: Swift.Int {
+    @objc get
+  }
+  @objc public var bindingIndicatorBit: Swift.Int {
+    @objc get
+  }
+  @objc public var chargingIndicator: Swift.Int {
+    @objc get
+  }
+  @objc public init(peripheral: CoreBluetooth.CBPeripheral, peripheralName: Swift.String?, rssi: Foundation.NSNumber?, macAddress: Swift.String?, advertisementData: [Swift.String : Any]?, isScannedAndConnected: Swift.Bool = false)
+  public func description() -> Swift.String
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class HIDModeCommand : BCLRingSDK.BCLCommand {
+  public static func createSet(touchMode: Swift.Int, gestureMode: Swift.Int, systemType: Swift.Int, deviceModelName: Swift.String, screenHeightPixel: Swift.Int, screenWidthPixel: Swift.Int) -> BCLRingSDK.HIDModeCommand
+  public static func createRead() -> BCLRingSDK.HIDModeCommand
+  public static func createGetFunctionCode() -> BCLRingSDK.HIDModeCommand
+  public static func createSetGestureFunction(swipeUpGesture: Swift.Int, swipeDownGesture: Swift.Int, snapGesture: Swift.Int, pinchGesture: Swift.Int) -> BCLRingSDK.HIDModeCommand
+  public static func createReadGestureFunction() -> BCLRingSDK.HIDModeCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetHIDModeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetHIDFunctionCodeResponse : BCLRingSDK.BCLResponse {
+  public var isHIDSupported: Swift.Bool {
+    get
+  }
+  public var isTouchPhotoSupported: Swift.Bool {
+    get
+  }
+  public var isTouchShortVideoSupported: Swift.Bool {
+    get
+  }
+  public var isTouchMusicControlSupported: Swift.Bool {
+    get
+  }
+  public var isTouchPPTControlSupported: Swift.Bool {
+    get
+  }
+  public var isTouchAudioUploadSupported: Swift.Bool {
+    get
+  }
+  public var isPinchPhotoSupported: Swift.Bool {
+    get
+  }
+  public var isGestureShortVideoSupported: Swift.Bool {
+    get
+  }
+  public var isGestureMusicControlSupported: Swift.Bool {
+    get
+  }
+  public var isGesturePPTControlSupported: Swift.Bool {
+    get
+  }
+  public var isSnapPhotoSupported: Swift.Bool {
+    get
+  }
+  public var touchFunctionByte: Swift.UInt8 {
+    get
+  }
+  public var gestureFunctionByte: Swift.UInt8 {
+    get
+  }
+  public var parseSuccess: Swift.Bool {
+    get
+  }
+  public var parseErrorMessage: Swift.String {
+    get
+  }
+  public var touchFunctionDescription: Swift.String {
+    get
+  }
+  public var gestureFunctionDescription: Swift.String {
+    get
+  }
+  public var supportedFunctionsDescription: Swift.String {
+    get
+  }
+  public var hasAnyTouchFunction: Swift.Bool {
+    get
+  }
+  public var hasAnyGestureFunction: Swift.Bool {
+    get
+  }
+  public var hasAnyHIDFunction: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetCurrentHIDModeResponse : BCLRingSDK.BCLResponse {
+  public var touchHIDMode: BCLRingSDK.BCLTouchHIDMode {
+    get
+  }
+  public var gestureHIDMode: BCLRingSDK.BCLGestureHIDMode {
+    get
+  }
+  public var systemType: BCLRingSDK.BCLSystemTypeHIDMode {
+    get
+  }
+  public var parseSuccess: Swift.Bool {
+    get
+  }
+  public var parseErrorMessage: Swift.String {
+    get
+  }
+  public var isAllHIDModesDisabled: Swift.Bool {
+    get
+  }
+  public var hasAnyActiveHIDMode: Swift.Bool {
+    get
+  }
+  public var activeModesDescription: Swift.String {
+    get
+  }
+  public var modeStatusDescription: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetGestureFunctionResponse : BCLRingSDK.BCLResponse {
+  public var setStatus: Swift.Int? {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadGestureFunctionResponse : BCLRingSDK.BCLResponse {
+  public var swipeUpGesture: Swift.Int? {
+    get
+  }
+  public var swipeDownGesture: Swift.Int? {
+    get
+  }
+  public var snapGesture: Swift.Int? {
+    get
+  }
+  public var pinchGesture: Swift.Int? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BCLCompressionUtils {
+  public static func compressString(_ string: Swift.String) -> Swift.String?
+  public static func decompressString(_ compressedString: Swift.String) -> Swift.String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class BatteryCommand : BCLRingSDK.BCLCommand {
+  public static func createRead() -> BCLRingSDK.BatteryCommand
+  public static func createChargeStatus() -> BCLRingSDK.BatteryCommand
+  public static func createPush() -> BCLRingSDK.BatteryCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadBatteryResponse : BCLRingSDK.BCLResponse {
+  public var batteryLevel: Swift.UInt8 {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLBatteryNotifyResponse : BCLRingSDK.BCLResponse {
+  public var batteryLevel: Swift.UInt8 {
+    get
+  }
+  @objc deinit
+}
+public enum BCLChargingState : Swift.UInt8 {
+  case notCharging
+  case charging
+  case charged
+  case unknown
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadChargingStateResponse : BCLRingSDK.BCLResponse {
+  public var chargingState: BCLRingSDK.BCLChargingState {
+    get
+  }
+  @objc deinit
+}
+public struct BCLAlarmClockData {
+  public var timestamp: Swift.UInt32
+  public enum RepeatType : Swift.UInt8 {
+    case once
+    case daily
+    case smartHoliday
+    case smartWorkday
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public var repeatType: BCLRingSDK.BCLAlarmClockData.RepeatType
+  public enum VibrationEffect : Swift.UInt8 {
+    case strong
+    case weak
+    case gradual
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public var vibrationEffect: BCLRingSDK.BCLAlarmClockData.VibrationEffect
+  public var isEnabled: Swift.Bool
+  public init(timestamp: Swift.UInt32, repeatType: BCLRingSDK.BCLAlarmClockData.RepeatType, vibrationEffect: BCLRingSDK.BCLAlarmClockData.VibrationEffect, isEnabled: Swift.Bool)
+}
+@_inheritsConvenienceInitializers public class AlarmClockCommand : BCLRingSDK.BCLCommand {
+  public static func createSetAlarmClock(items: [BCLRingSDK.BCLAlarmClockData]) -> BCLRingSDK.AlarmClockCommand
+  public static func createReadAlarmClock() -> BCLRingSDK.AlarmClockCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetAlarmClockResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAlarmClockResponse : BCLRingSDK.BCLResponse {
+  public var items: [BCLRingSDK.BCLAlarmClockData]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class RingDataCommand : BCLRingSDK.BCLCommand {
+  public static func createReadLocalData(timestamp: Foundation.Data) -> BCLRingSDK.RingDataCommand
+  public static func createReadAllLocalData(timestamp: Foundation.Data) -> BCLRingSDK.RingDataCommand
+  public static func createStopUploadLocalData() -> BCLRingSDK.RingDataCommand
+  public static func createDeleteAllLocalData() -> BCLRingSDK.RingDataCommand
+  public static func createReadLocalDataMemory() -> BCLRingSDK.RingDataCommand
+  public static func createRequestFileList() -> BCLRingSDK.RingDataCommand
+  public static func createRequestFileData(fileName: Swift.String) -> BCLRingSDK.RingDataCommand
+  public static func createDeleteFile(fileName: Swift.String) -> BCLRingSDK.RingDataCommand
+  public static func createFormatFileSystem() -> BCLRingSDK.RingDataCommand
+  public static func createGetFileSystemSpaceInfo() -> BCLRingSDK.RingDataCommand
+  public static func createSetAutoRecordMode(type: Swift.Int) -> BCLRingSDK.RingDataCommand
+  public static func createGetAutoRecordMode() -> BCLRingSDK.RingDataCommand
+  public static func createGetFileSystemStatus() -> BCLRingSDK.RingDataCommand
+  public static func createWriteHistoryRecord(data: Foundation.Data) -> BCLRingSDK.RingDataCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+public enum BCLDataSyncStatus {
+  case syncing
+  case noData
+  case completed
+  case error
+  public static func == (a: BCLRingSDK.BCLDataSyncStatus, b: BCLRingSDK.BCLDataSyncStatus) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct BCLDataSyncCallbacks {
+  public var onProgress: ((Swift.Int, Swift.Int, Swift.Int, BCLRingSDK.BCLRingDBModel) -> Swift.Void)?
+  public var onStatusChanged: ((BCLRingSDK.BCLDataSyncStatus) -> Swift.Void)?
+  public var onCompleted: (([BCLRingSDK.BCLRingDBModel]) -> Swift.Void)?
+  public var onError: ((BCLRingSDK.BCLError) -> Swift.Void)?
+  public init(onProgress: ((Swift.Int, Swift.Int, Swift.Int, BCLRingSDK.BCLRingDBModel) -> Swift.Void)? = nil, onStatusChanged: ((BCLRingSDK.BCLDataSyncStatus) -> Swift.Void)? = nil, onCompleted: (([BCLRingSDK.BCLRingDBModel]) -> Swift.Void)? = nil, onError: ((BCLRingSDK.BCLError) -> Swift.Void)? = nil)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetUnUploadDataResponse : BCLRingSDK.BCLResponse {
+  public var currentSyncState: BCLRingSDK.BCLDataSyncStatus {
+    get
+  }
+  public var ringDBModel: BCLRingSDK.BCLRingDBModel?
+  public var totalNumber: Swift.Int
+  public var indexNumber: Swift.Int
+  public var progress: Swift.Int {
+    get
+  }
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLDataSyncCallbacks, frameId: Swift.UInt8)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetAllHistoryDataResponse : BCLRingSDK.BCLResponse {
+  public var currentSyncState: BCLRingSDK.BCLDataSyncStatus {
+    get
+  }
+  public var ringDBModel: BCLRingSDK.BCLRingDBModel?
+  public var totalNumber: Swift.Int
+  public var indexNumber: Swift.Int
+  public var progress: Swift.Int {
+    get
+  }
+  public static func setCallbacks(_ callbacks: BCLRingSDK.BCLDataSyncCallbacks, frameId: Swift.UInt8)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopUploadDataResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLDeleteAllHistoryDataResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetLocalDataMemoryInfoResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLNegativeResponse : BCLRingSDK.BCLResponse {
+  public var errorCode: Swift.UInt8?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileListResponse : BCLRingSDK.BCLResponse {
+  public var fileTotalCount: Swift.Int?
+  public var fileIndex: Swift.Int?
+  public var fileSize: Swift.Int?
+  public var fileName: Swift.String?
+  public var userId: Swift.String?
+  public var timestamp: Swift.String?
+  public var fileType: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataResponse : BCLRingSDK.BCLResponse {
+  public var fileSystemStatus: Swift.Int?
+  public var fileSize: Swift.Int?
+  public var totalNumber: Swift.Int?
+  public var currentNumber: Swift.Int?
+  public var currentLength: Swift.Int?
+  public var fileType: Swift.Int?
+  public var fileDataType1: [Swift.Int]?
+  public var fileDataType2: [Swift.Int]?
+  public var fileDataType3: [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)]?
+  public var fileDataType4: [Swift.Int]?
+  public var fileDataType5: [Swift.Int]?
+  public var fileDataType6: [Swift.Int]?
+  public var fileDataType7: [(Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int, Swift.Int)]?
+  public var fileDataType8: [(Swift.Int, Swift.Int, Swift.Int, Swift.Int)]?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLDeleteFileResponse : BCLRingSDK.BCLResponse {
+  public var deleteResult: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFormatFileSystemResponse : BCLRingSDK.BCLResponse {
+  public var formatResult: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetFileSystemInfoResponse : BCLRingSDK.BCLResponse {
+  public var totalSize: Swift.Int?
+  public var usedSize: Swift.Int?
+  public var freeSize: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetAutoRecordDataModeResponse : BCLRingSDK.BCLResponse {
+  public var result: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetAutoRecordDataModeResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetFileSystemStatusResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  @objc deinit
+}
+public let BDLogger: SwiftyBeaver.SwiftyBeaver.Type
+public let defaultLogDirectoryPath: Swift.String
+public func BDSetUpLogger(_ directoryPath: Swift.String = defaultLogDirectoryPath)
+@_inheritsConvenienceInitializers @objc public class BCLRingSleepModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var hours: Swift.Int
+  @objc public var minutes: Swift.Int
+  @objc public var sleepTime: Swift.Int64
+  @objc public var deepTime: Swift.Int64
+  @objc public var lowTime: Swift.Int64
+  @objc public var ydTime: Swift.Int64
+  @objc public var qxTime: Swift.Int64
+  @objc public var startTime: Swift.Int64
+  @objc public var endTime: Swift.Int64
+  @objc public var xiaolv: Swift.Double
+  @objc public var shenshui: Swift.Double
+  @objc public var score: Swift.Int
+  @objc public var wakeupCount: Swift.Int
+  @objc public var sleepDataType: Swift.Int
+  @objc public var sleepDataList: [BCLRingSDK.BCLRingDBModel]
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class BCLDeviceConnectionModel : ObjectiveC.NSObject {
+  public var id: Swift.Int?
+  public var deviceUUID: Swift.String?
+  public var deviceName: Swift.String?
+  public var macAddress: Swift.String?
+  public var rssi: Swift.Int?
+  public var advertisementData: Swift.String?
+  public var manufacturerData: Swift.String?
+  public var connectionTime: Swift.Int64?
+  public var disconnectionTime: Swift.Int64?
+  public var connectionStatus: Swift.Int
+  public var protocolVersion: Swift.Int?
+  public var bindingIndicator: Swift.Int?
+  public var chargingIndicator: Swift.Int?
+  public var createdTime: Swift.Int64?
+  public var updatedTime: Swift.Int64?
+  @objc override dynamic public init()
+  public static func from(deviceInfo: BCLRingSDK.BCLDeviceInfoModel) -> BCLRingSDK.BCLDeviceConnectionModel
+  public func markAsDisconnected()
+  public func markAsConnected()
+  public var connectionDuration: Swift.Int64 {
+    get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  public func parseAdvertisementData() -> [Swift.String : Any]?
+  @objc deinit
+}
+extension BCLRingSDK.BCLHeartRateMeasureStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLHeartRateMeasureStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLHeartRateMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLApolloResponse.CharacteristicType : Swift.Equatable {}
+extension BCLRingSDK.BCLApolloResponse.CharacteristicType : Swift.Hashable {}
+extension BCLRingSDK.BCLFirmwareCommand : Swift.Equatable {}
+extension BCLRingSDK.BCLFirmwareCommand : Swift.Hashable {}
+extension BCLRingSDK.BCLFirmwareCommand : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLAudioType : Swift.Equatable {}
+extension BCLRingSDK.BCLAudioType : Swift.Hashable {}
+extension BCLRingSDK.BCLAudioType : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLOTAType : Swift.Equatable {}
+extension BCLRingSDK.BCLOTAType : Swift.Hashable {}
+extension BCLRingSDK.BCLOTAType : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLCentralManagerBluetoothState : Swift.Equatable {}
+extension BCLRingSDK.BCLCentralManagerBluetoothState : Swift.Hashable {}
+extension BCLRingSDK.BCLBluetoothDeviceState.BCLState : Swift.Equatable {}
+extension BCLRingSDK.BCLBluetoothDeviceState.BCLState : Swift.Hashable {}
+extension BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState : Swift.Equatable {}
+extension BCLRingSDK.BCLBluetoothDeviceState.BCLSimpleState : Swift.Hashable {}
+extension BCLRingSDK.BCLTouchHIDMode : Swift.Equatable {}
+extension BCLRingSDK.BCLTouchHIDMode : Swift.Hashable {}
+extension BCLRingSDK.BCLTouchHIDMode : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLGestureHIDMode : Swift.Equatable {}
+extension BCLRingSDK.BCLGestureHIDMode : Swift.Hashable {}
+extension BCLRingSDK.BCLGestureHIDMode : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.Equatable {}
+extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.Hashable {}
+extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLRingTimeZone : Swift.Equatable {}
+extension BCLRingSDK.BCLRingTimeZone : Swift.Hashable {}
+extension BCLRingSDK.BCLRingTimeZone : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLPPGWaveFormMeasureStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLPPGWaveFormMeasureStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLPPGWaveFormMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLError.ScanError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.ScanError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.RSSIError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.RSSIError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.ConnectionError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.ConnectionError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.CommandError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.CommandError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.ResponseParsingError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.ResponseParsingError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.TemperatureError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.TemperatureError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.BCLBloodOxygenError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.BCLBloodOxygenError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.BCLBloodPressureError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.BCLBloodPressureError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.HeartRateError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.HeartRateError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.DataSyncError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.DataSyncError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.HistoryDataMigrationError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.HistoryDataMigrationError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.ApolloOTAError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.ApolloOTAError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.NrfOTAError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.NrfOTAError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.PhyOTAError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.PhyOTAError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.OTAError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.OTAError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.SixAxisError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.SixAxisError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.PPGWaveFormError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.PPGWaveFormError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.ECGError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.ECGError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.PWTTError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.PWTTError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.TenMeterGameError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.TenMeterGameError : Swift.Hashable {}
+extension BCLRingSDK.BCLServiceType : Swift.Equatable {}
+extension BCLRingSDK.BCLServiceType : Swift.Hashable {}
+extension BCLRingSDK.CommandPriority : Swift.Equatable {}
+extension BCLRingSDK.CommandPriority : Swift.Hashable {}
+extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLPhyUpgradeResponse.CharacteristicType : Swift.Equatable {}
+extension BCLRingSDK.BCLPhyUpgradeResponse.CharacteristicType : Swift.Hashable {}
+extension BCLRingSDK.BCLTakePWTTStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLTakePWTTStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLTakePWTTStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLNrfUpgradeState.Stage : Swift.Equatable {}
+extension BCLRingSDK.BCLNrfUpgradeState.Stage : Swift.Hashable {}
+extension BCLRingSDK.BCLChargingState : Swift.Equatable {}
+extension BCLRingSDK.BCLChargingState : Swift.Hashable {}
+extension BCLRingSDK.BCLChargingState : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.Equatable {}
+extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.Hashable {}
+extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.Equatable {}
+extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.Hashable {}
+extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLDataSyncStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLDataSyncStatus : Swift.Hashable {}

@@ -660,6 +660,7 @@ public enum StringToDateStyles {
     get
   }
   public var ringPushBatteryBlock: ((Swift.Int) -> Swift.Void)?
+  public var systemBluetoothStateBlock: ((RingsSDK.BCLCentralManagerBluetoothState) -> Swift.Void)?
   @objc deinit
 }
 extension RingsSDK.RingManager : CoreBluetooth.CBCentralManagerDelegate {
@@ -964,6 +965,19 @@ public enum ApolloOTAStatus {
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BCLCentralManagerBluetoothState {
+  case unknown
+  case resetting
+  case unsupported
+  case poweredOn
+  case poweredOff
+  case unauthorized
+  public static func == (a: RingsSDK.BCLCentralManagerBluetoothState, b: RingsSDK.BCLCentralManagerBluetoothState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
     get
   }
 }
@@ -3135,6 +3149,8 @@ extension RingsSDK.OTAError : Swift.Hashable {}
 extension RingsSDK.RingTimeZone : Swift.Equatable {}
 extension RingsSDK.RingTimeZone : Swift.Hashable {}
 extension RingsSDK.RingTimeZone : Swift.RawRepresentable {}
+extension RingsSDK.BCLCentralManagerBluetoothState : Swift.Equatable {}
+extension RingsSDK.BCLCentralManagerBluetoothState : Swift.Hashable {}
 extension RingsSDK.Locales : Swift.Equatable {}
 extension RingsSDK.Locales : Swift.Hashable {}
 extension RingsSDK.Locales : Swift.RawRepresentable {}

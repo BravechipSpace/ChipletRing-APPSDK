@@ -547,6 +547,9 @@ extension BCLRingSDK.BCLRingManager {
   public func setHIDMode(touchMode: Swift.Int, gestureMode: Swift.Int, systemType: Swift.Int, deviceModelName: Swift.String, screenHeightPixel: Swift.Int, screenWidthPixel: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetHIDModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func getHIDFunctionCode(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetHIDFunctionCodeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func getCurrentHIDMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetCurrentHIDModeResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getMobileDeviceModelName() -> Swift.String
+  public func getMobileDeviceScreenWidthPixel() -> Swift.Int
+  public func getMobileDeviceScreenHeightPixel() -> Swift.Int
   public func setGestureFunction(swipeUpGesture: Swift.Int, swipeDownGesture: Swift.Int, snapGesture: Swift.Int, pinchGesture: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetGestureFunctionResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func readGestureFunction(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadGestureFunctionResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func startTakeECG(completion: @escaping (Swift.Result<BCLRingSDK.BCLTakeECGResponse, BCLRingSDK.BCLError>) -> Swift.Void)
@@ -558,9 +561,10 @@ extension BCLRingSDK.BCLRingManager {
   public func startThreeAxis(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameThreeAxisDataGameStartResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func stop(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameStopResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func accelerationCalibration(completion: @escaping (Swift.Result<BCLRingSDK.BCLTenMeterGameAccelerationCalibrationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
-  public func getMobileDeviceModelName() -> Swift.String
-  public func getMobileDeviceScreenWidthPixel() -> Swift.Int
-  public func getMobileDeviceScreenHeightPixel() -> Swift.Int
+  public func controlPCMFormatAudio(isOpen: Swift.Bool, completion: @escaping (Swift.Result<BCLRingSDK.BCLControlPCMFormatResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func controlADPCMFormatAudio(isOpen: Swift.Bool, completion: @escaping (Swift.Result<BCLRingSDK.BCLControlADPCMFormatResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setActivePushAudioInfo(audioType: BCLRingSDK.BCLAudioType, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetActivePushAudioInfoResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func getActivePushAudioInfo(completion: @escaping (Swift.Result<BCLRingSDK.BCLGetActivePushAudioInfoResponse, BCLRingSDK.BCLError>) -> Swift.Void)
 }
 extension BCLRingSDK.BCLRingManager {
   public func createToken(apiKey: Swift.String, userIdentifier: Swift.String, completion: @escaping (Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> Swift.Void)
@@ -792,6 +796,14 @@ public enum WaveformDataType {
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class BCLRingManager : ObjectiveC.NSObject {
   @objc public static let shared: BCLRingSDK.BCLRingManager
+  public var setCustomToken: Swift.String? {
+    get
+    set
+  }
+  public var commandTimeout: Swift.Double {
+    get
+    set
+  }
   public var systemBluetoothStateBlock: ((BCLRingSDK.BCLCentralManagerBluetoothState) -> Swift.Void)?
   public var systemBluetoothStateObservable: RxSwift.Observable<BCLRingSDK.BCLCentralManagerBluetoothState> {
     get
@@ -820,6 +832,7 @@ public enum WaveformDataType {
     get
   }
   public var batteryNotifyBlock: ((Swift.Int) -> Swift.Void)?
+  public var hidTouchAudioDataBlock: ((Swift.Int, Swift.Int, [Swift.Int16], Swift.Bool) -> Swift.Void)?
   public var isAutoReconnectEnabled: Swift.Bool
   public var autoReconnectTimeLimit: Swift.Double
   public var autoReconnectMaxAttempts: Swift.Int
@@ -854,6 +867,46 @@ extension BCLRingSDK.BCLRingManager : CoreBluetooth.CBPeripheralDelegate {
   @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverDescriptorsFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
   @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didOpen channel: CoreBluetooth.CBL2CAPChannel?, error: (any Swift.Error)?)
   @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverIncludedServicesFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+}
+public enum BCLAudioType : Swift.UInt8 {
+  case pcm
+  case adpcm
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class AudioCommand : BCLRingSDK.BCLCommand {
+  public static func createControlPCMFormat(isOpen: Swift.Bool) -> BCLRingSDK.AudioCommand
+  public static func createControlADPCMFormat(isOpen: Swift.Bool) -> BCLRingSDK.AudioCommand
+  public static func createSetActivePushAudioInfo(audioType: BCLRingSDK.BCLAudioType) -> BCLRingSDK.AudioCommand
+  public static func createGetActivePushAudioInfo() -> BCLRingSDK.AudioCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLControlPCMFormatResponse : BCLRingSDK.BCLResponse {
+  public var audioDataLength: Swift.Int?
+  public var seq: Swift.Int?
+  public var audioData: [Swift.Int16]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLControlADPCMFormatResponse : BCLRingSDK.BCLResponse {
+  public var audioDataLength: Swift.Int
+  public var seq: Swift.Int
+  public var audioData: [Swift.Int16]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetActivePushAudioInfoResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetActivePushAudioInfoResponse : BCLRingSDK.BCLResponse {
+  public var audioType: BCLRingSDK.BCLAudioType
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRingActivePushAudioCompleteResponse : BCLRingSDK.BCLResponse {
+  @objc deinit
 }
 @_inheritsConvenienceInitializers public class TenMeterGameCommand : BCLRingSDK.BCLCommand {
   public static func sixAxisDataGameStart() -> BCLRingSDK.TenMeterGameCommand
@@ -1573,6 +1626,7 @@ extension BCLRingSDK.BCLCommand {
     public static let ecgSimulator: Swift.UInt8
     public static let ecgStop: Swift.UInt8
     public static let tenMeterGame: Swift.UInt8
+    public static let audio: Swift.UInt8
   }
   public struct SubCmdType {
     public struct Time {
@@ -1716,6 +1770,13 @@ extension BCLRingSDK.BCLCommand {
       public static let threeAxisDataGameStart: Swift.UInt8
       public static let stop: Swift.UInt8
       public static let accelerationCalibration: Swift.UInt8
+    }
+    public struct Audio {
+      public static let controlPCMFormat: Swift.UInt8
+      public static let controlADPCMFormat: Swift.UInt8
+      public static let setActivePushAudioInfo: Swift.UInt8
+      public static let getActivePushAudioInfo: Swift.UInt8
+      public static let ringActivePushAudioComplete: Swift.UInt8
     }
   }
 }
@@ -2433,6 +2494,9 @@ extension BCLRingSDK.BCLFirmwareCommand : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Hashable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLAudioType : Swift.Equatable {}
+extension BCLRingSDK.BCLAudioType : Swift.Hashable {}
+extension BCLRingSDK.BCLAudioType : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLOTAType : Swift.Equatable {}
 extension BCLRingSDK.BCLOTAType : Swift.Hashable {}
 extension BCLRingSDK.BCLOTAType : Swift.RawRepresentable {}

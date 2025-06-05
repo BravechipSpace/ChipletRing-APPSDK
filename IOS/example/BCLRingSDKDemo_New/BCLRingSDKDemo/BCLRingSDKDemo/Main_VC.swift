@@ -1564,8 +1564,116 @@ class Main_VC: UIViewController {
                 }
             }
             break
-        case 183: //
-            BDLogger.info("")
+        case 183: // 打开PCM格式音频传输
+            BDLogger.info("打开PCM格式音频传输")
+            BCLRingManager.shared.controlPCMFormatAudio(isOpen: true) { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("PCM格式音频传输-音频数据长度: \(response.audioDataLength ?? 0)")
+                    BDLogger.info("PCM格式音频传输-音频数据序号: \(response.seq ?? 0)")
+                    BDLogger.info("PCM格式音频传输-音频数据: \(response.audioData)")
+                case let .failure(error):
+                    BDLogger.error("开启PCM格式音频传输失败: \(error)")
+                }
+            }
+            break
+        case 184: // 关闭PCM格式音频传输
+            BDLogger.info("关闭PCM格式音频传输")
+            BCLRingManager.shared.controlPCMFormatAudio(isOpen: false) { res in
+                switch res {
+                case .success:
+                    BDLogger.info("关闭PCM格式音频传输-成功")
+                case let .failure(error):
+                    BDLogger.error("关闭PCM格式音频传输失败: \(error)")
+                }
+            }
+            break
+        case 185: // 开启ADPCM格式音频传输
+            BDLogger.info("开启ADPCM格式音频传输")
+            BCLRingManager.shared.controlADPCMFormatAudio(isOpen: true) { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("ADPCM格式音频传输-音频数据长度: \(response.audioDataLength)")
+                    BDLogger.info("ADPCM格式音频传输-音频数据序号: \(response.seq)")
+                    BDLogger.info("ADPCM格式音频传输-音频数据: \(response.audioData)")
+                case let .failure(error):
+                    BDLogger.error("开启ADPCM格式音频传输失败: \(error)")
+                }
+            }
+            break
+        case 186: // 关闭ADPCM格式音频传输
+            BDLogger.info("关闭ADPCM格式音频传输")
+            BCLRingManager.shared.controlADPCMFormatAudio(isOpen: false) { res in
+                switch res {
+                case .success:
+                    BDLogger.info("关闭ADPCM格式音频传输-成功")
+                case let .failure(error):
+                    BDLogger.error("关闭ADPCM格式音频传输-失败: \(error)")
+                }
+            }
+            break
+        case 187: // 设置主动推送音频信息
+            BDLogger.info("设置主动推送音频信息")
+            let audioType: BCLAudioType = .pcm // 可选值：pcm, adpcm
+            BCLRingManager.shared.setActivePushAudioInfo(audioType: .pcm) { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 0 {
+                        if audioType == .pcm {
+                            BDLogger.info("主动推送音频信息已开启，格式为PCM")
+                        } else {
+                            BDLogger.info("主动推送音频信息已开启，格式为ADPCM")
+                        }
+                    } else {
+                        BDLogger.info("主动推送音频信息设置失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置主动推送音频信息失败: \(error)")
+                }
+            }
+            break
+        case 188: // 获取主动推送音频信息
+            BDLogger.info("获取主动推送音频信息")
+            BCLRingManager.shared.getActivePushAudioInfo { res in
+                switch res {
+                case let .success(response):
+                    if response.audioType == .pcm {
+                        BDLogger.info("主动推送音频信息已开启，格式为PCM")
+                    } else if response.audioType == .adpcm {
+                        BDLogger.info("主动推送音频信息已开启，格式为ADPCM")
+                    }
+                case let .failure(error):
+                    BDLogger.error("获取主动推送音频信息失败: \(error)")
+                }
+            }
+            break
+        case 189: //  设置HID触摸-上传实时音频模式
+            BDLogger.info("设置HID触摸-上传实时音频模式")
+
+            BCLRingManager.shared.hidTouchAudioDataBlock = { dataLenght, seq, audioData, isEnd in
+                BDLogger.info("HID触摸-上传实时音频数据-数据长度: \(dataLenght)")
+                BDLogger.info("HID触摸-上传实时音频数据-包序号: \(seq)")
+                BDLogger.info("HID触摸-上传实时音频数据-音频数据: \(audioData)")
+                BDLogger.info("HID触摸-上传实时音频数据-是否结束: \(isEnd)")
+            }
+
+            BCLRingManager.shared.setHIDMode(touchMode: 4,
+                                             gestureMode: 255,
+                                             systemType: 1,
+                                             deviceModelName: BCLRingManager.shared.getMobileDeviceModelName(),
+                                             screenHeightPixel: BCLRingManager.shared.getMobileDeviceScreenWidthPixel(),
+                                             screenWidthPixel: BCLRingManager.shared.getMobileDeviceScreenHeightPixel()) { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("设置HID触摸-上传实时音频模式成功")
+                    } else {
+                        BDLogger.info("设置HID触摸-上传实时音频模式失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置HID触摸-上传实时音频模式失败: \(error)")
+                }
+            }
             break
         default:
             break
