@@ -660,8 +660,8 @@ BLEUtils.startLeScan(this, leScanCallback);
             if (device == null || TextUtils.isEmpty(device.getName())) {
                 return;
             }
-            //是否符合条件，符合条件，会返回戒指设备信息
-            BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes);
+            //是否符合条件，符合条件，会返回戒指设备信息，第四个参数是指定特定版本戒指，快康公司传递true，其他公司都是false
+            BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
            
         }
     };
