@@ -2858,7 +2858,7 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
                 });
 ```
 ##### phy模式下升级异常的处理
-戒指是phy固件的情况下，如果升级失败，戒指名字会变成PPlusOTA，mac地址最后一位会加1，如果去搜索连接，因为和sdk里边的特征值是不同的，导致无法连接上。这种情况下，如果扫描到的设备是PPlusOTA，应该继续进行固件升级操作，而不是进行sdk连接蓝牙的操作。
+戒指是phy固件的情况下，如果升级失败，戒指名字会变成PPlusOTA，mac地址最后一位会加1，如果去搜索连接，因为和sdk里边的特征值是不同的，导致无法连接上。这种情况下，如果扫描到的设备是PPlusOTA，应该继续进行固件升级操作，而不是进行sdk连接蓝牙的操作。搜索的时候，应该PPlusOTA和sdk提供的 LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);结合，防止显示不出来PPlusOTA名字的设备
 
 升级完成以后，刷新一下蓝牙搜索列表，然后再进行sdk的连接。
 
