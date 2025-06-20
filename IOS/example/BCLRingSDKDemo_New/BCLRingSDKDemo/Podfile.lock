@@ -322,6 +322,7 @@ PODS:
   - QMUIKit/QMUIResources (4.8.0)
   - QMUIKit/QMUIWeakObjectContainer (4.8.0)
   - RxSwift (6.9.0)
+  - SnapKit (5.7.1)
   - SwiftDate (7.0.0)
   - SwiftyBeaver (1.9.5)
   - Zip (2.1.2)
@@ -333,6 +334,7 @@ DEPENDENCIES:
   - LookinServer/Swift
   - QMUIKit (= 4.8.0)
   - RxSwift (~> 6.9.0)
+  - SnapKit (~> 5)
   - SwiftDate
   - SwiftyBeaver (= 1.9.5)
   - Zip
@@ -344,6 +346,7 @@ SPEC REPOS:
     - LookinServer
     - QMUIKit
     - RxSwift
+    - SnapKit
     - SwiftDate
     - SwiftyBeaver
     - Zip
@@ -355,11 +358,12 @@ SPEC CHECKSUMS:
   LookinServer: 1b2b61c6402ae29fa22182d48f5cd067b4e99e80
   QMUIKit: 3c622fe3c55c0dccfad750634bd9ee5e7ade9a53
   RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SwiftDate: bbc26e26fc8c0c33fbee8c140c5e8a68293a148a
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 28aa47cdd9e059a66df1909ebafb7d8060895d1b
+PODFILE CHECKSUM: 7665827b63773b2ebea127cdf14fcfbb06ade7e3
 
 COCOAPODS: 1.16.2

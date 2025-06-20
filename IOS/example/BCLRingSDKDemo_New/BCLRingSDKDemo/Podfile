@@ -6,6 +6,8 @@ target 'BCLRingSDKDemo' do
   use_frameworks!
   pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
   pod 'QMUIKit','4.8.0'
+  pod 'SnapKit', '~> 5'
+  
   
   pod 'Foil', '~> 5.1.2'
   pod 'iOSDFULibrary'

@@ -15,7 +15,7 @@ class DeviceTableVC: UIViewController {
         table.delegate = self
         table.dataSource = self
         table.register(DeviceTableViewCell.self, forCellReuseIdentifier: "DeviceCell")
-        table.rowHeight = 100
+        table.rowHeight = UITableView.automaticDimension
         table.separatorStyle = .none
         return table
     }()
@@ -32,15 +32,15 @@ class DeviceTableVC: UIViewController {
         devices = []
         BCLRingManager.shared.startScan { res in
             switch res {
-            case .success(let devices):
+            case let .success(devices):
                 self.devices = devices
                 self.tableView.reloadData()
-            case .failure(let error):
+            case let .failure(error):
                 BDLogger.error("scan failed: \(error)")
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         BCLRingManager.shared.stopScan()
@@ -117,6 +117,14 @@ class DeviceTableViewCell: UITableViewCell {
         return label
     }()
 
+    private let rssiLabel: UILabel = {
+        let label = UILabel()
+        label.text = "RSSI：Unknown"
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .gray
+        return label
+    }()
+
     private let connectButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Connect", for: .normal)
@@ -144,7 +152,7 @@ class DeviceTableViewCell: UITableViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
         ])
-        [nameLabel, macLabel, connectButton].forEach {
+        [nameLabel, macLabel, rssiLabel, connectButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview($0)
         }
@@ -152,8 +160,12 @@ class DeviceTableViewCell: UITableViewCell {
             nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
 
-            macLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            macLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
             macLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+
+            rssiLabel.topAnchor.constraint(equalTo: macLabel.bottomAnchor, constant: 5),
+            rssiLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            rssiLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
 
             connectButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             connectButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
@@ -167,11 +179,16 @@ class DeviceTableViewCell: UITableViewCell {
 
     func configure(with device: BCLDeviceInfoModel) {
         nameLabel.text = "Name:\(device.peripheral.name ?? "Unknown")"
-        
+//        nameLabel.text = "Name:\(device.localName ?? "Unknown")"
         if device.isScannedAndConnected {
             macLabel.text = "Mac:系统蓝牙已连接，无法通过广播获取Mac"
-        }else{
+        } else {
             macLabel.text = "Mac:\(device.macAddress ?? "Unknown")"
+        }
+        if let rssi = device.rssi {
+            rssiLabel.text = "RSSI: \(rssi)"
+        } else {
+            rssiLabel.text = "RSSI: Unknown"
         }
     }
 

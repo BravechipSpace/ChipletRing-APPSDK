@@ -6,35 +6,35 @@
 	<dict>
 		<key>Headers/BCLRingSDK-Swift.h</key>
 		<data>
-		t9rYuG+7YwrvKAv3Y+nKEYpWcSU=
+		ivyNuS0vhk+VzMemxSxMp/VfdhY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		pgKvLWruHwRii32zK+DQlCilzPY=
+		FBWoJe+6kFBB9t0ks4E21MuFVi8=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		7gkb7d7a9s/JLc1ZCCKuBqE96FM=
+		ptWjIgsRswKT4o2S6hGHgG1ecjE=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		rD+ftQMdDrZ0B1tk19yN6KvzwHs=
+		+oXapLoL/6kUOecoE2IS2kHh32M=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		r7bLWKt4hKEgeMhxAUzCnkIUtG8=
+		v7VM/SNWByPXmT7EAW/mebGJULM=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		bltpyIEPn+8P/j1UPmnuPMGOHLE=
+		x6aIdNNTYt+yX+6NpB688iJrCDw=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		r7bLWKt4hKEgeMhxAUzCnkIUtG8=
+		v7VM/SNWByPXmT7EAW/mebGJULM=
 		</data>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		G8HGqY5dm8ZnmEnxfQ6cSOFv6YQ=
+		NL2yzcyC/YbZto1y2ip8C4sL2PY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -51,49 +51,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xrbBJSEA2B+36RsVG/qYtuwpZFwVj1ct45ZAMtBBFMQ=
+			7QloErGXTO9tLz59/5QkZOZk175SHQYKJwQbtoo553Q=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Lg9ZIGld5n5HG7Eo76IgWDDI53ow/2IPOEckOODH2ME=
+			s5a6B1weok/hFIXcHjNfPDn9eLdleQ6JL+GqwRPWYMU=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			aifM1XpuMynyy36ekQyESeM8uh5zsgGxOrlTHqereUk=
+			1GVDQNz7YUYPtEMOSAXIuOO7w42aDNk8t0LlFhRs8O4=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BeDmHjo2niQ9kc//9/401PFuYK+r2BdbtL7RWvj+P34=
+			dVMEajuhLGfw9lqVXbT09uvWWXrmyjBB464W9rJeDAU=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			34UfQXfx86IcmCgjQRHJb2hv5DXLbn0/6wmvQ7OurTI=
+			S0tP+Q/jiAD63eaB3cUHfjMfXt6E1Zphwar1lnlYPzk=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BeDmHjo2niQ9kc//9/401PFuYK+r2BdbtL7RWvj+P34=
+			dVMEajuhLGfw9lqVXbT09uvWWXrmyjBB464W9rJeDAU=
 			</data>
 		</dict>
 		<key>Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lYqQ4vti93upSj18WXv2BRfzDqWK3vcwzs2uwdoaBN0=
+			PTAWabBoP5QDeNUWT/DYo44RkR2j3cSr9y1EUyvfPRo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

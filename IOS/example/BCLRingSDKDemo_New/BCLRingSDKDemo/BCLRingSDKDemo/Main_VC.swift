@@ -48,6 +48,10 @@ class Main_VC: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
 
+        // 配置日志级别，控制台可按需打印日志
+        BCLRingManager.shared.configLogLevels(consoleLogLevel: .verbose)
+//        BCLRingManager.shared.manufacturerID = .KK
+
         // 蓝牙状态
         BCLRingManager.shared.systemBluetoothStateBlock = { state in
             if state == .poweredOn {
@@ -161,7 +165,7 @@ class Main_VC: UIViewController {
             BCLRingManager.shared.isAutoReconnectEnabled = false
             break
         case 103: //    同步时间
-            BCLRingManager.shared.syncTime { res in
+            BCLRingManager.shared.syncTime(timeZone: .East8) { res in
                 switch res {
                 case .success:
                     BDLogger.info("同步时间成功")
@@ -390,8 +394,8 @@ class Main_VC: UIViewController {
             }
             break
         case 123: //    固件版本更新检查
-            // 7.1.5.3Z3R / 7.1.7.0Z3R / (RH18:2.7.5.2Z3N) / 2.7.4.8Z27
-            BCLRingManager.shared.checkFirmwareUpdate(version: "2.7.4.0Z27") { result in
+            // 7.1.5.3Z3R / 7.1.7.0Z3R / (RH18:2.7.5.2Z3N) / 2.7.4.8Z27 / 7.2.0.2Z3R
+            BCLRingManager.shared.checkFirmwareUpdate(version: "7.2.0.2Z3R") { result in
                 switch result {
                 case let .success(versionInfo):
                     if versionInfo.hasNewVersion {
@@ -471,14 +475,33 @@ class Main_VC: UIViewController {
             BCLRingManager.shared.stopReadRSSI()
             break
         case 127: //    设置蓝牙名称
-            BCLRingManager.shared.setBluetoothName(name: "HR18") { res in
-                switch res {
-                case .success:
-                    BDLogger.info("设置蓝牙名称成功")
-                case let .failure(error):
-                    BDLogger.error("设置蓝牙名称失败: \(error)")
+            guard BCLRingManager.shared.deviceIsDidConnected else {
+                QMUITips.show(withText: "请连接蓝牙设备")
+                return
+            }
+            let contentView = UpdateDeviceName_Dialog(x: 15, y: UIScreen.main.bounds.height / 2 - 100, width: UIScreen.main.bounds.width - 30, height: 200)
+            contentView.confirmButtonCallback = { name in
+                BDLogger.info("更改蓝牙名称-\(name)")
+                BCLRingManager.shared.setBluetoothName(name: name) { res in
+                    switch res {
+                    case let .success(res):
+                        if res.success {
+                            BDLogger.info("设置蓝牙名称成功")
+                            QMUITips.show(withText: "设置成功")
+                        } else {
+                            BDLogger.info("设置蓝牙名称失败")
+                            QMUITips.show(withText: "设置失败")
+                        }
+                    case let .failure(error):
+                        BDLogger.error("设置蓝牙名称失败: \(error)")
+                        QMUITips.show(withText: "设置失败")
+                    }
                 }
             }
+            let modalPresentation_VC = QMUIModalPresentationViewController()
+            modalPresentation_VC.isModal = true
+            modalPresentation_VC.contentView = contentView
+            modalPresentation_VC.showWith(animated: true)
             break
         case 128: //    读取蓝牙名称
             BCLRingManager.shared.getBluetoothName { res in
@@ -562,6 +585,8 @@ class Main_VC: UIViewController {
                     BDLogger.info("麦克风支持：\(response.isMicrophoneSupported)")
                     BDLogger.info("运动模式支持：\(response.isSportModeSupported)")
                     BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
+                    BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
+                    BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
                 case let .failure(error):
                     switch error {
                     case let .responseParsing(reason):
@@ -640,6 +665,8 @@ class Main_VC: UIViewController {
                     BDLogger.info("麦克风支持：\(response.isMicrophoneSupported)")
                     BDLogger.info("运动模式支持：\(response.isSportModeSupported)")
                     BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
+                    BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
+                    BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
                 case let .failure(error):
                     BDLogger.error("连接戒指失败: \(error)")
                 }
@@ -714,6 +741,8 @@ class Main_VC: UIViewController {
                     BDLogger.info("麦克风支持：\(response.isMicrophoneSupported)")
                     BDLogger.info("运动模式支持：\(response.isSportModeSupported)")
                     BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
+                    BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
+                    BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
                 case let .failure(error):
                     BDLogger.error("刷新戒指失败: \(error)")
                 }
@@ -872,7 +901,7 @@ class Main_VC: UIViewController {
             filePicker.allowsMultipleSelection = false
             present(filePicker, animated: true, completion: nil)
             break
-        case 142: // 血压测量
+        case 142: // 血压-血糖测量
             bloodPressureWaveData = []
             // 设置回调
             BCLBloodPressureResponse.setCallbacks(BCLBloodPressureCallbacks(
@@ -884,6 +913,31 @@ class Main_VC: UIViewController {
                     switch status {
                     case .completed:
                         BDLogger.info("测量完成")
+                        BDLogger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                        BDLogger.info("血压波形数据量:\(self.bloodPressureWaveData.count)")
+                        BDLogger.info("血压波形数据:\(self.bloodPressureWaveData)")
+                        let mac = BCLRingManager.shared.currentConnectedDevice?.macAddress ?? ""
+                        BDLogger.info("Mac地址:\(mac)")
+                        // 血压云端算法
+                        BCLRingManager.shared.uploadBloodPressureData(mac: mac, waveData: self.bloodPressureWaveData) { res in
+                            switch res {
+                            case let .success(data):
+                                BDLogger.info("收缩压：\(data.0)、舒张压：\(data.1)")
+                            case let .failure(error):
+                                BDLogger.error("数据计算失败: \(error.localizedDescription)")
+                            }
+                        }
+
+                        // 血糖云端算法
+                        BCLRingManager.shared.uploadBloodGlucoseData(mac: mac, waveData: self.bloodPressureWaveData) { res in
+                            switch res {
+                            case let .success(data):
+                                BDLogger.info("血糖数据：\(data) mmol/L")
+                            case let .failure(error):
+                                BDLogger.error("血糖数据上传失败: \(error.localizedDescription)")
+                            }
+                        }
+
                     case .measuring:
                         BDLogger.info("测量中...")
                     case .busy:
@@ -919,7 +973,7 @@ class Main_VC: UIViewController {
             ))
 
             // 开始测量
-            BCLRingManager.shared.startBloodPressure(collectTime: 30, waveformConfig: 1, progressConfig: 1, waveformSetting: 0) { result in
+            BCLRingManager.shared.startBloodPressure(collectTime: 30, waveformConfig: 1, progressConfig: 1) { result in
                 switch result {
                 case .success:
                     break
@@ -1675,6 +1729,78 @@ class Main_VC: UIViewController {
                 }
             }
             break
+        case 190: // 固件历史版本
+            BDLogger.info("获取固件历史版本")
+            BCLRingManager.shared.getFirmwareVersionList(category: "Z4I") { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("固件历史版本-总个数: \(response.count)")
+                    response.forEach { item in
+                        BDLogger.info("固件历史版本-文件名: \(item.fileName)")
+                        BDLogger.info("固件历史版本-文件路径: \(item.filePath)")
+                        BDLogger.info("固件历史版本-下载链接: \(item.fileUrl)")
+                    }
+                case let .failure(error):
+                    BDLogger.error("获取固件历史版本失败: \(error)")
+                }
+            }
+            break
+        case 191: // 开始运动
+            BDLogger.info("开始运动")
+            BCLRingManager.shared.startSportMode(sportType: 1) { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("开始运动-成功")
+                    } else {
+                        BDLogger.info("开始运动-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("开始运动失败: \(error)")
+                }
+            } sportDataCallback: { sportDataRes in
+                BDLogger.info("运动数据-时间戳: \(sportDataRes.timestamp ?? 0)")
+                BDLogger.info("运动数据-步数: \(sportDataRes.totalSteps ?? 0)")
+                BDLogger.info("运动数据-心率: \(sportDataRes.heartRate ?? 0)次/分")
+                BDLogger.info("运动数据-能量消耗: \(sportDataRes.energyConsumption ?? 0)")
+
+            } passiveStopCallback: { stopRes in
+                BDLogger.info("被动停止运动-状态: \(stopRes.isWearInterrupt ?? 0)")
+            }
+            break
+        case 192: // 停止运动
+            BDLogger.info("停止运动")
+            BCLRingManager.shared.stopSportMode { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("停止运动-成功")
+                    } else {
+                        BDLogger.info("停止运动-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("停止运动失败: \(error)")
+                }
+            }
+            break
+        case 193: // 运动漏点续传
+            BDLogger.info("运动漏点续传")
+            BCLRingManager.shared.requestMissingPointsSportMode { res in
+                switch res {
+                case let .success(sportDataRes):
+                    BDLogger.info("运动数据-时间戳: \(sportDataRes.timestamp ?? 0)")
+                    BDLogger.info("运动数据-步数: \(sportDataRes.totalSteps ?? 0)")
+                    BDLogger.info("运动数据-心率: \(sportDataRes.heartRate ?? 0)次/分")
+                    BDLogger.info("运动数据-能量消耗: \(sportDataRes.energyConsumption ?? 0)")
+                case let .failure(error):
+                    BDLogger.error("运动漏点续传失败: \(error)")
+                }
+            }
+            break
+        case 194:
+            break
+        case 195:
+            break
         default:
             break
         }
@@ -1806,7 +1932,7 @@ class Main_VC: UIViewController {
                                              collectFrequency: 25,
                                              waveformConfig: 1,
                                              progressConfig: 1,
-                                             intervalConfig: 0,
+                                             intervalConfig: 1,
                                              callbacks: callBacks) { result in
             switch result {
             case .success:
