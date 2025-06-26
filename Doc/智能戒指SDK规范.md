@@ -514,97 +514,175 @@ BLEUtils.disconnectBLE(Context context);
     });
 
 
- /**
-     * 断联以后，重连
-     * @param mac
-     */
-    private void connect(String mac) {
+  private void connect(String mac) {
         dataEntityList.clear();
         Logger.show(TAG, "connect=" + mac, 6);
         this.mac = mac;
         //合并
         checkPermission();
+
     }
 
     public void checkPermission() {
 
+        if(App.isBackground){//app在后台不需要重连
+            return;
+        }
         String[] permission;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permission = new String[]{Permission.ACCESS_FINE_LOCATION, Permission.BLUETOOTH_CONNECT, Permission.BLUETOOTH_SCAN};
         } else {
             permission = new String[]{Permission.READ_MEDIA_IMAGES, Permission.READ_MEDIA_VIDEO, Permission.READ_MEDIA_AUDIO, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_FINE_LOCATION};
         }
+        if (getSupportActivity().isFinishing()) {
+        return;
+        }
         XXPermissions.with(this).permission(permission)
                 .request(new OnPermissionCallback() {
                     @Override
                     public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
                         if (!allGranted) {
-                            ToastUtils.show(getResources().getString(R.string.tips_get_permission_err));
+                            ((MainActivity) getSupportActivity()).showTipsDialog();
                             return;
                         }
-
+                        connecting=false;
+                        handler.removeMessages(0);
+                        handler.sendEmptyMessageDelayed(0, timeOut);
+                        refreshLayout.setRefreshing(true);
                         Logger.show("ConnectDevice", "mac :" + mac);
+                        if(StringUtils.isEmpty(mac)){
+                            mac = PreferencesUtils.getString("address");
+                        }
                         BluetoothDevice remote = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(mac);
+//                        remote=null;
                         if (BLEService.isGetToken()) {
                             Logger.show("ConnectDevice", " 蓝牙已连接");
 
-                        } else if (remote != null && (mac).equalsIgnoreCase(remote.getAddress())) {
-                            Set<BluetoothDevice> bondedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
-                            Logger.show("ConnectDevice", " 蓝牙 RemoteDevice 连接   ");
+                            String status = getRsString(R.string.connecting);
 
-                            //如果系统蓝牙已经有绑定的戒指，直接连接
-                            if (bondedDevices.contains(remote)) {
-
-                                BLEUtils.stopLeScan(TestActivity.this, leScanCallback);
-                                BLEUtils.connectLockByBLE(TestActivity.this, remote);
-                            } else {//如果没有，就进入扫描
-
-                                Logger.show("ConnectDevice", " 蓝牙 startLeScan 连接   ");
-                                BLEUtils.stopLeScan(TestActivity.this, leScanCallback);
-                                BLEUtils.startLeScan(TestActivity.this, leScanCallback);
+                            if (((MainActivity) getSupportActivity()) != null) {
+                                ((MainActivity) getSupportActivity()).aboutFragmentSetConnectStatus(status);
                             }
+                            refreshLayout.setRefreshing(false);
+                        } else if (remote != null && (mac).equalsIgnoreCase(remote.getAddress())) {
                             App.getInstance().setDeviceBean(new BleDeviceInfo(remote, -50));
+                            Set<BluetoothDevice> bondedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
+
+                            if (App.getInstance().otaUpdate) {//如果是ota升级过了，直接走广播，获取新的配置
+                                Logger.show("ConnectDevice", "ota升级过了，直接走广播，获取新的配置 ");
+                                BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+                                BLEUtils.startLeScan(getSupportActivity(), leScanCallback);
+                            } else {
+                                //如果系统蓝牙已经有绑定的戒指，直接连接
+                                if (bondedDevices.contains(remote)) {
+                                    Logger.show("ConnectDevice", "系统蓝牙已经有绑定的戒指，直接连接 ");
+                                    directConnection(remote);
+                                } else {//如果没有，就进入扫描
+                                    //是定时器关闭的蓝牙，从后台到前台进行重连，直接直连
+                                    if (App.getInstance().disconnectByTimer) {
+                                        Logger.show("ConnectDevice", "定时器关闭的蓝牙，从后台到前台进行重连，直接直连 ");
+                                        directConnection(remote);
+
+                                        App.getInstance().disconnectByTimer = false;
+                                    } else {
+
+                                            UserInfo userInfo = App.getInstance().getUserInfo();
+                                            if (userInfo != null && getSupportActivity() != null) {
+                                                if (!"1".equals(userInfo.getBindingIndicatorBit()+"") && !connecting) {
+                                                    directConnection(remote);
+                                                    Logger.show("不是HID的戒指", "直接连接");
+                                                    return;
+                                                }
+                                            }
+//                                        handler.removeMessages(101);
+//                                        handler.sendEmptyMessageDelayed(101, 5000);
+                                        Logger.show("ConnectDevice", " 蓝牙 startLeScan 连接   ");
+                                        BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+                                        BLEUtils.startLeScan(getSupportActivity(), leScanCallback);
+                                    }
+
+                                }
+                            }
+
                         } else {
                             Logger.show("ConnectDevice", " 蓝牙1 startLeScan 连接   ");
-                            BLEUtils.stopLeScan(TestActivity.this, leScanCallback);
-                            BLEUtils.startLeScan(TestActivity.this, leScanCallback);
+                            BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+                            BLEUtils.startLeScan(getSupportActivity(), leScanCallback);
                         }
+
                     }
                 });
     }
 
+    private void directConnection(BluetoothDevice remote){
+        refreshLayout.setRefreshing(false);
+        BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+        BLEUtils.connectLockByBLE(getSupportActivity(), remote);
+        connecting = true;
+    }
+    boolean connecting = false;
+    boolean isReUpData;
     @SuppressLint("MissingPermission")
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] bytes) {
-            if (device == null || StringUtils.isEmpty(device.getName())) {
+            if (device == null || StringUtils.isEmpty(device.getName())||connecting) {//有戒指正在连接，不能再进行扫描，防止连接到另外的戒指
+
                 return;
             }
-            if ((mac).equalsIgnoreCase(device.getAddress()) && !BLEService.isGetToken()) {
+            isReUpData = false;
+            if (device.getName().contains("PPlusOTA")) {
+                isReUpData = true;
+                BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+                BLEUtils.connectLockByBLE(getSupportActivity(), device);
+                App.getInstance().setDeviceBean(new BleDeviceInfo(device, rssi));
+            }
+           // Logger.show("ConnectDevice", "onLeScan");
+            if (!App.getInstance().otaUpdate) {//如果不是ota升级进行的连接
+                //扫描过程中，如果已经获取到用户信息，从云端拉取用户设备信息，如果是HID模式，继续走扫描，防止出现用户在系统蓝牙内解绑设备，直连导致无法配对，如果不是，直接连接
+                UserInfo userInfo = App.getInstance().getUserInfo();
+                if (userInfo != null && getSupportActivity() != null) {
+                    if (!"1".equals(userInfo.getBindingIndicatorBit()+"") && !connecting) {
+                        BluetoothDevice remote = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(mac);
+                        directConnection(remote);
+                        Logger.show("connecting", "connecting");
+                        return;
+                    }
+                }
+            }
+            if ((mac).equalsIgnoreCase(device.getAddress()) &&!BLEService.isGetToken()) {
+
                 if (dataEntityList.contains(device)) {
                     return;
                 }
-                Logger.show("ConnectDevice", "(mac).equalsIgnoreCase(device.getAddress())");
-                try {
 
+                try {
+                    if (getSupportActivity() == null) {
+                        Log.i("getSupportActivity","null");
+                        return;
+                    }
                     //是否符合条件，符合条件，会返回戒指设备信息
-                    BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes);
+                    BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
                     if (bleDeviceInfo == null) {
                         Log.i("bleDeviceInfo","null");
                         return;
                     }
 
-
                     App.getInstance().setDeviceBean(bleDeviceInfo);
+                    connectDevice(bleDeviceInfo,device);
+                    connecting = true;
                     dataEntityList.add(device);
-                    BLEUtils.stopLeScan(TestActivity.this, leScanCallback);
-                    BLEUtils.connectLockByBLE(TestActivity.this, device);
+                    Logger.show("ConnectDevice", "device:"+device.getAddress());
+                    BLEUtils.stopLeScan(getSupportActivity(), leScanCallback);
+                    BLEUtils.connectLockByBLE(getSupportActivity(), device);
+                    App.getInstance().otaUpdate = false;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
     };
+
 
 ```
 ##### 3.1.6 前台服务
