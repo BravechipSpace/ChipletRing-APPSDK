@@ -1985,7 +1985,13 @@ LmAPI.BLOOD_PRESSURE_APP(byte collectionTime,byte waveformConfiguration,byte pro
 **/
 LmAPI.STOP_BLOOD_PRESSURE_APP();
 ```
-##### 3.2.27 震动闹钟设置
+##### 3.2.27 震动，闹钟设置
+可以通过指令，设置戒指震动，测试戒指震动功能是否正常
+```java
+time:时间（s），type:  1：强力振动 2：持续振动 3：渐变振动
+
+LmAPI.SET_MOTOR(int time, int type)
+```
 接口功能：通过定制闹钟的方式，让戒指定时震动，只支持5个闹钟  
 接口声明：
 ```java
