@@ -575,6 +575,12 @@ extension BCLRingSDK.BCLRingManager {
   public func startSportMode(sportType: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLStartSportModeResponse, BCLRingSDK.BCLError>) -> Swift.Void, sportDataCallback: @escaping (BCLRingSDK.BCLSportDataResponse) -> Swift.Void, passiveStopCallback: @escaping (BCLRingSDK.BCLSportModePassiveStopResponse) -> Swift.Void)
   public func stopSportMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLSportModeStopResponse, BCLRingSDK.BCLError>) -> Swift.Void)
   public func requestMissingPointsSportMode(completion: @escaping (Swift.Result<BCLRingSDK.BCLMissingPointsResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setAlarmClock(items: [BCLRingSDK.BCLAlarmClockData], completion: @escaping (Swift.Result<BCLRingSDK.BCLSetAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readAlarmClock(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func setHoliday(holidayData: BCLRingSDK.BCLHolidayData, completion: @escaping (Swift.Result<BCLRingSDK.BCLSetHolidayResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func readHoliday(year: Swift.Int, completion: @escaping (Swift.Result<BCLRingSDK.BCLReadHolidayResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func linearMotorTimerVibration(seconds: Swift.Int, type: BCLRingSDK.BCLVibrationMotorType, completion: @escaping (Swift.Result<BCLRingSDK.BCLLinearMotorTimerVibrationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
+  public func linearMotorImmediateVibration(type: BCLRingSDK.BCLVibrationMotorType, completion: @escaping (Swift.Result<BCLRingSDK.BCLLinearMotorImmediateVibrationResponse, BCLRingSDK.BCLError>) -> Swift.Void)
 }
 extension BCLRingSDK.BCLRingManager {
   public func createToken(apiKey: Swift.String, userIdentifier: Swift.String, completion: @escaping (Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> Swift.Void)
@@ -622,10 +628,6 @@ extension BCLRingSDK.BCLRingManager {
 }
 extension BCLRingSDK.BCLRingManager {
   public func phyUpgradeFirmware(filePath: Swift.String, progressHandler: @escaping (Swift.Double) -> Swift.Void, completion: @escaping (Swift.Result<BCLRingSDK.BCLPhyUpgradeState, BCLRingSDK.BCLError>) -> Swift.Void)
-}
-extension BCLRingSDK.BCLRingManager {
-  public func setAlarmClock(items: [BCLRingSDK.BCLAlarmClockData], completion: @escaping (Swift.Result<BCLRingSDK.BCLSetAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
-  public func readAlarmClock(completion: @escaping (Swift.Result<BCLRingSDK.BCLReadAlarmClockResponse, BCLRingSDK.BCLError>) -> Swift.Void)
 }
 extension BCLRingSDK.BCLRingManager {
   public func localCalorieAndDistanceCounting(stepCount: Swift.Int, height: Swift.Double, weight: Swift.Double) -> (Swift.Double, Swift.Double)
@@ -1698,6 +1700,7 @@ extension BCLRingSDK.BCLCommand {
     public static let ecgStop: Swift.UInt8
     public static let tenMeterGame: Swift.UInt8
     public static let audio: Swift.UInt8
+    public static let vibrationMotor: Swift.UInt8
   }
   public struct SubCmdType {
     public struct Time {
@@ -1796,6 +1799,8 @@ extension BCLRingSDK.BCLCommand {
     }
     public struct AlarmClock {
       public static let set: Swift.UInt8
+      public static let setHoliday: Swift.UInt8
+      public static let readHoliday: Swift.UInt8
       public static let read: Swift.UInt8
     }
     public struct Composite {
@@ -1848,6 +1853,13 @@ extension BCLRingSDK.BCLCommand {
       public static let setActivePushAudioInfo: Swift.UInt8
       public static let getActivePushAudioInfo: Swift.UInt8
       public static let ringActivePushAudioComplete: Swift.UInt8
+    }
+    public struct VibrationMotor {
+      public static let sendVibrationMotorWaveform: Swift.UInt8
+      public static let linearMotorLinearPWM: Swift.UInt8
+      public static let linearMotorNonLinearPWM: Swift.UInt8
+      public static let linearMotorTimerVibration: Swift.UInt8
+      public static let linearMotorImmediateVibration: Swift.UInt8
     }
   }
 }
@@ -2099,6 +2111,30 @@ public struct BCLNrfUpgradeState {
     get
   }
 }
+public enum BCLVibrationMotorType : Swift.Int {
+  case strongVibration
+  case continuousVibration
+  case gradientVibration
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class VibrationMotorCommand : BCLRingSDK.BCLCommand {
+  public static func createLinearMotorTimerVibration(seconds: Swift.Int, type: BCLRingSDK.BCLVibrationMotorType) -> BCLRingSDK.VibrationMotorCommand
+  public static func createLinearMotorImmediateVibration(type: BCLRingSDK.BCLVibrationMotorType) -> BCLRingSDK.VibrationMotorCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLLinearMotorTimerVibrationResponse : BCLRingSDK.BCLResponse {
+  public var setStatus: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLLinearMotorImmediateVibrationResponse : BCLRingSDK.BCLResponse {
+  public var setStatus: Swift.Int?
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @objc public class BCLRingDBModel : ObjectiveC.NSObject, Swift.Codable {
   public var id: Swift.Int64?
   public var mac: Swift.String?
@@ -2332,45 +2368,70 @@ public enum BCLChargingState : Swift.UInt8 {
   }
   @objc deinit
 }
+public enum BCLRepeatType : Swift.UInt8 {
+  case once
+  case daily
+  case smartWorkday
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLVibrationEffect : Swift.UInt8 {
+  case strong
+  case continuous
+  case gradual
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
 public struct BCLAlarmClockData {
-  public var timestamp: Swift.UInt32
-  public enum RepeatType : Swift.UInt8 {
-    case once
-    case daily
-    case smartHoliday
-    case smartWorkday
-    public init?(rawValue: Swift.UInt8)
-    public typealias RawValue = Swift.UInt8
-    public var rawValue: Swift.UInt8 {
-      get
-    }
-  }
-  public var repeatType: BCLRingSDK.BCLAlarmClockData.RepeatType
-  public enum VibrationEffect : Swift.UInt8 {
-    case strong
-    case weak
-    case gradual
-    public init?(rawValue: Swift.UInt8)
-    public typealias RawValue = Swift.UInt8
-    public var rawValue: Swift.UInt8 {
-      get
-    }
-  }
-  public var vibrationEffect: BCLRingSDK.BCLAlarmClockData.VibrationEffect
+  public var timestamp: Foundation.TimeInterval
+  public var repeatType: BCLRingSDK.BCLRepeatType
+  public var vibrationEffect: BCLRingSDK.BCLVibrationEffect
   public var isEnabled: Swift.Bool
-  public init(timestamp: Swift.UInt32, repeatType: BCLRingSDK.BCLAlarmClockData.RepeatType, vibrationEffect: BCLRingSDK.BCLAlarmClockData.VibrationEffect, isEnabled: Swift.Bool)
+  public var isMonday: Swift.Bool
+  public var isTuesday: Swift.Bool
+  public var isWednesday: Swift.Bool
+  public var isThursday: Swift.Bool
+  public var isFriday: Swift.Bool
+  public var isSaturday: Swift.Bool
+  public var isSunday: Swift.Bool
+  public init(timestamp: Foundation.TimeInterval, repeatType: BCLRingSDK.BCLRepeatType, vibrationEffect: BCLRingSDK.BCLVibrationEffect, isEnabled: Swift.Bool, isMonday: Swift.Bool, isTuesday: Swift.Bool, isWednesday: Swift.Bool, isThursday: Swift.Bool, isFriday: Swift.Bool, isSaturday: Swift.Bool, isSunday: Swift.Bool)
+}
+public struct BCLHolidayData {
+  public var year: Swift.Int
+  public var nonWeekendHolidayCount: Swift.Int
+  public var nonWeekendHolidayDays: [Swift.Int]
+  public var workDaysCount: Swift.Int
+  public var workDays: [Swift.Int]
+  public init(year: Swift.Int, nonWeekendHolidayCount: Swift.Int, nonWeekendHolidayDays: [Swift.Int], workDaysCount: Swift.Int, workDays: [Swift.Int])
 }
 @_inheritsConvenienceInitializers public class AlarmClockCommand : BCLRingSDK.BCLCommand {
   public static func createSetAlarmClock(items: [BCLRingSDK.BCLAlarmClockData]) -> BCLRingSDK.AlarmClockCommand
+  public static func createSetHoliday(holidayData: BCLRingSDK.BCLHolidayData) -> BCLRingSDK.AlarmClockCommand
+  public static func createReadHoliday(year: Swift.Int) -> BCLRingSDK.AlarmClockCommand
   public static func createReadAlarmClock() -> BCLRingSDK.AlarmClockCommand
   override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetAlarmClockResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAlarmClockResponse : BCLRingSDK.BCLResponse {
   public var items: [BCLRingSDK.BCLAlarmClockData]
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetHolidayResponse : BCLRingSDK.BCLResponse {
+  public var status: Swift.Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadHolidayResponse : BCLRingSDK.BCLResponse {
+  public var holidayData: BCLRingSDK.BCLHolidayData?
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class RingDataCommand : BCLRingSDK.BCLCommand {
@@ -2667,14 +2728,17 @@ extension BCLRingSDK.BCLTakePWTTStatus : Swift.Hashable {}
 extension BCLRingSDK.BCLTakePWTTStatus : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLNrfUpgradeState.Stage : Swift.Equatable {}
 extension BCLRingSDK.BCLNrfUpgradeState.Stage : Swift.Hashable {}
+extension BCLRingSDK.BCLVibrationMotorType : Swift.Equatable {}
+extension BCLRingSDK.BCLVibrationMotorType : Swift.Hashable {}
+extension BCLRingSDK.BCLVibrationMotorType : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLChargingState : Swift.Equatable {}
 extension BCLRingSDK.BCLChargingState : Swift.Hashable {}
 extension BCLRingSDK.BCLChargingState : Swift.RawRepresentable {}
-extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.Equatable {}
-extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.Hashable {}
-extension BCLRingSDK.BCLAlarmClockData.RepeatType : Swift.RawRepresentable {}
-extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.Equatable {}
-extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.Hashable {}
-extension BCLRingSDK.BCLAlarmClockData.VibrationEffect : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLRepeatType : Swift.Equatable {}
+extension BCLRingSDK.BCLRepeatType : Swift.Hashable {}
+extension BCLRingSDK.BCLRepeatType : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLVibrationEffect : Swift.Equatable {}
+extension BCLRingSDK.BCLVibrationEffect : Swift.Hashable {}
+extension BCLRingSDK.BCLVibrationEffect : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Hashable {}
