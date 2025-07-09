@@ -11,7 +11,11 @@
 ./IOS/library:IOS SDK库。  
 ./IOS/source:IOS端部分开放的源码，结合SDK进行使用。  
 ./Doc/:重要，低功耗蓝牙技术和智能戒指解决方案的介绍。  
-##### 3.技术交流
+##### 3.商务合作
+如果您有商业合作、定制开发或企业支持需求，欢迎联系：  
+📧 **Email**: xiaojian.cui@bravechip.com
+##### 4.技术交流
 1.关注《勇芯科技》微信公众号。  
 2.添加微信好友"code_maker_"  
 3.github issue问题提交。
+
