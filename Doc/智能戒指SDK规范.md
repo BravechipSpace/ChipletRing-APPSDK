@@ -744,8 +744,9 @@ BLEUtils.startLeScan(this, leScanCallback);
         }
     };
 ```
-如果是HID戒指，需要设置BLEUtils.isHIDDevice为false，可以走强连接模式连接蓝牙，保证稳定性
-##重要 HID的戒指连接，需要将AndroidManifest.xml里的activity添加一个属性，因为会修改手机配置，如果不加，会导致重启或者连接多次的问题：
+设置BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;如果是HID模式的戒指，可以走强连接模式连接蓝牙，保证稳定性  
+
+重要: HID的戒指连接，需要将AndroidManifest.xml里的activity添加一个属性，因为会修改手机配置，如果不加，会导致重启或者连接多次的问题：
 ```java
  android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
 ```
