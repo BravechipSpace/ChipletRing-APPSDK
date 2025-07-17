@@ -16,6 +16,7 @@ public class App extends Application {
     private static App app;
     private BleDeviceInfo deviceBean;
     private BluetoothAdapter mBluetoothAdapter;
+    public static boolean needAutoConnect=true;//是否需要自动重连，默认true，如果测试断连情况，可以不需要重连
     @Override
     public void onCreate() {
         super.onCreate();

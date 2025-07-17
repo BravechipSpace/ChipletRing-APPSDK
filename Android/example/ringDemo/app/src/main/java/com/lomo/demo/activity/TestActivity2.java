@@ -19,6 +19,7 @@ import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
+import com.lm.sdk.inter.IFileListListener;
 import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
 import com.lm.sdk.inter.IResponseListener;
@@ -43,6 +44,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class TestActivity2 extends BaseActivity implements IResponseListener, View.OnClickListener {
 
@@ -53,6 +55,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
     private Handler handler = new Handler();  // 创建一个 Handler 实例
     private Runnable runnable;                 // 创建一个 Runnable 来定义任务
     String outputPath = com.lomo.demo.FileUtil.getSDPath(App.getInstance(), "保存" + ".pcm");
+    private byte[] fileNameByte=new byte[]{};
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +79,23 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         findViewById(R.id.btn_upload_history).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
         findViewById(R.id.bt_calculate_sleep).setOnClickListener(this);
+        findViewById(R.id.bt_file_list).setOnClickListener(this);
+        findViewById(R.id.bt_file_content).setOnClickListener(this);
+        findViewById(R.id.bt_test2).setOnClickListener(this);
     }
 
     @Override
     public void SystemControl(SystemControlBean systemControlBean) {
+
+    }
+
+    @Override
+    public void setUserInfo(byte result) {
+
+    }
+
+    @Override
+    public void getUserInfo(int sex, int height, int weight, int age) {
 
     }
 
@@ -468,6 +484,11 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                     }
 
                     @Override
+                    public void stop() {
+
+                    }
+
+                    @Override
                     public void resultDataSHOUSHI(int heart, int bloodOxygen) {
 
                     }
@@ -521,6 +542,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
             case R.id.bt_ecg_demo:
                 LogicalApi.startECGActivity(TestActivity2.this);
                 break;
+
             case R.id.bt_sleep_sevice:
                 String dateTimeString = "2025-02-15 23:59:59";
                 LogicalApi.getSleepDataFromService( dateTimeString, new IWebSleepResult() {
@@ -532,7 +554,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                         Date startDate = new Date(sleep2thBean.getStartTime()*1000);
                         // 将时间戳转换为 Date 对象
                         Date endDate = new Date(sleep2thBean.getEndTime()*1000);
-                        postView("\n入睡时间:" + sdf.format(startDate)+"\n清醒时间:" +sdf.format(endDate)+"\n睡眠小时:" + sleep2thBean.getHours()+"\n睡眠分钟:" + sleep2thBean.getMinutes() );
+                        postView("\n睡眠小时:" + sleep2thBean.getHours()+"\n睡眠分钟:" + sleep2thBean.getMinutes()+"\n开始时间和结束时间，需要通过绘图算法过滤后获得，详见3.5.3-睡眠数据绘图相关" );
 
                     }
 
@@ -541,10 +563,15 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
                     }
 
+                    @Override
+                    public void sleepDataBatchSuccess(List<SleepBean> sleepBeanList) {
+
+                    }
+
                 });
                 break;
             case R.id.btn_upload_history:
-                LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x01,  mac, new IHistoryListener() {
+                LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x00,  1751264721,mac, new IHistoryListener() {
                     @Override
                     public void error(int code) {
                         if (code == 3) {
@@ -564,6 +591,11 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                             postView("\n读取记录进度:" + progress + "%");
                             postView("\n记录内容:" + historyDataBean.toString());
                         }
+
+                    }
+
+                    @Override
+                    public void noNewDataAvailable() {
 
                     }
                 }, new IWebHistoryResult() {
@@ -642,7 +674,52 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 //                });
 
                 break;
+            case R.id.bt_file_list:
+                LmAPI.GET_FILE_LIST(new IFileListListener() {
+                    @Override
+                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                        postView("\nGET_FILE_LIST：" + "fileCount："+ fileCount + ",fileIndex："+ fileIndex+",fileSize："+ fileSize+",fileName："+ fileName);
+                        //取其中一个测试，填入自己读取到的数据，EDB435685884_F53D0B68_8.txt只是个demo
+                        if(fileName.equals("EDB435685884_F53D0B68_8.txt")){
+                            fileNameByte=rawDataByte;
+                        }
 
+                        // 去掉文件扩展名
+                        String withoutExtension = fileName.substring(0, fileName.lastIndexOf(".txt"));
+
+                        // 分割字符串
+                        String[] parts = withoutExtension.split("_");
+
+                        // 获取最后一个部分，即 "8"
+                        String result = parts[parts.length - 1];
+                    }
+
+                    @Override
+                    public void fileContent(String content) {
+
+                    }
+                });
+                break;
+            case R.id.bt_file_content:
+                /**
+                 * 类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
+                 */
+                LmAPI.GET_FILE_CONTENT(8,fileNameByte,new IFileListListener() {
+                    @Override
+                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                    }
+
+                    @Override
+                    public void fileContent(String content) {
+                        postView("\nGET_FILE_CONTENT：" +content);
+                    }
+                });
+                break;
+            case R.id.bt_test2:
+                 intent = new Intent();
+                intent.setClass(TestActivity2.this,TestActivity3.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

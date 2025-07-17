@@ -27,6 +27,7 @@ import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.StringUtils;
 import com.lm.sdk.utils.UtilSharedPreference;
+import com.lomo.demo.AES128CTR;
 import com.lomo.demo.R;
 import com.lomo.demo.adapter.DeviceAdapter;
 import com.lomo.demo.adapter.DeviceBean;
@@ -164,7 +165,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(Object o, int position) {
                 BleDeviceInfo  deviceBean = (BleDeviceInfo) o;
-                BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
+              //  BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
+                BLEUtils.isHIDDevice=false;
                  UtilSharedPreference.saveString(MainActivity.this,"address",deviceBean.getDevice().getAddress());
                 App.getInstance().setDeviceBean(deviceBean);
                 //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
@@ -173,6 +175,7 @@ public class MainActivity extends BaseActivity {
                 finish();
             }
         });
+
     }
 
     private void searchDevice(){
@@ -203,7 +206,7 @@ public class MainActivity extends BaseActivity {
             }
 
             //是否符合条件，符合条件，会返回戒指设备信息
-            BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes);
+            BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
             if(bleDeviceInfo==null){
                 return;
             }
