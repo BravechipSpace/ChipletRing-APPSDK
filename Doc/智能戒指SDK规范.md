@@ -2726,6 +2726,591 @@ public void initSleepChat( long showStartTime,List<HistoryDataBean> historyDataB
         } 
     }
 ```
+##### 3.5.4 睡眠问题反馈协查
+如果出现睡眠不准确，或者没有睡眠数据的情况，尤其是调用升级服务睡眠相关接口以后，一般排查步骤有三个:  
+1.如果戒指在身边，并且身边有可用的上位机，将戒指里的历史数据导出文档，发给我们，可以迅速排查是否固件问题  
+2.戒指没在身边，可以将用户账号发送给我们，我们后台来排查数据  
+3.虽然可以通过2来排查问题，但是因为涉及到网络传输，不好确定是固件就没有数据，还是上传途中丢数据，还是app没有上传，所以可以参考公版app的问题反馈机制  
+问题反馈流程：  
+我们会把一些重要的数据，保存到app本地，写入到文本文件里，然后压缩上传到服务器上，同时会给相关开发人员发送邮件，管理端也可以看到问题反馈记录，并且可以下载问题反馈文件，进行问题分析  
+目前sdk已经提供了一些日志，日志文件在"\Android\data\包名\files\LM"，记录了蓝牙连接日志(BLEService.txt)和蓝牙指令日志(command.txt)，并且提供了写入方法  
+```java
+  ImageSaverUtil.saveImageToInternalStorage(application,"发送指令="+str_data,"LM","command.txt",true);
+//boolean isAppend 目前没有效果，都是添加模式
+
+public class ImageSaverUtil {
+    private static ReentrantLock lock = new ReentrantLock();
+    // 写入sd卡需要保证线程使用
+    public static void saveImageToInternalStorage(Context context, String data, String folderName, String name,boolean isAppend) {
+        new Thread(() -> {
+            lock.lock();
+            String savedImagePath = null;
+            if (Build.VERSION.SDK_INT >= 29) {
+//                File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), folderName);
+                File folder=new File(FileUtil.getSDPath(context, folderName));
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
+                try {
+                    // Create a request to save the image to the app's internal storage
+                    File imageFile = new File(folder, folderName +  name);
+                    if (!imageFile.getParentFile().exists()) {
+                        imageFile.getParentFile().mkdirs();
+                        imageFile.createNewFile();
+                    }
+                    FileOutputStream outStream = new FileOutputStream(imageFile.getAbsolutePath(), true);
+                    OutputStreamWriter outputStream = new OutputStreamWriter(outStream, "utf-8");
+                    outputStream.write(TimeUtils.date2String(new Date()));
+                    outputStream.write(data);
+                    outputStream.write("\n");
+                    outputStream.flush();
+                    // Close the streams
+                    outputStream.close();
+
+                    savedImagePath = imageFile.getAbsolutePath();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Use the Scoped Storage APIs on Android 12 and higher
+                Log.d("ImageSaver", "Saved image to path: " + savedImagePath);
+            }
+            lock.unlock();
+
+        }).start();
+
+    }
+```
+可以在重要的部分，将数据主动写入日志，目前sdk里没有提供历史数据保存到日志的代码，可以自己添加，  
+```java
+
+
+  /**
+     * 获取历史数据
+     *
+     * @return
+     */
+    public Completable readHistoryObservable(int historyType) {
+        return Completable.create(emitter -> {
+            uploadHistoryData.clear();
+           // long time = DateUtils.stringToLong("2025-03-28 00:00:00","yyyy-MM-dd HH:mm");
+            //time/1000
+            //第一次连接戒指，同步一下云端最新数据的时间，后续直接读取未上传数据就行
+            LmAPILite.READ_HISTORY(historyType,latestHistoryTime, new IHistoryListenerLite() {
+                @Override
+                public void error(int code) {
+                   readHistoryError();
+                    emitter.onCompleted();
+                   
+                }
+
+                @Override
+                public void success() {
+                    latestHistoryTime=0;//重置时间，后续都读取未上传数据
+                    readHistorySuccess(false);
+                    emitter.onCompleted();
+                   
+                }
+
+                @Override
+                public void progress(double progress, HistoryDataBean historyDataBean) {
+                    uploadHistoryData.add(historyDataBean);
+                    readHistoryProgress();
+
+                }
+
+                @Override
+                public void clearHistory() {
+                    emitter.onCompleted();
+                }
+            });
+        }).delay(300, TimeUnit.MILLISECONDS); // 延时300ms;;
+
+    }
+
+```
+在readHistorySuccess方法里，将获取到的历史数据上传一下
+```java
+  try {
+            ImageSaverUtilLib.saveImageToInternalStorage(MainActivity.this, "戒指本地数据readHistorySuccess=" + App.getInstance().getGson().toJson(uploadHistoryData), "LM", "command.txt", true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+```
+这样即使没有上位机，戒指也不在身边，让用户从相关路径下，导出日志，也能根据日志，分析部分问题。  
+更方便的情况是，将日志压缩上传到服务器，服务器保存日志，提供下载入口，这样可以方便用户，不需要自己去导出日志  
+公版上传逻辑：  
+```java
+   findViewById(R.id.btn_submit).setOnClickListener(v -> {
+            ImageSaverUtilLib.saveImageToInternalStorage(FeedbackActivity.this, "问题反馈", "LM", "buttonClick.txt", true);
+
+            content = tv_content.getText().toString().trim();
+            if (StringUtils.isEmpty(content)) {
+                ToastUtils.show(getRsString(R.string.printf_feed));
+                return;
+            }
+            List<HistoryDataBean> historyDataBeanList = DataApi.instance.queryHistoryAllData();
+
+            ImageSaverUtilLib.saveImageToInternalStorage(App.getInstance(), "本地数据库数据:"+App.getInstance().getGson().toJson(historyDataBeanList), "LM", "LocalHistoryDatas.txt", false);
+             String pass = FileUtil.getSDPath(FeedbackActivity.this,"LM.zip");
+
+            File Pass = new File(pass);
+
+            //大于2M就删除新建，防止卡死
+            double fileSize = FileUtil.getFileSize(Pass, ConstUtils.MemoryUnit.MB);
+            if(fileSize>2){
+
+                try {
+                    Pass.delete();
+                    Pass.createNewFile();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+            setMessage("压缩文件中");
+            new Thread(() -> {
+                try {
+                    FolderCompressor.compressFolder(FileUtil.getSDPath(FeedbackActivity.this,"LM"), pass);
+                    runOnUiThread(() -> {
+                        dismissProgressDialog();
+                        // 更新 UI，提示用户压缩完成
+                        getPresenter().upload(Pass);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> {
+                        // 处理错误
+                    });
+                }
+            }).start();
+
+
+
+        });
+    }
+```
+```java
+  /**
+     * 上传文件
+     *
+     * @param file 上传文件
+     * @return
+     */
+    public static Observable<JsonResult> upload(File file) {
+        // 创建 RequestBody 对象
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        // 创建 MultipartBody.Part 对象
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        return ServerAPIClient.getApi().upload(body).subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidScheduler.mainThread());
+    }
+```
+FolderCompressor
+```java
+public class FolderCompressor {
+
+    public static void compressFolder(String folderPath, String zipFilePath) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(zipFilePath);
+             ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+            File folderToZip = new File(folderPath);
+            zipFolder(folderToZip, folderToZip.getName(), zipOut);
+        }
+    }
+
+    private static void zipFolder(File folder, String baseName, ZipOutputStream zipOut) throws IOException {
+        File[] files = folder.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    zipFolder(file, baseName + "/" + file.getName(), zipOut);
+                } else {
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        ZipEntry zipEntry = new ZipEntry(baseName + "/" + file.getName());
+                        zipOut.putNextEntry(zipEntry);
+
+                        byte[] bytes = new byte[1024];
+                        int length;
+                        while ((length = fis.read(bytes)) >= 0) {
+                            zipOut.write(bytes, 0, length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+```
+FileUtil
+```java
+ public static String getSDPath(Context ctx, String fileName) {
+        try{
+            File sdDir = null;
+            boolean sdCardExist = Environment.getExternalStorageState().equals(
+                    Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+            if (sdCardExist) {
+                if (Build.VERSION.SDK_INT >= 29) {
+                    //Android10之后
+                    sdDir = ctx.getExternalFilesDir(null);
+//                sdDir=  ctx.getExternalCacheDir();
+                } else {
+                    sdDir= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                }
+            } else {
+                sdDir = Environment.getRootDirectory();// 获取跟目录
+            }
+            if(!TextUtils.isEmpty(fileName)){
+                return sdDir.toString()+"/"+fileName;
+            }
+            return sdDir.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+  /**
+     * 获取文件大小
+     * <p>例如：getFileSize(file, ConstUtils.MB); 返回文件大小单位为MB</p>
+     *
+     * @param file 文件
+     * @param unit <ul>
+     *             <li>{@link ConstUtils.MemoryUnit#BYTE}: 字节</li>
+     *             <li>{@link ConstUtils.MemoryUnit#KB}  : 千字节</li>
+     *             <li>{@link ConstUtils.MemoryUnit#MB}  : 兆</li>
+     *             <li>{@link ConstUtils.MemoryUnit#GB}  : GB</li>
+     *             </ul>
+     * @return 文件大小以unit为单位
+     */
+    public static double getFileSize(File file, ConstUtils.MemoryUnit unit) {
+        if (!isFileExists(file)) return -1;
+        return byte2Size(file.length(), unit);
+    }
+
+    /**
+     * 字节数转以unit为单位的size
+     *
+     * @param byteNum 大小
+     * @param unit <ul>
+     *             <li>{@link ConstUtils.MemoryUnit#BYTE}: 字节</li>
+     *             <li>{@link ConstUtils.MemoryUnit#KB}  : 千字节</li>
+     *             <li>{@link ConstUtils.MemoryUnit#MB}  : 兆</li>
+     *             <li>{@link ConstUtils.MemoryUnit#GB}  : GB</li>
+     *             </ul>
+     * @return 以unit为单位的size
+     */
+    public static double byte2Size(long byteNum, ConstUtils.MemoryUnit unit) {
+        switch (unit) {
+            default:
+            case BYTE:
+                return (double) byteNum / ConstUtils.BYTE;
+            case KB:
+                return (double) byteNum / ConstUtils.KB;
+            case MB:
+                return (double) byteNum / ConstUtils.MB;
+            case GB:
+                return (double) byteNum / ConstUtils.GB;
+        }
+    }
+```
+后台代码  
+```java
+ /**
+     * 通用上传请求（单个）
+     */
+    @PostMapping("/upload")
+    public AjaxResult uploadFile(MultipartFile file) throws Exception {
+        try {
+            // 上传文件路径
+            String filePath = getUploadPath();
+            log.info("上传文件路径：{}", filePath);
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, file);
+            String url = serverConfig.getUrl() + fileName;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("url", url);
+            jsonObject.put("fileName", fileName);
+            return AjaxResult.success(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+```
+FileUploadUtils
+```java
+public class FileUploadUtils {
+    /**
+     * 默认大小 50M
+     */
+    public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
+
+    /**
+     * 默认的文件名最大长度 100
+     */
+    public static final int DEFAULT_FILE_NAME_LENGTH = 100;
+
+    /**
+     * 默认上传的地址
+     */
+    private static String defaultBaseDir = RuoYiConfig.getProfile();
+
+    public static void setDefaultBaseDir(String defaultBaseDir) {
+        FileUploadUtils.defaultBaseDir = defaultBaseDir;
+    }
+
+    public static String getDefaultBaseDir() {
+        return defaultBaseDir;
+    }
+
+    /**
+     * 以默认配置进行文件上传
+     *
+     * @param file 上传的文件
+     * @return 文件名称
+     * @throws Exception
+     */
+    public static final String upload(MultipartFile file) throws IOException {
+        try {
+            return upload(getDefaultBaseDir(), file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
+        } catch (Exception e) {
+            throw new IOException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 根据文件路径上传
+     *
+     * @param baseDir 相对应用的基目录
+     * @param file    上传的文件
+     * @return 文件名称
+     * @throws IOException
+     */
+    public static final String upload(String baseDir, MultipartFile file) throws IOException {
+        try {
+            return upload(baseDir, file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
+        } catch (Exception e) {
+            throw new IOException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param baseDir          相对应用的基目录
+     * @param file             上传的文件
+     * @param allowedExtension 上传文件类型
+     * @return 返回上传成功的文件名
+     * @throws FileSizeLimitExceededException       如果超出最大大小
+     * @throws FileNameLengthLimitExceededException 文件名太长
+     * @throws IOException                          比如读写文件出错时
+     * @throws InvalidExtensionException            文件校验异常
+     */
+    public static final String upload(String baseDir, MultipartFile file, String[] allowedExtension)
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException {
+        int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
+        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
+            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+        }
+
+        assertAllowed(file, allowedExtension);
+
+        String fileName = extractFilename(file);
+
+        String absPath = getAbsoluteFile(baseDir, fileName).getAbsolutePath();
+        file.transferTo(Paths.get(absPath));
+        return getPathFileName(baseDir, fileName);
+    }
+
+    /**
+     * 上传文件，保持原来的名称
+     * @param baseDir
+     * @param file
+     * @param allowedExtension
+     * @return
+     * @throws FileSizeLimitExceededException
+     * @throws IOException
+     * @throws FileNameLengthLimitExceededException
+     * @throws InvalidExtensionException
+     */
+    public static final String uploadMaintainOriginalName(String baseDir, MultipartFile file, String[] allowedExtension)
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException {
+        int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
+        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
+            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+        }
+
+        assertAllowed(file, allowedExtension);
+
+        String fileName = extractFilename2(file);
+
+        String absPath = getAbsoluteFile(baseDir, fileName).getAbsolutePath();
+        file.transferTo(Paths.get(absPath));
+        return getPathFileName(baseDir, fileName);
+    }
+
+    /**
+     * 编码文件名
+     */
+    public static final String extractFilename(MultipartFile file) {
+        return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
+                FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
+    }
+
+    /**
+     * 编码文件名
+     */
+    public static final String extractFilename2(MultipartFile file) {
+        return StringUtils.format("{}/{}.{}", DateUtils.datePath(),
+                FilenameUtils.getBaseName(file.getOriginalFilename()), getExtension(file));
+    }
+    public static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException {
+        File desc = new File(uploadDir + File.separator + fileName);
+
+        if (!desc.exists()) {
+            if (!desc.getParentFile().exists()) {
+                desc.getParentFile().mkdirs();
+            }
+        }
+        return desc;
+    }
+
+    public static final String getPathFileName(String uploadDir, String fileName) throws IOException {
+        int dirLastIndex = RuoYiConfig.getProfile().length() + 1;
+        String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
+        return Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
+    }
+
+    /**
+     * 文件大小校验
+     *
+     * @param file 上传的文件
+     * @return
+     * @throws FileSizeLimitExceededException 如果超出最大大小
+     * @throws InvalidExtensionException
+     */
+    public static final void assertAllowed(MultipartFile file, String[] allowedExtension)
+            throws FileSizeLimitExceededException, InvalidExtensionException {
+        long size = file.getSize();
+        if (size > DEFAULT_MAX_SIZE) {
+            throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);
+        }
+
+        String fileName = file.getOriginalFilename();
+        String extension = getExtension(file);
+        if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
+            if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {
+                throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
+                        fileName);
+            } else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION) {
+                throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
+                        fileName);
+            } else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION) {
+                throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
+                        fileName);
+            } else if (allowedExtension == MimeTypeUtils.VIDEO_EXTENSION) {
+                throw new InvalidExtensionException.InvalidVideoExtensionException(allowedExtension, extension,
+                        fileName);
+            } else {
+                throw new InvalidExtensionException(allowedExtension, extension, fileName);
+            }
+        }
+    }
+
+    /**
+     * 判断MIME类型是否是允许的MIME类型
+     *
+     * @param extension
+     * @param allowedExtension
+     * @return
+     */
+    public static final boolean isAllowedExtension(String extension, String[] allowedExtension) {
+        for (String str : allowedExtension) {
+            if (str.equalsIgnoreCase(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取文件名的后缀
+     *
+     * @param file 表单文件
+     * @return 后缀名
+     */
+    public static final String getExtension(MultipartFile file) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (StringUtils.isEmpty(extension)) {
+            extension = MimeTypeUtils.getExtension(Objects.requireNonNull(file.getContentType()));
+        }
+        return extension;
+    }
+}
+```
+MimeTypeUtils
+```java
+public class MimeTypeUtils
+{
+    public static final String IMAGE_PNG = "image/png";
+
+    public static final String IMAGE_JPG = "image/jpg";
+
+    public static final String IMAGE_JPEG = "image/jpeg";
+
+    public static final String IMAGE_BMP = "image/bmp";
+
+    public static final String IMAGE_GIF = "image/gif";
+    
+    public static final String[] IMAGE_EXTENSION = { "bmp", "gif", "jpg", "jpeg", "png" };
+
+    public static final String[] FLASH_EXTENSION = { "swf", "flv" };
+
+    public static final String[] MEDIA_EXTENSION = { "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg",
+            "asf", "rm", "rmvb" };
+
+    public static final String[] VIDEO_EXTENSION = { "mp4", "avi", "rmvb" };
+
+    public static final String[] DEFAULT_ALLOWED_EXTENSION = {
+            // 图片
+            "bmp", "gif", "jpg", "jpeg", "png",
+            // word excel powerpoint
+            "doc", "docx", "xls", "xlsx", "ppt", "pptx", "html", "htm", "txt", "pdf",
+            // 压缩文件
+            "rar", "zip", "gz", "bz2","apk",
+            // 视频格式
+            "mp4", "avi", "rmvb",
+            // pdf
+            "pdf","hex16", "bin"};
+
+    public static String getExtension(String prefix)
+    {
+        switch (prefix)
+        {
+            case IMAGE_PNG:
+                return "png";
+            case IMAGE_JPG:
+                return "jpg";
+            case IMAGE_JPEG:
+                return "jpeg";
+            case IMAGE_BMP:
+                return "bmp";
+            case IMAGE_GIF:
+                return "gif";
+            default:
+                return "";
+        }
+    }
+}
+
+```
+后续的管理端下载，邮件发送，可以让自己公司后台进行开发
 ## 四、升级服务
 ### 1、服务介绍
 为了进一步简化用户对接流程，提高算法质量，共享固件资源，将公版app所用的服务进行共享(1.0.34版本后新增)，仅需要3个步骤，就可以使用升级服务(服务的接口是http的，如果调用方使用的是https，需要同时兼容两种模式，如调用服务无响应，可能是因为CLEARTEXT communication to XX not permitted by network security policy 这样的错误)
