@@ -8,6 +8,7 @@
 import BCLRingSDK
 import QMUIKit
 import RxSwift
+import SwiftDate
 import UIKit
 
 /// 固件升级类型
@@ -49,7 +50,9 @@ class Main_VC: UIViewController {
         overrideUserInterfaceStyle = .light
 
         // 配置日志级别，控制台可按需打印日志
-        BCLRingManager.shared.configLogLevels(consoleLogLevel: .verbose)
+//        BCLRingManager.shared.configLogLevels(consoleLogLevel: .verbose)
+
+        // 定制功能配置
 //        BCLRingManager.shared.manufacturerID = .KK
 
         // 蓝牙状态
@@ -131,6 +134,10 @@ class Main_VC: UIViewController {
                 self.mac_Label.text = "MAC地址：\(deviceInfo.macAddress ?? "")"
                 self.connect_Label.text = "连接状态：已连接"
                 self.rssi_Label.text = "RSSI：\(deviceInfo.rssi ?? 0)"
+
+                UserDefaults.standard.set(deviceInfo.macAddress, forKey: "ring_macAddress")
+                UserDefaults.standard.set(deviceInfo.peripheralName, forKey: "ring_peripheralName")
+                UserDefaults.standard.set(deviceInfo.peripheral.identifier.uuidString, forKey: "ring_uuidString")
                 break
             default:
                 self.name_Label.text = "设备名称："
@@ -145,6 +152,34 @@ class Main_VC: UIViewController {
         BCLRingManager.shared.connectedPeripheralDeviceInfoObservable.subscribe(onNext: { deviceInfo in
             BDLogger.info("已连接的蓝牙设备信息: \(String(describing: deviceInfo))")
         }).disposed(by: disposeBag)
+
+        let macAddress = UserDefaults.standard.string(forKey: "ring_macAddress")
+        let peripheralName = UserDefaults.standard.string(forKey: "ring_peripheralName")
+        if let macAddress = macAddress {
+            let alert = UIAlertController(title: "提示", message: "是否自动连接设备？\n 设备MAC地址：\(macAddress) \n 设备名称：\(peripheralName)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
+                self.connectDevice(macAddress: macAddress)
+            }))
+            alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+
+    // 连接设备
+    func connectDevice(macAddress: String) {
+        QMUITips.showLoading("Device Connecting...", in: view)
+        BCLRingManager.shared.startConnect(macAddress: macAddress, isAutoReconnect: true, autoReconnectTimeLimit: 1000, autoReconnectMaxAttempts: 5000) { result in
+            switch result {
+            case .success:
+                BDLogger.info("connect success")
+                QMUITips.hideAllTips(in: self.view)
+                self.navigationController?.popViewController(animated: true)
+            case let .failure(error):
+                BDLogger.error("connect failed: \(error)")
+                QMUITips.hideAllTips(in: self.view)
+                QMUITips.showError("Connect Failed", in: self.view)
+            }
+        }
     }
 
     // MARK: - IBAction
@@ -1731,7 +1766,7 @@ class Main_VC: UIViewController {
             break
         case 190: // 固件历史版本
             BDLogger.info("获取固件历史版本")
-            BCLRingManager.shared.getFirmwareVersionList(category: "Z4I") { res in
+            BCLRingManager.shared.getFirmwareVersionList(category: "Z2W") { res in
                 switch res {
                 case let .success(response):
                     BDLogger.info("固件历史版本-总个数: \(response.count)")
@@ -1797,9 +1832,197 @@ class Main_VC: UIViewController {
                 }
             }
             break
-        case 194:
+        case 194: // 闹钟配置
+            BDLogger.info("设置闹钟")
+            let alarmClock1 = BCLAlarmClockData(timestamp: "2025-06-24 12:33:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
+                                                repeatType: .once,
+                                                vibrationEffect: .strong,
+                                                isEnabled: true,
+                                                isMonday: true,
+                                                isTuesday: true,
+                                                isWednesday: true,
+                                                isThursday: true,
+                                                isFriday: true,
+                                                isSaturday: true,
+                                                isSunday: true)
+            let alarmClock2 = BCLAlarmClockData(timestamp: "2025-06-24 12:34:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
+                                                repeatType: .once,
+                                                vibrationEffect: .strong,
+                                                isEnabled: true,
+                                                isMonday: true,
+                                                isTuesday: true,
+                                                isWednesday: true,
+                                                isThursday: true,
+                                                isFriday: true,
+                                                isSaturday: true,
+                                                isSunday: true)
+            let alarmClock3 = BCLAlarmClockData(timestamp: "2025-06-24 12:35:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
+                                                repeatType: .once,
+                                                vibrationEffect: .strong,
+                                                isEnabled: true,
+                                                isMonday: true,
+                                                isTuesday: true,
+                                                isWednesday: true,
+                                                isThursday: true,
+                                                isFriday: true,
+                                                isSaturday: true,
+                                                isSunday: true)
+            let alarmClock4 = BCLAlarmClockData(timestamp: "2025-06-24 12:36:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
+                                                repeatType: .once,
+                                                vibrationEffect: .strong,
+                                                isEnabled: true,
+                                                isMonday: true,
+                                                isTuesday: true,
+                                                isWednesday: true,
+                                                isThursday: true,
+                                                isFriday: true,
+                                                isSaturday: true,
+                                                isSunday: true)
+
+            let alarmClock5 = BCLAlarmClockData(timestamp: "2025-06-24 12:37:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
+                                                repeatType: .once,
+                                                vibrationEffect: .strong,
+                                                isEnabled: true,
+                                                isMonday: true,
+                                                isTuesday: true,
+                                                isWednesday: true,
+                                                isThursday: true,
+                                                isFriday: true,
+                                                isSaturday: true,
+                                                isSunday: true)
+            BCLRingManager.shared.setAlarmClock(items: [alarmClock1, alarmClock2, alarmClock3, alarmClock4, alarmClock5]) { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("闹钟设置--成功")
+                    } else {
+                        BDLogger.error("闹钟设置--失败")
+                    }
+                case let .failure(err):
+                    BDLogger.error("闹钟设置失败：\(err)")
+                }
+            }
+
             break
-        case 195:
+        case 195: // 读取闹钟配置
+            BDLogger.info("读取闹钟")
+            BCLRingManager.shared.readAlarmClock { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("读取闹钟配置成功，共有\(response.items.count)个闹钟")
+                    for alarmClock in response.items {
+                        BDLogger.info("闹钟时间: \(alarmClock.timestamp)")
+                        BDLogger.info("重复类型: \(alarmClock.repeatType.rawValue)")
+                        BDLogger.info("振动效果: \(alarmClock.vibrationEffect.rawValue)")
+                        BDLogger.info("是否启用: \(alarmClock.isEnabled)")
+                        BDLogger.info("星期一: \(alarmClock.isMonday)")
+                        BDLogger.info("星期二: \(alarmClock.isTuesday)")
+                        BDLogger.info("星期三: \(alarmClock.isWednesday)")
+                        BDLogger.info("星期四: \(alarmClock.isThursday)")
+                        BDLogger.info("星期五: \(alarmClock.isFriday)")
+                        BDLogger.info("星期六: \(alarmClock.isSaturday)")
+                        BDLogger.info("星期日: \(alarmClock.isSunday)")
+                    }
+                case let .failure(error):
+                    BDLogger.error("读取闹钟配置失败: \(error)")
+                }
+            }
+            break
+        case 196: // 智能节假日配置
+            BDLogger.info("智能节假日配置")
+            let holidayData = BCLHolidayData(year: 2025, nonWeekendHolidayCount: 18, nonWeekendHolidayDays: [1, 28, 29, 30, 31, 34, 35, 94, 121, 122, 125, 153, 274, 275, 276, 279, 280, 281], workDaysCount: 5, workDays: [26, 39, 117, 271, 284])
+            BCLRingManager.shared.setHoliday(holidayData: holidayData) { res in
+                switch res {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("智能节假日配置设置成功")
+                    } else {
+                        BDLogger.error("智能节假日配置设置失败")
+                    }
+                case let .failure(err):
+                    BDLogger.error("智能节假日配置设置失败: \(err)")
+                }
+            }
+
+            break
+        case 197: // 智能节假日配置读取
+            BDLogger.info("智能节假日配置读取")
+            BCLRingManager.shared.readHoliday(year: 2025) { res in
+                switch res {
+                case let .success(response):
+                    guard let holidayData = response.holidayData else {
+                        BDLogger.info("智能节假日配置读取失败，数据为空")
+                        return
+                    }
+                    BDLogger.info("智能节假日配置读取成功")
+                    BDLogger.info("智能节假日数据-年份: \(holidayData.year)")
+                    BDLogger.info("智能节假日数据-全年非周末的假日天数: \(holidayData.nonWeekendHolidayCount)")
+                    BDLogger.info("智能节假日数据-非周六日的假日下nonWeekendHolidayCount标的列表（一年中的第几天）: \(holidayData.nonWeekendHolidayDays)")
+                    BDLogger.info("智能节假日数据-周末中的工作天数: \(holidayData.workDaysCount)")
+                    BDLogger.info("智能节假日数据-周末中的调休日期（是一年中的第几天): \(holidayData.workDays)")
+                case let .failure(error):
+                    BDLogger.error("智能节假日配置读取失败: \(error)")
+                }
+            }
+            break
+        case 198: // 马达立刻震动
+            BDLogger.info("马达立刻震动")
+            BCLRingManager.shared.linearMotorImmediateVibration(type: .continuousVibration) { res in
+                switch res {
+                case let .success(response):
+                    if response.setStatus == 1 {
+                        BDLogger.info("马达立刻震动指令设置-成功")
+                    } else {
+                        BDLogger.info("马达立刻震动指令设置-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("马达立刻震动指令设置失败: \(error)")
+                }
+            }
+            break
+        case 199: // 震动马达-倒计时震动
+            BDLogger.info("震动马达-倒计时震动")
+            BCLRingManager.shared.linearMotorTimerVibration(seconds: 3, type: .strongVibration) { res in
+                switch res {
+                case let .success(response):
+                    if response.setStatus == 1 {
+                        BDLogger.info("震动马达-倒计时震动指令设置-成功")
+                    } else {
+                        BDLogger.info("震动马达-倒计时震动指令设置-失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("震动马达-倒计时震动指令设置失败: \(error)")
+                }
+            }
+            break
+        case 200:
+            let swipeUpGesture = 255
+            let swipeDownGesture = 255
+            let snapGesture = 255
+            let pinchGesture = 255
+            BCLRingManager.shared.setGestureFunction(swipeUpGesture: swipeUpGesture, swipeDownGesture: swipeDownGesture, snapGesture: snapGesture, pinchGesture: pinchGesture) { res in
+                switch res {
+                case let .success(response):
+                    if response.setStatus == 1 {
+                        BDLogger.info("设置当前HID手势2模式成功")
+                        if swipeUpGesture == 255 && swipeDownGesture == 255 && snapGesture == 255 && pinchGesture == 255 {
+                            BDLogger.info("当前HID手势2模式已关闭")
+                            QMUITips.show(withText: "提醒用户需要手动去系统蓝牙设置页面忽略蓝牙设备，重新连接的时候需要取消配对模式")
+                        } else {
+                            QMUITips.show(withText: "手势功能已开启，需要选择配对模式")
+                            /// 此处断开蓝牙连接，如果有开启自动重连，则会进行自动重连并触发系统弹窗（是否配对）
+                            BCLRingManager.shared.disconnect(peripheral: BCLRingManager.shared.currentConnectedDevice?.peripheral)
+                        }
+                    } else {
+                        BDLogger.info("设置当前HID手势2模式失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("设置当前HID手势2模式失败: \(error)")
+                }
+            }
+
+            break
+        case 201:
             break
         default:
             break
