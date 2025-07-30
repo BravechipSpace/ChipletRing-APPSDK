@@ -27,7 +27,6 @@ import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.StringUtils;
 import com.lm.sdk.utils.UtilSharedPreference;
-import com.lomo.demo.AES128CTR;
 import com.lomo.demo.R;
 import com.lomo.demo.adapter.DeviceAdapter;
 import com.lomo.demo.adapter.DeviceBean;
@@ -175,7 +174,6 @@ public class MainActivity extends BaseActivity {
                 finish();
             }
         });
-
     }
 
     private void searchDevice(){

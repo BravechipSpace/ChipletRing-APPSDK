@@ -103,55 +103,57 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.bt_jinxingpeidui:
 
-               postView("进行配对\n");
+            if(v.getId()== R.id.bt_jinxingpeidui) {
+
+                postView("进行配对\n");
                 boolean isbonded = mBluetoothDevice.createBond();
-                autoConnect=true;
+                autoConnect = true;
                 if (!isbonded) {//兼容判断，如果监测不能配对，启用老流程
                     Logger.show(TAG, "HID绑定不匹配，直接连接");
                     BLEUtils.connectLockByBLE(TestActivity3.this, mBluetoothDevice);
                 } else {
-                        Logger.show(TAG, "HID绑定操作");
-                        // 用BroadcastReceiver来取得搜索结果
-                        IntentFilter intentFilter = new IntentFilter();
-                        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);//搜索发现设备
-                        intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);//状态改变
-                        intentFilter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);//行动扫描模式改变了
-                        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);//动作状态发生了变化
-                        intentFilter.addAction(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            getApplicationContext().registerReceiver(searchDevices, intentFilter,RECEIVER_EXPORTED);
-                        } else {
-                            getApplicationContext().registerReceiver(searchDevices, intentFilter);
-                        }
+                    Logger.show(TAG, "HID绑定操作");
+                    // 用BroadcastReceiver来取得搜索结果
+                    IntentFilter intentFilter = new IntentFilter();
+                    intentFilter.addAction(BluetoothDevice.ACTION_FOUND);//搜索发现设备
+                    intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);//状态改变
+                    intentFilter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);//行动扫描模式改变了
+                    intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);//动作状态发生了变化
+                    intentFilter.addAction(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        getApplicationContext().registerReceiver(searchDevices, intentFilter, RECEIVER_EXPORTED);
+                    } else {
+                        getApplicationContext().registerReceiver(searchDevices, intentFilter);
+                    }
 
                 }
-                break;
-            case R.id.bt_quxiaopeidui:
+            }
+            if(v.getId()==R.id.bt_quxiaopeidui) {
+
                 postView("取消配对\n");
                 BLEUtils.removeBond(mBluetoothDevice);
-                App.needAutoConnect=false;
-                break;
-            case R.id.bt_lanyazhilian:
+                App.needAutoConnect = false;
+            }
+
+            if(v.getId()== R.id.bt_lanyazhilian) {
                 postView("蓝牙直连\n");
-                BLEUtils.isHIDDevice=false;
+                BLEUtils.isHIDDevice = false;
                 BLEUtils.connectLockByBLE(TestActivity3.this, mBluetoothDevice);
-                break;
-            case R.id.bt_duankailanya:
+            }
+            if(v.getId()== R.id.bt_duankailanya) {
                 postView("断开蓝牙\n");
                 BLEUtils.removeBond(mBluetoothDevice);
                 BLEUtils.disconnectBLE(TestActivity3.this);
-                App.needAutoConnect=false;
-                autoConnect=false;
-                break;
-            case R.id.bt_fendashoushi:
+                App.needAutoConnect = false;
+                autoConnect = false;
+            }
+            if(v.getId()==R.id.bt_fendashoushi) {
                 postView("奋达手势开启\n");
                 LmAPI.SET_HID_FENDA((byte) 1, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
                     @Override
                     public void setHIDSetting(boolean result) {
-                        postView("setHIDSetting\n"+result+"\n");
+                        postView("setHIDSetting\n" + result + "\n");
                     }
 
                     @Override
@@ -159,13 +161,13 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
                     }
                 });
-                break;
-            case R.id.bt_huoqushoushi:
+            }
+            if(v.getId()== R.id.bt_huoqushoushi) {
                 postView("奋达手势关闭\n");
                 LmAPI.SET_HID_FENDA((byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
                     @Override
                     public void setHIDSetting(boolean result) {
-                        postView("setHIDSetting\n"+result+"\n");
+                        postView("setHIDSetting\n" + result + "\n");
                     }
 
                     @Override
@@ -173,11 +175,9 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
                     }
                 });
-                break;
+            }
 
-            default:
-                break;
-        }
+
     }
 
 

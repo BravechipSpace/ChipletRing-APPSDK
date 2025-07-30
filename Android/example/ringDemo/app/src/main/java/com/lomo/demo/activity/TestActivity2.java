@@ -397,252 +397,267 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.bt_set_HID:
-                byte[] hidBytes = new byte[3];
-                hidBytes[0] = 0x04;             //上传实时音频
-                hidBytes[1] = (byte) 0xFF;      //关闭
-                hidBytes[2] = 0x00;             //系统类型 0：安卓  1：IOS  2：鸿蒙
-                LmAPI.SET_HID(hidBytes,TestActivity2.this);
-                break;
-            case R.id.bt_get_HID:
-                LmAPI.GET_HID();//获取HID现在的模式
-                break;
-            case R.id.bt_get_HID_code:
-                LmAPI.GET_HID_CODE((byte)0x00);  //系统类型 0：安卓  1：IOS  2：windows
-                break;
-            case R.id.bt_set_audio_type:
-                LmAPI.CONTROL_AUDIO_ADPCM_AUDIO((byte)0x01); //0 pcm, 1 adpcm
-                break;
-            case R.id.bt_get_audio_type:
-                LmAPI.GET_CONTROL_AUDIO_ADPCM();
-                break;
-            case R.id.bt_temp_test:
-                postView("\n开始测量温度");
-                LmAPI.READ_TEMP(new ITempListener() {
-                    @Override
-                    public void resultData(int temp) {
-                        postView("\n返回的温度：" + temp * 0.01 );
-                    }
+        if(v.getId()== R.id.bt_set_HID){
+            byte[] hidBytes = new byte[3];
+            hidBytes[0] = 0x04;             //上传实时音频
+            hidBytes[1] = (byte) 0xFF;      //关闭
+            hidBytes[2] = 0x00;             //系统类型 0：安卓  1：IOS  2：鸿蒙
+            LmAPI.SET_HID(hidBytes,TestActivity2.this);
+        }
 
-                    @Override
-                    public void testing(int num) {
-                        postView("\n测量中：" + num * 0.01 );
-                    }
+        if(v.getId()== R.id.bt_get_HID){
+            LmAPI.GET_HID();//获取HID现在的模式
+        }
 
-                    @Override
-                    public void error(int code) {
-                        postView("\n温度报错了,类型:" + code);
-                    }
-                });
-                break;
-            case R.id.bt_unpair://解绑,返回扫描界面
-                postView("\n解绑\n");
-                BLEUtils.setGetToken(false);
-                BLEUtils.disconnectBLE(this);
-                BLEUtils.removeBond(BLEService.getmBluetoothDevice());
-                UtilSharedPreference.saveString(TestActivity2.this,"address","");
-                Intent intent = new Intent(TestActivity2.this, MainActivity.class);
+        if(v.getId()== R.id.bt_get_HID_code){
+            LmAPI.GET_HID_CODE((byte)0x00);  //系统类型 0：安卓  1：IOS  2：windows
+        }
 
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.bt_get_rssi://获取信号强度,略微有点延迟；信号强度-60 > -70
-                BLEService.readRomoteRssi();
-                postView("\nrssi == "+ BLEService.RSSI);
-                break;
-            case R.id.bt_heart:
-                postView("\n开始测量心率");
-                LmAPI.GET_HEART_ROTA((byte) 0x00, (byte)0x30,new IHeartListener() {
-                    @Override
-                    public void progress(int progress) {
-                        postView("\n测量心率进度：" + progress + "%");
-                    }
+        if(v.getId()== R.id.bt_set_audio_type){
+            LmAPI.CONTROL_AUDIO_ADPCM_AUDIO((byte)0x01); //0 pcm, 1 adpcm
+        }
+        if(v.getId()== R.id.bt_get_audio_type){
+            LmAPI.GET_CONTROL_AUDIO_ADPCM();
+        }
 
-                    @Override
-                    public void resultData(int heart, int heartRota, int yaLi, int temp) {
-//                        postView("\n测量心率数据：" + heart);
-                    }
-
-                    @Override
-                    public void waveformData(byte seq, byte number, String waveData) {
-                    }
-
-                    @Override
-                    public void rriData(byte seq, byte number, String data) {
-                        postView("\ndata的值是：" + data);
-                    }
-
-                    @Override
-                    public void error(int code) {
-                        postView("\n测量心率错误：" + code);
-                    }
-
-                    @Override
-                    public void success() {
-                        postView("\n测量心率完成");
-                    }
-
-                    @Override
-                    public void stop() {
-
-                    }
-
-                    @Override
-                    public void resultDataSHOUSHI(int heart, int bloodOxygen) {
-
-                    }
-                });
-                break;
-            case R.id.bt_app_bind:
-                LmAPI.APP_BIND();
-
-                break;
-            case R.id.bt_connect:
-                LmAPI.APP_CONNECT();
-                break;
-            case R.id.bt_refresh:
-                LmAPI.APP_REFRESH();
-                break;
-            case R.id.bt_calculate_sleep:
-                postView("\n开始拿calculateSleep");
-                String formattedDateTime = "2025-03-5";
-                try {
-                    // 解析输入日期字符串为 LocalDate 对象
-                    LocalDate localDate = LocalDate.parse(formattedDateTime);
-
-                    // 转换为 LocalDateTime 对象，设置时间为午夜
-                    LocalDateTime localDateTime = localDate.atTime(0, 0);
-
-                    // 定义输出格式
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                    formattedDateTime = localDateTime.format(formatter);
-
-                    // 输出结果
-                    System.out.println("Formatted date and time: " + formattedDateTime);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if(v.getId()== R.id.bt_temp_test){
+            postView("\n开始测量温度");
+            LmAPI.READ_TEMP(new ITempListener() {
+                @Override
+                public void resultData(int temp) {
+                    postView("\n返回的温度：" + temp * 0.01 );
                 }
+
+                @Override
+                public void testing(int num) {
+                    postView("\n测量中：" + num * 0.01 );
+                }
+
+                @Override
+                public void error(int code) {
+                    postView("\n温度报错了,类型:" + code);
+                }
+            });
+        }
+
+        if(v.getId()== R.id.bt_unpair){
+            postView("\n解绑\n");
+            BLEUtils.setGetToken(false);
+            BLEUtils.disconnectBLE(this);
+            BLEUtils.removeBond(BLEService.getmBluetoothDevice());
+            UtilSharedPreference.saveString(TestActivity2.this,"address","");
+            Intent intent = new Intent(TestActivity2.this, MainActivity.class);
+
+            startActivity(intent);
+            finish();
+        }
+
+        if(v.getId()== R.id.bt_get_rssi){
+            BLEService.readRomoteRssi();
+            postView("\nrssi == "+ BLEService.RSSI);
+        }
+
+
+        if(v.getId()== R.id.bt_heart) {
+
+            postView("\n开始测量心率");
+            LmAPI.GET_HEART_ROTA((byte) 0x00, (byte) 0x30, new IHeartListener() {
+                @Override
+                public void progress(int progress) {
+                    postView("\n测量心率进度：" + progress + "%");
+                }
+
+                @Override
+                public void resultData(int heart, int heartRota, int yaLi, int temp) {
+//                        postView("\n测量心率数据：" + heart);
+                }
+
+                @Override
+                public void waveformData(byte seq, byte number, String waveData) {
+                }
+
+                @Override
+                public void rriData(byte seq, byte number, String data) {
+                    postView("\ndata的值是：" + data);
+                }
+
+                @Override
+                public void error(int code) {
+                    postView("\n测量心率错误：" + code);
+                }
+
+                @Override
+                public void success() {
+                    postView("\n测量心率完成");
+                }
+
+                @Override
+                public void stop() {
+
+                }
+
+                @Override
+                public void resultDataSHOUSHI(int heart, int bloodOxygen) {
+
+                }
+            });
+        }
+            if(v.getId()==R.id.bt_app_bind) {
+
+                LmAPI.APP_BIND();
+            }
+        if(v.getId()==R.id.bt_connect) {
+
+            LmAPI.APP_CONNECT();
+        }
+        if(v.getId()==R.id.bt_refresh) {
+            LmAPI.APP_REFRESH();
+        }
+
+        if(v.getId()==R.id.bt_calculate_sleep) {
+            postView("\n开始拿calculateSleep");
+            String formattedDateTime = "2025-03-5";
+            try {
+                // 解析输入日期字符串为 LocalDate 对象
+                LocalDate localDate = LocalDate.parse(formattedDateTime);
+
+                // 转换为 LocalDateTime 对象，设置时间为午夜
+                LocalDateTime localDateTime = localDate.atTime(0, 0);
+
+                // 定义输出格式
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                formattedDateTime = localDateTime.format(formatter);
+
+                // 输出结果
+                System.out.println("Formatted date and time: " + formattedDateTime);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 //                SleepBean sleepBean = LogicalApi.calculateSleep(formattedDateTime, App.getInstance().getDeviceBean().getDevice().getAddress(),1);
-                SleepBean sleepBean = LogicalApi.calculateSleep(formattedDateTime, mac,1);
-                Logger.show("shuju","sleepBean深睡:" + sleepBean.getHighTime() );
-                Logger.show("shuju","浅睡："+ sleepBean.getLowTime() );
-                Logger.show("shuju","清醒："+ sleepBean.getQxTime() );
-                Logger.show("shuju","眼动："+ sleepBean.getYdTime() );
-                Logger.show("shuju","全部睡眠小时:" + sleepBean.getAllHours());
-                Logger.show("shuju","全部睡眠分钟："+ sleepBean.getAllMinutes());
-                Logger.show("shuju","入睡时间戳："+ sleepBean.getStartTime() );
-                Logger.show("shuju","清醒时间戳："+ sleepBean.getEndTime() );
-                Logger.show("shuju","零星睡眠小时:："+ sleepBean.getHours() );
-                Logger.show("shuju","零星睡眠分钟："+ sleepBean.getMinutes() );
-                postView("\nsleepBean深睡:" + sleepBean.getHighTime() +" \n浅睡："+ sleepBean.getLowTime() +" \n清醒："+ sleepBean.getQxTime() +" \n眼动："+ sleepBean.getYdTime());
+            SleepBean sleepBean = LogicalApi.calculateSleep(formattedDateTime, mac,1);
+            Logger.show("shuju","sleepBean深睡:" + sleepBean.getHighTime() );
+            Logger.show("shuju","浅睡："+ sleepBean.getLowTime() );
+            Logger.show("shuju","清醒："+ sleepBean.getQxTime() );
+            Logger.show("shuju","眼动："+ sleepBean.getYdTime() );
+            Logger.show("shuju","全部睡眠小时:" + sleepBean.getAllHours());
+            Logger.show("shuju","全部睡眠分钟："+ sleepBean.getAllMinutes());
+            Logger.show("shuju","入睡时间戳："+ sleepBean.getStartTime() );
+            Logger.show("shuju","清醒时间戳："+ sleepBean.getEndTime() );
+            Logger.show("shuju","零星睡眠小时:："+ sleepBean.getHours() );
+            Logger.show("shuju","零星睡眠分钟："+ sleepBean.getMinutes() );
+            postView("\nsleepBean深睡:" + sleepBean.getHighTime() +" \n浅睡："+ sleepBean.getLowTime() +" \n清醒："+ sleepBean.getQxTime() +" \n眼动："+ sleepBean.getYdTime());
 
-                break;
-            case R.id.bt_ecg_demo:
-                LogicalApi.startECGActivity(TestActivity2.this);
-                break;
+        }
 
-            case R.id.bt_sleep_sevice:
-                String dateTimeString = "2025-02-15 23:59:59";
-                LogicalApi.getSleepDataFromService( dateTimeString, new IWebSleepResult() {
-                    @Override
-                    public void sleepDataSuccess(Sleep2thBean sleep2thBean) {
-                        // 定义日期时间格式
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        // 将时间戳转换为 Date 对象
-                        Date startDate = new Date(sleep2thBean.getStartTime()*1000);
-                        // 将时间戳转换为 Date 对象
-                        Date endDate = new Date(sleep2thBean.getEndTime()*1000);
-                        postView("\n睡眠小时:" + sleep2thBean.getHours()+"\n睡眠分钟:" + sleep2thBean.getMinutes()+"\n开始时间和结束时间，需要通过绘图算法过滤后获得，详见3.5.3-睡眠数据绘图相关" );
+           if(v.getId()==R.id.bt_ecg_demo) {
 
+
+               LogicalApi.startECGActivity(TestActivity2.this);
+           }
+        if(v.getId()==R.id.bt_sleep_sevice) {
+
+            String dateTimeString = "2025-02-15 23:59:59";
+            LogicalApi.getSleepDataFromService(dateTimeString, new IWebSleepResult() {
+                @Override
+                public void sleepDataSuccess(Sleep2thBean sleep2thBean) {
+                    // 定义日期时间格式
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    // 将时间戳转换为 Date 对象
+                    Date startDate = new Date(sleep2thBean.getStartTime() * 1000);
+                    // 将时间戳转换为 Date 对象
+                    Date endDate = new Date(sleep2thBean.getEndTime() * 1000);
+                    postView("\n睡眠小时:" + sleep2thBean.getHours() + "\n睡眠分钟:" + sleep2thBean.getMinutes() + "\n开始时间和结束时间，需要通过绘图算法过滤后获得，详见3.5.3-睡眠数据绘图相关");
+
+                }
+
+                @Override
+                public void error(String message) {
+
+                }
+
+                @Override
+                public void sleepDataBatchSuccess(List<SleepBean> sleepBeanList) {
+
+                }
+
+            });
+        }
+        if(v.getId()==R.id.btn_upload_history) {
+
+            LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x00, 1751264721, mac, new IHistoryListener() {
+                @Override
+                public void error(int code) {
+                    if (code == 3) {
+                        postView("\n出现了BIX的问题");
+                    }
+                }
+
+                @Override
+                public void success() {
+                    postView("\n读取记录完成");
+
+                }
+
+                @Override
+                public void progress(double progress, HistoryDataBean historyDataBean) {
+                    if (historyDataBean != null) {
+                        postView("\n读取记录进度:" + progress + "%");
+                        postView("\n记录内容:" + historyDataBean.toString());
                     }
 
-                    @Override
-                    public void error(String message) {
+                }
 
-                    }
+                @Override
+                public void noNewDataAvailable() {
 
-                    @Override
-                    public void sleepDataBatchSuccess(List<SleepBean> sleepBeanList) {
+                }
+            }, new IWebHistoryResult() {
+                @Override
+                public void updateHistoryFinish() {
+                    postView("\n历史数据上传服务器完成");
+                }
 
-                    }
+                @Override
+                public void serviceError(String errorMsg) {
+                    postView("\n服务器出错");
+                }
+            });
 
-                });
-                break;
-            case R.id.btn_upload_history:
-                LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x00,  1751264721,mac, new IHistoryListener() {
-                    @Override
-                    public void error(int code) {
-                        if (code == 3) {
-                            postView("\n出现了BIX的问题");
-                        }
-                    }
+        }
+        if(v.getId()==R.id.btn_ota) {
 
-                    @Override
-                    public void success() {
-                        postView("\n读取记录完成");
+            //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
+            OtaApi.otaUpdateWithCheckVersion("7.1.1.6Z3A", TestActivity2.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+                @Override
+                public void error(String message) {
+                    postView("\nota升级出错：" + message);
+                }
 
-                    }
+                @Override
+                public void onProgress(int i) {
+                    //  postView("\nota升级进度:"+i);
+                    Logger.show("OTA", "OTA升级" + i);
 
-                    @Override
-                    public void progress(double progress, HistoryDataBean historyDataBean) {
-                        if (historyDataBean != null) {
-                            postView("\n读取记录进度:" + progress + "%");
-                            postView("\n记录内容:" + historyDataBean.toString());
-                        }
+                }
 
-                    }
-
-                    @Override
-                    public void noNewDataAvailable() {
-
-                    }
-                }, new IWebHistoryResult() {
-                    @Override
-                    public void updateHistoryFinish() {
-                        postView("\n历史数据上传服务器完成");
-                    }
-
-                    @Override
-                    public void serviceError(String errorMsg) {
-                        postView("\n服务器出错");
-                    }
-                });
-
-                break;
-            case R.id.btn_ota:
-                //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
-                OtaApi.otaUpdateWithCheckVersion("7.1.1.6Z3A", TestActivity2.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
-                    @Override
-                    public void error(String message) {
-                        postView("\nota升级出错："+message);
-                    }
-
-                    @Override
-                    public void onProgress(int i) {
-                        //  postView("\nota升级进度:"+i);
-                        Logger.show("OTA","OTA升级"+i);
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                      //  postView("\nota升级结束");
-                        Logger.show("OTA","nota升级结束");
-                        OtaApi.destoryOta(TestActivity2.this);
-                        //需要延时调用蓝牙重连
+                @Override
+                public void onComplete() {
+                    //  postView("\nota升级结束");
+                    Logger.show("OTA", "nota升级结束");
+                    OtaApi.destoryOta(TestActivity2.this);
+                    //需要延时调用蓝牙重连
 //                        BLEUtils.disconnectBLE(TestActivity2.this);
 //                        BLEUtils.connectLockByBLE(TestActivity2.this,App.getInstance().getDeviceBean().getDevice());
 
 
-                    }
+                }
 
-                    @Override
-                    public void isLatestVersion() {
-                        postView("\n已是最新版本");
-                    }
-                });
+                @Override
+                public void isLatestVersion() {
+                    postView("\n已是最新版本");
+                }
+            });
 //                //检查当前硬件版本是否需要更新，用于第三方公司，页面上显示更新信息
 //                OtaApi.checkCurrentVersionNeedUpdate("", TestActivity.this, new ICheckOtaVersion() {
 //                    @Override
@@ -650,7 +665,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 //
 //                    }
 //                });
-                //
+            //
 //                OtaApi.otaUpdateWithVersion("", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
 //                    @Override
 //                    public void error(String message) {
@@ -673,55 +688,56 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 //                    }
 //                });
 
-                break;
-            case R.id.bt_file_list:
-                LmAPI.GET_FILE_LIST(new IFileListListener() {
-                    @Override
-                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
-                        postView("\nGET_FILE_LIST：" + "fileCount："+ fileCount + ",fileIndex："+ fileIndex+",fileSize："+ fileSize+",fileName："+ fileName);
-                        //取其中一个测试，填入自己读取到的数据，EDB435685884_F53D0B68_8.txt只是个demo
-                        if(fileName.equals("EDB435685884_F53D0B68_8.txt")){
-                            fileNameByte=rawDataByte;
-                        }
+        }
+        if(v.getId()==R.id.bt_file_list) {
 
-                        // 去掉文件扩展名
-                        String withoutExtension = fileName.substring(0, fileName.lastIndexOf(".txt"));
-
-                        // 分割字符串
-                        String[] parts = withoutExtension.split("_");
-
-                        // 获取最后一个部分，即 "8"
-                        String result = parts[parts.length - 1];
+            LmAPI.GET_FILE_LIST(new IFileListListener() {
+                @Override
+                public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                    postView("\nGET_FILE_LIST：" + "fileCount：" + fileCount + ",fileIndex：" + fileIndex + ",fileSize：" + fileSize + ",fileName：" + fileName);
+                    //取其中一个测试，填入自己读取到的数据，EDB435685884_F53D0B68_8.txt只是个demo
+                    if (fileName.equals("EDB435685884_F53D0B68_8.txt")) {
+                        fileNameByte = rawDataByte;
                     }
 
-                    @Override
-                    public void fileContent(String content) {
+                    // 去掉文件扩展名
+                    String withoutExtension = fileName.substring(0, fileName.lastIndexOf(".txt"));
 
-                    }
-                });
-                break;
-            case R.id.bt_file_content:
-                /**
-                 * 类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
-                 */
-                LmAPI.GET_FILE_CONTENT(8,fileNameByte,new IFileListListener() {
-                    @Override
-                    public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
-                    }
+                    // 分割字符串
+                    String[] parts = withoutExtension.split("_");
 
-                    @Override
-                    public void fileContent(String content) {
-                        postView("\nGET_FILE_CONTENT：" +content);
-                    }
-                });
-                break;
-            case R.id.bt_test2:
-                 intent = new Intent();
+                    // 获取最后一个部分，即 "8"
+                    String result = parts[parts.length - 1];
+                }
+
+                @Override
+                public void fileContent(String content) {
+
+                }
+            });
+        }
+        if(v.getId()==R.id.bt_file_content) {
+
+            /**
+             * 类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
+             */
+            LmAPI.GET_FILE_CONTENT(8, fileNameByte, new IFileListListener() {
+                @Override
+                public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                }
+
+                @Override
+                public void fileContent(String content) {
+                    postView("\nGET_FILE_CONTENT：" + content);
+                }
+            });
+        }
+        if(v.getId()==R.id.bt_test2){
+
+            Intent intent = new Intent();
                 intent.setClass(TestActivity2.this,TestActivity3.class);
                 startActivity(intent);
-                break;
-            default:
-                break;
+
         }
     }
 
