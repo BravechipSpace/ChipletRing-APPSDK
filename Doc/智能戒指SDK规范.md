@@ -3311,6 +3311,182 @@ public class MimeTypeUtils
 
 ```
 后续的管理端下载，邮件发送，可以让自己公司后台进行开发
+
+##### 3.5.5 戒指文件上传功能
+特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，流程是先调用开始运动的指令：
+```java
+ // 新增: 构建开始运动命令
+    public static byte[] buildStartExerciseCommand(ExerciseConfig config) {
+        // 命令格式: 帧类型(1) + 帧ID(1) + 命令(1) + 子命令(1) + 数据(10)
+        byte[] command = new byte[14];
+
+        command[0] = 0x00;  // 帧类型
+        command[1] = (byte)(68);  // 帧ID
+        command[2] = 0x38;  // 命令 (运动命令)
+        command[3] = 0x01;  // 子命令 (开始运动)
+
+        // 数据部分: sport_mode(2字节) + time(4字节) + slice_storage_time(4字节)
+        // sport_mode (2字节)
+        int sportMode = 1;
+        command[4] = (byte)(sportMode & 0xFF);
+        command[5] = (byte)((sportMode >> 8) & 0xFF);
+
+        // time (4字节) - 总持续时间, 小端格式
+        command[6] = (byte)(config.totalDuration & 0xFF);
+        command[7] = (byte)((config.totalDuration >> 8) & 0xFF);
+        command[8] = (byte)((config.totalDuration >> 16) & 0xFF);
+        command[9] = (byte)((config.totalDuration >> 24) & 0xFF);
+
+        // slice_storage_time (4字节) - 每段持续时间, 小端格式
+        command[10] = (byte)(config.segmentTime & 0xFF);
+        command[11] = (byte)((config.segmentTime >> 8) & 0xFF);
+        command[12] = (byte)((config.segmentTime >> 16) & 0xFF);
+        command[13] = (byte)((config.segmentTime >> 24) & 0xFF);
+
+        Log.d(TAG, String.format("构建开始运动命令: 运动模式=%d, 总时长=%ds, 每段时长=%ds",
+                sportMode, config.totalDuration, config.segmentTime));
+
+        return command;
+    }
+```
+
+```java
+public class ExerciseConfig {
+
+    public int totalDuration = 300;     // 总运动时长，默认为5分钟（秒）
+    public int segmentTime = 60;        // 每段时间，默认为60秒
+    public boolean autoStart = false;   // 是否自动开始
+    public boolean enableRest = true;   // 是否启用休息间隔
+    public int restTime = 30;           // 休息时间，默认为30秒
+
+    // 获取总段数
+    public int getTotalSegments() {
+        return (totalDuration + segmentTime - 1) / segmentTime; // 向上取整
+    }
+
+    // 获取运动描述信息
+    public String getExerciseDescription() {
+        return String.format("总时长: %d分%d秒，每段: %d秒，共%d段",
+                totalDuration / 60, totalDuration % 60, segmentTime, getTotalSegments());
+    }
+}
+
+```
+可以根据实际需求，定制运动时间和时长，定制自定义指令，然后发送开启运动的指令
+
+```java
+  byte[] command = LmApiDataUtils.buildStartExerciseCommand(config);
+    LmAPILite.CUSTOMIZE_CMD(commandData, customizeCmdListener);//简化版本LmAPILite，如果之前发送的指令都是通过LmAPI,换成LmAPI
+
+    // Custom Command Listener
+    private ICustomizeCmdListener customizeCmdListener = new ICustomizeCmdListener() {
+        @Override
+        public void cmdData(String responseData) {
+
+            recordLog("收到自定义命令响应: " + responseData);
+
+        }
+    };
+```
+可以手动停止运动
+```java
+ byte[] command = LmApiDataUtils.buildStopExerciseCommand();
+  LmAPILite.CUSTOMIZE_CMD(command, customizeCmdListener);
+```
+获取文件部分的回调
+```java
+/**
+ * 接收文件系统的原始值，方便客户定制文件内容
+ */
+public interface FileResponseCallback {
+
+    /**
+     * 对应3610请求文件列表指令
+     * @param data
+     */
+    void onFileListReceived(byte[] data);
+
+    /**
+     * 对应3611请求文件的数据指令
+     * @param data
+     */
+    void onFileInfoReceived(byte[] data);
+
+    /**
+     *对应361A请求文件的数据(一键上传）的指令
+     * @param data
+     */
+    void onFileDownloadEndReceived(byte[] data);
+
+    /**
+     *单文件下载成功回调
+
+     */
+    void oneFileDownloadSuccess();
+
+    /**
+     *对应361B响应上传文件的指令
+     * @param data
+     */
+    void onDownloadStatusReceived(byte[] data);
+
+    /**
+     * 对应361D响应一键上传的进度的指令
+     * @param data
+     */
+    void onFileDataReceived(byte[] data);
+}
+```
+对应的指令
+```java
+ /**
+     *请求文件列表
+     */
+    public static void GET_FILE_LIST(FileResponseCallback fileResponse) {
+        fileResponseCallback=fileResponse;
+        SEND_CMD(convertToBytes(0x36, new byte[]{0x10}));
+    }
+
+    /**
+     *格式化文件系统
+     */
+    public static void PERFORM_FORMAT_FILESYSTEM(FileResponseCallback fileResponse) {
+        fileResponseCallback=fileResponse;
+        SEND_CMD(convertToBytes(0x36, new byte[]{0x13}));
+    }
+
+    /**
+     *请求文件的数据
+     */
+    public static void DOWNLOAD_FILE(byte[] fileName,FileResponseCallback fileResponse) {
+        fileResponseCallback=fileResponse;
+        byte[] dataByte = new byte[1 + fileName.length];
+        dataByte[0] = 0x11;
+        System.arraycopy(fileName, 0, dataByte, 1, fileName.length);
+
+        SEND_CMD(convertToBytes(0x36, dataByte));
+    }
+
+    /**
+     *请求文件的数据(一键上传）
+     */
+    public static void DOWNLOAD_ALL_FILES(FileResponseCallback fileResponse) {
+        fileResponseCallback=fileResponse;
+        SEND_CMD(convertToBytes(0x36, new byte[]{0x1A,0x01}));
+    }
+```
+发送样例:
+```java
+  LmAPILite.GET_FILE_LIST(fileResponseCallback);
+
+  LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
+
+  byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
+  LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
+
+   LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
+```
+
 ## 四、升级服务
 ### 1、服务介绍
 为了进一步简化用户对接流程，提高算法质量，共享固件资源，将公版app所用的服务进行共享(1.0.34版本后新增)，仅需要3个步骤，就可以使用升级服务(服务的接口是http的，如果调用方使用的是https，需要同时兼容两种模式，如调用服务无响应，可能是因为CLEARTEXT communication to XX not permitted by network security policy 这样的错误)
