@@ -41,7 +41,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-
+        <activity
+            android:name=".activity.RingFileListActivity"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
+            android:exported="false" />
         <activity
             android:name=".activity.TestActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"

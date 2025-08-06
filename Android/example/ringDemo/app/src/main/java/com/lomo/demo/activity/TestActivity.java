@@ -132,6 +132,8 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_start_audio).setOnClickListener(this);
         findViewById(R.id.bt_stop_audio).setOnClickListener(this);
         findViewById(R.id.bt_jump_page2).setOnClickListener(this);
+        findViewById(R.id.bt_jump_pageFile).setOnClickListener(this);
+
         File file = new File(outputPath);
         file.delete();
 
@@ -754,6 +756,11 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         if (view.getId() == R.id.bt_jump_page2) {
             Intent intent = new Intent();
             intent.setClass(TestActivity.this, TestActivity2.class);
+            startActivity(intent);
+        }
+        if (view.getId() == R.id.bt_jump_pageFile) {
+            Intent intent = new Intent();
+            intent.setClass(TestActivity.this, RingFileListActivity.class);
             startActivity(intent);
         }
 

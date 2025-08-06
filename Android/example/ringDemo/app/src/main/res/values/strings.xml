@@ -2,5 +2,17 @@
 <resources>
 
     <string name="app_name">ring Demo</string>
-
+    <string name="exercise_control">运动控制</string>
+    <string name="total_exercise_duration">总运动时长（秒）</string>
+    <string name="exercise_segment_duration">运动片段时长（秒）</string>
+    <string name="ready">准备</string>
+    <string name="start_exercise">开始运动</string>
+    <string name="stop_exercise">停止运动</string>
+    <string name="file_list">文件列表</string>
+    <string name="total_selected">共 %d 个文件，已选择 %d 个</string>
+    <string name="get_file_list">获取文件列表</string>
+    <string name="format_file_system">格式化文件系统</string>
+    <string name="download_selected">下载已选择</string>
+    <string name="download_all">下载所有</string>
+    <string name="download_progress">下载中...</string>
 </resources>

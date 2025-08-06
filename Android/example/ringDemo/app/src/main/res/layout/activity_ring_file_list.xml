@@ -1,0 +1,228 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#161B41"
+    >
+
+    <include layout="@layout/layout_toolbar" />
+
+<ScrollView android:id="@+id/offlineLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <!-- 运动控制卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp"
+           >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exercise_control"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_exercise_duration"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/exerciseTotalDurationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="300"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exercise_segment_duration"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/exerciseSegmentDurationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="60"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/exerciseStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ready"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/startExerciseButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/start_exercise"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_button_blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginEnd="8dp" />
+
+                    <Button
+                        android:id="@+id/stopExerciseButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stop_exercise"
+                        android:textSize="14sp"
+                        android:background="@drawable/button_gray_bg"
+                        android:textColor="@android:color/white"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 文件列表 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/file_list"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/fileListStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="共 0 个文件，已选择 0 个"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/darker_gray" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/getFileListButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="@string/get_file_list"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_button_blue"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="16dp" />
+                <Button
+                    android:id="@+id/formatFileSystemButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="@string/format_file_system"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_button_blue"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="16dp" />
+                <!-- 文件列表容器 -->
+                <LinearLayout
+                    android:id="@+id/fileListContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/file_list_background"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- 文件项会动态添加到这里 -->
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/downloadSelectedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/download_selected"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_button_blue"
+                    android:textColor="@android:color/white" />
+                <Button
+                    android:id="@+id/downloadAll"
+                    android:layout_marginTop="10dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/download_all"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_button_blue"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+</LinearLayout>
