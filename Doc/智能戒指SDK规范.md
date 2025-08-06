@@ -3348,6 +3348,20 @@ public class MimeTypeUtils
 
         return command;
     }
+
+ // 新增: 构建停止运动命令
+    public static byte[] buildStopExerciseCommand() {
+        // 命令格式: 帧类型(1) + 帧ID(1) + 命令(1) + 子命令(1)
+        byte[] command = new byte[4];
+
+        command[0] = 0x00;  // 帧类型
+        command[1] = (byte)(68);  // 帧ID
+        command[2] = 0x38;  // 命令 (运动命令)
+        command[3] = 0x03;  // 子命令 (停止运动)
+
+        Log.d(TAG, "构建停止运动命令");
+        return command;
+    }
 ```
 
 ```java
