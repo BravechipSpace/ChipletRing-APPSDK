@@ -2293,6 +2293,175 @@ public interface IHeartListener {
 
 ```
 定制化功能，涉及到的回调返回有error，resultDataSHOUSHI，waveformData，progress，success，stop
+
+##### 3.2.34 戒指文件上传功能
+特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，流程是先调用开始运动的指令：
+
+```java
+public class ExerciseConfig {
+
+    public int totalDuration = 300;     // 总运动时长，默认为5分钟（秒）
+    public int segmentTime = 60;        // 每段时间，默认为60秒
+    public boolean autoStart = false;   // 是否自动开始
+    public boolean enableRest = true;   // 是否启用休息间隔
+    public int restTime = 30;           // 休息时间，默认为30秒
+
+    // 获取总段数
+    public int getTotalSegments() {
+        return (totalDuration + segmentTime - 1) / segmentTime; // 向上取整
+    }
+
+    // 获取运动描述信息
+    public String getExerciseDescription() {
+        return String.format("总时长: %d分%d秒，每段: %d秒，共%d段",
+                totalDuration / 60, totalDuration % 60, segmentTime, getTotalSegments());
+    }
+}
+
+```
+可以根据实际需求，定制运动时间和时长，定制自定义指令，然后发送开启运动的指令
+
+```java
+  LmAPILite.START_EXERCISE(config);
+```
+可以手动停止运动
+```java
+ LmAPILite.STOP_EXERCISE();
+```
+获取文件部分的回调
+```java
+/**
+ * 接收文件系统的原始值，方便客户定制文件内容
+ */
+public interface FileResponseCallback {
+
+    /**
+     * 对应3610请求文件列表指令
+     * @param data
+     */
+    void onFileListReceived(byte[] data);
+
+    /**
+     * 对应3611请求文件的数据指令
+     * @param data
+     */
+    void onFileInfoReceived(byte[] data);
+
+    /**
+     *对应361A请求文件的数据(一键上传）的指令
+     * @param data
+     */
+    void onFileDownloadEndReceived(byte[] data);
+
+    /**
+     *单文件下载成功回调
+
+     */
+    void oneFileDownloadSuccess();
+
+    /**
+     *对应361B响应上传文件的指令
+     * @param data
+     */
+    void onDownloadStatusReceived(byte[] data);
+
+    /**
+     * 对应361D响应一键上传的进度的指令
+     * @param data
+     */
+    void onFileDataReceived(byte[] data);
+}
+```
+文件内容解析样例：
+```java
+ public void onFileDataReceived(byte[] data) 这个回调里会返回文件原始值，然后下边是解析：
+ byte[] contentDataByte=new byte[data.length - 4-17];
+ System.arraycopy(data, 21, contentDataByte, 0, contentDataByte.length);
+ List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
+```
+解析内容源码，可以自己改造成需要的：
+```java
+ public static List<String[]> fileContentQingHua(byte[] contentByte) {
+
+        byte[] timestamp=new byte[8];
+        System.arraycopy(contentByte, 0, timestamp, 0, timestamp.length);
+        Date date = bytesToTimestamp(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(date);
+
+        byte[] contentDataByte=new byte[contentByte.length-8];
+        System.arraycopy(contentByte, 8, contentDataByte, 0, contentDataByte.length);
+
+        List<String[]> resultList=new ArrayList<>();
+        for (int i = 0; i < contentDataByte.length / 30; i++) {
+            String[] result=new String[13];
+            ByteBuffer buffer = ByteBuffer.wrap(contentDataByte, i * 30, 30);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+
+            result[0]=formattedDate;
+            int greenData = buffer.getInt();
+            result[1]=greenData+"";
+            int redData = buffer.getInt();
+            result[2]=redData+"";
+            int irData = buffer.getInt();
+            result[3]=irData+"";
+            short accX = buffer.getShort();
+            result[4]=accX+"";
+            short accY = buffer.getShort();
+            result[5]=accY+"";
+            short accZ = buffer.getShort();
+            result[6]=accZ+"";
+            short  gyroX = buffer.getShort();
+            result[7]=gyroX+"";
+            short gyroY = buffer.getShort();
+            result[8]=gyroY+"";
+            short gyroZ = buffer.getShort();
+            result[9]=gyroZ+"";
+            short temper0 = buffer.getShort();
+            result[10]=temper0+"";
+            short temper1 = buffer.getShort();
+            result[11]=temper1+"";
+            short temper2 = buffer.getShort();
+            result[12]=temper2+"";
+            resultList.add(result);
+//            str += "greenData:" + greenData + ";redData:" + redData+ ";irData:" + irData+  ";accX:" + accX + ";accY:" + accY + ";accZ:" + accZ
+//                    +  ";gyroX:" + gyroX+  ";gyroY:" + gyroY+  ";gyroZ:" + gyroZ+  ";temper0:" + temper0+  ";temper1:" + temper1+  ";temper2:" + temper2
+//                    + "\r\n";
+
+        }
+
+        return resultList;
+```
+对应参数的说明：
+```java
+Uinx_ms 类型：uint64_t没帧ppg数据的第一包有（z ppg数据点位视为一组）
+   green，类型：无符号整型
+red，类型：无符号整形
+ir，类型：无符号整型
+acc_x，类型：有符号短整型
+acc_y，类型：有符号短整型
+acc_z，类型：有符号短整型
+   gyro_x，类型：有符号短整型
+gyro _y，类型：有符号短整型
+gyro _z，类型：有符号短整型
+temper0，类型：有符号短整型
+temper1，类型：有符号短整型
+temper2，类型：有符号短整型
+
+```
+发送样例:
+```java
+  LmAPILite.GET_FILE_LIST(fileResponseCallback);
+
+  LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
+
+  byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
+  LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
+
+   LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
+```
+
+
 #### 3.3 固件升级（OTA）
 **注：目前不建议使用，可以参考四、升级服务里的OTA升级**
 ![alt text](image/f66e099fc52821fbc43ecd7803e0633.png)
@@ -3312,172 +3481,6 @@ public class MimeTypeUtils
 ```
 后续的管理端下载，邮件发送，可以让自己公司后台进行开发
 
-##### 3.5.5 戒指文件上传功能
-特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，流程是先调用开始运动的指令：
-
-```java
-public class ExerciseConfig {
-
-    public int totalDuration = 300;     // 总运动时长，默认为5分钟（秒）
-    public int segmentTime = 60;        // 每段时间，默认为60秒
-    public boolean autoStart = false;   // 是否自动开始
-    public boolean enableRest = true;   // 是否启用休息间隔
-    public int restTime = 30;           // 休息时间，默认为30秒
-
-    // 获取总段数
-    public int getTotalSegments() {
-        return (totalDuration + segmentTime - 1) / segmentTime; // 向上取整
-    }
-
-    // 获取运动描述信息
-    public String getExerciseDescription() {
-        return String.format("总时长: %d分%d秒，每段: %d秒，共%d段",
-                totalDuration / 60, totalDuration % 60, segmentTime, getTotalSegments());
-    }
-}
-
-```
-可以根据实际需求，定制运动时间和时长，定制自定义指令，然后发送开启运动的指令
-
-```java
-  LmAPILite.START_EXERCISE(config);
-```
-可以手动停止运动
-```java
- LmAPILite.STOP_EXERCISE();
-```
-获取文件部分的回调
-```java
-/**
- * 接收文件系统的原始值，方便客户定制文件内容
- */
-public interface FileResponseCallback {
-
-    /**
-     * 对应3610请求文件列表指令
-     * @param data
-     */
-    void onFileListReceived(byte[] data);
-
-    /**
-     * 对应3611请求文件的数据指令
-     * @param data
-     */
-    void onFileInfoReceived(byte[] data);
-
-    /**
-     *对应361A请求文件的数据(一键上传）的指令
-     * @param data
-     */
-    void onFileDownloadEndReceived(byte[] data);
-
-    /**
-     *单文件下载成功回调
-
-     */
-    void oneFileDownloadSuccess();
-
-    /**
-     *对应361B响应上传文件的指令
-     * @param data
-     */
-    void onDownloadStatusReceived(byte[] data);
-
-    /**
-     * 对应361D响应一键上传的进度的指令
-     * @param data
-     */
-    void onFileDataReceived(byte[] data);
-}
-```
-文件内容解析样例：
-```java
- public void onFileDataReceived(byte[] data) 这个回调里会返回文件原始值，然后下边是解析：
- byte[] contentDataByte=new byte[data.length - 4-17];
- System.arraycopy(data, 21, contentDataByte, 0, contentDataByte.length);
- List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
-```
-解析内容源码，可以自己改造成需要的：
-```java
- public static List<String[]> fileContentQingHua(byte[] contentByte) {
-
-        byte[] timestamp=new byte[8];
-        System.arraycopy(contentByte, 0, timestamp, 0, timestamp.length);
-        Date date = bytesToTimestamp(timestamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = sdf.format(date);
-
-        byte[] contentDataByte=new byte[contentByte.length-8];
-        System.arraycopy(contentByte, 8, contentDataByte, 0, contentDataByte.length);
-
-        List<String[]> resultList=new ArrayList<>();
-        for (int i = 0; i < contentDataByte.length / 30; i++) {
-            String[] result=new String[13];
-            ByteBuffer buffer = ByteBuffer.wrap(contentDataByte, i * 30, 30);
-            buffer.order(ByteOrder.LITTLE_ENDIAN);
-
-            result[0]=formattedDate;
-            int greenData = buffer.getInt();
-            result[1]=greenData+"";
-            int redData = buffer.getInt();
-            result[2]=redData+"";
-            int irData = buffer.getInt();
-            result[3]=irData+"";
-            short accX = buffer.getShort();
-            result[4]=accX+"";
-            short accY = buffer.getShort();
-            result[5]=accY+"";
-            short accZ = buffer.getShort();
-            result[6]=accZ+"";
-            short  gyroX = buffer.getShort();
-            result[7]=gyroX+"";
-            short gyroY = buffer.getShort();
-            result[8]=gyroY+"";
-            short gyroZ = buffer.getShort();
-            result[9]=gyroZ+"";
-            short temper0 = buffer.getShort();
-            result[10]=temper0+"";
-            short temper1 = buffer.getShort();
-            result[11]=temper1+"";
-            short temper2 = buffer.getShort();
-            result[12]=temper2+"";
-            resultList.add(result);
-//            str += "greenData:" + greenData + ";redData:" + redData+ ";irData:" + irData+  ";accX:" + accX + ";accY:" + accY + ";accZ:" + accZ
-//                    +  ";gyroX:" + gyroX+  ";gyroY:" + gyroY+  ";gyroZ:" + gyroZ+  ";temper0:" + temper0+  ";temper1:" + temper1+  ";temper2:" + temper2
-//                    + "\r\n";
-
-        }
-
-        return resultList;
-```
-对应参数的说明：
-```java
-Uinx_ms 类型：uint64_t没帧ppg数据的第一包有（z ppg数据点位视为一组）
-   green，类型：无符号整型
-red，类型：无符号整形
-ir，类型：无符号整型
-acc_x，类型：有符号短整型
-acc_y，类型：有符号短整型
-acc_z，类型：有符号短整型
-   gyro_x，类型：有符号短整型
-gyro _y，类型：有符号短整型
-gyro _z，类型：有符号短整型
-temper0，类型：有符号短整型
-temper1，类型：有符号短整型
-temper2，类型：有符号短整型
-
-```
-发送样例:
-```java
-  LmAPILite.GET_FILE_LIST(fileResponseCallback);
-
-  LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
-
-  byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
-  LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
-
-   LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
-```
 
 ## 四、升级服务
 ### 1、服务介绍
