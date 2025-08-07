@@ -93,16 +93,6 @@ public class RingFileListActivity extends Activity {
         }
     };
 
-    // Custom Command Listener
-    private ICustomizeCmdListener customizeCmdListener = new ICustomizeCmdListener() {
-        @Override
-        public void cmdData(String responseData) {
-
-            recordLog("收到自定义命令响应: " + responseData);
-
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +105,6 @@ public class RingFileListActivity extends Activity {
 
         // Set device command callback
         NotificationHandler.setDeviceCommandCallback(new NotificationHandler.DeviceCommandCallback() {
-            @Override
-            public void sendCommand(byte[] commandData) {
-                LmAPI.CUSTOMIZE_CMD(commandData, customizeCmdListener);
-                recordLog("Send device command: " + bytesToHexString(commandData));
-            }
 
             @Override
             public void onExerciseStarted(int duration, int segmentTime) {

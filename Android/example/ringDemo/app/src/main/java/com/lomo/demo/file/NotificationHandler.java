@@ -2,10 +2,14 @@ package com.lomo.demo.file;
 
 import android.util.Log;
 
+import com.lm.sdk.LmAPILite;
 import com.lm.sdk.mode.ExerciseConfig;
 import com.lm.sdk.mode.MeasurementConfig;
 import com.lm.sdk.utils.LmApiDataUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,7 +18,6 @@ public class NotificationHandler {
 
     // 设备命令发送回调接口
     public interface DeviceCommandCallback {
-        void sendCommand(byte[] commandData);
         default void onExerciseStarted(int duration, int segmentTime) {}
         default void onExerciseStopped() {}
     }
@@ -77,9 +80,7 @@ public class NotificationHandler {
             currentSegment = 0;
 
             // 发送运动开始命令
-            byte[] command = LmApiDataUtils.buildStartExerciseCommand(config);
-            deviceCommandCallback.sendCommand(command);
-
+            LmAPILite.START_EXERCISE(config);
             // 启动运动定时器
             startExerciseTimer(config);
 
@@ -105,8 +106,7 @@ public class NotificationHandler {
         try {
             // 发送运动停止命令
             if (deviceCommandCallback != null) {
-                byte[] command = LmApiDataUtils.buildStopExerciseCommand();
-                deviceCommandCallback.sendCommand(command);
+                LmAPILite.STOP_EXERCISE();
             }
 
             // 停止定时器

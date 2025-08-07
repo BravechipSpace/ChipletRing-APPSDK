@@ -133,6 +133,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_stop_audio).setOnClickListener(this);
         findViewById(R.id.bt_jump_page2).setOnClickListener(this);
         findViewById(R.id.bt_jump_pageFile).setOnClickListener(this);
+        findViewById(R.id.tv_connect).setOnClickListener(this);
 
         File file = new File(outputPath);
         file.delete();
@@ -763,7 +764,10 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             intent.setClass(TestActivity.this, RingFileListActivity.class);
             startActivity(intent);
         }
-
+        if (view.getId() == R.id.tv_connect) {
+            BLEUtils.isHIDDevice = false;
+            BLEUtils.connectLockByBLE(TestActivity.this, bluetoothDevice);
+        }
 
 
     }
