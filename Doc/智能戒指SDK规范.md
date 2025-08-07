@@ -3314,55 +3314,6 @@ public class MimeTypeUtils
 
 ##### 3.5.5 戒指文件上传功能
 特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，流程是先调用开始运动的指令：
-```java
- // 新增: 构建开始运动命令
-    public static byte[] buildStartExerciseCommand(ExerciseConfig config) {
-        // 命令格式: 帧类型(1) + 帧ID(1) + 命令(1) + 子命令(1) + 数据(10)
-        byte[] command = new byte[14];
-
-        command[0] = 0x00;  // 帧类型
-        command[1] = (byte)(68);  // 帧ID
-        command[2] = 0x38;  // 命令 (运动命令)
-        command[3] = 0x01;  // 子命令 (开始运动)
-
-        // 数据部分: sport_mode(2字节) + time(4字节) + slice_storage_time(4字节)
-        // sport_mode (2字节)
-        int sportMode = 1;
-        command[4] = (byte)(sportMode & 0xFF);
-        command[5] = (byte)((sportMode >> 8) & 0xFF);
-
-        // time (4字节) - 总持续时间, 小端格式
-        command[6] = (byte)(config.totalDuration & 0xFF);
-        command[7] = (byte)((config.totalDuration >> 8) & 0xFF);
-        command[8] = (byte)((config.totalDuration >> 16) & 0xFF);
-        command[9] = (byte)((config.totalDuration >> 24) & 0xFF);
-
-        // slice_storage_time (4字节) - 每段持续时间, 小端格式
-        command[10] = (byte)(config.segmentTime & 0xFF);
-        command[11] = (byte)((config.segmentTime >> 8) & 0xFF);
-        command[12] = (byte)((config.segmentTime >> 16) & 0xFF);
-        command[13] = (byte)((config.segmentTime >> 24) & 0xFF);
-
-        Log.d(TAG, String.format("构建开始运动命令: 运动模式=%d, 总时长=%ds, 每段时长=%ds",
-                sportMode, config.totalDuration, config.segmentTime));
-
-        return command;
-    }
-
- // 新增: 构建停止运动命令
-    public static byte[] buildStopExerciseCommand() {
-        // 命令格式: 帧类型(1) + 帧ID(1) + 命令(1) + 子命令(1)
-        byte[] command = new byte[4];
-
-        command[0] = 0x00;  // 帧类型
-        command[1] = (byte)(68);  // 帧ID
-        command[2] = 0x38;  // 命令 (运动命令)
-        command[3] = 0x03;  // 子命令 (停止运动)
-
-        Log.d(TAG, "构建停止运动命令");
-        return command;
-    }
-```
 
 ```java
 public class ExerciseConfig {
@@ -3389,23 +3340,11 @@ public class ExerciseConfig {
 可以根据实际需求，定制运动时间和时长，定制自定义指令，然后发送开启运动的指令
 
 ```java
-  byte[] command = LmApiDataUtils.buildStartExerciseCommand(config);
-    LmAPILite.CUSTOMIZE_CMD(commandData, customizeCmdListener);//简化版本LmAPILite，如果之前发送的指令都是通过LmAPI,换成LmAPI
-
-    // Custom Command Listener
-    private ICustomizeCmdListener customizeCmdListener = new ICustomizeCmdListener() {
-        @Override
-        public void cmdData(String responseData) {
-
-            recordLog("收到自定义命令响应: " + responseData);
-
-        }
-    };
+  LmAPILite.START_EXERCISE(config);
 ```
 可以手动停止运动
 ```java
- byte[] command = LmApiDataUtils.buildStopExerciseCommand();
-  LmAPILite.CUSTOMIZE_CMD(command, customizeCmdListener);
+ LmAPILite.STOP_EXERCISE();
 ```
 获取文件部分的回调
 ```java
@@ -3451,43 +3390,82 @@ public interface FileResponseCallback {
     void onFileDataReceived(byte[] data);
 }
 ```
-对应的指令
+文件内容解析样例：
 ```java
- /**
-     *请求文件列表
-     */
-    public static void GET_FILE_LIST(FileResponseCallback fileResponse) {
-        fileResponseCallback=fileResponse;
-        SEND_CMD(convertToBytes(0x36, new byte[]{0x10}));
-    }
+ public void onFileDataReceived(byte[] data) 这个回调里会返回文件原始值，然后下边是解析：
+ byte[] contentDataByte=new byte[data.length - 4-17];
+ System.arraycopy(data, 21, contentDataByte, 0, contentDataByte.length);
+ List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
+```
+解析内容源码，可以自己改造成需要的：
+```java
+ public static List<String[]> fileContentQingHua(byte[] contentByte) {
 
-    /**
-     *格式化文件系统
-     */
-    public static void PERFORM_FORMAT_FILESYSTEM(FileResponseCallback fileResponse) {
-        fileResponseCallback=fileResponse;
-        SEND_CMD(convertToBytes(0x36, new byte[]{0x13}));
-    }
+        byte[] timestamp=new byte[8];
+        System.arraycopy(contentByte, 0, timestamp, 0, timestamp.length);
+        Date date = bytesToTimestamp(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(date);
 
-    /**
-     *请求文件的数据
-     */
-    public static void DOWNLOAD_FILE(byte[] fileName,FileResponseCallback fileResponse) {
-        fileResponseCallback=fileResponse;
-        byte[] dataByte = new byte[1 + fileName.length];
-        dataByte[0] = 0x11;
-        System.arraycopy(fileName, 0, dataByte, 1, fileName.length);
+        byte[] contentDataByte=new byte[contentByte.length-8];
+        System.arraycopy(contentByte, 8, contentDataByte, 0, contentDataByte.length);
 
-        SEND_CMD(convertToBytes(0x36, dataByte));
-    }
+        List<String[]> resultList=new ArrayList<>();
+        for (int i = 0; i < contentDataByte.length / 30; i++) {
+            String[] result=new String[13];
+            ByteBuffer buffer = ByteBuffer.wrap(contentDataByte, i * 30, 30);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
 
-    /**
-     *请求文件的数据(一键上传）
-     */
-    public static void DOWNLOAD_ALL_FILES(FileResponseCallback fileResponse) {
-        fileResponseCallback=fileResponse;
-        SEND_CMD(convertToBytes(0x36, new byte[]{0x1A,0x01}));
-    }
+            result[0]=formattedDate;
+            int greenData = buffer.getInt();
+            result[1]=greenData+"";
+            int redData = buffer.getInt();
+            result[2]=redData+"";
+            int irData = buffer.getInt();
+            result[3]=irData+"";
+            short accX = buffer.getShort();
+            result[4]=accX+"";
+            short accY = buffer.getShort();
+            result[5]=accY+"";
+            short accZ = buffer.getShort();
+            result[6]=accZ+"";
+            short  gyroX = buffer.getShort();
+            result[7]=gyroX+"";
+            short gyroY = buffer.getShort();
+            result[8]=gyroY+"";
+            short gyroZ = buffer.getShort();
+            result[9]=gyroZ+"";
+            short temper0 = buffer.getShort();
+            result[10]=temper0+"";
+            short temper1 = buffer.getShort();
+            result[11]=temper1+"";
+            short temper2 = buffer.getShort();
+            result[12]=temper2+"";
+            resultList.add(result);
+//            str += "greenData:" + greenData + ";redData:" + redData+ ";irData:" + irData+  ";accX:" + accX + ";accY:" + accY + ";accZ:" + accZ
+//                    +  ";gyroX:" + gyroX+  ";gyroY:" + gyroY+  ";gyroZ:" + gyroZ+  ";temper0:" + temper0+  ";temper1:" + temper1+  ";temper2:" + temper2
+//                    + "\r\n";
+
+        }
+
+        return resultList;
+```
+对应参数的说明：
+```java
+Uinx_ms 类型：uint64_t没帧ppg数据的第一包有（z ppg数据点位视为一组）
+   green，类型：无符号整型
+red，类型：无符号整形
+ir，类型：无符号整型
+acc_x，类型：有符号短整型
+acc_y，类型：有符号短整型
+acc_z，类型：有符号短整型
+   gyro_x，类型：有符号短整型
+gyro _y，类型：有符号短整型
+gyro _z，类型：有符号短整型
+temper0，类型：有符号短整型
+temper1，类型：有符号短整型
+temper2，类型：有符号短整型
+
 ```
 发送样例:
 ```java
