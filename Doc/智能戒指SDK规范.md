@@ -2451,13 +2451,14 @@ temper2，类型：有符号短整型
 ```
 发送样例:
 ```java
+//请求文件列表
   LmAPILite.GET_FILE_LIST(fileResponseCallback);
-
+  //格式化文件系统
   LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
-
+  //请求文件的数据
   byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
   LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
-
+  //请求文件的数据(一键上传）
    LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
 ```
 
