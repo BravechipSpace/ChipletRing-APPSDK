@@ -105,7 +105,7 @@
 * 说明：由于戒指的体积，结构，材料限制，射频性能不如蓝牙耳机好，重连机制是必要的，可以增加稳定性。
 * 安卓相关API：
   ```java
-  LmAPI.APP_REFRESH()
+  BLEUtils.connectLockByBLE
   ```
 * IOS相关API：
   ```Swift
