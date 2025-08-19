@@ -3513,8 +3513,8 @@ public class MimeTypeUtils
 DataApi.instance.deleteHistoryErrorBatch();
 ```
 ```java
-   //如需使用更精准的睡眠算法，获取戒指历史数据时，请调用该指令(LmAPI.READ_HISTORY不支持上传服务器操作)，这个支持一代协议
-   LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x01,  mac, new IHistoryListener() {
+   //如需使用更精准的睡眠算法，获取戒指历史数据时，请调用该指令(LmAPI.READ_HISTORY不支持上传服务器操作)，这个支持一代协议,(byte) 0x00是未上传历史，(byte) 0x01是所有历史，正常情况下传0x00就可以了
+   LmAPI.READ_HISTORY_UPDATE_TO_SERVER((byte) 0x00,  mac, new IHistoryListener() {
                     @Override
                     public void error(int code) {
                         if (code == 3) {
@@ -4004,7 +4004,27 @@ public class MovementSegment {
     }
 }
 ```
+##### 6、特殊戒指计步方案
+有部分戒指，不是到0点清零，是每隔5分钟清零一次，只记录5分钟之间的步数，这个需要后台来计算当前步数，也就是从0点到当前时间的步数总和，前提是先同步一下未上传历史数据，保证数据完整，对应的方法是
+```java
 
+//先调用一下同步未上传历史数据的指令，在updateHistoryFinish调用下一个接口
+LmAPI.READ_HISTORY_UPDATE_TO_SERVER
+
+//获取当前步数
+LogicalApi.getCurrentSteps()
+```
+如果有显示步数趋势的需求，可以调用根据开始时间和结束时间，获取当前用户所有历史的接口，app端可以根据历史记录，累加单位时间内的步数，灵活显示每天，每小时等步数的趋势图
+```java
+LogicalApi:
+    /**
+     * 查询当前用户，开始时间和结束时间内的历史数据列表
+     * @param startTime 开始时间戳(秒级时间戳)
+     * @param endTime 结束时间戳(秒级时间戳)
+     * @param webApiResult
+     */
+    public static void getHistoryDatasWithTime(long startTime,long endTime, IWebGetHistoryResult webApiResult) {
+```
 
 ## 五、其他
 **注：使用戒指API前，应先查看戒指状态**
