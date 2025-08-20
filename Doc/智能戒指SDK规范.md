@@ -2295,12 +2295,13 @@ public interface IHeartListener {
 定制化功能，涉及到的回调返回有error，resultDataSHOUSHI，waveformData，progress，success，stop
 
 ##### 3.2.34 戒指文件上传功能
-特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，流程是先调用开始运动的指令：
+特定戒指支持收集用户的健康数据，生成文件，并且可以将文件上传到app，分别有戒指自动采集和用户手动采集两种模式。
+如果是用户手动采集，流程是先调用开始采集的指令：
 
 ```java
 public class ExerciseConfig {
 
-    public int totalDuration = 300;     // 总运动时长，默认为5分钟（秒）
+    public int totalDuration = 300;     // 总采集时长，默认为5分钟（秒）
     public int segmentTime = 60;        // 每段时间，默认为60秒
     public boolean autoStart = false;   // 是否自动开始
     public boolean enableRest = true;   // 是否启用休息间隔
@@ -2319,14 +2320,18 @@ public class ExerciseConfig {
 }
 
 ```
-可以根据实际需求，定制运动时间和时长，定制自定义指令，然后发送开启运动的指令
+可以根据实际需求，定制采集时间和时长，定制自定义指令，然后发送开启采集的指令
 
 ```java
-  LmAPILite.START_EXERCISE(config);
+  LmAPI.START_EXERCISE(config);
 ```
-可以手动停止运动
+可以手动停止采集
 ```java
- LmAPILite.STOP_EXERCISE();
+ LmAPI.STOP_EXERCISE();
+```
+如果戒指支持自动采集，直接进入获取文件的流程：
+```java
+  LmAPI.GET_FILE_LIST(fileResponseCallback);
 ```
 获取文件部分的回调
 ```java
@@ -2348,10 +2353,16 @@ public interface FileResponseCallback {
     void onFileInfoReceived(byte[] data);
 
     /**
-     *对应361A请求文件的数据(一键上传）的指令
+     *对应361D响应一键上传的进度
      * @param data
      */
     void onFileDownloadEndReceived(byte[] data);
+
+    /**
+     *对应361C一键下载，每个文件的进度
+     * @param data
+     */
+    void onDownloadAllFileProgress(byte[] data);
 
     /**
      *单文件下载成功回调
@@ -2360,18 +2371,31 @@ public interface FileResponseCallback {
     void oneFileDownloadSuccess();
 
     /**
-     *对应361B响应上传文件的指令
+     *对应361A请求文件的数据(一键上传）
      * @param data
      */
     void onDownloadStatusReceived(byte[] data);
 
     /**
-     * 对应361D响应一键上传的进度的指令
+     * 对应3611请求文件的数据
      * @param data
      */
     void onFileDataReceived(byte[] data);
 }
 ```
+文件内容有两种方法，一种是完整信息，一种是简化信息，具体是哪个，根据文件后缀名来判断，7是完整的，9是简化的
+根据文件名获取后缀名的样例：
+```java
+      // 去掉文件扩展名
+      String withoutExtension = fileName.substring(0, fileName.lastIndexOf(".txt"));
+      // 分割字符串
+     String[] parts = withoutExtension.split("_");
+     // 获取最后一个部分，即 "8"
+     String result = parts[parts.length - 1];
+     fileType= Integer.parseInt(result);         
+```
+
+
 文件内容解析样例：
 ```java
  public void onFileDataReceived(byte[] data) 这个回调里会返回文件原始值，然后下边是解析：
@@ -2379,8 +2403,10 @@ public interface FileResponseCallback {
  System.arraycopy(data, 21, contentDataByte, 0, contentDataByte.length);
  List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
 ```
+
 解析内容源码，可以自己改造成需要的：
 ```java
+//完整信息内容解析
  public static List<String[]> fileContentQingHua(byte[] contentByte) {
 
         byte[] timestamp=new byte[8];
@@ -2432,6 +2458,42 @@ public interface FileResponseCallback {
 
         return resultList;
 ```
+
+```java
+//简化信息内容解析
+ public static List<String[]> fileContentType9(byte[] contentByte) {
+
+        byte[] timestamp=new byte[8];
+        System.arraycopy(contentByte, 0, timestamp, 0, timestamp.length);
+        Date date = bytesToTimestamp(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(date);
+
+        byte[] contentDataByte=new byte[contentByte.length-8];
+        System.arraycopy(contentByte, 8, contentDataByte, 0, contentDataByte.length);
+
+        List<String[]> resultList=new ArrayList<>();
+        for (int i = 0; i < contentDataByte.length / 12; i++) {
+            String[] result=new String[4];
+            ByteBuffer buffer = ByteBuffer.wrap(contentDataByte, i * 12, 12);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+
+            result[0]=formattedDate;
+            int greenData = buffer.getInt();
+            result[1]=greenData+"";
+            int redData = buffer.getInt();
+            result[2]=redData+"";
+            int irData = buffer.getInt();
+            result[3]=irData+"";
+            resultList.add(result);
+
+
+        }
+
+        return resultList;
+    }
+```
+
 对应参数的说明：
 ```java
 Uinx_ms 类型：uint64_t没帧ppg数据的第一包有（z ppg数据点位视为一组）
@@ -2452,15 +2514,17 @@ temper2，类型：有符号短整型
 发送样例:
 ```java
 //请求文件列表
-  LmAPILite.GET_FILE_LIST(fileResponseCallback);
+  LmAPI.GET_FILE_LIST(fileResponseCallback);
+  
   //格式化文件系统
-  LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
+  LmAPI.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
   //请求文件的数据
   byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
-  LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
-  //请求文件的数据(一键上传）
-   LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
+  LmAPI.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
+  //请求文件的数据(一键上传所有文件）
+   LmAPI.DOWNLOAD_ALL_FILES(fileResponseCallback);
 ```
+以下是各个指令对应的回调字段的含义：
 
 
 #### 3.3 固件升级（OTA）
@@ -3637,6 +3701,19 @@ public class SleepBean {
      */
     private List<HistoryDataBean> historyDataBeanList;
 ```
+##### 服务器端超时，导致戒指未成功上传，睡眠不显示的解决办法：
+因为一般建议是上传戒指的未上传数据，如果是从戒指里正确获取了数据，但是因为网络问题，或者服务器问题，没有将数据上传到服务器，导致睡眠不会显示，下一次同步数据的时候，是从上一次戒指上传完后的最后一条数据的时间戳开始，所以在服务器上，中间的数据就会丢掉。  
+解决办法：下一次同步时，先获取服务器上当前用户的最后一条历史时间戳，然后调用戒指上传记录指令的时候，传入该时间戳，就会从该时间戳以后上传，这样就能保证服务器上数据的完整性了
+```java
+LogicalApi:
+ public static void loadUserLatestHistory( IWebLastTimeResult iWebLastTimeResult)
+
+建议在createToken接口调用成功后，调用这个接口，尽量在蓝牙连接之前，获取到时间戳
+LmAPI:
+ public static void READ_HISTORY_UPDATE_TO_SERVER(byte type, long timeMillis)
+将timeMillis设置为loadUserLatestHistory获取的时间戳
+```
+
 ##### 2、ota升级
 该服务支持从云端拉取最新的固件，需保证与戒指处于连接状态,建议rssi > -70(参考3.2.27 获取RSSI)并且电量>50 ，目前提供三个接口，根据不同情况调用
 OtaApi.otaUpdateWithCheckVersion 该接口包含了检查版本号version(调用 LmAPI.GET_VERSION((byte) 0x00)获取)，从云端拉取最新固件，自动升级功能，ota升级完成以后，要延时3s重连一下戒指
