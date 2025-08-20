@@ -2524,12 +2524,24 @@ temper2，类型：有符号短整型
   //请求文件的数据(一键上传所有文件）
    LmAPI.DOWNLOAD_ALL_FILES(fileResponseCallback);
 ```
-以下是各个指令对应的回调字段的含义：
-![alt text](image/请求文件列表.png)
-![alt text](image/完整版文件内容.png)
-![alt text](image/简化版文件内容.png)
-![alt text](image/一键上传所有文件.png)
-![alt text](image/响应文件上传进度.png)
+以下是各个指令对应的回调字段的含义：  
+请求文件列表：  
+
+![alt text](image/请求文件列表.png)  
+完整版文件内容  
+
+![alt text](image/完整版文件内容.png)  
+简化版文件内容  
+
+![alt text](image/简化版文件内容.png)  
+一键上传所有文件  
+
+![alt text](image/一键上传所有文件.png)  
+响应文件上传进度  
+
+![alt text](image/响应文件上传进度.png)  
+格式化系统  
+
 ![alt text](image/格式化系统.png)
 
 #### 3.3 固件升级（OTA）
