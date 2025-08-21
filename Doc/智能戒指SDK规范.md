@@ -4131,7 +4131,7 @@ LogicalApi:
      */
     public static void getHistoryDatasWithTime(long startTime,long endTime, IWebGetHistoryResult webApiResult) {
 ```
-接口返回的是原始历史数据，客户端可以根据自己需求，比如计算每天24小时，各个小时的步数，可以计算某个小时0分到59分之内的步数，累加，算作该小时的步数  
+接口返回的是原始历史数据，客户端可以根据自己需求，比如计算每天24小时，各个小时的步数，可以计算某个小时0分到59分之内的步数，累加(步数是65535，是主动测量或者周期测量的特殊标志，需要排除掉)，算作该小时的步数  
 
 ## 五、其他
 **注：使用戒指API前，应先查看戒指状态**
