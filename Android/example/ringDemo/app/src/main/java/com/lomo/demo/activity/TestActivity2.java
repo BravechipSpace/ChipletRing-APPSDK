@@ -60,7 +60,6 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test2);
-        LmAPI.addWLSCmdListener(this,this);
         tv_result2 = findViewById(R.id.tv_result2);
         findViewById(R.id.bt_unpair).setOnClickListener(this);
         findViewById(R.id.bt_set_HID).setOnClickListener(this);
@@ -508,10 +507,10 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
             }
         if(v.getId()==R.id.bt_connect) {
 
-            LmAPI.APP_CONNECT();
+            LmAPI.APP_CONNECT(0);
         }
         if(v.getId()==R.id.bt_refresh) {
-            LmAPI.APP_REFRESH();
+            LmAPI.APP_REFRESH(0);
         }
 
         if(v.getId()==R.id.bt_calculate_sleep) {

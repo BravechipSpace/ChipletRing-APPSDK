@@ -88,6 +88,11 @@ public class RingFileListActivity extends Activity {
         }
 
         @Override
+        public void onDownloadAllFileProgress(byte[] data) {
+
+        }
+
+        @Override
         public void oneFileDownloadSuccess() {
             updateDownloadButtonFinish();
         }

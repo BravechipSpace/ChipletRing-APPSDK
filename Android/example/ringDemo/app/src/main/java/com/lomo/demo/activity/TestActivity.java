@@ -101,7 +101,6 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        LmAPI.addWLSCmdListener(this, this);
         bt_step = findViewById(R.id.bt_step);
         bt_battery = findViewById(R.id.bt_battery);
         bt_version = findViewById(R.id.bt_version);
@@ -262,7 +261,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
     protected void onDestroy() {
         super.onDestroy();
         BLEUtils.disconnectBLE(this);
-        LmAPI.removeWLSCmdListener(this);
+
         handler.removeMessages(101);
     }
 

@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
+import com.lm.sdk.BaseLmAPi;
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
@@ -37,6 +38,7 @@ import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.inter.ITempListener;
 import com.lm.sdk.inter.IWebHistoryResult;
 import com.lm.sdk.inter.IWebSleepResult;
+import com.lm.sdk.inter.IWebStepResult;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
@@ -85,7 +87,6 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test3);
-        LmAPI.addWLSCmdListener(this,this);
         tv_result2 = findViewById(R.id.tv_result2);
         findViewById(R.id.bt_jinxingpeidui).setOnClickListener(this);
         findViewById(R.id.bt_quxiaopeidui).setOnClickListener(this);
@@ -93,6 +94,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
         findViewById(R.id.bt_duankailanya).setOnClickListener(this);
         findViewById(R.id.bt_fendashoushi).setOnClickListener(this);
         findViewById(R.id.bt_huoqushoushi).setOnClickListener(this);
+        findViewById(R.id.bt_currentStep).setOnClickListener(this);
 
         mBluetoothDevice =   App.getInstance().getDeviceBean().getDevice();
         BLEUtils.isHIDDevice=false;//设置为不是配对戒指，防止sdk自动配对，进行手动进行配对操作
@@ -176,10 +178,26 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                     }
                 });
             }
+        if(v.getId()==R.id.bt_currentStep) {
 
+            postView("当前用户的步数\n");
+            // BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
+            //这个方法，获取广播，如果bleDeviceInfo.getStepAccumulation()>0，说明是新固件，支持每5分钟步数清零，重新累积功能
+            //如果不是新固件，获取步数还是使用以前的
+            LmAPI.GET_CURRENT_STEP_FROM_SERVER(mBluetoothDevice.getAddress(), new IWebStepResult() {
+                @Override
+                public void getCurrentSteps(double allStep) {
+                    postView("步数：\n"+allStep);
+                }
+
+                @Override
+                public void error(String message) {
+
+                }
+            });
+        }
 
     }
-
 
     /**
      * 蓝牙接收广播
