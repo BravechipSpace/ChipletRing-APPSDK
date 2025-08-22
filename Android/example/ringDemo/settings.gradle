@@ -1,2 +1,3 @@
 rootProject.name='AmbientLight'
 include ':app'
+include ':st25.android.reader.interface'

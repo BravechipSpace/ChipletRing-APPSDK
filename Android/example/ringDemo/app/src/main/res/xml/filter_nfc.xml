@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+        <!-- capture all ISO14443A tags (NFC tags Type 4)-->
+        <tech-list>
+            <tech>android.nfc.tech.NfcA</tech>
+            <tech>android.nfc.tech.IsoDep</tech>
+            <tech>android.nfc.tech.Ndef</tech>
+        </tech-list>
+
+        <!-- capture all ISO15693 tags -->
+        <tech-list>
+            <tech>android.nfc.tech.NfcV</tech>
+            <tech>android.nfc.tech.NdefFormatable</tech>
+        </tech-list>
+
+        <tech-list>
+            <tech>android.nfc.tech.NfcV</tech>
+        </tech-list>
+
+        <tech-list>
+            <tech>android.nfc.tech.NdefFormatable</tech>
+        </tech-list>
+
+        <!-- capture all ISO14443B tags tags -->
+        <tech-list>
+            <tech>android.nfc.tech.NfcB</tech>
+            <tech>android.nfc.tech.NdefFormatable</tech>
+        </tech-list>
+
+    </resources>
+</PreferenceScreen>

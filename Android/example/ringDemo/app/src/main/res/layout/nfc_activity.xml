@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:padding="40dp"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/tv_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试日志"
+            android:layout_marginBottom="10dp"/>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/createAes"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="设置明文key"
+        />
+
+    <Button
+        android:id="@+id/getAesKey"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="获取明文key"
+        />
+    <Button
+        android:id="@+id/createAesPassWord"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="设置加密的key"
+        />
+    <Button
+        android:id="@+id/getAesPassWord"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="获取加密的key"
+        />
+
+    <Button
+        android:id="@+id/getDeviceID"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="明文获取设备ID"
+        />
+    <Button
+        android:id="@+id/getDeviceIdPassWord"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="加密获取设备ID"
+        />
+
+
+</LinearLayout>

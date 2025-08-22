@@ -15,4 +15,7 @@
     <string name="download_selected">下载已选择</string>
     <string name="download_all">下载所有</string>
     <string name="download_progress">下载中...</string>
+
+    <string name="aiddescription">帮助描述</string>
+    <string name="servicedesc">服务描述</string>
 </resources>
