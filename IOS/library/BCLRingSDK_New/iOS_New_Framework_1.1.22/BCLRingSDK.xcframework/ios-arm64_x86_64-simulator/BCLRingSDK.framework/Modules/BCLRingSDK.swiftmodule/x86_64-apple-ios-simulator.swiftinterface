@@ -1139,6 +1139,20 @@ public enum BCLSystemTypeHIDMode : UInt8 {
     get
   }
 }
+public struct TimeZoneInfo {
+  public let identifier: String
+  public let totalOffsetHours: Double
+  public let standardOffsetHours: Double
+  public let isDaylightSaving: Bool
+  public let daylightOffsetHours: Double
+  public let nextTransition: Date?
+  public var offsetDescription: String {
+    get
+  }
+  public var daylightSavingDescription: String {
+    get
+  }
+}
 @objc public enum BCLRingTimeZone : Int {
   case UTC = 0x00
   case East1 = 0x01
@@ -1166,6 +1180,8 @@ public enum BCLSystemTypeHIDMode : UInt8 {
   case West2 = 0xFE
   case West1 = 0xFF
   public static func getCurrentSystemTimeZone() -> BCLRingTimeZone
+  public static func getCurrentSystemTimeZoneInfo() -> (bclTimeZone: BCLRingTimeZone, info: TimeZoneInfo)
+  public static func calculateBCLTimeZone(for timeZone: TimeZone) -> BCLRingTimeZone
   public var region: Region {
     get
   }

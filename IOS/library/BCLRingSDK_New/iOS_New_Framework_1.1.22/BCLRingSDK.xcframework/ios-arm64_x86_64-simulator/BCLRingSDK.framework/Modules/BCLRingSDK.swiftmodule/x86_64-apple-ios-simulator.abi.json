@@ -49150,6 +49150,405 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "TimeZoneInfo",
+        "printedName": "TimeZoneInfo",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "identifier",
+            "printedName": "identifier",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV10identifierSSvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV10identifierSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV10identifierSSvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV10identifierSSvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "totalOffsetHours",
+            "printedName": "totalOffsetHours",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV16totalOffsetHoursSdvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV16totalOffsetHoursSdvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV16totalOffsetHoursSdvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV16totalOffsetHoursSdvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "standardOffsetHours",
+            "printedName": "standardOffsetHours",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV19standardOffsetHoursSdvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV19standardOffsetHoursSdvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV19standardOffsetHoursSdvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV19standardOffsetHoursSdvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isDaylightSaving",
+            "printedName": "isDaylightSaving",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV16isDaylightSavingSbvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV16isDaylightSavingSbvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV16isDaylightSavingSbvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV16isDaylightSavingSbvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "daylightOffsetHours",
+            "printedName": "daylightOffsetHours",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV19daylightOffsetHoursSdvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV19daylightOffsetHoursSdvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV19daylightOffsetHoursSdvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV19daylightOffsetHoursSdvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "nextTransition",
+            "printedName": "nextTransition",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Date?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Date",
+                    "printedName": "Foundation.Date",
+                    "usr": "s:10Foundation4DateV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV14nextTransition10Foundation4DateVSgvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV14nextTransition10Foundation4DateVSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.Date?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Date",
+                        "printedName": "Foundation.Date",
+                        "usr": "s:10Foundation4DateV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV14nextTransition10Foundation4DateVSgvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV14nextTransition10Foundation4DateVSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "offsetDescription",
+            "printedName": "offsetDescription",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV17offsetDescriptionSSvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV17offsetDescriptionSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV17offsetDescriptionSSvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV17offsetDescriptionSSvg",
+                "moduleName": "BCLRingSDK",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "daylightSavingDescription",
+            "printedName": "daylightSavingDescription",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK12TimeZoneInfoV25daylightSavingDescriptionSSvp",
+            "mangledName": "$s10BCLRingSDK12TimeZoneInfoV25daylightSavingDescriptionSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK12TimeZoneInfoV25daylightSavingDescriptionSSvg",
+                "mangledName": "$s10BCLRingSDK12TimeZoneInfoV25daylightSavingDescriptionSSvg",
+                "moduleName": "BCLRingSDK",
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10BCLRingSDK12TimeZoneInfoV",
+        "mangledName": "$s10BCLRingSDK12TimeZoneInfoV",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "BCLRingTimeZone",
         "printedName": "BCLRingTimeZone",
         "children": [
@@ -50218,6 +50617,71 @@
             "declKind": "Func",
             "usr": "s:10BCLRingSDK0A8TimeZoneO016getCurrentSystemcD0ACyFZ",
             "mangledName": "$s10BCLRingSDK0A8TimeZoneO016getCurrentSystemcD0ACyFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getCurrentSystemTimeZoneInfo",
+            "printedName": "getCurrentSystemTimeZoneInfo()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Tuple",
+                "printedName": "(bclTimeZone: BCLRingSDK.BCLRingTimeZone, info: BCLRingSDK.TimeZoneInfo)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLRingTimeZone",
+                    "printedName": "BCLRingSDK.BCLRingTimeZone",
+                    "usr": "c:@M@BCLRingSDK@E@BCLRingTimeZone"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TimeZoneInfo",
+                    "printedName": "BCLRingSDK.TimeZoneInfo",
+                    "usr": "s:10BCLRingSDK12TimeZoneInfoV"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A8TimeZoneO016getCurrentSystemcD4InfoAC03bclcD0_AA0cdH0V4infotyFZ",
+            "mangledName": "$s10BCLRingSDK0A8TimeZoneO016getCurrentSystemcD4InfoAC03bclcD0_AA0cdH0V4infotyFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "calculateBCLTimeZone",
+            "printedName": "calculateBCLTimeZone(for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "BCLRingTimeZone",
+                "printedName": "BCLRingSDK.BCLRingTimeZone",
+                "usr": "c:@M@BCLRingSDK@E@BCLRingTimeZone"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "TimeZone",
+                "printedName": "Foundation.TimeZone",
+                "usr": "s:10Foundation8TimeZoneV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A8TimeZoneO016calculateBCLTimeD03forAC10Foundation0cD0V_tFZ",
+            "mangledName": "$s10BCLRingSDK0A8TimeZoneO016calculateBCLTimeD03forAC10Foundation0cD0V_tFZ",
             "moduleName": "BCLRingSDK",
             "static": true,
             "declAttributes": [
@@ -114826,175 +115290,175 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6969,
+      "offset": 8160,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7009,
+      "offset": 8200,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7049,
+      "offset": 8240,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7089,
+      "offset": 8280,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7129,
+      "offset": 8320,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7169,
+      "offset": 8360,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7209,
+      "offset": 8400,
       "length": 4,
       "value": "0x06"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7249,
+      "offset": 8440,
       "length": 4,
       "value": "0x07"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7289,
+      "offset": 8480,
       "length": 4,
       "value": "0x08"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7329,
+      "offset": 8520,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7370,
+      "offset": 8561,
       "length": 4,
       "value": "0x0A"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7414,
+      "offset": 8605,
       "length": 4,
       "value": "0x0B"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7458,
+      "offset": 8649,
       "length": 4,
       "value": "0x0C"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7502,
+      "offset": 8693,
       "length": 4,
       "value": "0xF4"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7546,
+      "offset": 8737,
       "length": 4,
       "value": "0xF5"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7587,
+      "offset": 8778,
       "length": 4,
       "value": "0xF6"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7627,
+      "offset": 8818,
       "length": 4,
       "value": "0xF7"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7667,
+      "offset": 8858,
       "length": 4,
       "value": "0xF8"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7707,
+      "offset": 8898,
       "length": 4,
       "value": "0xF9"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7747,
+      "offset": 8938,
       "length": 4,
       "value": "0xFA"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7787,
+      "offset": 8978,
       "length": 4,
       "value": "0xFB"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7827,
+      "offset": 9018,
       "length": 4,
       "value": "0xFC"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7867,
+      "offset": 9058,
       "length": 4,
       "value": "0xFD"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7907,
+      "offset": 9098,
       "length": 4,
       "value": "0xFE"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7947,
+      "offset": 9138,
       "length": 4,
       "value": "0xFF"
     },
