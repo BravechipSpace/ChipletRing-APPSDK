@@ -4,19 +4,18 @@
 target 'BCLRingSDKDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  # Demo工程调试使用，不用添加
   pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
   pod 'QMUIKit','4.8.0'
   pod 'SnapKit', '~> 5'         
 
+  # Pods for BCLRingSDKDemo
   # SDK用到的库
   pod 'Foil', '~> 5.1.2'
-  pod 'iOSDFULibrary'
+  pod 'NordicDFU'
   pod 'RxSwift', '~> 6.9.0'
   pod 'RxCocoa', '~> 6.9.0'
   pod 'SwiftDate'
   pod 'SwiftyBeaver', '1.9.5'
   pod 'Zip'
-  
-  # Pods for BCLRingSDKDemo
+
 end

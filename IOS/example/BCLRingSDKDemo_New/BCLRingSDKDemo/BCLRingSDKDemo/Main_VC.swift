@@ -16,6 +16,7 @@ public enum FirmwareUpgradeType {
     case apollo // 阿波罗（Ambiq）升级
     case nordic // Nordic DFU 升级
     case phy // Phy 固件升级
+    case phyBootMode // Phy Bootloader 固件升级
 }
 
 class Main_VC: UIViewController {
@@ -49,10 +50,8 @@ class Main_VC: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
 
-        // 配置日志级别，控制台可按需打印日志
-//        BCLRingManager.shared.configLogLevels(consoleLogLevel: .verbose)
 
-        // 定制功能配置
+        // 定制厂商标识，进行特定处理
 //        BCLRingManager.shared.manufacturerID = .KK
 
         // 蓝牙状态
@@ -69,7 +68,7 @@ class Main_VC: UIViewController {
             BDLogger.info("电量推送Block: \(batteryLevel)")
         }
 
-//        //  蓝牙设备连接状态Block
+//        //  蓝牙设备连接状态Block方式
 //        BCLRingManager.shared.bluetoothConnectStateBlock = { state in
 //            switch state {
 //            case .connecting:
@@ -101,58 +100,120 @@ class Main_VC: UIViewController {
 //            }
 //        }
 
-        //  蓝牙设备连接状态
-        BCLRingManager.shared.bluetoothConnectStateObservable.subscribe(onNext: { state in
+//        //  蓝牙设备连接状态RX监听
+//        BCLRingManager.shared.bluetoothConnectStateObservable.subscribe(onNext: { state in
+//            switch state {
+//            case .connecting:
+//                self.name_Label.text = "设备名称："
+//                self.mac_Label.text = "MAC地址："
+//                self.connect_Label.text = "连接状态：连接中..."
+//                self.rssi_Label.text = "RSSI："
+//                break
+//            case .characteristicProcessingCompleted:
+//                let deviceInfo = BCLRingManager.shared.currentConnectedDevice
+//                if let advertisementData = deviceInfo?.advertisementData as? [String: Any] {
+//                    BDLogger.info("广播数据：\(advertisementData)")
+//                }
+//                if let advDataManufacturerData = deviceInfo?.advDataManufacturerData as? Data {
+//                    BDLogger.info("蓝牙制造商数据：\(advDataManufacturerData)")
+//                    let hexString = advDataManufacturerData.map { String(format: "%02X", $0) }.joined()
+//                    BDLogger.info("蓝牙制造商数据（Hex）：\(hexString)")
+//                }
+//                BDLogger.info("蓝牙广播协议中充电指示位：\(deviceInfo?.chargingIndicator ?? 0)")
+//                BDLogger.info("蓝牙广播协议中绑定指示位：\(deviceInfo?.bindingIndicatorBit ?? 0)")
+//                BDLogger.info("蓝牙广播协议中通讯协议版本号：\(deviceInfo?.communicationProtocolVersion ?? 0)")
+//                guard let deviceInfo = deviceInfo else {
+//                    self.name_Label.text = "设备名称："
+//                    self.mac_Label.text = "MAC地址："
+//                    self.connect_Label.text = "连接状态：未连接"
+//                    self.rssi_Label.text = "RSSI："
+//                    return
+//                }
+//                self.name_Label.text = "设备名称：\(deviceInfo.peripheralName ?? "")"
+//                self.mac_Label.text = "MAC地址：\(deviceInfo.macAddress ?? "")"
+//                self.connect_Label.text = "连接状态：已连接"
+//                self.rssi_Label.text = "RSSI：\(deviceInfo.rssi ?? 0)"
+//
+//                UserDefaults.standard.set(deviceInfo.macAddress, forKey: "ring_macAddress")
+//                UserDefaults.standard.set(deviceInfo.peripheralName, forKey: "ring_peripheralName")
+//                UserDefaults.standard.set(deviceInfo.peripheral.identifier.uuidString, forKey: "ring_uuidString")
+//                break
+//            default:
+//                self.name_Label.text = "设备名称："
+//                self.mac_Label.text = "MAC地址："
+//                self.connect_Label.text = "连接状态：未连接"
+//                self.rssi_Label.text = "RSSI："
+//                break
+//            }
+//        }).disposed(by: disposeBag)
+
+        //  简化版本连接状态回调
+        BCLRingManager.shared.deviceIsDidConnectedBlock = { state in
             switch state {
-            case .connecting:
-                self.name_Label.text = "设备名称："
-                self.mac_Label.text = "MAC地址："
-                self.connect_Label.text = "连接状态：连接中..."
-                self.rssi_Label.text = "RSSI："
-                break
-            case .characteristicProcessingCompleted:
-                let deviceInfo = BCLRingManager.shared.currentConnectedDevice
-                if let advertisementData = deviceInfo?.advertisementData as? [String: Any] {
-                    BDLogger.info("广播数据：\(advertisementData)")
-                }
-                if let advDataManufacturerData = deviceInfo?.advDataManufacturerData as? Data {
-                    BDLogger.info("蓝牙制造商数据：\(advDataManufacturerData)")
-                    let hexString = advDataManufacturerData.map { String(format: "%02X", $0) }.joined()
-                    BDLogger.info("蓝牙制造商数据（Hex）：\(hexString)")
-                }
-                BDLogger.info("蓝牙广播协议中充电指示位：\(deviceInfo?.chargingIndicator ?? 0)")
-                BDLogger.info("蓝牙广播协议中绑定指示位：\(deviceInfo?.bindingIndicatorBit ?? 0)")
-                BDLogger.info("蓝牙广播协议中通讯协议版本号：\(deviceInfo?.communicationProtocolVersion ?? 0)")
-                guard let deviceInfo = deviceInfo else {
+            case .connected:
+                BDLogger.info("设备已连接-简化版本")
+                if let connectedDevice = BCLRingManager.shared.currentConnectedDevice {
+                    self.name_Label.text = "设备名称：\(connectedDevice.peripheralName ?? "")"
+                    self.mac_Label.text = "MAC地址：\(connectedDevice.macAddress ?? "")"
+                    self.connect_Label.text = "连接状态：已连接"
+                    self.rssi_Label.text = "RSSI：\(connectedDevice.rssi ?? 0)"
+                } else {
+                    BDLogger.error("当前没有已连接的设备信息")
                     self.name_Label.text = "设备名称："
                     self.mac_Label.text = "MAC地址："
                     self.connect_Label.text = "连接状态：未连接"
                     self.rssi_Label.text = "RSSI："
-                    return
                 }
-                self.name_Label.text = "设备名称：\(deviceInfo.peripheralName ?? "")"
-                self.mac_Label.text = "MAC地址：\(deviceInfo.macAddress ?? "")"
-                self.connect_Label.text = "连接状态：已连接"
-                self.rssi_Label.text = "RSSI：\(deviceInfo.rssi ?? 0)"
-
-                UserDefaults.standard.set(deviceInfo.macAddress, forKey: "ring_macAddress")
-                UserDefaults.standard.set(deviceInfo.peripheralName, forKey: "ring_peripheralName")
-                UserDefaults.standard.set(deviceInfo.peripheral.identifier.uuidString, forKey: "ring_uuidString")
-                break
-            default:
+            case .connecting:
+                BDLogger.info("设备连接中...-简化版本")
+                if let pendingDevice = BCLRingManager.shared.pendingDeviceInfo {
+                    self.name_Label.text = "设备名称：\(pendingDevice.peripheralName ?? "")"
+                    self.mac_Label.text = "MAC地址：\(pendingDevice.macAddress ?? "")"
+                    self.connect_Label.text = "连接状态：连接中"
+                    self.rssi_Label.text = "RSSI：\(pendingDevice.rssi ?? 0)"
+                } else {
+                    BDLogger.error("当前没有连接中的设备信息")
+                    self.name_Label.text = "设备名称："
+                    self.mac_Label.text = "MAC地址："
+                    self.connect_Label.text = "连接状态：未连接"
+                    self.rssi_Label.text = "RSSI："
+                }
+            case .disconnected:
+                BDLogger.info("设备已断开连接-简化版本")
                 self.name_Label.text = "设备名称："
                 self.mac_Label.text = "MAC地址："
                 self.connect_Label.text = "连接状态：未连接"
                 self.rssi_Label.text = "RSSI："
-                break
             }
-        }).disposed(by: disposeBag)
+        }
 
-        //  已连接的蓝牙设备信息
-        BCLRingManager.shared.connectedPeripheralDeviceInfoObservable.subscribe(onNext: { deviceInfo in
-            BDLogger.info("已连接的蓝牙设备信息: \(String(describing: deviceInfo))")
-        }).disposed(by: disposeBag)
+//        //  待连接的蓝牙设备信息
+//        BCLRingManager.shared.pendingPeripheralDeviceInfoObservable.subscribe(onNext: { deviceInfo in
+//            BDLogger.info("待连接设备信息: \(String(describing: deviceInfo))")
+//            guard let deviceInfo = deviceInfo else {
+//                BDLogger.error("待连接设备信息为空")
+//                return
+//            }
+//            self.name_Label.text = "设备名称：\(deviceInfo.peripheralName ?? "")"
+//            self.mac_Label.text = "MAC地址：\(deviceInfo.macAddress ?? "")"
+//            self.connect_Label.text = "连接状态：连接中"
+//            self.rssi_Label.text = "RSSI：\(deviceInfo.rssi ?? 0)"
+//        }).disposed(by: disposeBag)
+//
+//        //  已连接的蓝牙设备信息
+//        BCLRingManager.shared.connectedPeripheralDeviceInfoObservable.subscribe(onNext: { deviceInfo in
+//            BDLogger.info("已连接的蓝牙设备信息: \(String(describing: deviceInfo))")
+//            guard let deviceInfo = deviceInfo else {
+//                BDLogger.error("待连接设备信息为空")
+//                return
+//            }
+//            self.name_Label.text = "设备名称：\(deviceInfo.peripheralName ?? "")"
+//            self.mac_Label.text = "MAC地址：\(deviceInfo.macAddress ?? "")"
+//            self.connect_Label.text = "连接状态：已连接"
+//            self.rssi_Label.text = "RSSI：\(deviceInfo.rssi ?? 0)"
+//        }).disposed(by: disposeBag)
 
+        // 用于记录上次连接过的设备信息，应用启动后可选择是否自动连接
         let macAddress = UserDefaults.standard.string(forKey: "ring_macAddress")
         let peripheralName = UserDefaults.standard.string(forKey: "ring_peripheralName")
         if let macAddress = macAddress {
@@ -173,7 +234,6 @@ class Main_VC: UIViewController {
             case .success:
                 BDLogger.info("connect success")
                 QMUITips.hideAllTips(in: self.view)
-                self.navigationController?.popViewController(animated: true)
             case let .failure(error):
                 BDLogger.error("connect failed: \(error)")
                 QMUITips.hideAllTips(in: self.view)
@@ -660,7 +720,11 @@ class Main_VC: UIViewController {
                     BDLogger.error("连接戒指-历史数据同步出错：\(error.localizedDescription)")
                 }
             )
-            BCLRingManager.shared.appEventConnectRing(date: Date(), timeZone: .East8, callbacks: callbacks) { res in
+
+            // 设置过滤时间（可选）(如果不需要过滤时间，可以传nil，表示不过滤) (传入时间则只会同步过滤时间之后的数据)
+            let filterTime = "2025-01-01 00:00:00".toDate("yyyy-MM-dd HH:mm:ss", region: Region.local)?.date
+            BDLogger.info("APP事件-连接戒指-过滤时间: \(String(describing: filterTime))")
+            BCLRingManager.shared.appEventConnectRing(date: Date(), timeZone: .East8, filterTime: filterTime, callbacks: callbacks) { res in
                 switch res {
                 case let .success(response):
                     BDLogger.info("连接戒指成功: \(response)")
@@ -736,7 +800,10 @@ class Main_VC: UIViewController {
                 }
             )
 
-            BCLRingManager.shared.appEventRefreshRing(date: Date(), timeZone: .East8, callbacks: callbacks) { res in
+            // 设置过滤时间（可选）(如果不需要过滤时间，可以传nil，表示不过滤) (传入时间则只会同步过滤时间之后的数据)
+            let filterTime = "2025-01-01 00:00:00".toDate("yyyy-MM-dd HH:mm:ss", region: Region.local)?.date
+            BDLogger.info("APP事件-刷新戒指-过滤时间: \(String(describing: filterTime))")
+            BCLRingManager.shared.appEventRefreshRing(date: Date(), timeZone: .East8, filterTime: filterTime, callbacks: callbacks) { res in
                 switch res {
                 case let .success(response):
                     BDLogger.info("刷新戒指成功: \(response)")
@@ -1080,7 +1147,7 @@ class Main_VC: UIViewController {
             break
         case 148: // SDK本地计算睡眠数据
             BDLogger.info("使用SDK内置计算睡眠数据方法获取睡眠数据")
-            let date = Date("2025-05-09", format: "yyyy-MM-dd")
+            let date = Date("2025-08-08", format: "yyyy-MM-dd")
             // BCLRingLocalSleepModel
             let sleepModel = BCLRingManager.shared.calculateSleepLocally(targetDate: date!, macString: nil)
             BDLogger.info("睡眠数据\(sleepModel.description)")
@@ -1766,7 +1833,7 @@ class Main_VC: UIViewController {
             break
         case 190: // 固件历史版本
             BDLogger.info("获取固件历史版本")
-            BCLRingManager.shared.getFirmwareVersionList(category: "Z2W") { res in
+            BCLRingManager.shared.getFirmwareVersionList(category: "Z3N") { res in
                 switch res {
                 case let .success(response):
                     BDLogger.info("固件历史版本-总个数: \(response.count)")
@@ -1782,6 +1849,15 @@ class Main_VC: UIViewController {
             break
         case 191: // 开始运动
             BDLogger.info("开始运动")
+
+            /// 运动数据监听
+            BCLRingManager.shared.sportDataBlock = { sportDataResponse in
+                BDLogger.info("运动数据-时间戳: \(sportDataResponse.timestamp ?? 0)")
+                BDLogger.info("运动数据-步数: \(sportDataResponse.totalSteps ?? 0)")
+                BDLogger.info("运动数据-心率: \(sportDataResponse.heartRate ?? 0)次/分")
+                BDLogger.info("运动数据-能量消耗: \(sportDataResponse.energyConsumption ?? 0)")
+            }
+
             BCLRingManager.shared.startSportMode(sportType: 1) { res in
                 switch res {
                 case let .success(response):
@@ -1793,14 +1869,6 @@ class Main_VC: UIViewController {
                 case let .failure(error):
                     BDLogger.error("开始运动失败: \(error)")
                 }
-            } sportDataCallback: { sportDataRes in
-                BDLogger.info("运动数据-时间戳: \(sportDataRes.timestamp ?? 0)")
-                BDLogger.info("运动数据-步数: \(sportDataRes.totalSteps ?? 0)")
-                BDLogger.info("运动数据-心率: \(sportDataRes.heartRate ?? 0)次/分")
-                BDLogger.info("运动数据-能量消耗: \(sportDataRes.energyConsumption ?? 0)")
-
-            } passiveStopCallback: { stopRes in
-                BDLogger.info("被动停止运动-状态: \(stopRes.isWearInterrupt ?? 0)")
             }
             break
         case 192: // 停止运动
@@ -1820,17 +1888,17 @@ class Main_VC: UIViewController {
             break
         case 193: // 运动漏点续传
             BDLogger.info("运动漏点续传")
-            BCLRingManager.shared.requestMissingPointsSportMode { res in
-                switch res {
-                case let .success(sportDataRes):
-                    BDLogger.info("运动数据-时间戳: \(sportDataRes.timestamp ?? 0)")
-                    BDLogger.info("运动数据-步数: \(sportDataRes.totalSteps ?? 0)")
-                    BDLogger.info("运动数据-心率: \(sportDataRes.heartRate ?? 0)次/分")
-                    BDLogger.info("运动数据-能量消耗: \(sportDataRes.energyConsumption ?? 0)")
-                case let .failure(error):
-                    BDLogger.error("运动漏点续传失败: \(error)")
-                }
+
+            /// 漏传运动数据监听
+            BCLRingManager.shared.sportDataMissingPointsBlock = { missingPointsDtatRes in
+                BDLogger.info("漏传-运动数据-时间戳: \(missingPointsDtatRes.timestamp ?? 0)")
+                BDLogger.info("漏传-运动数据-步数: \(missingPointsDtatRes.totalSteps ?? 0)")
+                BDLogger.info("漏传-运动数据-心率: \(missingPointsDtatRes.heartRate ?? 0)次/分")
+                BDLogger.info("漏传-运动数据-能量消耗: \(missingPointsDtatRes.energyConsumption ?? 0)")
             }
+
+            /// 请求获取漏传运动数据
+            BCLRingManager.shared.requestMissingPointsSportMode()
             break
         case 194: // 闹钟配置
             BDLogger.info("设置闹钟")
@@ -2022,7 +2090,281 @@ class Main_VC: UIViewController {
             }
 
             break
-        case 201:
+        case 201: // PHY Boot Mode 固件升级功能
+            BDLogger.info("PHY Boot Mode 升级功能")
+            var phyBootDeviceMacAddress = ""
+            // 首先获取当前连接的设备的MAC地址
+            guard let currentConnectedDevice = BCLRingManager.shared.currentConnectedDevice, currentConnectedDevice.macAddress?.isEmpty == false else {
+                BDLogger.error("当前没有连接的设备或设备MAC地址为空")
+                return
+            }
+            phyBootDeviceMacAddress = currentConnectedDevice.macAddress!
+            BDLogger.info("当前Phy Boot Mode 升级设备的MAC地址: \(phyBootDeviceMacAddress)")
+            BDLogger.info("当前Phy Boot Mode 设备升级完成后的地址则为:\(decrementMac(macAddress: phyBootDeviceMacAddress) ?? "Mac地址获取失败")")
+            // 如果戒指的固件升级模式为.phy的，存在戒指在固件升级过程中，因连接断开等因素导致的固件升级中断，则戒指会进入到boot模式。
+            // 此模式下戒指表现为名字为包含PPlus OTA信息，以及戒指的MAC地址最后一位会自动+1
+            // 首先查找设备名称包含 PPlusOTA 的设备，并进行连接。
+            guard let currentConnectedDevice = BCLRingManager.shared.currentConnectedDevice, currentConnectedDevice.isPhyBootMode else {
+                BDLogger.error("当前设备不支持PHY Boot Mode升级功能")
+                return
+            }
+
+            // 📢 根据实际情况选择以下两种 方式之一进行PHY Boot Mode升级：
+            // -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // 1、根据自身是否有固件版本号执行不同的逻辑，如果有固件版本信息，则可以直接通过当前的固件版本信息去检查是否有需要升级的固件版本，然后下载最新的固件文件后，进行PHY Boot Mode升级
+            // a、检查固件版本更新
+//            let currentFirmwareVersion = "2.4.8.0Z34"
+//            BCLRingManager.shared.checkFirmwareUpdate(version: currentFirmwareVersion) { result in
+//                switch result {
+//                case let .success(versionInfo):
+//                    //  有新版本固件可以进行升级
+//                    if versionInfo.hasNewVersion {
+//                        BDLogger.info("""
+//                        ✅ 发现新版本：
+//                        - 版本号：\(versionInfo.version ?? "")
+//                        - 下载地址：\(versionInfo.downloadUrl ?? "")
+//                        - 文件名：\(versionInfo.fileName ?? "")
+//                        """)
+//
+//                        // b、下载固件文件
+//                        guard let fileName = versionInfo.fileName,
+//                              let downloadUrl = versionInfo.downloadUrl,
+//                              !fileName.isEmpty,
+//                              !downloadUrl.isEmpty else {
+//                            BDLogger.error("❌ 无法获取固件文件名或下载地址")
+//                            return
+//                        }
+//                        let destinationPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+//                        BCLRingManager.shared.downloadFirmware(url: downloadUrl, fileName: fileName, destinationPath: destinationPath, progress: { progress in
+//                            BDLogger.info("固件下载进度：\(progress)")
+//                        }, completion: { result in
+//                            switch result {
+//                            case let .success(filePath):
+//                                BDLogger.info("固件下载成功：\(filePath)")
+//                                // c、执行PHY Boot Mode升级
+//                                // 检查文件扩展名是否为.hex16
+//                                guard filePath.lowercased() == "hex16" else {
+//                                    BDLogger.error("请选择.hex16格式的固件文件")
+//                                    return
+//                                }
+//                                BDLogger.info("选择的文件：\(filePath)")
+//                                BDLogger.info("开始Phy Boot Mode 固件升级...")
+//                                // 如果开启了自动重连，需要先关掉。
+//                                BCLRingManager.shared.isAutoReconnectEnabled = false
+//                                BCLRingManager.shared.phyBootModeUpgrade(
+//                                    filePath: filePath,
+//                                    device: BCLRingManager.shared.currentConnectedDevice!,
+//                                    peripheral: BCLRingManager.shared.currentConnectedDevice!.peripheral
+//                                ) { progress in
+//                                    BDLogger.info("PHY Boot Mode 升级进度: \(progress)%")
+//                                } completion: { result in
+//                                    switch result {
+//                                    case let .success(response):
+//                                        switch response {
+//                                        case .preparing:
+//                                            BDLogger.info("PHY Boot Mode 升级中: 准备中...")
+//                                        case .bootModeConnected:
+//                                            BDLogger.info("PHY Boot Mode 升级中: 已连接到Boot模式设备...")
+//                                        case .upgrading:
+//                                            BDLogger.info("PHY Boot Mode 升级中: 文件传传输中...")
+//                                        case .upgradingCompleted:
+//                                            BDLogger.info("PHY Boot Mode 升级中: 文件传输完成，准备退出Boot模式...")
+//                                        case .exitingBootMode:
+//                                            BDLogger.info("PHY Boot Mode 升级中: 正在退出Boot模式...")
+//                                        case .success:
+//                                            BDLogger.info("✅ PHY Boot Mode 升级成功: \(response)")
+//                                            // TODO: 升级成功后可以选择重新连接设备
+//                                            // 将Phy Boot 模式下的Mac地址进行-1操作，然后进行重新连接设备
+//                                            guard let targetDeviceMacAddress = self.decrementMac(macAddress: phyBootDeviceMacAddress) else {
+//                                                BDLogger.error("❌ 获取目标设备的MAC地址失败,无法重连蓝牙设备")
+//                                                return
+//                                            }
+//                                            BDLogger.info("升级成功后，目标设备的MAC地址: \(targetDeviceMacAddress)")
+//                                            self.connectDevice(macAddress: targetDeviceMacAddress)
+//                                        case let .failed(errString):
+//                                            BDLogger.error("❌ PHY Boot Mode 升级失败: \(errString)")
+//                                        }
+//                                    case let .failure(error):
+//                                        BDLogger.error("❌ PHY Boot Mode 升级失败: \(error)")
+//                                    }
+//                                }
+//                            case let .failure(error):
+//                                BDLogger.error("固件下载失败：\(error)")
+//                            }
+//                        })
+//                    } else {
+//                        BDLogger.info("✅ 当前已是最新版本")
+//                        // 如果当前版本已经是最新的，没有最新版本固件可以下载，则可以通过固件版本历史信息去查询最新的固件文件进行PHY Boot Mode升级
+//                    }
+//                    BDLogger.info("📝 消息：\(String(describing: versionInfo.version))")
+//                case let .failure(error):
+//                    switch error {
+//                    case let .network(.invalidParameters(message)):
+//                        BDLogger.error("❌ 参数无效，请检查版本号格式: \(message)")
+//                    case let .network(.httpError(code)):
+//                        BDLogger.error("❌ HTTP请求失败：状态码 \(code)")
+//                    case let .network(.serverError(code, message)):
+//                        BDLogger.error("❌ 服务器错误：[\(code)] \(message)")
+//                    case .network(.invalidResponse):
+//                        BDLogger.error("❌ 响应数据无效")
+//                    case let .network(.decodingError(error)):
+//                        BDLogger.error("❌ 数据解析失败：\(error.localizedDescription)")
+//                    case let .network(.networkError(message)):
+//                        BDLogger.error("❌ 网络错误：\(message)")
+//                    case let .network(.tokenError(message)):
+//                        BDLogger.error("❌ Token异常：\(message)")
+//                    default:
+//                        BDLogger.error("❌ 其他错误：\(error)")
+//                    }
+//                }
+//            }
+
+            // -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//            // 2、如果没有固件版本信息，则可以根据固件分配的编码例如：Q1W、Q2W、Q3W信息去查询固件历史版本信息，然后取最新版本的固件文件进行下载后，执行PHY Boot Mode升级
+//            // 同样查找并连接戒指 名称包含 PPlusOTA 的设备，并进行连接。
+//
+//            // 通过标识查找固件版本信息列表
+//            // 📢 注意：以下的 category 固件类别 标识 需要根据实际设备的固件类别进行替换 例如：Z21、Z34等，防止下载到错误的固件文件，导致蓝牙设备变砖
+//            BCLRingManager.shared.getFirmwareVersionList(category: "000") { result in
+//                switch result {
+//                case let .success(response):
+//                    BDLogger.info("固件历史版本-总个数: \(response.count)")
+//                    // 解析版本号并找出最新版本
+//                    let latestVersion = self.findLatestVersion(from: response)
+//                    if let latest = latestVersion {
+//                        let latestFileName = self.getFileName(from: latest)
+//                        let latestFileUrl = self.getFileUrl(from: latest)
+//                        BDLogger.info("✅ 找到最新版本：\(latestFileName)")
+//                        BDLogger.info("✅ 最新版本号：\(self.extractVersionNumber(from: latestFileName))")
+//                        BDLogger.info("✅ 最新版本下载链接：\(latestFileUrl)")
+//                        guard !latestFileName.isEmpty, !latestFileUrl.isEmpty else {
+//                            BDLogger.error("文件名或下载URL为空")
+//                            return
+//                        }
+//                        BDLogger.info("开始下载最新固件：\(latestFileName)")
+//
+//                        // 获取文档目录路径
+//                        let destinationPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+//
+//                        // 调用固件的下载方法
+//                        BCLRingManager.shared.downloadFirmware(
+//                            url: latestFileUrl,
+//                            fileName: latestFileName,
+//                            destinationPath: destinationPath,
+//                            progress: { progress in
+//                                BDLogger.info("固件下载进度：\(progress)%")
+//                            },
+//                            completion: { result in
+//                                switch result {
+//                                case let .success(filePath):
+//                                    BDLogger.info("✅ 固件下载成功：\(filePath)")
+//                                    guard let currentDevice = BCLRingManager.shared.currentConnectedDevice else {
+//                                        BDLogger.error("当前没有连接的设备")
+//                                        return
+//                                    }
+//                                    BDLogger.info("开始PHY Boot Mode升级...")
+//                                    // 如果开启了自动重连，需要先关掉。
+//                                    BCLRingManager.shared.isAutoReconnectEnabled = false
+//                                    BCLRingManager.shared.phyBootModeUpgrade(
+//                                        filePath: filePath,
+//                                        device: currentDevice,
+//                                        peripheral: currentDevice.peripheral
+//                                    ) { progress in
+//                                        BDLogger.info("PHY Boot Mode 升级进度: \(progress)%")
+//                                    } completion: { result in
+//                                        switch result {
+//                                        case let .success(response):
+//                                            switch response {
+//                                            case .preparing:
+//                                                BDLogger.info("PHY Boot Mode 升级中: 准备中...")
+//                                            case .bootModeConnected:
+//                                                BDLogger.info("PHY Boot Mode 升级中: 已连接到Boot模式设备...")
+//                                            case .upgrading:
+//                                                BDLogger.info("PHY Boot Mode 升级中: 文件传传输中...")
+//                                            case .upgradingCompleted:
+//                                                BDLogger.info("PHY Boot Mode 升级中: 文件传输完成，准备退出Boot模式...")
+//                                            case .exitingBootMode:
+//                                                BDLogger.info("PHY Boot Mode 升级中: 正在退出Boot模式...")
+//                                            case .success:
+//                                                BDLogger.info("✅ PHY Boot Mode 升级成功: \(response)")
+//                                                // 📢 需要将Phy Boot 模式下的Mac地址进行-1操作，然后进行重新连接设备
+//                                                guard let targetDeviceMacAddress = self.decrementMac(macAddress: phyBootDeviceMacAddress) else {
+//                                                    BDLogger.error("❌ 获取目标设备的MAC地址失败,无法重连蓝牙设备")
+//                                                    return
+//                                                }
+//                                                BDLogger.info("升级成功后，目标设备的MAC地址: \(targetDeviceMacAddress)")
+//                                                self.connectDevice(macAddress: targetDeviceMacAddress)
+//                                            case let .failed(errString):
+//                                                BDLogger.error("❌ PHY Boot Mode 升级失败: \(errString)")
+//                                            }
+//                                        case let .failure(error):
+//                                            BDLogger.error("❌ PHY Boot Mode 升级失败: \(error)")
+//                                        }
+//                                    }
+//                                case let .failure(error):
+//                                    BDLogger.error("❌ 固件下载失败：\(error)")
+//                                }
+//                            }
+//                        )
+//                    } else {
+//                        BDLogger.error("❌ 未找到有效的固件版本")
+//                    }
+//                case let .failure(error):
+//                    BDLogger.error("获取固件历史版本失败: \(error)")
+//                }
+//            }
+
+            // 📢 注意：如果需要在手机上选择文件进行PHY Boot Mode升级，请使用以下代码实现文件选择器
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------
+            curFirmwareUpgradeType = .phyBootMode
+            // 实现打开文件选择器
+            let filePicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
+            filePicker.delegate = self
+            filePicker.allowsMultipleSelection = false
+            present(filePicker, animated: true, completion: nil)
+            break
+
+        case 202: // 开始老化测试
+            BDLogger.info("开始老化测试")
+            BCLRingManager.shared.setAgingMode(mode: 0) { result in
+                switch result {
+                case let .success(response):
+                    BDLogger.info("老化测试开始-成功 \n 当前模式：\(response.agingMode)")
+                case let .failure(error):
+                    BDLogger.error("老化测试开始-失败: \(error)")
+                }
+            }
+            break
+        case 203: // 读取老化测试信息
+            BDLogger.info("读取老化测试信息")
+            BCLRingManager.shared.readAgingModeInfo { result in
+                switch result {
+                case let .success(response):
+                    BDLogger.info("读取老化测试信息-成功")
+                    BDLogger.info("老化信息-总时长（分钟）: \(response.totalDurationMinutes)")
+                    BDLogger.info("老化信息-开始时间戳: \(response.startTime)")
+                    BDLogger.info("老化信息-结束时间戳: \(response.endTime)")
+                    BDLogger.info("老化信息-老化状态: \(response.agingStatus)")
+                    BDLogger.info("老化信息-充电最高温度: \(Float(response.maxChargeTemp) / 100.0)°C")
+                    BDLogger.info("老化信息-充电最高温度时长: \(response.maxChargeTempTime)")
+                case let .failure(error):
+                    BDLogger.error("读取老化测试信息-失败: \(error)")
+                }
+            }
+            break
+        case 204: // 特定固件步数获取
+            BDLogger.info("特定固件步数获取")
+            BCLRingManager.shared.queryStepInfo(mac: "42:4A:2D:2C:E1:6E") { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("特定固件步数获取-成功")
+                    BDLogger.info("步数信息-总步数: \(response)")
+                case let .failure(error):
+                    BDLogger.error("特定固件步数获取-失败: \(error)")
+                }
+            }
             break
         default:
             break
@@ -2395,6 +2737,8 @@ extension Main_VC: UIDocumentPickerDelegate {
             BDLogger.info("选择的文件：\(fileURL)")
             BDLogger.info("文件名称：\(fileURL.lastPathComponent)")
             BDLogger.info("开始Phy固件升级...")
+            // 如果开启了自动重连，需要先关掉。
+            BCLRingManager.shared.isAutoReconnectEnabled = false
             BCLRingManager.shared.phyUpgradeFirmware(filePath: fileURL.path) { progress in
                 BDLogger.info("升级进度：\(progress)")
             } completion: { res in
@@ -2407,6 +2751,201 @@ extension Main_VC: UIDocumentPickerDelegate {
                     break
                 }
             }
+        } else if curFirmwareUpgradeType == .phyBootMode {
+            // 检查文件扩展名是否为.hex16
+            guard fileURL.pathExtension.lowercased() == "hex16" else {
+                BDLogger.error("请选择.hex16格式的固件文件")
+                return
+            }
+            BDLogger.info("选择的文件：\(fileURL)")
+            BDLogger.info("文件名称：\(fileURL.lastPathComponent)")
+            BDLogger.info("开始Phy Boot Mode 固件升级...")
+            BCLRingManager.shared.isAutoReconnectEnabled = false
+            BCLRingManager.shared.phyBootModeUpgrade(filePath: fileURL.path, device: BCLRingManager.shared.currentConnectedDevice!, peripheral: BCLRingManager.shared.currentConnectedDevice!.peripheral) { progress in
+                BDLogger.info("PHY Boot Mode 升级进度: \(progress)%")
+            } completion: { res in
+                switch res {
+                case let .success(response):
+                    BDLogger.info("PHY Boot Mode 升级成功: \(response)")
+                case let .failure(error):
+                    BDLogger.error("PHY Boot Mode 升级失败: \(error)")
+                }
+            }
         }
+    }
+}
+
+// MARK: - 版本号处理工具方法
+
+extension Main_VC {
+    /// 从文件名中提取版本号
+    /// - Parameter fileName: 文件名，例如 "2.7.5.0Z3N.hex16"
+    /// - Returns: 版本号字符串，例如 "2.7.5.0"
+    private func extractVersionNumber(from fileName: String) -> String {
+        // 使用正则表达式匹配版本号格式
+        let pattern = #"^(\d+\.\d+\.\d+\.\d+)"#
+
+        if let regex = try? NSRegularExpression(pattern: pattern),
+           let match = regex.firstMatch(in: fileName, range: NSRange(fileName.startIndex..., in: fileName)) {
+            let versionRange = Range(match.range(at: 1), in: fileName)!
+            return String(fileName[versionRange])
+        }
+
+        // 如果正则匹配失败，使用简单的字符串分割
+        let components = fileName.components(separatedBy: "Z")
+        if let firstComponent = components.first {
+            return firstComponent
+        }
+
+        return ""
+    }
+
+    /// 比较两个版本号
+    /// - Parameters:
+    ///   - version1: 第一个版本号
+    ///   - version2: 第二个版本号
+    /// - Returns: 比较结果：-1表示version1更旧，0表示相等，1表示version1更新
+    private func compareVersions(_ version1: String, _ version2: String) -> Int {
+        let components1 = version1.components(separatedBy: ".").compactMap { Int($0) }
+        let components2 = version2.components(separatedBy: ".").compactMap { Int($0) }
+
+        let maxLength = max(components1.count, components2.count)
+
+        for i in 0 ..< maxLength {
+            let num1 = i < components1.count ? components1[i] : 0
+            let num2 = i < components2.count ? components2[i] : 0
+
+            if num1 < num2 {
+                return -1
+            } else if num1 > num2 {
+                return 1
+            }
+        }
+
+        return 0
+    }
+
+    /// 从固件版本列表中找出最新版本
+    /// - Parameter versions: 固件版本列表
+    /// - Returns: 最新版本的固件信息
+    private func findLatestVersion(from versions: [Any]) -> Any? {
+        var latestVersion: Any?
+        var latestVersionNumber = ""
+
+        for version in versions {
+            // 使用 Mirror 反射来获取 fileName 属性
+            let mirror = Mirror(reflecting: version)
+            var fileName: String?
+
+            for child in mirror.children {
+                if child.label == "fileName" {
+                    fileName = child.value as? String
+                    break
+                }
+            }
+
+            if let fileName = fileName {
+                let versionNumber = extractVersionNumber(from: fileName)
+
+                if versionNumber.isEmpty {
+                    continue
+                }
+
+                if latestVersion == nil {
+                    latestVersion = version
+                    latestVersionNumber = versionNumber
+                } else {
+                    let comparison = compareVersions(versionNumber, latestVersionNumber)
+                    if comparison > 0 {
+                        latestVersion = version
+                        latestVersionNumber = versionNumber
+                    }
+                }
+            }
+        }
+
+        return latestVersion
+    }
+
+    /// 从固件版本对象中获取文件名
+    /// - Parameter version: 固件版本对象
+    /// - Returns: 文件名
+    private func getFileName(from version: Any) -> String {
+        let mirror = Mirror(reflecting: version)
+        for child in mirror.children {
+            if child.label == "fileName" {
+                return child.value as? String ?? ""
+            }
+        }
+        return ""
+    }
+
+    /// 从固件版本对象中获取文件URL
+    /// - Parameter version: 固件版本对象
+    /// - Returns: 文件URL
+    private func getFileUrl(from version: Any) -> String {
+        let mirror = Mirror(reflecting: version)
+        for child in mirror.children {
+            if child.label == "fileUrl" {
+                return child.value as? String ?? ""
+            }
+        }
+        return ""
+    }
+
+    /// 递增MAC地址(当前Mac地址+1)
+    /// - Parameter macAddress: MAC地址
+    /// - Returns: 递增后的MAC地址
+    func incrementMac(macAddress: String) -> String? {
+        let components = macAddress.components(separatedBy: ":")
+        var bytes = [UInt8]()
+
+        for component in components {
+            if let byte = UInt8(component, radix: 16) {
+                bytes.append(byte)
+            } else {
+                return nil // 非法的MAC地址格式
+            }
+        }
+
+        for i in (0 ..< 6).reversed() {
+            if bytes[i] < 255 {
+                bytes[i] += 1
+                break
+            } else {
+                bytes[i] = 0
+            }
+        }
+
+        let incrementedMacAddress = bytes.map { String(format: "%02X", $0) }.joined(separator: ":")
+        return incrementedMacAddress
+    }
+
+    /// 递减MAC地址(当前Mac地址-1)
+    /// - Parameter macAddress: MAC地址
+    /// - Returns: 递减后的MAC地址
+    func decrementMac(macAddress: String) -> String? {
+        let components = macAddress.components(separatedBy: ":")
+        var bytes = [UInt8]()
+
+        for component in components {
+            if let byte = UInt8(component, radix: 16) {
+                bytes.append(byte)
+            } else {
+                return nil // 非法的MAC地址格式
+            }
+        }
+
+        for i in (0 ..< 6).reversed() {
+            if bytes[i] > 0 {
+                bytes[i] -= 1
+                break
+            } else {
+                bytes[i] = 255
+            }
+        }
+
+        let decrementedMacAddress = bytes.map { String(format: "%02X", $0) }.joined(separator: ":")
+        return decrementedMacAddress
     }
 }

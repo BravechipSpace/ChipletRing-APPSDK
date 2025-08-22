@@ -66,7 +66,7 @@ class Log_VC: UIViewController {
     private func loadLogFiles() {
         // 获取今天的日志文件路径
         let filename = "\(Date().toFormat("yyyy-MM-dd")).log"
-        let logFilePath = URL(fileURLWithPath: defaultLogDirectoryPath).appendingPathComponent(filename)
+        let logFilePath = URL(fileURLWithPath: BDLogConfig.currentLogDirectoryPath).appendingPathComponent(filename)
 
         do {
             // 读取日志文件内容
@@ -95,7 +95,7 @@ class Log_VC: UIViewController {
     private func deleteAllLogFiles() {
         do {
             let fileManager = FileManager.default
-            let directoryURL = URL(fileURLWithPath: defaultLogDirectoryPath)
+            let directoryURL = URL(fileURLWithPath: BDLogConfig.currentLogDirectoryPath)
             let fileURLs = try fileManager.contentsOfDirectory(at: directoryURL,
                                                                includingPropertiesForKeys: nil,
                                                                options: [.skipsHiddenFiles])

@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         window?.rootViewController = initialVC
         window?.makeKeyAndVisible()
+        
+        // 配置网络地址（国外地址：.overseas、国内地址：.domestic（默认））
+//        BCLRingManager.shared.networkRegion = .overseas
 
         //  检查蓝牙权限
         BCLRingManager.shared.checkBluetoothPermission { auth in

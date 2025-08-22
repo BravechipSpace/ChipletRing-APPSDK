@@ -58,6 +58,79 @@ class DeviceTableVC: UIViewController {
     }
 
     func connectDevice(device: BCLDeviceInfoModel) {
+        if device.isPhyBootMode {
+            BDLogger.info("设备处于PHY引导模式，无法连接")
+            BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
+//            BCLRingManager.shared.connectPhyBootModeDevice(device: device, firmwareVersion: "2.7.5.0Z3N", isAutoReconnect: false, autoReconnectTimeLimit: 0, autoReconnectMaxAttempts: 0, progressHandler: { progress in
+//                BDLogger.info("升级进度：\(progress)")
+//            }, upgradeCompletion: { res in
+//                switch res {
+//                case let .success(state):
+//                    switch state {
+//                    case .preparing:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：升级准备中")
+//                    case .preparingToBootMode:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：准备进入boot模式")
+//                    case .bootModeDisconnected:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：boot模式连接断开")
+//                    case .bootModeConnected:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：boot模式连接成功")
+//                    case .preparingToAppMode:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：准备进入app模式")
+//                    case .appModeDisconnected:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：app模式连接断开")
+//                    case .appModeConnected:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：app模式连接成功")
+//                    case .upgrading:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：升级中")
+//                    case let .failed(error):
+//                        BDLogger.error("phy固件boot模式中断重新升级结果：升级失败：\(error)")
+//                    case .success:
+//                        BDLogger.info("phy固件boot模式中断重新升级结果：升级成功")
+//                    }
+//                    break
+//                case let .failure(error):
+//                    BDLogger.error("升级失败：\(error)")
+//                    break
+//                }
+//            }, connectResultBlock: { res in
+//                switch res {
+//                case let .success(deviceInfo):
+//                    BDLogger.info("连接成功：\(deviceInfo)")
+//                    break
+//                case let .failure(error):
+//                    BDLogger.error("连接失败：\(error)")
+//                }
+//            })
+//            BCLRingManager.shared.connectPhyBootModeDevice(macAddress: device.macAddress ?? "", isAutoReconnect: false, autoReconnectTimeLimit: 0, autoReconnectMaxAttempts: 0) { result in
+//                switch result {
+//                case .success:
+//                    BDLogger.info("connect success")
+//                    QMUITips.hideAllTips(in: self.view)
+//                    self.navigationController?.popViewController(animated: true)
+//                case let .failure(error):
+//                    BDLogger.error("connect failed: \(error)")
+//                    QMUITips.hideAllTips(in: self.view)
+//                    QMUITips.showError("Connect Failed", in: self.view)
+//                }
+//            }
+        } else {
+            QMUITips.showLoading("Device Connecting...", in: view)
+            BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
+            BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
+                switch result {
+                case .success:
+                    BDLogger.info("connect success")
+                    QMUITips.hideAllTips(in: self.view)
+                    self.navigationController?.popViewController(animated: true)
+                case let .failure(error):
+                    BDLogger.error("connect failed: \(error)")
+                    QMUITips.hideAllTips(in: self.view)
+                    QMUITips.showError("Connect Failed", in: self.view)
+                }
+            }
+        }
+        
         QMUITips.showLoading("Device Connecting...", in: view)
         BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
         BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
@@ -169,6 +242,8 @@ class DeviceTableViewCell: UITableViewCell {
 
             connectButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             connectButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            connectButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5),
+            connectButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
             connectButton.widthAnchor.constraint(equalToConstant: 60),
         ])
 
