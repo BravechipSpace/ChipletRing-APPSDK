@@ -4,6 +4,7 @@
     android:layout_height="50dp"
     android:minHeight="50dp"
     android:gravity="center"
+    android:fitsSystemWindows="true"
     android:orientation="horizontal">
     <TextView
         android:id="@+id/tv_device_name"
