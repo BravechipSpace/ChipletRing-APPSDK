@@ -288,7 +288,30 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_start_play"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="开始游戏"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_stop_play"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="结束游戏"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

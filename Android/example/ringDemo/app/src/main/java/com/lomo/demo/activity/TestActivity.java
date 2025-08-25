@@ -35,6 +35,7 @@ import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
 import com.lm.sdk.inter.IQ2Listener;
 import com.lm.sdk.inter.IResponseListener;
+import com.lm.sdk.inter.IShiMiListener;
 import com.lm.sdk.inter.LmOTACallback;
 import com.lm.sdk.library.utils.PreferencesUtils;
 import com.lm.sdk.library.utils.ToastUtils;
@@ -133,7 +134,8 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_jump_page2).setOnClickListener(this);
         findViewById(R.id.bt_jump_pageFile).setOnClickListener(this);
         findViewById(R.id.tv_connect).setOnClickListener(this);
-
+        findViewById(R.id.bt_start_play).setOnClickListener(this);
+        findViewById(R.id.bt_stop_play).setOnClickListener(this);
         File file = new File(outputPath);
         file.delete();
 
@@ -597,6 +599,60 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             postView("\n开始获取采集周期");
             LmAPI.GET_COLLECTION();
         }
+        if (view.getId() == R.id.bt_start_play) {
+            postView("\n开始游戏");
+            //postView("\n开始读取未上传数据");
+
+            LmAPI.READ_6_AXIS_SENSORS_SHIMI(new IShiMiListener() {
+                @Override
+                public void startPlay6Zhou(int state, int sszx, int ssfy, int sssd, int sjzx, int sjfy, int zzjsd, int js, int xzjsd, int yzjsd) {
+                    postView("\n6轴数据:state:" +state+",sszx:" +sszx+",ssfy:"+ssfy+",sssd:"+sssd+",sjzx:"+sjzx+",sjfy:"+sjfy
+                            +",zzjsd:"+zzjsd+",js:"+js+",xzjsd:"+xzjsd+",yzjsd:"+yzjsd);
+                }
+
+                @Override
+                public void startPlay3Zhou(int state, int zzjsd, int xzjsd, int yzjsd) {
+
+                }
+
+                @Override
+                public void stopPlay(boolean success) {
+
+                }
+
+                @Override
+                public void acceleration(boolean success) {
+
+                }
+            });
+        }
+        if (view.getId() == R.id.bt_stop_play) {
+            postView("\n停止游戏");
+            //postView("\n开始读取未上传数据");
+            LmAPI.STOP_PLAY_SHIMMI(new IShiMiListener() {
+                @Override
+                public void startPlay6Zhou(int state, int sszx, int ssfy, int sssd, int sjzx, int sjfy, int zzjsd, int js, int xzjsd, int yzjsd) {
+
+                }
+
+                @Override
+                public void startPlay3Zhou(int state, int zzjsd, int xzjsd, int yzjsd) {
+
+                }
+
+                @Override
+                public void stopPlay(boolean success) {
+
+                }
+
+                @Override
+                public void acceleration(boolean success) {
+
+                }
+            });
+        }
+
+
 
         if (view.getId() == R.id.bt_blood_oxygen) {
             postView("\n开始测量血氧");

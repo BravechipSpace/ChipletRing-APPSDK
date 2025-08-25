@@ -184,7 +184,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
             // BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
             //这个方法，获取广播，如果bleDeviceInfo.getStepAccumulation()>0，说明是新固件，支持每5分钟步数清零，重新累积功能
             //如果不是新固件，获取步数还是使用以前的
-            LmAPI.GET_CURRENT_STEP_FROM_SERVER(mBluetoothDevice.getAddress(), new IWebStepResult() {
+            LmAPI.GET_CURRENT_STEP_FROM_SERVER(true,mBluetoothDevice.getAddress(), new IWebStepResult() {
                 @Override
                 public void getCurrentSteps(double allStep) {
                     postView("步数：\n"+allStep);
