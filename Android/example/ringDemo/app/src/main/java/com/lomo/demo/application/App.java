@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.mode.BleDeviceInfo;
+import com.lm.sdk.utils.BLEUtils;
 import com.lomo.demo.adapter.DeviceBean;
 
 /**
@@ -23,6 +24,7 @@ public class App extends Application {
         app = this;
         LmAPI.init(this);
         LmAPI.setDebug(true);
+        BLEUtils.contentTitle="ChipletRing Demo";
     }
 
 

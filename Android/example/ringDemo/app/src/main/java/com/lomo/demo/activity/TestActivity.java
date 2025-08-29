@@ -90,7 +90,8 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
                 if (!TextUtils.isEmpty(mac) && !BLEUtils.isGetToken() && App.needAutoConnect) {
                     Log.e("TAG", "Handler  延迟重连  resetConnect 1111 ");
                     BLEUtils.setConnecting(false);
-                    connect(mac);
+                    BLEUtils.connectLockByBLE(TestActivity.this, deviceBean.getDevice());
+                   // connect(mac);
                 }
 
             }
