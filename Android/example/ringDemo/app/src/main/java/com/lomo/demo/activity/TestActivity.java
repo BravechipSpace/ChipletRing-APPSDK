@@ -30,6 +30,7 @@ import com.lm.sdk.LmAPI;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.BluetoothConnectCallback;
+import com.lm.sdk.inter.I6axisListener;
 import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
@@ -46,6 +47,7 @@ import com.lm.sdk.mode.SleepBean;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.ConvertUtils;
+import com.lm.sdk.utils.ImageSaverUtil;
 import com.lm.sdk.utils.Logger;
 import com.lm.sdk.utils.StringUtils;
 import com.lm.sdk.utils.UtilSharedPreference;
@@ -137,6 +139,10 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.tv_connect).setOnClickListener(this);
         findViewById(R.id.bt_start_play).setOnClickListener(this);
         findViewById(R.id.bt_stop_play).setOnClickListener(this);
+        findViewById(R.id.bt_start_6_zhou).setOnClickListener(this);
+        findViewById(R.id.bt_stop_6_zhou).setOnClickListener(this);
+
+
         File file = new File(outputPath);
         file.delete();
 
@@ -653,6 +659,49 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             });
         }
 
+        if (view.getId() == R.id.bt_start_6_zhou) {
+            postView("\n开始6轴传感器数据");
+            //postView("\n开始读取未上传数据");
+
+            LmAPI.READ_6_AXIS_ACCELERATION(new I6axisListener() {
+                @Override
+                public void turnOff() {
+                    postView("\n6轴关闭");
+                }
+
+                @Override
+                public void sensorsData(String bpData) {
+                    postView("\n6轴数据:" + bpData);
+                    ImageSaverUtil.saveImageToInternalStorage(TestActivity.this,"发送6轴指令="+bpData,"LM","6轴.txt",true);
+                }
+
+                @Override
+                public void deviceBusy() {
+                    postView("\n设备繁忙");
+                }
+            });
+        }
+        if (view.getId() == R.id.bt_stop_6_zhou) {
+            postView("\n停止6轴传感器数据");
+            //postView("\n开始读取未上传数据");
+
+            LmAPI.TURN_OFF_6_AXIS_SENSORS(new I6axisListener() {
+                @Override
+                public void turnOff() {
+                    postView("\n6轴关闭");
+                }
+
+                @Override
+                public void sensorsData(String bpData) {
+
+                }
+
+                @Override
+                public void deviceBusy() {
+
+                }
+            });
+        }
 
 
         if (view.getId() == R.id.bt_blood_oxygen) {
