@@ -29,6 +29,7 @@ import com.lm.sdk.inter.IWebSleepResult;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
+import com.lm.sdk.mode.SleepBatchBean;
 import com.lm.sdk.mode.SleepBean;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.utils.BLEUtils;
@@ -576,9 +577,10 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                 }
 
                 @Override
-                public void sleepDataBatchSuccess(List<SleepBean> sleepBeanList) {
+                public void sleepDataBatchSuccess(List<SleepBatchBean> sleepBeanList) {
 
                 }
+
 
             });
         }

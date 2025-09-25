@@ -551,8 +551,14 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         }
 
         if (view.getId() == R.id.bt_read_time) {
-            postView("\n开始读取时间");
-            LmAPI.READ_TIME();
+//            postView("\n开始读取时间");
+//            LmAPI.READ_TIME();
+
+            Intent updateIntent = new Intent("ACTION_UPDATE_TITLE");
+            updateIntent.putExtra("EXTRA_NEW_TITLE", "新的标题");
+//            String sdkPackageName = "com.lm.sdk"; // 替换为你的SDK的实际包名
+//            updateIntent.setPackage(sdkPackageName); // 这行代码确保了广播是显式的
+            sendBroadcast(updateIntent);
         }
 
         if (view.getId() == R.id.bt_set_file) {
