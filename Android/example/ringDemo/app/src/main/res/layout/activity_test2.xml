@@ -37,7 +37,7 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -62,7 +62,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -87,7 +87,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -111,7 +111,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -135,7 +135,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -159,7 +159,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -183,7 +183,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -207,7 +207,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -231,7 +231,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
@@ -257,7 +257,7 @@
             android:id="@+id/bt_test2"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="跳转到奋达定制页"
             android:textSize="14sp"
             android:textColor="@color/white"
@@ -266,7 +266,7 @@
             android:id="@+id/bt_unpair"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="解除绑定"
             android:textSize="14sp"
             android:textColor="@color/white"
