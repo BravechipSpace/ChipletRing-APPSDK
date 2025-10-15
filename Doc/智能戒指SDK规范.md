@@ -447,6 +447,7 @@ public void lmBleConnecting(int code) {
 public void lmBleConnectionSucceeded(int code) {
     //连接成功
    BLEUtils.setConnecting(false);
+BLEUtils.setGetToken(true);
 }
 @Override
 public void lmBleConnectionFailed(int code) {
