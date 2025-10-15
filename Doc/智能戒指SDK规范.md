@@ -435,6 +435,11 @@ public void lmBleConnectionSucceeded(int code) {
 public void lmBleConnectionFailed(int code) {
     //连接失败
 }
+//断连后或者设备故障，发送指令超时，cmd是超时的指令
+ @Override
+    public void timeOut(String cmd) {
+
+    }
 ```
 为了保证断连后重连，需要在以上回调里，设置一些属性
 ```java
