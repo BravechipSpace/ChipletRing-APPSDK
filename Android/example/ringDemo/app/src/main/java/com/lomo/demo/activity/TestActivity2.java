@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPI;
+import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.IFileListListener;
@@ -27,6 +28,7 @@ import com.lm.sdk.inter.ITempListener;
 import com.lm.sdk.inter.IWebHistoryResult;
 import com.lm.sdk.inter.IWebSleepResult;
 import com.lm.sdk.inter.LmOtaProgressListener;
+import com.lm.sdk.lmApiInter.IHistoryListenerLite;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
 import com.lm.sdk.mode.SleepBatchBean;
@@ -82,6 +84,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         findViewById(R.id.bt_file_list).setOnClickListener(this);
         findViewById(R.id.bt_file_content).setOnClickListener(this);
         findViewById(R.id.bt_test2).setOnClickListener(this);
+        READ_HISTORY_AUTO();
     }
 
     @Override
@@ -761,6 +764,36 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         else
             tv_result2.scrollTo(0, 0);
 
+    }
+    private void READ_HISTORY_AUTO() {
+
+        LmAPI.READ_HISTORY_AUTO( new IHistoryListener() {
+            @Override
+            public void error(int code) {
+                if (code == 3) {
+                    postView("\n出现了BIX的问题");
+                }
+                // setMessage(TestActivity.this,"\n出现了BIX的问题");
+            }
+
+            @Override
+            public void success() {
+                postView("\n读取记录完成");
+
+
+            }
+
+            @Override
+            public void progress(double progress, HistoryDataBean historyDataBean) {
+                postView("\n读取记录进度:" + progress + "%");
+                postView("\n记录内容:" + historyDataBean.toString());
+            }
+
+            @Override
+            public void noNewDataAvailable() {
+
+            }
+        });
     }
 
 

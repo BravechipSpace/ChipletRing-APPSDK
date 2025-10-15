@@ -791,7 +791,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
 
             postView("\n开始读取全部数据");
             //postView("\n开始读取未上传数据");
-            LmAPI.READ_HISTORY((byte) 0x01, 1753848000, new IHistoryListener() {
+            LmAPI.READ_HISTORY((byte) 0x01, 0, new IHistoryListener() {
                 @Override
                 public void error(int code) {
                     if (code == 3) {
