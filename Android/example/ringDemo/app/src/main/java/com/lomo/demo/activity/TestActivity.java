@@ -794,10 +794,22 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             LmAPI.READ_HISTORY((byte) 0x01, 0, new IHistoryListener() {
                 @Override
                 public void error(int code) {
-                    if (code == 3) {
-                        postView("\n出现了BIX的问题");
+                    postView("\n读取历史错误码:" + code );
+                    String message="";
+                    if(code==0){
+                        message="正在测量中";
                     }
-                    // setMessage(TestActivity.this,"\n出现了BIX的问题");
+                    if(code==1){
+                        message="正在上传历史记录";
+                    }
+                    if(code==2){
+                        message="正在删除历史记录";
+                    }
+                    if(code==3){
+                        message="文件系统损坏";
+                    }
+                    postView("\n读取历史错误:" + message );
+
                 }
 
                 @Override
