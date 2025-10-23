@@ -3578,6 +3578,9 @@ public class MimeTypeUtils
 ### 2、申请token
 根据key，和使用sdk的用户的手机号或者邮箱，就可以申请token，token会自动保存在本地，不需要用户保存，尽量在合适的时候，调用这个接口，刷新一下Token，防止被踢或者Token过期
 ```java
+//方法说明
+public static void createToken(String key,String userName, ICreateToken iCreateToken)
+//使用
  LogicalApi.createToken("","", new ICreateToken() {
             @Override
             public void getTokenSuccess() {
