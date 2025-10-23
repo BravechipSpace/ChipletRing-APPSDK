@@ -38,6 +38,7 @@ import com.lm.sdk.inter.IQ2Listener;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.inter.IShiMiListener;
 import com.lm.sdk.inter.LmOTACallback;
+import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.PreferencesUtils;
 import com.lm.sdk.library.utils.ToastUtils;
 import com.lm.sdk.mode.BleDeviceInfo;
@@ -568,24 +569,31 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         }
 
         if (view.getId() == R.id.bt_start_update) {
-            postView("\n开始升级");
-            //startUpdate
-            OtaApi.startUpdate(App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOTACallback() {
-                @Override
-                public void onDeviceStateChange(int i) {
-                    Logger.show("固件升级", "固件升级-onDevicestatechange:" + i);
-                }
-
-                @Override
-                public void onProgress(int i, int i1) {
-                    Logger.show("固件升级", "固件升级-onProgress:" + i + " /" + i1);
-                }
-
-                @Override
-                public void onComplete() {
-                    Logger.show("固件升级", "固件升级-oncomplete");
-                }
-            });
+            postView("\n打开注释，传入本固件的版本号，才能测试升级");
+            //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
+//            OtaApi.otaUpdateWithCheckVersion("7.1.5.0Z3R", TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+//                @Override
+//                public void error(String message) {
+//                    postView("\nota升级出错："+message);
+//                }
+//
+//                @Override
+//                public void onProgress(int i) {
+//                    //  postView("\nota升级进度:"+i);
+//                    Logger.show("OTA","OTA升级"+i);
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    postView("\nota升级结束");
+//                    OtaApi.destoryOta(TestActivity.this);
+//                }
+//
+//                @Override
+//                public void isLatestVersion() {
+//                    postView("\n已是最新版本");
+//                }
+//            });
         }
 
         if (view.getId() == R.id.bt_version) {
