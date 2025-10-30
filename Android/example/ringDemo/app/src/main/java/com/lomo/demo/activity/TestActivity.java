@@ -142,6 +142,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_stop_play).setOnClickListener(this);
         findViewById(R.id.bt_start_6_zhou).setOnClickListener(this);
         findViewById(R.id.bt_stop_6_zhou).setOnClickListener(this);
+        findViewById(R.id.bt_jump_pageCollection).setOnClickListener(this);
 
 
         File file = new File(outputPath);
@@ -900,7 +901,11 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             BLEUtils.connectLockByBLE(TestActivity.this, bluetoothDevice);
         }
 
-
+        if (view.getId() == R.id.bt_jump_pageCollection) {
+            Intent intent = new Intent();
+            intent.setClass(TestActivity.this,CollectionActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void removeBond( BluetoothDevice btDevice){
