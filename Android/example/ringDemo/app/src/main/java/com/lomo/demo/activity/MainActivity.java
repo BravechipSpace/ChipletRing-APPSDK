@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -45,7 +46,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends Activity {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;

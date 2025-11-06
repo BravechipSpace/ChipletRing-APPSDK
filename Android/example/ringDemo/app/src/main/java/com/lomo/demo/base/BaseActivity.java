@@ -36,12 +36,16 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
 
 
     private int REQUEST_CODE_PERMISSION = 0x00099;
-
+    private static boolean cmdListenerInit=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LmAPI.addWLSCmdListener(this, this);
+        if(!cmdListenerInit){
+            LmAPI.addWLSCmdListener(this, this);
+            cmdListenerInit=true;
+        }
+
     }
 
     @Override
