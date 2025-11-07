@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao'
 android {
-    compileSdkVersion 35
+    compileSdk 35
     namespace = "com.lomo.demo"
     defaultConfig {
         applicationId "com.lomo.demo"
