@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>睡眠图</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 100%;height:130px;"></div>
+<script type="text/javascript">
+			var chartDom = null;
+			var myChart = null;
+			setTimeout(function() {
+				chartDom = document.getElementById('main');
+				myChart = echarts.init(chartDom);
+				var option;
+
+var state = ['', '', '', '']; //四种状态
+var dataValue=[]
+option = {
+grid:{ // 让图表占满容器
+									  top:"5%",
+									  left:"18%",
+									  right:"10%",
+									  bottom:"1%"
+									},
+<!--  tooltip: {-->
+<!--   trigger: 'axis',-->
+<!--        axisPointer:{-->
+<!--		    type:'cross',-->
+<!--		     label:{-->
+<!--		       show:false-->
+<!--		     },-->
+<!--		  lineStyle:{-->
+<!--		    color:'#00000000',-->
+<!--		    width:0,-->
+<!--		    type:'solid'-->
+<!--	        }-->
+<!--	    },-->
+<!--    //提示框-->
+<!--    formatter: function(params) {-->
+<!--									Android.toolTips(0,params.value[1], params.value[2])-->
+<!--									return '';-->
+<!--								}-->
+<!--  },-->
+tooltip: {
+        axisPointer:{
+		    type:'cross',
+		    label:{
+		      show:false
+		    },
+		  lineStyle:{
+		    color:'purple',
+		    width:0,
+		    type:'solid'
+	        }
+	    },
+	    formatter: function(params) {
+	     console.log(params)
+	     Android.toolTips(0,params.value[1], params.value[2])
+	    	// return params[params.length-1].value[1]+" "+params[params.length-1].value[2];
+	     	return "";
+	    }
+    },
+  xAxis: {
+      show:false,
+    type: 'time',
+    interval: 3600 * 1000, //以一个小时递增
+    min: '2024-04-03 01:37', //将data里最小时间的整点时间设为min,否则min会以data里面的min为开始进行整点递增
+    axisLabel: {
+      formatter: function (value) {
+        var date = new Date(value);
+        return getzf(date.getHours()) + ':00';
+        function getzf(num) {
+          if (parseInt(num) < 10) {
+            num = '0' + num;
+          }
+          return num;
+        }
+      }
+    }
+  },
+  yAxis: {
+    axisLabel: { //x轴文字的配置
+									show: true,
+									textStyle: {
+										color: "#ffffff",
+									}
+								},
+								axisLine: {
+                 lineStyle: {
+                color: "#00000000" // 设置 y 轴线的颜色为绿色
+                  }
+               },
+    data:state
+  },
+  series: [
+    // 用空bar来显示三个图例
+    { name: state[0], type: 'bar', data: [] },
+    { name: state[1], type: 'bar', data: [] },
+    { name: state[2], type: 'bar', data: [] },
+     { name: state[3], type: 'bar', data: [] },
+    {
+      type: 'custom',
+      renderItem: function (params, api) {
+        var categoryIndex = api.value(0); //这里使用 api.value(0) 取出当前 dataItem 中第一个维度的数值。
+        var start = api.coord([api.value(1), categoryIndex]); // 这里使用 api.coord(...) 将数值在当前坐标系中转换成为屏幕上的点的像素值。
+        var end = api.coord([api.value(2), categoryIndex]);
+        var height = api.size([0, 1])[1];
+
+        return {
+          type: 'rect', // 表示这个图形元素是矩形。还可以是 'circle', 'sector', 'polygon' 等等。
+
+          shape: echarts.graphic.clipRectByRect(
+            {
+              // 矩形的位置和大小。
+              x: start[0],
+              y: start[1] - height / 2,
+              width: end[0] - start[0],
+              height: height
+            },
+            {
+              // 当前坐标系的包围盒。
+              x: params.coordSys.x,
+              y: params.coordSys.y,
+              width: params.coordSys.width,
+              height: params.coordSys.height
+            }
+          ),
+          style: api.style()
+        };
+      },
+      encode: {
+        x: [1, 2], // data 中『维度1』和『维度2』对应到 X 轴
+        y: 0 // data 中『维度0』对应到 Y 轴
+      },
+      data: dataValue
+    }
+  ]
+};
+
+				option && myChart.setOption(option);
+
+			}, 0);
+
+			function refreshData(time,tips, yAxis) {
+
+				var yAxisData=JSON.parse(yAxis)
+
+				array = new Array();
+	                var colors = ['#2F41A6', '#5068EC', '#9BABFF', '#ECB725']; //四种状态的颜色
+                    var state =JSON.parse(tips)//['深度睡眠', '浅睡眠', '快速动眼', '清醒时间']; //四种状态
+					for (var i = 0; i < yAxisData.length; i++) {
+                        console.log("yAxisData[i]",yAxisData[i].sleepType,yAxisData[i].startTime, yAxisData[i].endTime)
+						if(yAxisData[i].sleepType==1){
+							array.push({value: [3,yAxisData[i].startTime, yAxisData[i].endTime], name: '清醒时间',
+							 itemStyle: {normal: {color: colors[3] }}
+							});
+						}else if(yAxisData[i].sleepType==2){
+							array.push({value: [1, yAxisData[i].startTime, yAxisData[i].endTime], name: '清醒时间',
+							 itemStyle: {normal: {color: colors[1] }}
+							});
+						}else if(yAxisData[i].sleepType==3){
+							array.push({value: [0, yAxisData[i].startTime,yAxisData[i].endTime], name: '清醒时间',
+							 itemStyle: {normal: {color: colors[0] }}
+							});
+						}else if(yAxisData[i].sleepType==4){
+							array.push({value: [2, yAxisData[i].startTime, yAxisData[i].endTime], name: '清醒时间',
+							 itemStyle: {normal: {color: colors[2] }}
+							});
+						}
+
+					}
+
+				//刷新数据
+				myChart.setOption({
+  xAxis: {
+    min: time, //将data里最小时间的整点时间设为min,否则min会以data里面的min为开始进行整点递增
+    axisLabel: {
+      formatter: function (value) {
+        var date = new Date(value);
+        return getzf(date.getHours()) + ':00';
+        function getzf(num) {
+          if (parseInt(num) < 10) {
+            num = '0' + num;
+          }
+          return num;
+        }
+      }
+    }
+  },
+  yAxis: {
+    data:state
+  },
+  series: [
+    // 用空bar来显示三个图例
+    { name: state[0], type: 'bar', data: [] },
+    { name: state[1], type: 'bar', data: [] },
+    { name: state[2], type: 'bar', data: [] },
+     { name: state[3], type: 'bar', data: [] },
+    {
+      type: 'custom',
+      renderItem: function (params, api) {
+        var categoryIndex = api.value(0); //这里使用 api.value(0) 取出当前 dataItem 中第一个维度的数值。
+        var start = api.coord([api.value(1), categoryIndex]); // 这里使用 api.coord(...) 将数值在当前坐标系中转换成为屏幕上的点的像素值。
+        var end = api.coord([api.value(2), categoryIndex]);
+        var height = api.size([0, 1])[1];
+
+        return {
+          type: 'rect', // 表示这个图形元素是矩形。还可以是 'circle', 'sector', 'polygon' 等等。
+
+          shape: echarts.graphic.clipRectByRect(
+            {
+              // 矩形的位置和大小。
+              x: start[0],
+              y: start[1] - height / 2,
+              width: end[0] - start[0],
+              height: height
+            },
+            {
+              // 当前坐标系的包围盒。
+              x: params.coordSys.x,
+              y: params.coordSys.y,
+              width: params.coordSys.width,
+              height: params.coordSys.height
+            }
+          ),
+          style: api.style()
+        };
+      },
+      encode: {
+        x: [1, 2], // data 中『维度1』和『维度2』对应到 X 轴
+        y: 0 // data 中『维度0』对应到 Y 轴
+      },
+      data: array
+    }
+  ]
+});
+
+			};
+
+
+			function loadEcharts(echartJson) {
+				var option = JSON.parse(echartJson);
+				if (option && typeof option === "object") {
+					myChart.setOption(option, true);
+				}
+			}
+
+</script>
+</body>
+</html>

@@ -18,4 +18,9 @@
 
     <string name="aiddescription">帮助描述</string>
     <string name="servicedesc">服务描述</string>
+    <string name="sleep_type1">深度睡眠</string>
+    <string name="sleep_type2">浅睡眠</string>
+    <string name="sleep_type3">快速眼动</string>
+    <string name="sleep_type4">清醒时间</string>
+
 </resources>

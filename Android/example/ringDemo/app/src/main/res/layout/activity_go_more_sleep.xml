@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".activity.TestActivity2">
@@ -19,6 +19,125 @@
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
     </RelativeLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        tools:context=".fragment.sleep.DaySleepFragment">
+        <TextView
+            android:id="@+id/tv_day_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="--"
+            android:textColor="@color/text_black_color"
+            android:textSize="@dimen/sp_10" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_sleep_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_black_color"
+                android:textSize="@dimen/sp_26"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/text_black_color"/>
+            <TextView
+                android:id="@+id/tv_sleep_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_black_color"
+                android:textSize="@dimen/sp_26"/>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150">
+            <com.lomo.demo.views.EchartView
+                android:id="@+id/echarts_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:chartType="sleep_day" />
+            <TextView
+                android:id="@+id/tv_sleep_not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/sleep_data_synchronization"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+        <com.lomo.demo.views.MyScaleView
+            android:id="@+id/main_scale"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <LinearLayout
+            android:id="@+id/in_sleep_layout"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/start_sleep_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15" />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_8"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_gray"
+                android:text="@string/ru_shui" />
+
+
+            <TextView
+                android:id="@+id/end_sleep_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_15"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/white"
+                android:text="--" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_8"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_gray"
+                android:text="@string/qing_xing" />
+        </LinearLayout>
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/tv_result2"
         android:layout_width="match_parent"
