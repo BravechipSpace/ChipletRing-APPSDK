@@ -58,7 +58,7 @@ tooltip: {
 	        }
 	    },
 	    formatter: function(params) {
-	     console.log(params)
+	    // console.log(params.value[1], params.value[2])
 	     Android.toolTips(0,params.value[1], params.value[2])
 	    	// return params[params.length-1].value[1]+" "+params[params.length-1].value[2];
 	     	return "";
@@ -153,8 +153,9 @@ tooltip: {
 	                var colors = ['#2F41A6', '#5068EC', '#9BABFF', '#ECB725']; //四种状态的颜色
                     var state =JSON.parse(tips)//['深度睡眠', '浅睡眠', '快速动眼', '清醒时间']; //四种状态
 					for (var i = 0; i < yAxisData.length; i++) {
-                        console.log("yAxisData[i]",yAxisData[i].sleepType,yAxisData[i].startTime, yAxisData[i].endTime)
+
 						if(yAxisData[i].sleepType==1){
+
 							array.push({value: [3,yAxisData[i].startTime, yAxisData[i].endTime], name: '清醒时间',
 							 itemStyle: {normal: {color: colors[3] }}
 							});

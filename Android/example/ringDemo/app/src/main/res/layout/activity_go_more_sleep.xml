@@ -76,13 +76,14 @@
                 android:id="@+id/echarts_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:chartType="sleep_day" />
+                app:chartType="sleep_day"
+                />
             <TextView
                 android:id="@+id/tv_sleep_not"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/sleep_data_synchronization"
+                android:text="请先获取睡眠数据"
                 android:textColor="@color/white" />
         </RelativeLayout>
         <com.lomo.demo.views.MyScaleView
@@ -115,7 +116,7 @@
                 android:textSize="@dimen/sp_8"
                 android:layout_centerVertical="true"
                 android:textColor="@color/text_gray"
-                android:text="@string/ru_shui" />
+                android:text="入睡" />
 
 
             <TextView
@@ -133,7 +134,7 @@
                 android:textSize="@dimen/sp_8"
                 android:layout_centerVertical="true"
                 android:textColor="@color/text_gray"
-                android:text="@string/qing_xing" />
+                android:text="清醒" />
         </LinearLayout>
     </LinearLayout>
 

@@ -19,6 +19,7 @@ import com.lm.sdk.library.utils.TimeUtils;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.utils.GsonUtils;
+import com.lm.sdk.utils.Logger;
 import com.lomo.demo.R;
 import com.lomo.demo.base.BaseActivity;
 import com.lomo.demo.bean.SleepChartBean;
@@ -207,14 +208,17 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
 
     public void initSleepChatGomore(long showStartTime, long endTimeData, List<HistoryDataBean> historyDataBeanList) {
         List<SleepChartBean> list = new ArrayList<>();
-        int totalCount = 0;//记录条数
-        int lastType = 0;
         for (int i = 0; i < historyDataBeanList.size(); i++) {
             HistoryDataBean dataBean = historyDataBeanList.get(i);
             String time = DateUtils.longToString(dataBean.getTime() * 1000, "yyyy-MM-dd HH:mm:ss");
             String endtime = DateUtils.longToString((dataBean.getTime() +30)* 1000, "yyyy-MM-dd HH:mm:ss");
-                    lastType = dataBean.getSleepType();
-                    list.add(new SleepChartBean(lastType, time, endtime));
+
+            list.add(new SleepChartBean(dataBean.getSleepType(), time, endtime));
+
+
+                Logger.show("starttime",time);
+            Logger.show("sleepType",dataBean.getSleepType()+"");
+            Logger.show("endtime",endtime);
         }
 
 
@@ -303,17 +307,34 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
                 @Override
                 public void dataUploadFinish() {
                     //睡眠分期是开始时间，每30s增加一个，和Sleep2thBean的List<HistoryBean> historyBeanList里的sleepType含义一致
-                    long stageTimeBase= overviewSleep.getStartTS()-30;//第一个分期从开始时间开始，先减去30s，方便代码计时
+                    long stageTimeBase= overviewSleep.getStartTS();//第一个分期从开始时间开始，先减去30s，方便代码计时
                     List<HistoryDataBean> historyBeanList=new ArrayList<>();
                     for (GoMoreSleep sleep : sleepStaging) {
                         for (short stage : sleep.getStages()) {
-                            stageTimeBase=stageTimeBase+30;
+
                             HistoryDataBean historyBean=new HistoryDataBean();
                             historyBean.setTime(stageTimeBase);
+                            //gomore分期与原有睡眠分期标志位不同，原有的是
+                            // 0：无效
+                            //1：清醒
+                            //2：浅睡
+                            //3：深睡
+                            //4：眼动期
+                            //gomore分期是0：唤醒，1：眼动，2：浅睡，3：深睡
+                            //适配老代码，修改为一致
+                            if(stage==0){
+                                stage=1;
+                            }else if(stage==1){
+                                stage=4;
+                            }
+
                             historyBean.setSleepType(stage);
                             historyBeanList.add(historyBean);
+                            stageTimeBase=stageTimeBase+30;
                         }
                     }
+
+
                     initSleepChatGomore(overviewSleep.getStartTS(),overviewSleep.getEndTS(),historyBeanList);
                 }
 
