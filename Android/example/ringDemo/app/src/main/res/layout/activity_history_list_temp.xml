@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.TestActivity2">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GoMore睡眠算法"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/tv_result2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="数据区域"
+        android:scrollbars="vertical"
+        android:padding="10dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_getHistoryTemp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="30dp"
+            android:text="获取历史温度"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_bg_state"/>
+        <Button
+            android:id="@+id/bt_goBack"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="30dp"
+            android:text="返回前一页"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_bg_state"/>
+    </LinearLayout>
+
+</LinearLayout>

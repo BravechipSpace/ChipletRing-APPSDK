@@ -5,10 +5,10 @@ android {
     namespace = "com.lomo.demo"
     defaultConfig {
         applicationId "com.lomo.demo"
-        minSdkVersion 26
+        minSdkVersion 27
         targetSdkVersion 35
-        versionCode 5
-        versionName "2.0.4"
+        versionCode 6
+        versionName "2.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         packagingOptions {
@@ -25,17 +25,16 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled false
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -45,6 +44,9 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+    }
+    packagingOptions{
+        exclude 'META-INF/DEPENDENCIES'
     }
 
 }
