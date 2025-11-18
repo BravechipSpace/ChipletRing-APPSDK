@@ -211,7 +211,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
         for (int i = 0; i < historyDataBeanList.size(); i++) {
             HistoryDataBean dataBean = historyDataBeanList.get(i);
             String time = DateUtils.longToString(dataBean.getTime() * 1000, "yyyy-MM-dd HH:mm:ss");
-            String endtime = DateUtils.longToString((dataBean.getTime() +30)* 1000, "yyyy-MM-dd HH:mm:ss");
+            String endtime = DateUtils.longToString((dataBean.getTime() +60)* 1000, "yyyy-MM-dd HH:mm:ss");
 
             list.add(new SleepChartBean(dataBean.getSleepType(), time, endtime));
 
@@ -307,7 +307,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
                 @Override
                 public void dataUploadFinish() {
                     //睡眠分期是开始时间，每30s增加一个，和Sleep2thBean的List<HistoryBean> historyBeanList里的sleepType含义一致
-                    long stageTimeBase= overviewSleep.getStartTS();//第一个分期从开始时间开始，先减去30s，方便代码计时
+                    long stageTimeBase= overviewSleep.getStartTS();
                     List<HistoryDataBean> historyBeanList=new ArrayList<>();
                     for (GoMoreSleep sleep : sleepStaging) {
                         for (short stage : sleep.getStages()) {
@@ -330,7 +330,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
 
                             historyBean.setSleepType(stage);
                             historyBeanList.add(historyBean);
-                            stageTimeBase=stageTimeBase+30;
+                            stageTimeBase=stageTimeBase+60;
                         }
                     }
 
