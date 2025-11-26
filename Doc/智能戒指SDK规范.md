@@ -1,3 +1,4 @@
+目前该文档不再维护，可以去新文档查阅(https://yongxin.gitbook.io/yongxin-docs/documentation)
 # 智能戒指SDK规范 
 * 本规范针对产品经理，开发工程师，测试工程师编写。  
 * 本规范介绍了BLE等技术。了解过这些基本技术后，你就会明白如何将智能戒指的功能集成到自己的APP中。
