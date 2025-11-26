@@ -3818,7 +3818,7 @@ LogicalApi.getSleepFromServiceWithGomore(String date, IWebSleepResult webApiResu
 //批量获取睡眠总览，兼容Gomore睡眠和旧版本睡眠，替换掉LogicalApi.getSleepDataBatchFromService
 LogicalApi.getSleepDataWithGoMoreBatch(List<String> dates, IWebSleepResult webApiResult)
 ```
-如果是Gomore睡眠，绘图需要改变一下，每个分期是60分钟记录一次睡眠状态，需要特殊处理
+如果是Gomore睡眠，绘图需要改变一下，每个分期是60秒记录一次睡眠状态，需要特殊处理
 根据sleepDataType进行判断，如果是3，是Gomore睡眠
 ```java
  /**
