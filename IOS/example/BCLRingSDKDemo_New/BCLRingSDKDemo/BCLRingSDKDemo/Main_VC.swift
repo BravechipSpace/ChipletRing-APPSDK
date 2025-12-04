@@ -1147,7 +1147,7 @@ class Main_VC: UIViewController {
             break
         case 148: // SDK本地计算睡眠数据
             BDLogger.info("使用SDK内置计算睡眠数据方法获取睡眠数据")
-            let date = Date("2025-08-08", format: "yyyy-MM-dd")
+            let date = Date("2025-11-04", format: "yyyy-MM-dd")
             // BCLRingLocalSleepModel
             let sleepModel = BCLRingManager.shared.calculateSleepLocally(targetDate: date!, macString: nil)
             BDLogger.info("睡眠数据\(sleepModel.description)")
@@ -1417,9 +1417,9 @@ class Main_VC: UIViewController {
                     } else if fileType == 6 {
                         BDLogger.info("文件类型:温度数据红外-数据：\(response.fileDataType6 ?? [])")
                     } else if fileType == 7 {
-                        BDLogger.info("文件类型:红外+红色+绿色+温度+三轴-数据：\(response.fileDataType7 ?? [])")
+//                        BDLogger.info("文件类型:红外+红色+绿色+温度+三轴-数据：\(response.fileDataType7 ?? [])")
                     } else if fileType == 8 {
-                        BDLogger.info("文件类型:PPG数据绿色+三轴(hr)-数据：\(response.fileDataType8 ?? [])")
+//                        BDLogger.info("文件类型:PPG数据绿色+三轴(hr)-数据：\(response.fileDataType8 ?? [])")
                     }
                 case let .failure(error):
                     BDLogger.error("获取文件数据失败: \(error)")

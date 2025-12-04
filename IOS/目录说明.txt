@@ -1,0 +1,4 @@
+Example目录：
+主要是SDK中Demo工程的示例方法
+library目录：
+存放了SDK

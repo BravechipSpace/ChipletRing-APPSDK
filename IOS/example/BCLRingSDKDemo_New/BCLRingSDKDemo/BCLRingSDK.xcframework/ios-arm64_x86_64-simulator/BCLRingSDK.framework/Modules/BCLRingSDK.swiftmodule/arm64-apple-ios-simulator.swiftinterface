@@ -2,6 +2,7 @@
 // swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
 // swift-module-flags: -target arm64-apple-ios13-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BCLRingSDK
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+@_exported import BCLRingSDK
 import CoreBluetooth
 import Foil
 import Foundation
@@ -56,9 +57,7 @@ import zlib
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPersonalInformationResponse : BCLResponse {
-  public var success: Bool {
-    get
-  }
+  public var status: Int
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadPersonalInformationResponse : BCLResponse {
@@ -66,6 +65,106 @@ import zlib
   public var height: Int
   public var weight: Int
   public var age: Int
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetPPGFrequency(hrFrequency: UInt8, spo2Frequency: UInt8, rawdataFrequency: UInt8) -> SystemSettingCommand
+  public static func createReadPPGFrequency() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPPGFrequencyResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadPPGFrequencyResponse : BCLResponse {
+  public var hrFrequency: UInt8
+  public var spo2Frequency: UInt8
+  public var rawdataFrequency: UInt8
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetGyroscopeStatus(status: UInt8) -> SystemSettingCommand
+  public static func createReadGyroscopeStatus() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetGyroscopeStatusResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadGyroscopeStatusResponse : BCLResponse {
+  public var status: UInt8
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetAccelerometerStatus(status: UInt8) -> SystemSettingCommand
+  public static func createReadAccelerometerStatus() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetAccelerometerStatusResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAccelerometerStatusResponse : BCLResponse {
+  public var status: UInt8
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetTemperatureStatus(status: UInt8) -> SystemSettingCommand
+  public static func createReadTemperatureStatus() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetTemperatureStatusResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadTemperatureStatusResponse : BCLResponse {
+  public var status: UInt8
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetPPGStatus(status: UInt8) -> SystemSettingCommand
+  public static func createReadPPGStatus() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPPGStatusResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadPPGStatusResponse : BCLResponse {
+  public var status: UInt8
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetPPGRawDataDuration(duration: Int) -> SystemSettingCommand
+  public static func createReadPPGRawDataDuration() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetPPGRawDataDurationResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadPPGRawDataDurationResponse : BCLResponse {
+  public var duration: Int
+  @objc deinit
+}
+extension SystemSettingCommand {
+  public static func createSetAutoCollectionStatus(status: UInt8) -> SystemSettingCommand
+  public static func createReadAutoCollectionStatus() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetAutoCollectionStatusResponse : BCLResponse {
+  public var success: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLReadAutoCollectionStatusResponse : BCLResponse {
+  public var status: UInt8
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class HeartRateCommand : BCLCommand {
@@ -93,9 +192,9 @@ public struct BCLHeartRateCallbacks {
   public var onStatusChanged: ((BCLHeartRateMeasureStatus) -> Void)?
   public var onMeasureValue: ((Int?, Int?, Int?, Int?) -> Void)?
   public var onWaveform: ((Int, Int, [(Int, Int, Int, Int)]) -> Void)?
-  public var onRRInterval: ((Int, Int, [UInt8]) -> Void)?
+  public var onRRInterval: ((Int, Int, [Int]) -> Void)?
   public var onError: ((BCLError) -> Void)?
-  public init(onProgress: ((Int) -> Void)? = nil, onStatusChanged: ((BCLHeartRateMeasureStatus) -> Void)? = nil, onMeasureValue: ((Int?, Int?, Int?, Int?) -> Void)? = nil, onWaveform: ((Int, Int, [(Int, Int, Int, Int)]) -> Void)? = nil, onRRInterval: ((Int, Int, [UInt8]) -> Void)? = nil, onError: ((BCLError) -> Void)? = nil)
+  public init(onProgress: ((Int) -> Void)? = nil, onStatusChanged: ((BCLHeartRateMeasureStatus) -> Void)? = nil, onMeasureValue: ((Int?, Int?, Int?, Int?) -> Void)? = nil, onWaveform: ((Int, Int, [(Int, Int, Int, Int)]) -> Void)? = nil, onRRInterval: ((Int, Int, [Int]) -> Void)? = nil, onError: ((BCLError) -> Void)? = nil)
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLHeartRateResponse : BCLResponse {
   public var status: BCLHeartRateMeasureStatus
@@ -104,7 +203,7 @@ public struct BCLHeartRateCallbacks {
   public var stressIndex: Int?
   public var temperature: Int?
   public var waveformData: (Int, Int, [(Int, Int, Int, Int)])?
-  public var rrIntervalData: (Int, Int, [UInt8])?
+  public var rrIntervalData: (Int, Int, [Int])?
   public var progressData: Int?
   public static func setCallbacks(_ callbacks: BCLHeartRateCallbacks, frameId: UInt8)
   @objc deinit
@@ -407,6 +506,9 @@ public protocol BCLServerResponse {
   public static func createAgingMode(isMode: Int) -> FixtureTestingCommand
   public static func createReadAgingMode() -> FixtureTestingCommand
   public static func configureLinearMotorParameters(pattern: Int, dutyCycle: Int, execution: Int, repetitions: Int) -> FixtureTestingCommand
+  public static func createFDKeyVerification(parameter_1: Int, parameter_2: Int, parameter_3: Int, parameter_4: Int, parameter_5: Int, parameter_6: Int, parameter_7: Int, parameter_8: Int) -> FixtureTestingCommand
+  public static func createReadMCUId() -> FixtureTestingCommand
+  public static func createReset() -> FixtureTestingCommand
   override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
   @objc deinit
 }
@@ -484,6 +586,17 @@ public protocol BCLServerResponse {
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingConfigureLinearMotorParametersResponse : BCLResponse {
   @objc deinit
 }
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingFDKeyVerificationResponse : BCLResponse {
+  public var status: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingMCUIdReadResponse : BCLResponse {
+  public var mcu_ID: String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingResetResponse : BCLResponse {
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @objc public class BCLRingLocalSleepModel : NSObject {
   @objc public var hours: Int
   @objc public var minutes: Int
@@ -509,7 +622,7 @@ extension Double {
 }
 extension BCLRingManager {
   public func configLogPath(directoryPath: String = defaultLogDirectoryPath)
-  public func configLogLevels(consoleLogLevel: SwiftyBeaver.Level = .verbose, fileLogLevel: SwiftyBeaver.Level = .verbose)
+  public func configLogLevels(consoleLogLevel: BCLLogLevel = .verbose, fileLogLevel: BCLLogLevel = .verbose)
   public func checkBluetoothPermission(completion: @escaping (CBManagerAuthorization) -> Void)
   public func startScan(scanResultBlock: @escaping (Result<[BCLDeviceInfoModel], BCLError>) -> Void)
   public func stopScan()
@@ -536,6 +649,22 @@ extension BCLRingManager {
   public func restoreFactorySettings(completion: @escaping (Result<BCLRestoreFactorySettingsResponse, BCLError>) -> Void)
   public func setBluetoothName(name: String, completion: @escaping (Result<BCLSetBluetoothNameResponse, BCLError>) -> Void)
   public func getBluetoothName(completion: @escaping (Result<BCLReadBluetoothNameResponse, BCLError>) -> Void)
+  public func setPersonalInformation(sex: Int, age: Int, height: Int, weight: Int, completion: @escaping (Result<BCLSetPersonalInformationResponse, BCLError>) -> Void)
+  public func getPersonalInformation(completion: @escaping (Result<BCLReadPersonalInformationResponse, BCLError>) -> Void)
+  public func setPPGFrequency(hrFrequency: UInt8, spo2Frequency: UInt8, rawdataFrequency: UInt8, completion: @escaping (Result<BCLSetPPGFrequencyResponse, BCLError>) -> Void)
+  public func readPPGFrequency(completion: @escaping (Result<BCLReadPPGFrequencyResponse, BCLError>) -> Void)
+  public func setGyroscopeStatus(status: UInt8, completion: @escaping (Result<BCLSetGyroscopeStatusResponse, BCLError>) -> Void)
+  public func readGyroscopeStatus(completion: @escaping (Result<BCLReadGyroscopeStatusResponse, BCLError>) -> Void)
+  public func setAccelerometerStatus(status: UInt8, completion: @escaping (Result<BCLSetAccelerometerStatusResponse, BCLError>) -> Void)
+  public func readAccelerometerStatus(completion: @escaping (Result<BCLReadAccelerometerStatusResponse, BCLError>) -> Void)
+  public func setTemperatureStatus(status: UInt8, completion: @escaping (Result<BCLSetTemperatureStatusResponse, BCLError>) -> Void)
+  public func readTemperatureStatus(completion: @escaping (Result<BCLReadTemperatureStatusResponse, BCLError>) -> Void)
+  public func setPPGStatus(status: UInt8, completion: @escaping (Result<BCLSetPPGStatusResponse, BCLError>) -> Void)
+  public func readPPGStatus(completion: @escaping (Result<BCLReadPPGStatusResponse, BCLError>) -> Void)
+  public func setPPGRawDataDuration(duration: Int, completion: @escaping (Result<BCLSetPPGRawDataDurationResponse, BCLError>) -> Void)
+  public func readPPGRawDataDuration(completion: @escaping (Result<BCLReadPPGRawDataDurationResponse, BCLError>) -> Void)
+  public func setAutoCollectionStatus(status: UInt8, completion: @escaping (Result<BCLSetAutoCollectionStatusResponse, BCLError>) -> Void)
+  public func readAutoCollectionStatus(completion: @escaping (Result<BCLReadAutoCollectionStatusResponse, BCLError>) -> Void)
   public func startBloodOxygen(collectTime: Int, collectFrequency: Int, waveformConfig: Int, progressConfig: Int, completion: @escaping (Result<BCLBloodOxygenResponse, BCLError>) -> Void)
   public func stopBloodOxygen(completion: @escaping (Result<BCLStopBloodOxygenResponse, BCLError>) -> Void)
   public func startBloodPressure(collectTime: Int, waveformConfig: Int, progressConfig: Int, completion: @escaping (Result<BCLBloodPressureResponse, BCLError>) -> Void)
@@ -559,6 +688,8 @@ extension BCLRingManager {
   public func deleteRingAllHistoryData(completion: @escaping (Result<BCLDeleteAllHistoryDataResponse, BCLError>) -> Void)
   public func getFileList(completion: @escaping (Result<BCLRequestFileListResponse, BCLError>) -> Void)
   public func getFileData(fileName: String, completion: @escaping (Result<BCLRequestFileDataResponse, BCLError>) -> Void)
+  public func requestFileDataResume(fileOffset: Int32, fileName: String, completion: @escaping (Result<BCLRequestFileDataResumeResponse, BCLError>) -> Void)
+  public func requestFileDataOneKey(fileIndex: Int, completion: @escaping (Result<BCLRequestFileDataOneKeyResponse, BCLError>) -> Void)
   public func deleteFile(fileName: String, completion: @escaping (Result<BCLDeleteFileResponse, BCLError>) -> Void)
   public func formatFileSystem(completion: @escaping (Result<BCLFormatFileSystemResponse, BCLError>) -> Void)
   public func getFileSystemInfo(completion: @escaping (Result<BCLGetFileSystemInfoResponse, BCLError>) -> Void)
@@ -569,6 +700,9 @@ extension BCLRingManager {
   public func communicationLoopRateTest(dataLength: Int = 10, completion: @escaping (Result<BCLFixtureTestingCommunicationLoopbackResponse, BCLError>) -> Void)
   public func setAgingMode(mode: Int = 0, completion: @escaping (Result<BCLFixtureTestingAgingSettingResponse, BCLError>) -> Void)
   public func readAgingModeInfo(completion: @escaping (Result<BCLFixtureTestingAgingReadResponse, BCLError>) -> Void)
+  public func fdKeyVerification(parameter_1: Int, parameter_2: Int, parameter_3: Int, parameter_4: Int, parameter_5: Int, parameter_6: Int, parameter_7: Int, parameter_8: Int, completion: @escaping (Result<BCLFixtureTestingFDKeyVerificationResponse, BCLError>) -> Void)
+  public func mcuIDRead(completion: @escaping (Result<BCLFixtureTestingMCUIdReadResponse, BCLError>) -> Void)
+  public func reset(completion: @escaping (Result<BCLFixtureTestingResetResponse, BCLError>) -> Void)
   public func configureLinearMotorParameters(pattern: Int, dutyCycle: Int, execution: Int, repetitions: Int, completion: @escaping (Result<BCLFixtureTestingConfigureLinearMotorParametersResponse, BCLError>) -> Void)
   public func appEventBindRing(date: Date, timeZone: BCLRingTimeZone, completion: @escaping (Result<BCLBindRingResponse, BCLError>) -> Void)
   public func appEventConnectRing(date: Date, timeZone: BCLRingTimeZone, filterTime: Date? = nil, callbacks: BCLDataSyncCallbacks, completion: @escaping (Result<BCLConnectRingResponse, BCLError>) -> Void)
@@ -594,13 +728,16 @@ extension BCLRingManager {
   public func controlADPCMFormatAudio(isOpen: Bool, completion: @escaping (Result<BCLControlADPCMFormatResponse, BCLError>) -> Void)
   public func setActivePushAudioInfo(audioType: BCLAudioType, completion: @escaping (Result<BCLSetActivePushAudioInfoResponse, BCLError>) -> Void)
   public func getActivePushAudioInfo(completion: @escaping (Result<BCLGetActivePushAudioInfoResponse, BCLError>) -> Void)
+  public func convertAdpcmToPcm(adpcmData: Data) -> Data?
   @available(*, deprecated, message: "请改用 startSportMode(sportType: Int,completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void)，数据回调请使用 BCLRingManager.shared.sportDataBlock 进行接收，并使用 BCLRingManager.shared.passiveStopBlock 进行接收被动停止回调")
   public func startSportMode(sportType: Int, completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void, sportDataCallback: @escaping (BCLSportDataResponse) -> Void, passiveStopCallback: @escaping (BCLSportModePassiveStopResponse) -> Void)
-  public func startSportMode(sportType: Int, completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void)
+  public func startSportMode(sportType: Int, recordDuration: UInt32? = nil, sliceDuration: UInt32? = nil, completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void)
   public func stopSportMode(completion: @escaping (Result<BCLSportModeStopResponse, BCLError>) -> Void)
   @available(*, deprecated, message: "请改用 requestMissingPointsSportMode() 无回调版本，数据回调请使用 BCLRingManager.shared.sportDataMissingPointsBlock 进行接收")
   public func requestMissingPointsSportMode(completion: @escaping (Result<BCLMissingPointsResponse, BCLError>) -> Void)
   public func requestMissingPointsSportMode()
+  public func setTimedStartSportMode(collectionMode: Int, startTime: TimeInterval, endTime: TimeInterval, completion: @escaping (Result<BCLSetTimedStartResponse, BCLError>) -> Void)
+  public func getTimedStartSportMode(completion: @escaping (Result<BCLGetTimedStartResponse, BCLError>) -> Void)
   public func setAlarmClock(items: [BCLAlarmClockData], completion: @escaping (Result<BCLSetAlarmClockResponse, BCLError>) -> Void)
   public func readAlarmClock(completion: @escaping (Result<BCLReadAlarmClockResponse, BCLError>) -> Void)
   public func setHoliday(holidayData: BCLHolidayData, completion: @escaping (Result<BCLSetHolidayResponse, BCLError>) -> Void)
@@ -615,8 +752,9 @@ extension BCLRingManager {
   public func downloadFirmware(url: String, fileName: String, destinationPath: String, progress: @escaping (Double) -> Void, completion: @escaping (Result<String, BCLError>) -> Void)
   public func getFirmwareVersionList(category: String, completion: @escaping (Result<[FirmwareVersionItem], BCLError>) -> Void)
   public func uploadHistory(historyData: [BCLRingDBModel], mac: String, completion: @escaping (Result<Void, BCLError>) -> Void)
-  public func getSleepData(date: Date, timeZone: BCLRingTimeZone, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
+  public func getSleepData(date: Date, timeZone: BCLRingTimeZone = .East8, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
   public func getSleepDataByTimeRange(datas: [String], completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
+  public func loadUserLatestHistory(completion: @escaping (Result<BCLRingDBModel, BCLError>) -> Void)
   public func uploadBloodPressureData(mac: String, waveData: [(Int, Int, Int, Int, Int)], completion: @escaping (Result<(Int, Int), BCLError>) -> Void)
   public func uploadBloodGlucoseData(mac: String, waveData: [(Int, Int, Int, Int, Int)], completion: @escaping (Result<Double, BCLError>) -> Void)
   public func compressWaveData(waveData: String) -> String
@@ -634,7 +772,7 @@ extension BCLRingManager {
   public func insertHistoryDataSync(dataModels: [BCLRingDBModel], completion: @escaping (Result<Void, BCLError>) -> Void)
   public func deleteDBAllHistoryData(completion: @escaping (Result<Void, BCLError>) -> Void)
   public func deleteDBHistoryData(startTime: Int64, endTime: Int64, completion: @escaping (Result<Void, BCLError>) -> Void)
-  public func compressLogAndDataFiles(completion: @escaping (Result<(String, Data), BCLError>) -> Void)
+  public func compressLogAndDataFiles(fromDate: String? = nil, completion: @escaping (Result<(String, Data), BCLError>) -> Void)
   public func cleanCompressedFiles(completion: @escaping (Result<Void, BCLError>) -> Void)
 }
 extension BCLRingManager {
@@ -661,6 +799,22 @@ extension BCLRingManager {
 extension BCLRingManager {
   public func localCalorieAndDistanceCounting(stepCount: Int, height: Double, weight: Double) -> (Double, Double)
   public func calculateSleepLocally(targetDate: Date, macString: String?) -> BCLRingLocalSleepModel
+}
+extension BCLRingManager {
+  public func startDataRateStatistics()
+  public func stopDataRateStatistics()
+  public func resetDataRateStatistics()
+  public func getCurrentDataRateInfo() -> BCLDataReceiveRateInfo?
+  public var dataReceiveRateObservable: Observable<BCLDataReceiveRateInfo?> {
+    get
+  }
+  public var formattedDataReceiveRate: String {
+    get
+  }
+  public func setDataRateChangeCallback(_ block: ((BCLDataReceiveRateInfo?) -> Void)?)
+  public var isDataRateStatisticsActive: Bool {
+    get
+  }
 }
 public struct BCLApolloResponse {
   public enum CharacteristicType {
@@ -897,9 +1051,12 @@ public enum WaveformDataType {
   public var sportDataBlock: ((BCLSportDataResponse) -> Void)?
   public var passiveStopBlock: ((BCLSportModePassiveStopResponse) -> Void)?
   public var sportDataMissingPointsBlock: ((BCLMissingPointsResponse) -> Void)?
+  public var keyEventBlock: ((BCLKeyEventTypeResponse) -> Void)?
+  public var keyEventRawDataBlock: ((BCLKeyEventRawDataResponse) -> Void)?
   public var isAutoReconnectEnabled: Bool
   public var autoReconnectTimeLimit: TimeInterval
   public var autoReconnectMaxAttempts: Int
+  final public let dataRateStatisticsTool: BCLRingSDK.BCLRateStatisticsTool
   @objc deinit
 }
 extension BCLRingManager {
@@ -971,6 +1128,46 @@ public enum BCLAudioType : UInt8 {
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRingActivePushAudioCompleteResponse : BCLResponse {
   @objc deinit
+}
+public struct BCLDataReceiveRateInfo {
+  public let totalPacketsReceived: Int
+  public let packetsPerSecond: Int
+  public let bytesPerSecond: Int
+  public let averagePacketSize: Double
+  public let startTime: Date
+  public let lastReceiveTime: Date
+  public let elapsedSeconds: TimeInterval
+  public var description: String {
+    get
+  }
+  public var formattedByteRate: String {
+    get
+  }
+}
+public class BCLRateStatisticsTool {
+  public var dataReceiveRateObservable: Observable<BCLDataReceiveRateInfo?> {
+    get
+  }
+  public var currentRateInfo: BCLDataReceiveRateInfo? {
+    get
+  }
+  public var rateChangeBlock: ((BCLDataReceiveRateInfo?) -> Void)?
+  public init()
+  @objc deinit
+  public func startStatistics()
+  public func stopStatistics()
+  public func recordDataReceived(dataSize: Int)
+  public func resetStatistics()
+  public func getCurrentStatistics() -> BCLDataReceiveRateInfo?
+}
+extension BCLRateStatisticsTool {
+  public func recordDataReceived(_ data: Data?)
+  public var isStatisticsActive: Bool {
+    get
+  }
+  public var formattedCurrentRate: String {
+    get
+  }
 }
 @_inheritsConvenienceInitializers public class TenMeterGameCommand : BCLCommand {
   public static func sixAxisDataGameStart() -> TenMeterGameCommand
@@ -1139,6 +1336,20 @@ public enum BCLSystemTypeHIDMode : UInt8 {
     get
   }
 }
+public struct TimeZoneInfo {
+  public let identifier: String
+  public let totalOffsetHours: Double
+  public let standardOffsetHours: Double
+  public let isDaylightSaving: Bool
+  public let daylightOffsetHours: Double
+  public let nextTransition: Date?
+  public var offsetDescription: String {
+    get
+  }
+  public var daylightSavingDescription: String {
+    get
+  }
+}
 @objc public enum BCLRingTimeZone : Int {
   case UTC = 0x00
   case East1 = 0x01
@@ -1166,6 +1377,8 @@ public enum BCLSystemTypeHIDMode : UInt8 {
   case West2 = 0xFE
   case West1 = 0xFF
   public static func getCurrentSystemTimeZone() -> BCLRingTimeZone
+  public static func getCurrentSystemTimeZoneInfo() -> (bclTimeZone: BCLRingTimeZone, info: TimeZoneInfo)
+  public static func calculateBCLTimeZone(for timeZone: TimeZone) -> BCLRingTimeZone
   public var region: Region {
     get
   }
@@ -1210,10 +1423,12 @@ public enum BCLSystemTypeHIDMode : UInt8 {
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class SportModeCommand : BCLCommand {
-  public static func createStart(sportType: Int) -> SportModeCommand
+  public static func createStart(sportType: Int, recordDuration: UInt32? = nil, sliceDuration: UInt32? = nil) -> SportModeCommand
   public static func createRequestMissingPoints() -> SportModeCommand
   public static func createStop() -> SportModeCommand
   public static func createPassiveStop() -> SportModeCommand
+  public static func createSetTimedStart(collectionMode: Int, startTime: TimeInterval, endTime: TimeInterval) -> SportModeCommand
+  public static func createGetTimedStart() -> SportModeCommand
   override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
   @objc deinit
 }
@@ -1241,6 +1456,16 @@ public enum BCLSystemTypeHIDMode : UInt8 {
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSportModePassiveStopResponse : BCLResponse {
   public var isWearInterrupt: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetTimedStartResponse : BCLResponse {
+  public var status: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetTimedStartResponse : BCLResponse {
+  public var collectionMode: Int?
+  public var startTime: TimeInterval?
+  public var endTime: TimeInterval?
   @objc deinit
 }
 public struct BCLTokenResponse : Codable, BCLServerResponse {
@@ -1402,6 +1627,7 @@ public enum BCLError : Error {
     case invalidUUID
     case invalidMACAddress
     case deviceNotInPhyBootMode
+    case phyBootModeDisconnect
     public static func == (a: BCLRingSDK.BCLError.ConnectionError, b: BCLRingSDK.BCLError.ConnectionError) -> Swift.Bool
     public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
@@ -1755,6 +1981,8 @@ extension BCLCommand {
     public static let tenMeterGame: UInt8
     public static let audio: UInt8
     public static let vibrationMotor: UInt8
+    public static let keyEvent: UInt8
+    public static let ledDiaplayEvent: UInt8
   }
   public struct SubCmdType {
     public struct Time {
@@ -1826,6 +2054,11 @@ extension BCLCommand {
       public static let setAutoRecordMode: UInt8
       public static let getAutoRecordMode: UInt8
       public static let getFileSystemStatus: UInt8
+      public static let requestFileDataResume: UInt8
+      public static let requestFileDataOneKey: UInt8
+      public static let fileUploadResponse: UInt8
+      public static let fileUploadProgress: UInt8
+      public static let fileDataOneKeyProgress: UInt8
       public static let writeHistoryRecord: UInt8
     }
     public struct SystemSetting {
@@ -1837,12 +2070,28 @@ extension BCLCommand {
       public static let readAllInformation: UInt8
       public static let setPersonalInformation: UInt8
       public static let readPersonalInformation: UInt8
+      public static let setPPGFrequency: UInt8
+      public static let readPPGFrequency: UInt8
+      public static let setGyroscopeStatus: UInt8
+      public static let readGyroscopeStatus: UInt8
+      public static let setAccelerometerStatus: UInt8
+      public static let readAccelerometerStatus: UInt8
+      public static let setTemperatureStatus: UInt8
+      public static let readTemperatureStatus: UInt8
+      public static let setPPGStatus: UInt8
+      public static let readPPGStatus: UInt8
+      public static let setPPGRawDataDuration: UInt8
+      public static let readPPGRawDataDuration: UInt8
+      public static let setAutoCollectionStatus: UInt8
+      public static let readAutoCollectionStatus: UInt8
     }
     public struct SportMode {
       public static let start: UInt8
       public static let requestMissingPoints: UInt8
       public static let stop: UInt8
       public static let passiveStop: UInt8
+      public static let setTimedStart: UInt8
+      public static let getTimedStart: UInt8
     }
     public struct HIDMode {
       public static let set: UInt8
@@ -1864,12 +2113,15 @@ extension BCLCommand {
       public static let unbind: UInt8
     }
     public struct FixtureTesting {
+      public static let reset: UInt8
       public static let oneKeySelfInspection: UInt8
       public static let communicationLoopback: UInt8
       public static let communicationUpload: UInt8
       public static let configureLinearMotorParameters: UInt8
       public static let agingSetting: UInt8
       public static let agingRead: UInt8
+      public static let fdKeyVerification: UInt8
+      public static let mcuIdRead: UInt8
     }
     public struct SixAxis {
       public static let close: UInt8
@@ -1917,6 +2169,13 @@ extension BCLCommand {
       public static let linearMotorNonLinearPWM: UInt8
       public static let linearMotorTimerVibration: UInt8
       public static let linearMotorImmediateVibration: UInt8
+    }
+    public struct KeyEvent {
+      public static let keyEventType: UInt8
+      public static let keyEventRawData: UInt8
+    }
+    public struct LEDDiaplayEvent {
+      public static let ledDisplayConfiguration: UInt8
     }
   }
 }
@@ -2099,6 +2358,15 @@ public class BCLPhyUpgrade {
   public func encode(to encoder: any Swift.Encoder) throws
   required public init(from decoder: any Swift.Decoder) throws
 }
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLKeyEventTypeResponse : BCLResponse {
+  public var keyEventType: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLKeyEventRawDataResponse : BCLResponse {
+  public var dataLength: Int?
+  public var rawData: [Int]?
+  @objc deinit
+}
 @_hasMissingDesignatedInitializers public class BCLResponse {
   final public let frameType: UInt8
   final public let frameId: UInt8
@@ -2209,6 +2477,7 @@ public enum BCLVibrationMotorType : Int {
   public var indexNumber: Int?
   public var time: Int64?
   public var stepCount: Int?
+  public var stepCountingType: Int?
   public var heartRate: Int?
   public var bloodOxygen: Int?
   public var heartRateVariability: Int?
@@ -2222,7 +2491,7 @@ public enum BCLVibrationMotorType : Int {
   public var rrBytes: Data?
   @objc override dynamic public init()
   @objc public init(bytes: [UInt8])
-  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil)
+  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, stepCountingType: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil)
   required public init(from decoder: Decoder) throws
   public func encode(to encoder: Encoder) throws
   @objc public func toDictionary() -> [String : Any]
@@ -2533,6 +2802,8 @@ public struct BCLHolidayData {
   public static func createSetAutoRecordMode(type: Int) -> RingDataCommand
   public static func createGetAutoRecordMode() -> RingDataCommand
   public static func createGetFileSystemStatus() -> RingDataCommand
+  public static func createRequestFileDataResume(fileOffset: Int32, fileName: String) -> RingDataCommand
+  public static func createRequestFileDataOneKey(fileIndex: Int) -> RingDataCommand
   public static func createWriteHistoryRecord(data: Data) -> RingDataCommand
   override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
   @objc deinit
@@ -2600,7 +2871,7 @@ public struct BCLDataSyncCallbacks {
   public var fileSize: Int?
   public var fileName: String?
   public var userId: String?
-  public var timestamp: String?
+  public var fileDate: String?
   public var fileType: Int?
   @objc deinit
 }
@@ -2611,14 +2882,15 @@ public struct BCLDataSyncCallbacks {
   public var currentNumber: Int?
   public var currentLength: Int?
   public var fileType: Int?
-  public var fileDataType1: [Int]?
+  public var fileDataType1: [(Int, Int, Int)]?
   public var fileDataType2: [Int]?
   public var fileDataType3: [(Int, Int, Int, Int, Int)]?
   public var fileDataType4: [Int]?
   public var fileDataType5: [Int]?
   public var fileDataType6: [Int]?
-  public var fileDataType7: [(Int, Int, Int, Int, Int, Int, Int)]?
+  public var fileDataType7: (Int64, [(Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)])?
   public var fileDataType8: [(Int, Int, Int, Int)]?
+  public var fileDataType9: (Int64, [(Int, Int, Int)])?
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLDeleteFileResponse : BCLResponse {
@@ -2647,14 +2919,53 @@ public struct BCLDataSyncCallbacks {
   public var status: Int?
   @objc deinit
 }
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataResumeResponse : BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataOneKeyResponse : BCLResponse {
+  public enum ResponseType {
+    case fileDataOneKey(status: Int, startTimestamp: Int64, endTimestamp: Int64)
+    case fileResponse(fileIndex: Int, uploadStatus: Int, startTimestamp: Int64, endTimestamp: Int64, fileName: String)
+    case fileContentData(fileContent: FileContentType?)
+    case fileProgress(fileIndex: Int, progress: Int)
+    case fileDataOneKeyProgress(progress: Int)
+  }
+  public enum FileContentType {
+    case unknown(fileContent: Int?)
+    case fileContentType1(fileContent: [(x: Int, y: Int, z: Int)]?)
+    case fileContentType2(fileContent: [Int]?)
+    case fileContentType3(fileContent: [(red: Int, infrared: Int, xAxis: Int, yAxis: Int, zAxis: Int)]?)
+    case fileContentType4(fileContent: [Int]?)
+    case fileContentType5(fileContent: [Int]?)
+    case fileContentType6(fileContent: [Int]?)
+    case fileContentType7(fileSystemStatus: Int, fileSize: Int, totalNumber: Int, currentNumber: Int, currentLength: Int, timestamp: Int64, fileContent: [(green: Int, red: Int, infrared: Int, xAccelerometer: Int, yAccelerometer: Int, zAccelerometer: Int, xGyroscope: Int, yGyroscope: Int, zGyroscope: Int, temp0: Int, temp1: Int, temp2: Int)]?)
+    case fileContentType8(fileContent: [(green: Int, x: Int, y: Int, z: Int)]?)
+    case fileContentType9(fileSystemStatus: Int, fileSize: Int, totalNumber: Int, currentNumber: Int, currentLength: Int, timestamp: Int64, fileContent: [(green: Int, red: Int, infrared: Int)]?)
+  }
+  public var responseType: ResponseType?
+  public var fileType: FileContentType?
+  @objc deinit
+}
+public enum BCLLogLevel : Int {
+  case verbose
+  case debug
+  case info
+  case warning
+  case error
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 public let BDLogger: SwiftyBeaver.Type
 public let defaultLogDirectoryPath: Swift.String
 @_hasMissingDesignatedInitializers public class BDLogConfig {
-  public static var consoleLogLevel: SwiftyBeaver.Level {
+  public static var consoleLogLevel: BCLLogLevel {
     get
     set
   }
-  public static var fileLogLevel: SwiftyBeaver.Level {
+  public static var fileLogLevel: BCLLogLevel {
     get
     set
   }
@@ -2838,3 +3149,6 @@ extension BCLRingSDK.BCLVibrationEffect : Swift.Hashable {}
 extension BCLRingSDK.BCLVibrationEffect : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLLogLevel : Swift.Equatable {}
+extension BCLRingSDK.BCLLogLevel : Swift.Hashable {}
+extension BCLRingSDK.BCLLogLevel : Swift.RawRepresentable {}
