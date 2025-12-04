@@ -13,16 +13,13 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // 创建窗口
         window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let initialVC = storyboard.instantiateInitialViewController() else {
-            fatalError("无法从 Main.storyboard 实例化初始控制器")
-        }
-        window?.rootViewController = initialVC
+
+        // 使用MainTabBarController作为根控制器(纯代码方式)
+        let mainTabBarController = BaseTabBar_VC()
+        window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
-        
-        // 配置网络地址（国外地址：.overseas、国内地址：.domestic（默认））
-//        BCLRingManager.shared.networkRegion = .overseas
 
         //  检查蓝牙权限
         BCLRingManager.shared.checkBluetoothPermission { auth in

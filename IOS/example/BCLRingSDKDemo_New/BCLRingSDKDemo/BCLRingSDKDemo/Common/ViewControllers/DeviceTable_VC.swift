@@ -117,11 +117,25 @@ class DeviceTableVC: UIViewController {
         } else {
             QMUITips.showLoading("Device Connecting...", in: view)
             BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
-            BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
+            BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 600, autoReconnectMaxAttempts: 20) { result in
                 switch result {
                 case .success:
                     BDLogger.info("connect success")
                     QMUITips.hideAllTips(in: self.view)
+
+                    // 保存设备信息到 UserDefaults
+                    let connectedDevice = BCLRingManager.shared.currentConnectedDevice
+                    let macAddress = connectedDevice?.macAddress
+                    let peripheralName = connectedDevice?.peripheralName
+
+                    BDLogger.info("准备保存设备信息 - MAC: \(macAddress ?? "nil"), 设备名: \(peripheralName ?? "nil")")
+
+                    UserDefaults.standard.set(macAddress, forKey: "ring_macAddress")
+                    UserDefaults.standard.set(peripheralName, forKey: "ring_peripheralName")
+                    UserDefaults.standard.synchronize()
+
+                    BDLogger.info("设备信息已保存到 UserDefaults")
+
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     BDLogger.error("connect failed: \(error)")
@@ -131,20 +145,20 @@ class DeviceTableVC: UIViewController {
             }
         }
         
-        QMUITips.showLoading("Device Connecting...", in: view)
-        BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
-        BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
-            switch result {
-            case .success:
-                BDLogger.info("connect success")
-                QMUITips.hideAllTips(in: self.view)
-                self.navigationController?.popViewController(animated: true)
-            case let .failure(error):
-                BDLogger.error("connect failed: \(error)")
-                QMUITips.hideAllTips(in: self.view)
-                QMUITips.showError("Connect Failed", in: self.view)
-            }
-        }
+//        QMUITips.showLoading("Device Connecting...", in: view)
+//        BDLogger.info("连接设备的UUID：\(device.peripheral.identifier.uuidString)")
+//        BCLRingManager.shared.startConnect(uuidString: device.peripheral.identifier.uuidString, isAutoReconnect: true, autoReconnectTimeLimit: 300, autoReconnectMaxAttempts: 10) { result in
+//            switch result {
+//            case .success:
+//                BDLogger.info("connect success")
+//                QMUITips.hideAllTips(in: self.view)
+//                self.navigationController?.popViewController(animated: true)
+//            case let .failure(error):
+//                BDLogger.error("connect failed: \(error)")
+//                QMUITips.hideAllTips(in: self.view)
+//                QMUITips.showError("Connect Failed", in: self.view)
+//            }
+//        }
     }
 }
 

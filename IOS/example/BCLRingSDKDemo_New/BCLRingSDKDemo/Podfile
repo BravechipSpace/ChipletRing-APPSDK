@@ -17,5 +17,4 @@ target 'BCLRingSDKDemo' do
   pod 'SwiftDate'
   pod 'SwiftyBeaver', '1.9.5'
   pod 'Zip'
-
 end
