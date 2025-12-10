@@ -323,9 +323,9 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
     public void CONTROL_AUDIO(byte[] bytes) {
         postView("\n音频结果：" + Arrays.toString(bytes));
         byte[] adToPcm = new AdPcmTool().adpcmToPcmFromJNI(bytes);
-//
-//        savePcmFile(outputPath,adToPcm);
-//        postView("\n已保存：" + outputPath);
+
+        savePcmFile(outputPath,adToPcm);
+        postView("\n已保存：" + outputPath);
     }
 
     public static void savePcmFile(String filePath, byte[] byteArray) {
