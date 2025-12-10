@@ -1,0 +1,6 @@
+framework module NordicDFU {
+  umbrella header "NordicDFU-umbrella.h"
+
+  export *
+  module * { export * }
+}

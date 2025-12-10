@@ -1,3 +1,4 @@
+目前该文档不再维护，可以去新文档查阅(https://yongxin.gitbook.io/yongxin-docs/documentation)
 # 智能戒指SDK规范 
 * 本规范针对产品经理，开发工程师，测试工程师编写。  
 * 本规范介绍了BLE等技术。了解过这些基本技术后，你就会明白如何将智能戒指的功能集成到自己的APP中。
@@ -2756,23 +2757,36 @@ public class SleepBean{
 ```
 ```java
 public class Sleep2thBean {
-    List<HistoryDataBean> sleepDataBeanList;
+ List<HistoryDataBean> sleepDataBeanList;
     long startTime;//第一次入睡时间
     long endTime;//最后一次醒来时间
-    long sleepTime;//睡眠时长
+    long sleepTime;//睡眠时长，包含清醒时间
     long deepTime ;//深睡眠时长
     long lowTime ;//浅睡眠时长
     long ydTime ;//眼动时间
     long qxTime;//清醒时长
     long seconds;//睡眠时长(秒)
-    int hours;//睡眠时长(小时)
-    int minutes;//睡眠时长(分钟)
+    int hours;//睡眠时长(小时)，不包含清醒时间
+    int minutes;//睡眠时长(分钟)，不包含清醒时间
     long sjTime;//实际睡眠时长
     double xiaolv;//睡眠效率
     double shenshui;//深睡比例
     int score ;//睡眠评分
-    int wakeupCount;//清醒次数
+    int wakeupCount;//清醒次数(传统睡眠返回)
+    int waso;//入睡后的总清醒时间（单位分钟）,gomore算法使用
     String tips;//评价(保留)
+    int sleepDataType;//1是1代睡眠，2是2代睡眠,3是gomore算法
+    int voMax;//最大摄氧量
+
+    double resultTemperture;//平均体温
+    int xshours;//小睡使用shortSleepList，暂时用不到这个字段
+    int xsminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllhours;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String sleepLog;//计算睡眠产生的日志
+    List<HistoryDataBean> historyBeanList;
+    String noSleepResult;//无睡眠的原因
+    List<Sleep2thBean> shortSleepList;//短睡眠列表
 }
 ```
 数据库中数据
@@ -3669,64 +3683,37 @@ READ_HISTORY_AUTO_UPDATE_TO_SERVER(  String mMac, IHistoryListenerLite listenerL
 LogicalApi.getSleepDataBatchFromService(List<String> dates, IWebSleepResult webApiResult)
 //返回的数据结构
 
-public class SleepBean {
-    /**
-     * 零星睡眠小时
-     */
-    int hours = 0;
-    /**
-     * 零星睡眠分钟
-     */
-    int minutes = 0;
-    /**
-     * 全部睡眠小时
-     */
-    int allHours = 0;
-    /**
-     * 全部睡眠分钟
-     */
-    int allMinutes =0;
-    /**
-     * 睡眠小时
-     */
-    int sleepHours = 0;
-    /**
-     * 睡眠分钟
-     */
-    int sleepMinutes =0;
-    /**
-     * 深度睡眠时间
-     */
-    long highTime = 0;
-    /**
-     * 浅度睡眠时间
-     */
-    long lowTime = 0;
-    /**
-     * 眼动时间
-     */
-    long ydTime = 0;
-    /**
-     * 清醒时间
-     */
-    long qxTime = 0;
-    /**
-     * 入睡时间戳
-     */
-    long startTime = 0;
-    /**
-     * 清醒时间戳
-     */
-    long endTime = 0;
+public class Sleep2thBean {
+    List<HistoryDataBean> sleepDataBeanList;
+    long startTime;//第一次入睡时间
+    long endTime;//最后一次醒来时间
+    long sleepTime;//睡眠时长，包含清醒时间
+    long deepTime ;//深睡眠时长
+    long lowTime ;//浅睡眠时长
+    long ydTime ;//眼动时间
+    long qxTime;//清醒时长
+    long seconds;//睡眠时长(秒)
+    int hours;//睡眠时长(小时)，不包含清醒时间
+    int minutes;//睡眠时长(分钟)，不包含清醒时间
+    long sjTime;//实际睡眠时长
+    double xiaolv;//睡眠效率
+    double shenshui;//深睡比例
+    int score ;//睡眠评分
+    int wakeupCount;//清醒次数(传统睡眠返回)
+    int waso;//入睡后的总清醒时间（单位分钟）,gomore算法使用
+    String tips;//评价(保留)
+    int sleepDataType;//1是1代睡眠，2是2代睡眠,3是gomore算法
+    int voMax;//最大摄氧量
 
-    /**
-     * 睡眠评分
-     */
-    long score = 0;
-    /**
-     * 睡眠数据
-     */
-    private List<HistoryDataBean> historyDataBeanList;
+    double resultTemperture;//平均体温
+    int xshours;//小睡使用shortSleepList，暂时用不到这个字段
+    int xsminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllhours;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String sleepLog;//计算睡眠产生的日志
+    List<HistoryDataBean> historyBeanList;
+    String noSleepResult;//无睡眠的原因
+    List<Sleep2thBean> shortSleepList;//短睡眠列表
 ```
 ##### 服务器端超时，导致戒指未成功上传，睡眠不显示的解决办法：
 因为一般建议是上传戒指的未上传数据，如果是从戒指里正确获取了数据，但是因为网络问题，或者服务器问题，没有将数据上传到服务器，导致睡眠不会显示，下一次同步数据的时候，是从上一次戒指上传完后的最后一条数据的时间戳开始，所以在服务器上，中间的数据就会丢掉。  
@@ -3740,8 +3727,148 @@ LmAPI:
  public static void READ_HISTORY_UPDATE_TO_SERVER(byte type, long timeMillis)
 将timeMillis设置为loadUserLatestHistory获取的时间戳
 ```
+##### 2、GoMore睡眠
+Gomore睡眠是集成在戒指里，可以直接通过指令，获取用户睡眠信息，用户可以保存睡眠信息到自己服务器，也可以调用我们的接口，保存到我们云端。如果要保证GoMore算法可以正常使用，需要进行授权。
+步骤：
+1.需要调用指令，获取设备的deviceID  
+2.调用授权接口，传入deviceID，获取key
+3.然后调用指令，将key写入到戒指里
 
-##### 2、ota升级
+首先通过二代协议的返回值，判断戒指是否支持Gomore睡眠
+```java
+   private int gomoreSleep;//固件是否支持gomore睡眠算法,1支持0不支持
+```
+##### 授权：
+
+##### 睡眠上传和获取
+睡眠相关的新接口，已经兼容了传统睡眠和Gomore睡眠，改动很小，新增了一些字段，包括小睡列表（传统睡眠算法后续会增加，目前只有Gomore算法支持）
+```java
+public class Sleep2thBean {
+    List<HistoryDataBean> sleepDataBeanList;
+    long startTime;//第一次入睡时间
+    long endTime;//最后一次醒来时间
+    long sleepTime;//睡眠时长，包含清醒时间
+    long deepTime ;//深睡眠时长
+    long lowTime ;//浅睡眠时长
+    long ydTime ;//眼动时间
+    long qxTime;//清醒时长
+    long seconds;//睡眠时长(秒)
+    int hours;//睡眠时长(小时)，不包含清醒时间
+    int minutes;//睡眠时长(分钟)，不包含清醒时间
+    long sjTime;//实际睡眠时长
+    double xiaolv;//睡眠效率
+    double shenshui;//深睡比例
+    int score ;//睡眠评分
+    int wakeupCount;//清醒次数(传统睡眠返回)
+    int waso;//入睡后的总清醒时间（单位分钟）,gomore算法使用
+    String tips;//评价(保留)
+    int sleepDataType;//1是1代睡眠，2是2代睡眠,3是gomore算法
+    int voMax;//最大摄氧量
+
+    double resultTemperture;//平均体温
+    int xshours;//小睡使用shortSleepList，暂时用不到这个字段
+    int xsminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllhours;//小睡使用shortSleepList，暂时用不到这个字段
+    String xsAllminutes;//小睡使用shortSleepList，暂时用不到这个字段
+    String sleepLog;//计算睡眠产生的日志
+    List<HistoryDataBean> historyBeanList;
+    String noSleepResult;//无睡眠的原因
+    List<Sleep2thBean> shortSleepList;//短睡眠列表
+}
+
+```
+通过蓝牙指令获取gomore睡眠结果
+```java
+ List<GoMoreSleepBean> gomoreSleepList=new ArrayList<>();
+ LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+                @Override
+                public void overviewOfSleep(GoMoreSleep goMoreSleep) {
+                    //睡眠总览
+                    Gson gson = new Gson();
+                    String json = gson.toJson(goMoreSleep);
+                    gomoreSleepList.add(gson.fromJson(json, GoMoreSleepBean.class));
+                }
+
+                @Override
+                public void sleepStaging(GoMoreSleep goMoreSleep) {
+                    //睡眠分期，是每一分钟的睡眠状态
+                    Gson gson = new Gson();
+                    String json = gson.toJson(goMoreSleep);
+                    gomoreSleepList.add(gson.fromJson(json, GoMoreSleepBean.class));
+                }
+
+                @Override
+                public void dataUploadFinish() {
+                    //数据获取完成，用户可以提交到自己服务器，也可以上传到我们服务器
+                    
+                }
+
+                @Override
+                public void noSleepData() {
+                    //没有数据
+                   
+                }
+            });
+```
+sdk提供的服务器相关的接口
+```java
+//上传Gomore睡眠记录
+LogicalApi.insertGomoreSleepList(List<GoMoreSleep> gomoreSleepList, IWebCommonListener iWebCommonListener)
+//获取睡眠，兼容gomore和传统睡眠，替换掉LogicalApi.getSleepDataFromService
+LogicalApi.getSleepFromServiceWithGomore(String date, IWebSleepResult webApiResult)
+//批量获取睡眠总览，兼容Gomore睡眠和旧版本睡眠，替换掉LogicalApi.getSleepDataBatchFromService
+LogicalApi.getSleepDataWithGoMoreBatch(List<String> dates, IWebSleepResult webApiResult)
+```
+如果是Gomore睡眠，绘图需要改变一下，每个分期是60秒记录一次睡眠状态，需要特殊处理
+根据sleepDataType进行判断，如果是3，是Gomore睡眠
+```java
+ /**
+     * 适配gomore算法的睡眠绘图
+     * @param showStartTime
+     * @param endTimeData
+     * @param historyDataBeanList
+     */
+    public void initSleepChatGomore(long showStartTime, long endTimeData, List<HistoryDataBean> historyDataBeanList) {
+        List<SleepChartBean> list = new ArrayList<>();
+        if (historyDataBeanList != null && !historyDataBeanList.isEmpty()) {
+            int currentSleepType = historyDataBeanList.get(0).getSleepType();
+            long startTime = historyDataBeanList.get(0).getTime();
+            long currentEndTime = historyDataBeanList.get(0).getTime();
+
+            for (int i = 1; i < historyDataBeanList.size(); i++) {
+                HistoryDataBean currentBean = historyDataBeanList.get(i);
+                HistoryDataBean previousBean = historyDataBeanList.get(i - 1);
+
+                // 检查是否连续（时间相差60秒）且睡眠类型相同
+                boolean isContinuous = (currentBean.getTime() == previousBean.getTime() + 60);
+                boolean sameSleepType = (currentBean.getSleepType() == currentSleepType);
+
+                if (isContinuous && sameSleepType) {
+                    // 连续且类型相同，更新结束时间
+                    currentEndTime = currentBean.getTime();
+                } else {
+                    // 不连续或类型不同，保存当前时间段
+                    String startTimeStr = com.lm.sdk.library.utils.DateUtils.longToString(startTime * 1000, "yyyy-MM-dd HH:mm:ss");
+                    String endTimeStr = com.lm.sdk.library.utils.DateUtils.longToString(currentEndTime * 1000, "yyyy-MM-dd HH:mm:ss");
+                    list.add(new SleepChartBean(currentSleepType, startTimeStr, endTimeStr));
+
+                    // 开始新的时间段
+                    currentSleepType = currentBean.getSleepType();
+                    startTime = currentBean.getTime();
+                    currentEndTime = currentBean.getTime();
+                }
+            }
+
+            // 添加最后一个时间段
+            String startTimeStr = com.lm.sdk.library.utils.DateUtils.longToString(startTime * 1000, "yyyy-MM-dd HH:mm:ss");
+            String endTimeStr = com.lm.sdk.library.utils.DateUtils.longToString(currentEndTime * 1000, "yyyy-MM-dd HH:mm:ss");
+            list.add(new SleepChartBean(currentSleepType, startTimeStr, endTimeStr));
+        }
+
+    }
+
+```
+##### 3、ota升级
 该服务支持从云端拉取最新的固件，需保证与戒指处于连接状态,建议rssi > -70(参考3.2.27 获取RSSI)并且电量>50 ，目前提供三个接口，根据不同情况调用
 OtaApi.otaUpdateWithCheckVersion 该接口包含了检查版本号version(调用 LmAPI.GET_VERSION((byte) 0x00)获取)，从云端拉取最新固件，自动升级功能，ota升级完成以后，要延时3s重连一下戒指
 
@@ -3937,7 +4064,7 @@ OtaApi.otaUpdateWithVersion是在调用OtaApi.checkCurrentVersionNeedUpdate后�
     }
 ```
 
-##### 3、血压和血糖算法(部分戒指支持)
+##### 4、血压和血糖算法(部分戒指支持)
 基于戒指传输的波形值，经过python算法，给出具体的血压值或者血糖值，调用样例
 ```java
 
@@ -4013,7 +4140,7 @@ BLOOD_PRESSURE_APP(byte collectionTime,byte waveformConfiguration,byte progressC
      */
 getBloodPressureOrSugar(String mac, String waveFormValue, String testType,IWebBloodPressureAndSugarResult webApiResult)
 ```
-##### 4、根据固件类别获取固件信息
+##### 5、根据固件类别获取固件信息
 这个列表，除非有用户想回退固件，或者戒指升级到指定固件，才会用到，其他用户，直接使用最新固件即可
 ```java
 //String category, 对应固件类别，比如Z3R，Z2W之类，不传不会返回固件信息
@@ -4046,7 +4173,7 @@ public class Firmware {
     private String fileUrl;
 }
 ```
-##### 5、时间线
+##### 6、时间线
 根据开始时间和结束时间，获取时间线，包括跑步和行走，前提是需要上传历史数据到服务器(READ_HISTORY_UPDATE_TO_SERVER)
 ```java
 
@@ -4108,7 +4235,7 @@ public class MovementSegment {
     }
 }
 ```
-##### 6、特殊戒指计步方案
+##### 7、特殊戒指计步方案
 有部分戒指，不是到0点清零，是每隔5分钟清零一次，只记录5分钟之间的步数，这个需要后台来计算当前步数，也就是从0点到当前时间的步数总和，前提是先同步一下未上传历史数据，保证数据完整。  
 判断是否是这种固件，需要根据广播判断
 ```java
