@@ -269,7 +269,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 343, title: "Phy固件升级", category: .firmwareUpgrade),
             FunctionDemoModel(id: 344, title: "Phy Boot Mode固件升级", category: .firmwareUpgrade),
 //            FunctionDemoModel(id: 345, title: "PhyBootMode测试升级", category: .firmwareUpgrade, requiresConnection: false),
-            
+
             // 音频功能（361-380）
             FunctionDemoModel(id: 361, title: "开始音频传输-pcm格式", category: .audioTransmission),
             FunctionDemoModel(id: 362, title: "停止音频传输-pcm格式", category: .audioTransmission),
@@ -279,7 +279,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 366, title: "获取主动推送音频数据", category: .audioTransmission),
             FunctionDemoModel(id: 367, title: "开始录音（Z5J定制）", category: .audioTransmission),
             FunctionDemoModel(id: 368, title: "结束录音（Z5J定制）", category: .audioTransmission),
-            
+
             // 文件系统（381-400）
             FunctionDemoModel(id: 381, title: "获取文件系统空间信息", category: .fileSystem),
             FunctionDemoModel(id: 382, title: "获取文件系统状态", category: .fileSystem),
@@ -289,20 +289,14 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 386, title: "删除指定文件数据", category: .fileSystem),
             FunctionDemoModel(id: 387, title: "获取全部文件数据", category: .fileSystem),
 
-            
-            
-            
+            // 睡眠数据获取（401-420）
+            FunctionDemoModel(id: 401, title: "查询指定日期下的详细睡眠数据", category: .sleepData, requiresConnection: false),
+            FunctionDemoModel(id: 402, title: "查询指定时间范围的睡眠数据", category: .sleepData, requiresConnection: false),
 
 //            // 网络API功能 (121-124)
-//            FunctionDemoModel(id: 121, title: "获取睡眠数据", category: .networkAPI),
-//            FunctionDemoModel(id: 122, title: "获取Token", category: .networkAPI, requiresConnection: false),
-//            FunctionDemoModel(id: 123, title: "固件版本更新检查", category: .networkAPI),
-//            FunctionDemoModel(id: 124, title: "固件文件下载", category: .networkAPI),
 
             // 测试功能，需要调整。
 //            FunctionDemoModel(id: 202, title: "PWTT", category: .measurementBloodPressure),
-
-//
 //            // TODO: 继续添加其余功能 (142-216)
 //            // 用户可以根据Main_VC.swift中的btnAction switch语句继续添加
         ]

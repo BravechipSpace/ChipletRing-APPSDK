@@ -34,6 +34,7 @@ enum FunctionCategory: String, CaseIterable {
     case firmwareUpgrade = "固件升级功能"
     case audioTransmission = "音频数据传输"
     case fileSystem = "文件系统"
+    case sleepData = "睡眠数据"
     case ppgWaveform = "PPG波形透传输"
     case keyEvent = "按键事件"
     case displayEvent = "显示事件"
@@ -72,6 +73,7 @@ enum FunctionCategory: String, CaseIterable {
             .sdkNetwork,
             .firmwareUpgrade,
             .fileSystem,
+            .sleepData,
             .sdkDatabase,
             .sdkLog,
         ]

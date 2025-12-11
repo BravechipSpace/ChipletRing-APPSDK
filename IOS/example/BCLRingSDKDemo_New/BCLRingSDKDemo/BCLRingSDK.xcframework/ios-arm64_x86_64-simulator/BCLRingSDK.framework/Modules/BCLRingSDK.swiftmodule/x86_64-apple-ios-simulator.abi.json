@@ -129321,7 +129321,7 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 93665,
+      "offset": 94816,
       "length": 4,
       "value": "1000"
     },
@@ -130037,7 +130037,7 @@
       "kind": "StringLiteral",
       "offset": 329,
       "length": 8,
-      "value": "\"1.1.25\""
+      "value": "\"1.1.27\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",

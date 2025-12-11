@@ -102,7 +102,7 @@ class SceneDemo_VC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let alert = UIAlertController(
                 title: "设备绑定流程",
-                message: "待完善",
+                message: "1. 选择设备进行连接\n2. 连接成功后自动同步时间\n3. 设置采集周期\n4. 完成绑定",
                 preferredStyle: .alert
             )
             alert.addAction(UIAlertAction(title: "知道了", style: .default))
@@ -112,27 +112,27 @@ class SceneDemo_VC: UIViewController {
 
     /// 2. 设备连接流程
     private func executeDeviceContentScenario() {
-        print("待完善")
+        
     }
 
     /// 执行复合指令-连接指令
     private func executeConnectCompositeCommand(_ deviceInfo: BCLDeviceInfoModel) {
-        print("待完善")
+    
     }
 
     /// 3. 刷新数据流程
     private func executeDeviceRefreshScenario() {
-        print("待完善")
+        
     }
 
     /// 4. 数据同步流程
     private func executeDataSyncScenario() {
-        print("待完善")
+        
     }
 
     /// 5. 固件升级流程
     private func executeFirmwareUpgradeScenario() {
-        print("待完善")
+        
     }
 
     // MARK: - Helper Methods

@@ -192,10 +192,10 @@ class Settings_VC: UIViewController {
         alert.addAction(UIAlertAction(title: "取消", style: .cancel))
         alert.addAction(UIAlertAction(title: "确定", style: .destructive) { _ in
             // 清除UserDefaults中的设备信息
-//            UserDefaults.standard.removeObject(forKey: "ring_macAddress")
-//            UserDefaults.standard.removeObject(forKey: "ring_peripheralName")
-//            UserDefaults.standard.removeObject(forKey: "ring_uuidString")
-//            UserDefaults.standard.synchronize()
+            UserDefaults.standard.removeObject(forKey: "ring_macAddress")
+            UserDefaults.standard.removeObject(forKey: "ring_peripheralName")
+            UserDefaults.standard.removeObject(forKey: "ring_uuidString")
+            UserDefaults.standard.synchronize()
 
             BDLogger.info("缓存已清除")
 
