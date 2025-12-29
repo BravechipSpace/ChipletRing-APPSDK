@@ -216,9 +216,6 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
             list.add(new SleepChartBean(dataBean.getSleepType(), time, endtime));
 
 
-                Logger.show("starttime",time);
-            Logger.show("sleepType",dataBean.getSleepType()+"");
-            Logger.show("endtime",endtime);
         }
 
 
