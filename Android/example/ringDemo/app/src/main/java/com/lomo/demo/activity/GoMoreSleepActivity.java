@@ -268,9 +268,9 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
                 public void overviewOfSleep(GoMoreSleep goMoreSleep) {
                     StringBuilder stringBuilder=new StringBuilder();
                     stringBuilder.append("开始时间：")
-                            .append( DateUtils.longToString(goMoreSleep.getStartTS()*1000,"yyyy-MM-dd HH:mm:ss"))
+                            .append( DateUtils.longToString(goMoreSleep.getStartTs()*1000,"yyyy-MM-dd HH:mm:ss"))
                                     .append(",结束时间:")
-                                            .append( DateUtils.longToString(goMoreSleep.getEndTS()*1000,"yyyy-MM-dd HH:mm:ss"))
+                                            .append( DateUtils.longToString(goMoreSleep.getEndTs()*1000,"yyyy-MM-dd HH:mm:ss"))
                                                     .append(",睡眠潜伏期:").append(goMoreSleep.getLatency()).append("分钟")
                                     .append(",清醒时间:").append(goMoreSleep.getWakeTimes()).append("分钟")
                                     .append(",不包含清醒时间的总睡眠时间:").append(goMoreSleep.getTotalSleepTime()).append("分钟")
@@ -304,7 +304,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
                 @Override
                 public void dataUploadFinish() {
                     //睡眠分期是开始时间，每30s增加一个，和Sleep2thBean的List<HistoryBean> historyBeanList里的sleepType含义一致
-                    long stageTimeBase= overviewSleep.getStartTS();
+                    long stageTimeBase= overviewSleep.getStartTs();
                     List<HistoryDataBean> historyBeanList=new ArrayList<>();
                     for (GoMoreSleep sleep : sleepStaging) {
                         for (short stage : sleep.getStages()) {
@@ -332,7 +332,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
                     }
 
 
-                    initSleepChatGomore(overviewSleep.getStartTS(),overviewSleep.getEndTS(),historyBeanList);
+                    initSleepChatGomore(overviewSleep.getStartTs(),overviewSleep.getEndTs(),historyBeanList);
                 }
 
                 @Override

@@ -37,6 +37,7 @@ import com.lm.sdk.inter.IHistoryListener;
 import com.lm.sdk.inter.IQ2Listener;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.inter.IShiMiListener;
+import com.lm.sdk.inter.IWebTimeLineResult;
 import com.lm.sdk.inter.LmOTACallback;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.PreferencesUtils;
@@ -44,6 +45,7 @@ import com.lm.sdk.library.utils.ToastUtils;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.mode.DistanceCaloriesBean;
 import com.lm.sdk.mode.HistoryDataBean;
+import com.lm.sdk.mode.MovementSegment;
 import com.lm.sdk.mode.SleepBean;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.utils.BLEUtils;
@@ -63,6 +65,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,6 +148,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_jump_pageCollection).setOnClickListener(this);
         findViewById(R.id.bt_jump_goMore).setOnClickListener(this);
         findViewById(R.id.bt_jump_historyTemp).setOnClickListener(this);
+        findViewById(R.id.bt_timeline).setOnClickListener(this);
 
         File file = new File(outputPath);
         file.delete();
@@ -320,7 +324,8 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
     }
 
     @Override
-    public void CONTROL_AUDIO(byte[] bytes) {
+    public void CONTROL_AUDIO(int seq, byte[] bytes) {
+
         postView("\n音频结果：" + Arrays.toString(bytes));
         byte[] adToPcm = new AdPcmTool().adpcmToPcmFromJNI(bytes);
 
@@ -916,6 +921,37 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             Intent intent = new Intent();
             intent.setClass(TestActivity.this,HistoryListTempActivity.class);
             startActivity(intent);
+        }
+        if (view.getId() == R.id.bt_timeline) {
+            // 获取当前日期(不含时间)
+            LocalDate today = LocalDate.now();
+
+            // 获取系统默认时区
+            ZoneId zoneId = ZoneId.systemDefault();
+
+            // 当天0点(00:00:00)
+            LocalDateTime startOfDay = today.atStartOfDay();
+            // 当天24点(实际上是次日的00:00:00)
+            LocalDateTime endOfDay = today.plusDays(1).atStartOfDay();
+
+            // 转换为秒级时间戳
+            long startTimestamp = startOfDay.atZone(zoneId).toEpochSecond();
+            long endTimestamp = endOfDay.atZone(zoneId).toEpochSecond();
+
+            LogicalApi.getTimeLineWithHistory(startTimestamp, endTimestamp, new IWebTimeLineResult() {
+                @Override
+                public void timelineResult(List<MovementSegment> movementSegments) {
+                    postView("\ntimeline");
+                    for (MovementSegment segment : movementSegments) {
+                        postView("\nsegment:"+segment.getType());
+                    }
+                }
+
+                @Override
+                public void serviceError(String errorMsg) {
+
+                }
+            });
         }
 
     }

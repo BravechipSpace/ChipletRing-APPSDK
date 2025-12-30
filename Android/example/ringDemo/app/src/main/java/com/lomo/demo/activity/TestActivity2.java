@@ -102,6 +102,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
     }
 
+
     @Override
     public void lmBleConnecting(int code) {
 
@@ -364,7 +365,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
     }
 
     @Override
-    public void CONTROL_AUDIO(byte[] bytes) {
+    public void CONTROL_AUDIO(int seq, byte[] bytes) {
         postView("\n音频结果：" + Arrays.toString(bytes));
         byte[] adToPcm = new AdPcmTool().adpcmToPcmFromJNI(bytes);
 
@@ -718,6 +719,16 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                 public void fileContent(String content) {
 
                 }
+
+                @Override
+                public void AudioFileContent(byte[] content) {
+
+                }
+
+                @Override
+                public void getFileContentFinish() {
+
+                }
             });
         }
         if(v.getId()==R.id.bt_file_content) {
@@ -733,6 +744,16 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                 @Override
                 public void fileContent(String content) {
                     postView("\nGET_FILE_CONTENT：" + content);
+                }
+
+                @Override
+                public void AudioFileContent(byte[] content) {
+
+                }
+
+                @Override
+                public void getFileContentFinish() {
+
                 }
             });
         }

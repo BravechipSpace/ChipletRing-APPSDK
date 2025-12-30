@@ -476,8 +476,9 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
     }
 
+
     @Override
-    public void CONTROL_AUDIO(byte[] bytes) {
+    public void CONTROL_AUDIO(int seq, byte[] bytes) {
 
     }
 

@@ -362,7 +362,7 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     }
 
     @Override
-    public void CONTROL_AUDIO(byte[] bytes) {
+    public void CONTROL_AUDIO(int seq, byte[] bytes) {
 
     }
 

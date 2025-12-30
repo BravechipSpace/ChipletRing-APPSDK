@@ -89,6 +89,16 @@ public class RingFileListActivity extends Activity {
         }
 
         @Override
+        public void onFilePushFileName(byte[] data) {
+
+        }
+
+        @Override
+        public void onFilePushFileData(byte[] data) {
+
+        }
+
+        @Override
         public void onFileDownloadEndReceived(byte[] data){
             handleFileDownloadEndResponse(data);
         }
