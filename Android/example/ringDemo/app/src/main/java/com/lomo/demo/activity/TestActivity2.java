@@ -633,7 +633,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         if(v.getId()==R.id.btn_ota) {
 
             //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
-            OtaApi.otaUpdateWithCheckVersion("7.1.1.6Z3A", TestActivity2.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+            OtaApi.otaUpdateWithCheckVersion("7.2.9.6Z5I", TestActivity2.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
                 @Override
                 public void error(String message) {
                     postView("\nota升级出错：" + message);
@@ -641,14 +641,26 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
                 @Override
                 public void onProgress(int i) {
-                    //  postView("\nota升级进度:"+i);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级进度:"+i);
+                        }
+                    });
+
                     Logger.show("OTA", "OTA升级" + i);
 
                 }
 
                 @Override
                 public void onComplete() {
-                    //  postView("\nota升级结束");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级结束");
+                        }
+                    });
                     Logger.show("OTA", "nota升级结束");
                     OtaApi.destoryOta(TestActivity2.this);
                     //需要延时调用蓝牙重连
