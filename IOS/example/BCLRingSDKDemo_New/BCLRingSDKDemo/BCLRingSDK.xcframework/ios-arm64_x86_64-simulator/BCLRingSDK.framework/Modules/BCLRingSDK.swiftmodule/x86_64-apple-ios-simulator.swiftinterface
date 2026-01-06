@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
 // swift-module-flags: -target x86_64-apple-ios13-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BCLRingSDK
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1
 @_exported import BCLRingSDK
 import CoreBluetooth
 import Foil
@@ -168,7 +168,7 @@ extension SystemSettingCommand {
   @objc deinit
 }
 extension SystemSettingCommand {
-  public static func createGoMoreSetPersonalInformation(age: UInt8, gender: UInt8, height: UInt8, weight: UInt8, maxHeartRate: UInt8, normalHeartRate: UInt8, maxOxygenUptake: UInt8) -> SystemSettingCommand
+  public static func createGoMoreSetPersonalInformation(age: UInt8, gender: UInt8, height: UInt8, weight: UInt8, maxHeartRate: Int16?, normalHeartRate: Int8?, maxOxygenUptake: Int8?) -> SystemSettingCommand
   public static func createGoMoreReadPersonalInformation() -> SystemSettingCommand
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGoMoreSetPersonalInformationResponse : BCLResponse {
@@ -183,9 +183,9 @@ extension SystemSettingCommand {
   public var gender: UInt8
   public var height: UInt8
   public var weight: UInt8
-  public var maxHeartRate: UInt8
-  public var normalHeartRate: UInt8
-  public var maxOxygenUptake: UInt8
+  public var maxHeartRate: UInt16?
+  public var normalHeartRate: UInt8?
+  public var maxOxygenUptake: UInt8?
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class HeartRateCommand : BCLCommand {
@@ -658,6 +658,7 @@ extension BCLRingManager {
   public func disconnect(peripheral: CBPeripheral?)
   public func startReadRSSI(interval: TimeInterval, readRSSIBlock: @escaping (Result<NSNumber, BCLError>) -> Void)
   public func stopReadRSSI()
+  public func rediscoverServices(completion: @escaping (Result<Bool, BCLError>) -> Void, serviceProcessingCompletion: ((Result<Bool, BCLError>) -> Void)? = nil)
   public func syncTime(date: Date = Date(), timeZone: BCLRingTimeZone = .East8, completion: @escaping (Result<BCLSyncTimeResponse, BCLError>) -> Void)
   public func readTime(completion: @escaping (Result<BCLReadTimeResponse, BCLError>) -> Void)
   public func readFirmware(completion: @escaping (Result<BCLReadFirmwareResponse, BCLError>) -> Void)
@@ -675,8 +676,6 @@ extension BCLRingManager {
   public func getBluetoothName(completion: @escaping (Result<BCLReadBluetoothNameResponse, BCLError>) -> Void)
   public func setPersonalInformation(sex: Int, age: Int, height: Int, weight: Int, completion: @escaping (Result<BCLSetPersonalInformationResponse, BCLError>) -> Void)
   public func getPersonalInformation(completion: @escaping (Result<BCLReadPersonalInformationResponse, BCLError>) -> Void)
-  public func goMoreSetPersonalInformation(age: UInt8, gender: UInt8, height: UInt8, weight: UInt8, maxHeartRate: UInt8, normalHeartRate: UInt8, maxOxygenUptake: UInt8, completion: @escaping (Result<BCLGoMoreSetPersonalInformationResponse, BCLError>) -> Void)
-  public func goMoreGetPersonalInformation(completion: @escaping (Result<BCLGoMoreReadPersonalInformationResponse, BCLError>) -> Void)
   public func setPPGFrequency(hrFrequency: UInt8, spo2Frequency: UInt8, rawdataFrequency: UInt8, completion: @escaping (Result<BCLSetPPGFrequencyResponse, BCLError>) -> Void)
   public func readPPGFrequency(completion: @escaping (Result<BCLReadPPGFrequencyResponse, BCLError>) -> Void)
   public func setGyroscopeStatus(status: UInt8, completion: @escaping (Result<BCLSetGyroscopeStatusResponse, BCLError>) -> Void)
@@ -713,6 +712,7 @@ extension BCLRingManager {
   public func readAllHistoryData(timestamp: TimeInterval = 0, callbacks: BCLDataSyncCallbacks, completion: @escaping (Result<Void, BCLError>) -> Void)
   public func deleteRingAllHistoryData(completion: @escaping (Result<BCLDeleteAllHistoryDataResponse, BCLError>) -> Void)
   public func readGoMoreSleepData(completion: @escaping (Result<BCLGoMoreSleepDataResponse, BCLError>) -> Void)
+  public func uploadGoMoreSleepData(sleepModels: [BCLGoMoreSleepModel], completion: @escaping (Result<Void, BCLError>) -> Void)
   public func getFileList(completion: @escaping (Result<BCLRequestFileListResponse, BCLError>) -> Void)
   public func getFileData(fileName: String, completion: @escaping (Result<BCLRequestFileDataResponse, BCLError>) -> Void)
   public func requestFileDataResume(fileOffset: Int32, fileName: String, completion: @escaping (Result<BCLRequestFileDataResumeResponse, BCLError>) -> Void)
@@ -757,6 +757,11 @@ extension BCLRingManager {
   public func getActivePushAudioInfo(completion: @escaping (Result<BCLGetActivePushAudioInfoResponse, BCLError>) -> Void)
   public func ringStartRecording(isOpen: Bool, totalDuration: UInt32, sliceDuration: UInt32, completion: @escaping (Result<BCLRingStartRecordingResponse, BCLError>) -> Void)
   public func convertAdpcmToPcm(adpcmData: Data) -> Data?
+  @discardableResult
+  public func initAdpcmProcessors() -> Bool
+  public func decodeStereoAdpcm(adpcmData: Data, sampleCount: Int) -> Data?
+  public func decodeMonoAdpcm(adpcmData: Data) -> Data?
+  public func adpcmTransferFinish()
   @available(*, deprecated, message: "请改用 startSportMode(sportType: Int,completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void)，数据回调请使用 BCLRingManager.shared.sportDataBlock 进行接收，并使用 BCLRingManager.shared.passiveStopBlock 进行接收被动停止回调")
   public func startSportMode(sportType: Int, completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void, sportDataCallback: @escaping (BCLSportDataResponse) -> Void, passiveStopCallback: @escaping (BCLSportModePassiveStopResponse) -> Void)
   public func startSportMode(sportType: Int, recordDuration: UInt32? = nil, sliceDuration: UInt32? = nil, completion: @escaping (Result<BCLStartSportModeResponse, BCLError>) -> Void)
@@ -782,13 +787,18 @@ extension BCLRingManager {
   public func uploadHistory(historyData: [BCLRingDBModel], mac: String, completion: @escaping (Result<Void, BCLError>) -> Void)
   public func getSleepData(date: Date, timeZone: BCLRingTimeZone = .East8, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
   public func getSleepDataByTimeRange(datas: [String], completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
-  public func loadUserLatestHistory(completion: @escaping (Result<BCLRingDBModel, BCLError>) -> Void)
+  public func loadUserLatestHistory(completion: @escaping (Result<BCLRingDBModel?, BCLError>) -> Void)
   public func uploadBloodPressureData(mac: String, waveData: [(Int, Int, Int, Int, Int)], completion: @escaping (Result<(Int, Int), BCLError>) -> Void)
   public func uploadBloodGlucoseData(mac: String, waveData: [(Int, Int, Int, Int, Int)], completion: @escaping (Result<Double, BCLError>) -> Void)
   public func compressWaveData(waveData: String) -> String
   public func decompressWaveData(compressWaveData: String) -> String
   public func getServerStepCalculationResult(completion: @escaping (Result<Int, BCLError>) -> Void)
   public func getServerDeviceHistory(mac: String? = nil, startTime: Int64, endTime: Int64, completion: @escaping (Result<[BCLRingDBModel], BCLError>) -> Void)
+  public func getTimeline(startTime: Int64, endTime: Int64, completion: @escaping (Result<[BCLTimelineItem], BCLError>) -> Void)
+  public func getGoMoreSleepData(date: Date, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
+  public func getGoMoreSleepDataBatch(dates: [String], completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
+  public func requestGomorePKey(deviceId: String, apiKey: String, completion: @escaping (Result<String, BCLError>) -> Void)
+  public func saveGomorePKey(companyApiKey: String, deviceId: String, mac: String, pkey: String, completion: @escaping (Result<Void, BCLError>) -> Void)
 }
 extension BCLRingManager {
   public func queryAllHistoryData(macString: String, completion: @escaping (Result<[BCLRingDBModel], BCLError>) -> Void)
@@ -850,6 +860,12 @@ extension BCLRingManager {
     get
   }
 }
+extension BCLRingManager {
+  public func queryGoMoreAuthStatus(completion: @escaping (Result<BCLGoMoreAuthStatusResponse, BCLError>) -> Void)
+  public func sendGoMorePKey(pKey: String, completion: @escaping (Result<BCLGoMorePKeyResponse, BCLError>) -> Void)
+  public func goMoreSetPersonalInformation(age: UInt8, gender: UInt8, height: UInt8, weight: UInt8, maxHeartRate: Int16?, normalHeartRate: Int8?, maxOxygenUptake: Int8?, completion: @escaping (Result<BCLGoMoreSetPersonalInformationResponse, BCLError>) -> Void)
+  public func goMoreGetPersonalInformation(completion: @escaping (Result<BCLGoMoreReadPersonalInformationResponse, BCLError>) -> Void)
+}
 public struct BCLApolloResponse {
   public enum CharacteristicType {
     case write
@@ -884,6 +900,22 @@ public enum BCLFirmwareState {
   case failed(Error)
 }
 public struct BCLFirmwareProgress {
+}
+@_inheritsConvenienceInitializers public class GoMoreAuthCommand : BCLCommand {
+  public static func createQueryAuthStatus() -> GoMoreAuthCommand
+  public static func createSendPKey(pKey: String) -> GoMoreAuthCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGoMoreAuthStatusResponse : BCLResponse {
+  public var isAuthorized: Bool?
+  public var mcuIdHexString: String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGoMorePKeyResponse : BCLResponse {
+  public var isAuthorized: Bool?
+  public var mcuIdHexString: String?
+  @objc deinit
 }
 @_inheritsConvenienceInitializers public class BloodPressureCommand : BCLCommand {
   public static func createTake(collectTime: Int, waveformConfig: Int, progressConfig: Int) -> BloodPressureCommand
@@ -1097,6 +1129,10 @@ public enum WaveformDataType {
   public var sportDataMissingPointsBlock: ((BCLMissingPointsResponse) -> Void)?
   public var keyEventBlock: ((BCLKeyEventTypeResponse) -> Void)?
   public var keyEventRawDataBlock: ((BCLKeyEventRawDataResponse) -> Void)?
+  public var gesturePairingPushObservable: Observable<BCLGesturePairingPushResponse?> {
+    get
+  }
+  public var gesturePairingPushBlock: ((BCLGesturePairingPushResponse) -> Void)?
   public var isAutoReconnectEnabled: Bool
   public var autoReconnectTimeLimit: TimeInterval
   public var autoReconnectMaxAttempts: Int
@@ -1630,6 +1666,7 @@ public enum BCLError : Error {
   case pwtt(PWTTError)
   case tenMeterGame(TenMeterGameError)
   case sportMode(SportModeError)
+  case goMoreAuth(GoMoreAuthError)
   case unknown
   public enum NetworkError : Error {
     case invalidResponse
@@ -1678,6 +1715,11 @@ public enum BCLError : Error {
     case deviceNotInPhyBootMode
     case phyBootModeDisconnect
     case characteristicNotAvailable
+    case serviceDiscoveryFailed
+    case peripheralMismatch
+    case noServicesFound
+    case characteristicDiscoveryFailed
+    case noCharacteristicsFound
     public static func == (a: BCLRingSDK.BCLError.ConnectionError, b: BCLRingSDK.BCLError.ConnectionError) -> Swift.Bool
     public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
@@ -1950,6 +1992,19 @@ public enum BCLError : Error {
       get
     }
   }
+  public enum GoMoreAuthError : Error {
+    case unknown
+    case invalidParameter
+    case invalidPKeyLength
+    case authorizationFailed
+    case unauthorized
+    case dataFormatError
+    public static func == (a: BCLRingSDK.BCLError.GoMoreAuthError, b: BCLRingSDK.BCLError.GoMoreAuthError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
 }
 public protocol BCLCommandProtocol {
   var frameType: UInt8 { get }
@@ -2033,6 +2088,7 @@ extension BCLCommand {
     public static let vibrationMotor: UInt8
     public static let keyEvent: UInt8
     public static let ledDiaplayEvent: UInt8
+    public static let goMoreAuth: UInt8
   }
   public struct SubCmdType {
     public struct Time {
@@ -2153,6 +2209,7 @@ extension BCLCommand {
       public static let getFunctionCode: UInt8
       public static let setGestureFunction: UInt8
       public static let readGestureFunction: UInt8
+      public static let gesturePairingPush: UInt8
     }
     public struct AlarmClock {
       public static let set: UInt8
@@ -2231,6 +2288,10 @@ extension BCLCommand {
     }
     public struct LEDDiaplayEvent {
       public static let ledDisplayConfiguration: UInt8
+    }
+    public struct GoMoreAuth {
+      public static let queryAuthStatus: UInt8
+      public static let sendPKey: UInt8
     }
   }
 }
@@ -2544,15 +2605,98 @@ public enum BCLVibrationMotorType : Int {
   public var reserve: Int?
   public var rrCount: Int?
   public var rrBytes: Data?
+  public var measureType: Int?
+  public var stepsPerUnitTime: Int?
+  public var accumulationFlag: Int?
+  public var batteryLevel: Int?
+  public var batteryVoltage: Int?
+  public var notWornReason: Int?
+  public var recordCalibrationFlag: Int?
+  public var ambientLightIntensityFactor: Int?
+  public var temperatureData: Data?
+  public var stepRateMax: Int?
+  public var stepRateMin: Int?
+  public var breathingRate: Int?
+  public var breathingRateConfidence: Int?
+  public var activityStatus: Int?
+  public var totalCalories: Int?
+  public var basalMetabolicCalories: Int?
+  public var exerciseCalories: Int?
+  public func parseTemperatureArray() -> [Int]?
   @objc override dynamic public init()
   @objc public init(bytes: [UInt8])
-  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, stepCountingType: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil)
+  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, stepCountingType: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil, measureType: Int? = nil, stepsPerUnitTime: Int? = nil, accumulationFlag: Int? = nil, batteryLevel: Int? = nil, batteryVoltage: Int? = nil, notWornReason: Int? = nil, recordCalibrationFlag: Int? = nil, ambientLightIntensityFactor: Int? = nil, temperatureData: Data? = nil, stepRateMax: Int? = nil, stepRateMin: Int? = nil, breathingRate: Int? = nil, breathingRateConfidence: Int? = nil, activityStatus: Int? = nil, totalCalories: Int? = nil, basalMetabolicCalories: Int? = nil, exerciseCalories: Int? = nil)
   required public init(from decoder: Decoder) throws
   public func encode(to encoder: Encoder) throws
   @objc public func toDictionary() -> [String : Any]
   public var localizedDescription: String {
     get
   }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class BCLGoMoreSleepModel : NSObject, Codable {
+  @objc public var resType: Int
+  @objc public var startTs: Int64
+  @objc public var endTs: Int64
+  @objc public var numEpochs: Int
+  @objc public var latency: Int
+  @objc public var wakeTimes: Int
+  @objc public var totalSleepTime: Int
+  @objc public var waso: Int
+  @objc public var sleepPeriod: Int
+  @objc public var efficiency: Int
+  @objc public var wakeRatio: Int
+  @objc public var remRatio: Int
+  @objc public var lightRatio: Int
+  @objc public var deepRatio: Int
+  @objc public var wakeNumMinutes: Int
+  @objc public var remNumMinutes: Int
+  @objc public var lightNumMinutes: Int
+  @objc public var deepNumMinutes: Int
+  @objc public var score: Int
+  @objc public var type: Int
+  @objc public var packNum: Int
+  @objc public var packNo: Int
+  @objc public var stageNum: Int
+  @objc public var stages: [Int16]
+  @objc override dynamic public init()
+  @objc public init?(data: Data)
+  required public init(from decoder: Decoder) throws
+  public func encode(to encoder: Encoder) throws
+  @objc public var isOverview: Bool {
+    @objc get
+  }
+  @objc public var isStagesData: Bool {
+    @objc get
+  }
+  @objc public var isNoData: Bool {
+    @objc get
+  }
+  @objc public var isEndOfData: Bool {
+    @objc get
+  }
+  @objc public var isLongSleep: Bool {
+    @objc get
+  }
+  @objc public var isShortSleep: Bool {
+    @objc get
+  }
+  @objc public var efficiencyPercent: Double {
+    @objc get
+  }
+  @objc override dynamic public var description: String {
+    @objc get
+  }
+  public func toDictionary() -> [String : Any]
+  @objc deinit
+}
+@objc public class BCLTimelineItem : NSObject, Codable {
+  final public let startTime: Int64
+  final public let endTime: Int64
+  final public let type: String
+  public init(startTime: Int64, endTime: Int64, type: String)
+  required public init(from decoder: Decoder) throws
+  public func encode(to encoder: Encoder) throws
   @objc deinit
 }
 @objc public class BCLDeviceInfoModel : NSObject {
@@ -2715,6 +2859,24 @@ public enum BCLVibrationMotorType : Int {
     get
   }
   public var pinchGesture: Int? {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGesturePairingPushResponse : BCLResponse {
+  public var pairingStatus: Bool {
+    get
+  }
+  public var swipeUpGesture: Int {
+    get
+  }
+  public var swipeDownGesture: Int {
+    get
+  }
+  public var snapGesture: Int {
+    get
+  }
+  public var pinchGesture: Int {
     get
   }
   @objc deinit
@@ -3005,39 +3167,9 @@ public struct BCLDataSyncCallbacks {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGoMoreSleepDataResponse : BCLResponse {
-  public enum ResponseType {
-    case sleepOverview(overview: SleepOverview)
-    case sleepStages(stages: SleepStagesData)
-    case noData
+  public var sleepModels: [BCLGoMoreSleepModel] {
+    get
   }
-  public struct SleepOverview {
-    public let startTimestamp: UInt32
-    public let endTimestamp: UInt32
-    public let numEpochs: UInt16
-    public let latency: UInt16
-    public let wakeTimes: UInt16
-    public let totalSleepTime: UInt16
-    public let waso: UInt16
-    public let sleepPeriod: UInt16
-    public let efficiency: UInt16
-    public let wakeRatio: UInt16
-    public let remRatio: UInt16
-    public let lightRatio: UInt16
-    public let deepRatio: UInt16
-    public let wakeNumMinutes: UInt16
-    public let remNumMinutes: UInt16
-    public let lightNumMinutes: UInt16
-    public let deepNumMinutes: UInt16
-    public let score: UInt8
-    public let type: UInt8
-  }
-  public struct SleepStagesData {
-    public let totalPackages: UInt8
-    public let packageNumber: UInt8
-    public let stageCount: UInt8
-    public let stages: [Int8]
-  }
-  public var responseType: ResponseType?
   @objc deinit
 }
 public enum BCLLogLevel : Int {
@@ -3210,6 +3342,8 @@ extension BCLRingSDK.BCLError.TenMeterGameError : Swift.Equatable {}
 extension BCLRingSDK.BCLError.TenMeterGameError : Swift.Hashable {}
 extension BCLRingSDK.BCLError.SportModeError : Swift.Equatable {}
 extension BCLRingSDK.BCLError.SportModeError : Swift.Hashable {}
+extension BCLRingSDK.BCLError.GoMoreAuthError : Swift.Equatable {}
+extension BCLRingSDK.BCLError.GoMoreAuthError : Swift.Hashable {}
 extension BCLRingSDK.BCLServiceType : Swift.Equatable {}
 extension BCLRingSDK.BCLServiceType : Swift.Hashable {}
 extension BCLRingSDK.CommandPriority : Swift.Equatable {}

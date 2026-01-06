@@ -38,6 +38,10 @@ class AudioTransmission_Module: BaseFunction_Module {
             startRecording()
         case 368: // 368 - 结束录音（Z5J定制）
             stopRecording()
+        case 369: // 369 - 立体双声道解码-adpcm格式
+            openStereoAdpcmDecodePage()
+        case 370: // 370 - 单声道解码-adpcm格式（Z5J定制）
+            openMonoAdpcmDecodePage()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -188,5 +192,25 @@ class AudioTransmission_Module: BaseFunction_Module {
                 self.showError("结束录音失败: \(error)")
             }
         }
+    }
+
+    // 369 - 立体双声道解码-adpcm格式
+    private func openStereoAdpcmDecodePage() {
+        guard let vc = viewController else {
+            BDLogger.error("当前ViewController为空")
+            return
+        }
+        let stereoAdpcmDecodeVC = StereoAdpcmDecode_VC()
+        vc.navigationController?.pushViewController(stereoAdpcmDecodeVC, animated: true)
+    }
+    
+    // 370 - 单声道解码-adpcm格式（Z5J定制）
+    private func openMonoAdpcmDecodePage() {
+        guard let vc = viewController else {
+            BDLogger.error("当前ViewController为空")
+            return
+        }
+        let monoAdpcmDecodeVC = VoiceRecord_VC()
+        vc.navigationController?.pushViewController(monoAdpcmDecodeVC, animated: true)
     }
 }

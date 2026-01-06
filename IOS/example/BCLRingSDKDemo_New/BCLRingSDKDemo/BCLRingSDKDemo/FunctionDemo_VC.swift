@@ -41,11 +41,18 @@ class FunctionDemo_VC: UIViewController {
         super.viewDidLoad()
         setupUI()
         loadFunctionData()
+        setupNotifications()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         executor.currentViewController = self
+        // 刷新数据以更新动态标题（如功能ID 126的订阅状态）
+        loadFunctionData()
     }
 
     // MARK: - UI Setup
@@ -117,6 +124,21 @@ class FunctionDemo_VC: UIViewController {
         collectionView.reloadData()
     }
 
+    /// 设置通知监听
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRefreshFunctionList),
+            name: NSNotification.Name("RefreshFunctionList"),
+            object: nil
+        )
+    }
+
+    /// 处理刷新功能列表通知
+    @objc private func handleRefreshFunctionList() {
+        loadFunctionData()
+    }
+
     /// 生成所有功能分组数据
     private func generateFunctionSections() -> [FunctionSection] {
         var sectionsDict: [FunctionCategory: [FunctionDemoModel]] = [:]
@@ -139,6 +161,12 @@ class FunctionDemo_VC: UIViewController {
         }
 
         return sortedSections
+    }
+
+    /// 获取HID服务订阅状态的动态标题
+    private func getHIDServiceSubscriptionTitle() -> String {
+        let isSubscribed = BCLRingManager.shared.gesturePairingPushBlock != nil
+        return isSubscribed ? "订阅HID服务状态-开(Z4I定制)" : "订阅HID服务状态-关(Z4I定制)"
     }
 
     /// 获取所有功能数据 (216个功能)
@@ -226,6 +254,11 @@ class FunctionDemo_VC: UIViewController {
             // HID功能 (121-130)
             FunctionDemoModel(id: 121, title: "获取HID功能码", category: .hidControl),
             FunctionDemoModel(id: 122, title: "获取当前HID模式", category: .hidControl),
+            FunctionDemoModel(id: 129, title: "手势功能开启(Z4I定制)", category: .hidControl),
+            FunctionDemoModel(id: 130, title: "手势功能配置读取(Z4I定制)", category: .hidControl),
+            FunctionDemoModel(id: 128, title: "刷新蓝牙服务相关信息(Z4I定制)", category: .hidControl),
+            FunctionDemoModel(id: 127, title: "手动临时断开连接(Z4I定制)", category: .hidControl),
+            FunctionDemoModel(id: 126, title: getHIDServiceSubscriptionTitle(), category: .hidControl),
 
             // 网络相关API功能 (201-300)
             FunctionDemoModel(id: 201, title: "切换服务器-国内", category: .sdkNetwork, requiresConnection: false),
@@ -235,7 +268,12 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 205, title: "提交历史数据到云端", category: .sdkNetwork),
             FunctionDemoModel(id: 206, title: "提交波形数据，获取血压结果", category: .sdkNetwork, requiresConnection: false),
             FunctionDemoModel(id: 207, title: "提交波形数据，获取血糖结果", category: .sdkNetwork, requiresConnection: false),
-
+            FunctionDemoModel(id: 208, title: "固件版本更新检查", category: .sdkNetwork, requiresConnection: false),
+            FunctionDemoModel(id: 209, title: "查询固件版本历史列表", category: .sdkNetwork, requiresConnection: false),
+            FunctionDemoModel(id: 210, title: "下载特定固件文件", category: .sdkNetwork, requiresConnection: false),
+            FunctionDemoModel(id: 211, title: "时间线数据", category: .sdkNetwork, requiresConnection: false),
+            FunctionDemoModel(id: 212, title: "获取用户最新一条历史数据", category: .sdkNetwork, requiresConnection: false),
+            
             // 六轴传感器数据 (301-320)
             FunctionDemoModel(id: 301, title: "设置六轴传感器工作频率", category: .sixAxisProtocol),
             FunctionDemoModel(id: 302, title: "获取六轴传感器工作频率", category: .sixAxisProtocol),
@@ -269,6 +307,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 343, title: "Phy固件升级", category: .firmwareUpgrade),
             FunctionDemoModel(id: 344, title: "Phy Boot Mode固件升级", category: .firmwareUpgrade),
 //            FunctionDemoModel(id: 345, title: "PhyBootMode测试升级", category: .firmwareUpgrade, requiresConnection: false),
+            FunctionDemoModel(id: 345, title: "获取固件升级类型", category: .firmwareUpgrade, requiresConnection: false),
 
             // 音频功能（361-380）
             FunctionDemoModel(id: 361, title: "开始音频传输-pcm格式", category: .audioTransmission),
@@ -279,6 +318,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 366, title: "获取主动推送音频数据", category: .audioTransmission),
             FunctionDemoModel(id: 367, title: "开始录音（Z5J定制）", category: .audioTransmission),
             FunctionDemoModel(id: 368, title: "结束录音（Z5J定制）", category: .audioTransmission),
+            FunctionDemoModel(id: 369, title: "立体双声道解码-adpcm格式（Z5J定制）", category: .audioTransmission),
+            FunctionDemoModel(id: 370, title: "单声道解码-adpcm格式（Z5J定制）", category: .audioTransmission),
 
             // 文件系统（381-400）
             FunctionDemoModel(id: 381, title: "获取文件系统空间信息", category: .fileSystem),
@@ -292,11 +333,28 @@ class FunctionDemo_VC: UIViewController {
             // 睡眠数据获取（401-420）
             FunctionDemoModel(id: 401, title: "查询指定日期下的详细睡眠数据", category: .sleepData, requiresConnection: false),
             FunctionDemoModel(id: 402, title: "查询指定时间范围的睡眠数据", category: .sleepData, requiresConnection: false),
+            
+            // GoMore功能（421-450）
+            FunctionDemoModel(id: 421, title: "查询GoMore授权状态", category: .goMoreFunction),
+            FunctionDemoModel(id: 422, title: "下发GoMore授权PKey", category: .goMoreFunction),
+            FunctionDemoModel(id: 423, title: "设置GoMore个人信息", category: .goMoreFunction),
+            FunctionDemoModel(id: 424, title: "获取GoMore个人信息", category: .goMoreFunction),
+            FunctionDemoModel(id: 425, title: "读取戒指中GoMore睡眠数据", category: .goMoreFunction),
+            FunctionDemoModel(id: 426, title: "提交GoMore睡眠数据", category: .goMoreFunction),
+            FunctionDemoModel(id: 427, title: "查询指定日期的GoMore睡眠数据详情", category: .goMoreFunction, requiresConnection: false),
+            FunctionDemoModel(id: 428, title: "查询指定时间范围的GoMore睡眠数据", category: .goMoreFunction, requiresConnection: false),
+            FunctionDemoModel(id: 429, title: "获取Gomore授权PKey", category: .goMoreFunction, requiresConnection: false),
+            FunctionDemoModel(id: 430, title: "保存Gomore授权设备信息", category: .goMoreFunction, requiresConnection: false),
 
-//            // 网络API功能 (121-124)
+            // 自定义指令 (1001-1100)
+            FunctionDemoModel(id: 1001, title: "发送自定义指令（开启）", category: .customCommand),
+            FunctionDemoModel(id: 1002, title: "发送自定义指令（结束）", category: .customCommand),
+            FunctionDemoModel(id: 1003, title: "分享Log日志", category: .customCommand, requiresConnection: false),
 
             // 测试功能，需要调整。
 //            FunctionDemoModel(id: 202, title: "PWTT", category: .measurementBloodPressure),
+
+//
 //            // TODO: 继续添加其余功能 (142-216)
 //            // 用户可以根据Main_VC.swift中的btnAction switch语句继续添加
         ]

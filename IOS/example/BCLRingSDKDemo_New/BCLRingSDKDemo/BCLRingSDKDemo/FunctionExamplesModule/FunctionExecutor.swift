@@ -67,6 +67,8 @@ class FunctionExecutor {
             AudioTransmission_Module(), // 361-380: 音频数据传输
             FileSystem_Module(), // 381-400: 文件系统
             SleepData_Module(), // 401-420: 睡眠数据
+            GoMoreFunction_Module(), // 421-450: GoMore功能
+            CustomCommand_Module(), // 1001-1100: 自定义命令
             
         ]
     }

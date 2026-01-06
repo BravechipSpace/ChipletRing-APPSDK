@@ -33,16 +33,16 @@ class FirmwareUpgrade_Module: BaseFunction_Module {
 
     override func executeFunction(id: Int) {
         switch id {
-        case 341:
+        case 341: // 341 - Apollo固件升级
             upgradeApolloFirmware()
-        case 342:
+        case 342: // 342 - Nordic固件升级
             upgradeNordicFirmware()
-        case 343:
+        case 343: // 343 - Phy固件升级
             upgradePhyFirmware()
-        case 344:
+        case 344: // 344 - Phy Boot Mode固件升级
             upgradePhyBootModeFirmware()
-//        case 345:
-//            upgradePhyBootModeTest()
+        case 345: // 345 - 获取固件升级类型
+            showOTATypeConfigDialog()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -371,6 +371,57 @@ class FirmwareUpgrade_Module: BaseFunction_Module {
 //            }
 //        }
 //    }
+
+    // 345 - 获取固件升级类型弹窗
+    private func showOTATypeConfigDialog() {
+        let contentView = OTATypeConfig_Dialog(x: 0, y: 0, width: UIScreen.main.bounds.width - 30, height: 260)
+        contentView.confirmButtonCallback = { version in
+            BDLogger.info("开始获取固件升级类型 - 版本号:\(version)")
+            self.getOTAType(firmwareVersion: version)
+        }
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
+    // 执行获取固件升级类型
+    private func getOTAType(firmwareVersion: String) {
+        showLoading("查询升级类型...")
+        BCLRingManager.shared.getOTAType(firmwareVersion: firmwareVersion) { [weak self] response in
+            self?.hideLoading()
+            BDLogger.info("固件升级类型 rawValue: \(response.rawValue)")
+            switch response.rawValue {
+            case 0:
+                BDLogger.error("固件升级类型: 未知")
+                self?.showError("固件升级类型: 未知")
+            case 1:
+                BDLogger.info("""
+                固件升级类型: Apollo
+                对应升级方法: apolloUpgradeFirmware(filePath:progressHandler:completion:)
+                固件文件格式: .bin
+                """)
+                self?.showSuccess("固件升级类型: Apollo")
+            case 2:
+                BDLogger.info("""
+                固件升级类型: Nordic
+                对应升级方法: nrfUpgradeFirmware(filePath:fileName:progressHandler:completion:)
+                固件文件格式: .zip
+                """)
+                self?.showSuccess("固件升级类型: Nordic")
+            case 3:
+                BDLogger.info("""
+                固件升级类型: Phy
+                对应升级方法: phyUpgradeFirmware(filePath:progressHandler:completion:)
+                固件文件格式: .hex16
+                """)
+                self?.showSuccess("固件升级类型: Phy")
+            default:
+                BDLogger.error("固件升级类型: 未知 (rawValue: \(response.rawValue))")
+                self?.showError("固件升级类型: 未知")
+            }
+        }
+    }
 
     // 打开文件选择器
     private func openFilePicker() {
