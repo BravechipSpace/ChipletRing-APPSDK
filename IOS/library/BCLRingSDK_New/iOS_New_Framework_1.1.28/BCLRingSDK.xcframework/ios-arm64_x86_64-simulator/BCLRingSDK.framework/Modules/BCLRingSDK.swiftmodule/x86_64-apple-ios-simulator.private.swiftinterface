@@ -318,6 +318,13 @@ public protocol BCLServerResponse {
   public var isBloodGlucoseMeasurementSupported: Bool
   public var isFileSystemSupported: Bool
   public var isGoMoreSleepAlgorithmSupported: Bool
+  public var gomoreUserAge: UInt8?
+  public var gomoreUserGender: BCLGomoreGender?
+  public var gomoreUserHeight: UInt8?
+  public var gomoreUserWeight: UInt8?
+  public var gomoreMaxHeartRate: Int16?
+  public var gomoreRestingHeartRate: UInt8?
+  public var gomoreMaxOxygenUptake: UInt8?
   public var supportedFeaturesDescription: String {
     get
   }
@@ -403,6 +410,13 @@ public protocol BCLServerResponse {
   public var isBloodGlucoseMeasurementSupported: Bool
   public var isFileSystemSupported: Bool
   public var isGoMoreSleepAlgorithmSupported: Bool
+  public var gomoreUserAge: UInt8?
+  public var gomoreUserGender: BCLGomoreGender?
+  public var gomoreUserHeight: UInt8?
+  public var gomoreUserWeight: UInt8?
+  public var gomoreMaxHeartRate: Int16?
+  public var gomoreRestingHeartRate: UInt8?
+  public var gomoreMaxOxygenUptake: UInt8?
   public var supportedFeaturesDescription: String {
     get
   }
@@ -500,6 +514,13 @@ public protocol BCLServerResponse {
   public var isBloodGlucoseMeasurementSupported: Bool
   public var isFileSystemSupported: Bool
   public var isGoMoreSleepAlgorithmSupported: Bool
+  public var gomoreUserAge: UInt8?
+  public var gomoreUserGender: BCLGomoreGender?
+  public var gomoreUserHeight: UInt8?
+  public var gomoreUserWeight: UInt8?
+  public var gomoreMaxHeartRate: Int16?
+  public var gomoreRestingHeartRate: UInt8?
+  public var gomoreMaxOxygenUptake: UInt8?
   public var supportedFeaturesDescription: String {
     get
   }
@@ -1412,6 +1433,18 @@ public enum BCLSystemTypeHIDMode : UInt8 {
   case iOS
   case windows
   case unknown
+  public var description: String {
+    get
+  }
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLGomoreGender : UInt8 {
+  case female
+  case male
   public var description: String {
     get
   }
@@ -2622,10 +2655,11 @@ public enum BCLVibrationMotorType : Int {
   public var totalCalories: Int?
   public var basalMetabolicCalories: Int?
   public var exerciseCalories: Int?
+  public var hardAdt: Int?
   public func parseTemperatureArray() -> [Int]?
   @objc override dynamic public init()
   @objc public init(bytes: [UInt8])
-  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, stepCountingType: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil, measureType: Int? = nil, stepsPerUnitTime: Int? = nil, accumulationFlag: Int? = nil, batteryLevel: Int? = nil, batteryVoltage: Int? = nil, notWornReason: Int? = nil, recordCalibrationFlag: Int? = nil, ambientLightIntensityFactor: Int? = nil, temperatureData: Data? = nil, stepRateMax: Int? = nil, stepRateMin: Int? = nil, breathingRate: Int? = nil, breathingRateConfidence: Int? = nil, activityStatus: Int? = nil, totalCalories: Int? = nil, basalMetabolicCalories: Int? = nil, exerciseCalories: Int? = nil)
+  public init(id: Int64? = nil, mac: String? = nil, totalNumber: Int = 0, indexNumber: Int = 0, time: Int64 = 0, stepCount: Int = 0, stepCountingType: Int = 0, heartRate: Int = 0, bloodOxygen: Int = 0, heartRateVariability: Int = 0, stressIndex: Int = 0, temperature: Int = 0, exerciseIntensity: Int = 0, sleepType: Int = 0, measureMarker: Int = 0, reserve: Int = 0, rrCount: Int = 0, rrBytes: Data? = nil, measureType: Int? = nil, stepsPerUnitTime: Int? = nil, accumulationFlag: Int? = nil, batteryLevel: Int? = nil, batteryVoltage: Int? = nil, notWornReason: Int? = nil, recordCalibrationFlag: Int? = nil, ambientLightIntensityFactor: Int? = nil, temperatureData: Data? = nil, stepRateMax: Int? = nil, stepRateMin: Int? = nil, breathingRate: Int? = nil, breathingRateConfidence: Int? = nil, activityStatus: Int? = nil, totalCalories: Int? = nil, basalMetabolicCalories: Int? = nil, exerciseCalories: Int? = nil, hardAdt: Int? = nil)
   required public init(from decoder: Decoder) throws
   public func encode(to encoder: Encoder) throws
   @objc public func toDictionary() -> [String : Any]
@@ -3294,6 +3328,9 @@ extension BCLRingSDK.BCLGestureHIDMode : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.Equatable {}
 extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.Hashable {}
 extension BCLRingSDK.BCLSystemTypeHIDMode : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLGomoreGender : Swift.Equatable {}
+extension BCLRingSDK.BCLGomoreGender : Swift.Hashable {}
+extension BCLRingSDK.BCLGomoreGender : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLRingTimeZone : Swift.Equatable {}
 extension BCLRingSDK.BCLRingTimeZone : Swift.Hashable {}
 extension BCLRingSDK.BCLRingTimeZone : Swift.RawRepresentable {}

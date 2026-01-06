@@ -93,6 +93,14 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
                 BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
                 BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
+                BDLogger.info("GoMore睡眠算法支持: \(response.isGoMoreSleepAlgorithmSupported)")
+                BDLogger.info("GoMore用户年龄: \(String(describing: response.gomoreUserAge))")
+                BDLogger.info("GoMore用户性别: \(String(describing: response.gomoreUserGender))")
+                BDLogger.info("GoMore用户身高: \(String(describing: response.gomoreUserHeight))")
+                BDLogger.info("GoMore用户体重: \(String(describing: response.gomoreUserWeight))")
+                BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
+                BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
+                BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
             case let .failure(error):
                 switch error {
                 case let .responseParsing(reason):
@@ -196,6 +204,14 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
                 BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
                 BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
+                BDLogger.info("GoMore睡眠算法支持: \(response.isGoMoreSleepAlgorithmSupported)")
+                BDLogger.info("GoMore用户年龄: \(String(describing: response.gomoreUserAge))")
+                BDLogger.info("GoMore用户性别: \(String(describing: response.gomoreUserGender))")
+                BDLogger.info("GoMore用户身高: \(String(describing: response.gomoreUserHeight))")
+                BDLogger.info("GoMore用户体重: \(String(describing: response.gomoreUserWeight))")
+                BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
+                BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
+                BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
             case let .failure(error):
                 BDLogger.error("连接戒指指令执行-失败: \(error)")
             }
@@ -295,6 +311,14 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("血压测量支持：\(response.isBloodPressureMeasurementSupported)")
                 BDLogger.info("血糖测量支持:\(response.isBloodGlucoseMeasurementSupported) ")
                 BDLogger.info("文件支持:\(response.isFileSystemSupported) ")
+                BDLogger.info("GoMore睡眠算法支持: \(response.isGoMoreSleepAlgorithmSupported)")
+                BDLogger.info("GoMore用户年龄: \(String(describing: response.gomoreUserAge))")
+                BDLogger.info("GoMore用户性别: \(String(describing: response.gomoreUserGender))")
+                BDLogger.info("GoMore用户身高: \(String(describing: response.gomoreUserHeight))")
+                BDLogger.info("GoMore用户体重: \(String(describing: response.gomoreUserWeight))")
+                BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
+                BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
+                BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
             case let .failure(error):
                 BDLogger.error("刷新戒指指令执行-失败: \(error)")
             }

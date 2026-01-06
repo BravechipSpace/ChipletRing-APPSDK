@@ -729,11 +729,11 @@ SWIFT_CLASS("_TtC10BCLRingSDK20BCLRingSleepDayModel")
 /// 睡眠模型
 SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @interface BCLRingSleepModel : NSObject
-/// 睡眠时长（小时）
+/// 睡眠时长（小时）（不包含清醒时间）
 @property (nonatomic) NSInteger hours;
-/// 睡眠时长（分钟）
+/// 睡眠时长（分钟）（不包含清醒时间）
 @property (nonatomic) NSInteger minutes;
-/// 睡眠总时长（秒）
+/// 睡眠总时长（秒）（包含清醒时间）
 @property (nonatomic) int64_t sleepTime;
 /// 深度睡眠时间
 @property (nonatomic) int64_t deepTime;
@@ -743,9 +743,9 @@ SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @property (nonatomic) int64_t ydTime;
 /// 清醒时间
 @property (nonatomic) int64_t qxTime;
-/// 入睡时间戳
+/// 入睡时间戳（第一次入睡时间）
 @property (nonatomic) int64_t startTime;
-/// 清醒时间戳
+/// 清醒时间戳 （最后一次醒来时间）
 @property (nonatomic) int64_t endTime;
 /// 睡眠效率
 @property (nonatomic) double xiaolv;
@@ -1579,11 +1579,11 @@ SWIFT_CLASS("_TtC10BCLRingSDK20BCLRingSleepDayModel")
 /// 睡眠模型
 SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @interface BCLRingSleepModel : NSObject
-/// 睡眠时长（小时）
+/// 睡眠时长（小时）（不包含清醒时间）
 @property (nonatomic) NSInteger hours;
-/// 睡眠时长（分钟）
+/// 睡眠时长（分钟）（不包含清醒时间）
 @property (nonatomic) NSInteger minutes;
-/// 睡眠总时长（秒）
+/// 睡眠总时长（秒）（包含清醒时间）
 @property (nonatomic) int64_t sleepTime;
 /// 深度睡眠时间
 @property (nonatomic) int64_t deepTime;
@@ -1593,9 +1593,9 @@ SWIFT_CLASS("_TtC10BCLRingSDK17BCLRingSleepModel")
 @property (nonatomic) int64_t ydTime;
 /// 清醒时间
 @property (nonatomic) int64_t qxTime;
-/// 入睡时间戳
+/// 入睡时间戳（第一次入睡时间）
 @property (nonatomic) int64_t startTime;
-/// 清醒时间戳
+/// 清醒时间戳 （最后一次醒来时间）
 @property (nonatomic) int64_t endTime;
 /// 睡眠效率
 @property (nonatomic) double xiaolv;
