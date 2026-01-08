@@ -22,13 +22,16 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.hjq.permissions.OnPermissionCallback;
-import com.hjq.permissions.Permission;
+
 import com.hjq.permissions.XXPermissions;
+import com.hjq.permissions.permission.PermissionLists;
+import com.hjq.permissions.permission.base.IPermission;
 import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.Logger;
 import com.lm.sdk.utils.StringUtils;
 import com.lm.sdk.utils.UtilSharedPreference;
 import com.lomo.demo.R;
@@ -72,8 +75,16 @@ public class MainActivity extends Activity {
     private void initPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             XXPermissions.with(this)
-                    // 申请多个权限
-                    .permission(Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.BLUETOOTH_SCAN, Permission.BLUETOOTH_CONNECT, Permission.BLUETOOTH_ADVERTISE,Permission.MANAGE_EXTERNAL_STORAGE)
+                    .permission(PermissionLists.getAccessCoarseLocationPermission())
+                    .permission(PermissionLists.getAccessFineLocationPermission())
+                    .permission(
+                            PermissionLists.getBluetoothScanPermission())
+                    .permission(PermissionLists.getBluetoothConnectPermission())
+                    .permission(
+                            PermissionLists.getBluetoothAdvertisePermission())
+                    .permission(
+                            PermissionLists.getManageExternalStoragePermission())
+
                     // 设置权限请求拦截器（局部设置）
                     //.interceptor(new PermissionInterceptor())
                     // 设置不触发错误检测机制（局部设置）
@@ -81,68 +92,33 @@ public class MainActivity extends Activity {
                     .request(new OnPermissionCallback() {
 
                         @Override
-                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        public void onResult(@NonNull List<IPermission> grantedList, @NonNull List<IPermission> deniedList) {
+                            boolean allGranted = deniedList.isEmpty();
                             if (!allGranted) {
                                 Toast.makeText(getApplicationContext(),"获取部分权限成功，但部分权限未正常授予",Toast.LENGTH_SHORT).show();
                                 return;
                             }
-//                            String mac = UtilSharedPreference.getStringValue(MainActivity.this,"address");
-//                            if(StringUtils.isEmpty(mac)){
-                                searchDevice();
-                            //}else{
-//                                //自动重连，默认软连接
-//                                UtilSharedPreference.saveInt(MainActivity.this, LmAPI.needHardconnection,0);
-//                                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-//                                startActivity(intent);
-//                                finish();
-                           // }
-
+                            searchDevice();
                         }
 
-                        @Override
-                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
-                            if (doNotAskAgain) {
-                                Toast.makeText(getApplicationContext(),"被永久拒绝授权，请手动授予录音和日历权限",Toast.LENGTH_SHORT).show();
-                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                XXPermissions.startPermissionActivity(MainActivity.this, permissions);
-                            } else {
-                                Toast.makeText(getApplicationContext(),"获取录音和日历权限失败",Toast.LENGTH_SHORT).show();
-                            }
-                        }
                     });
 
         }else {
             XXPermissions.with(MainActivity.this)
-                    .permission(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_EXTERNAL_STORAGE)
-                    .request(new OnPermissionCallback() {
+                    .permission(PermissionLists.getAccessCoarseLocationPermission())
+                    .permission(PermissionLists.getAccessFineLocationPermission())
+
+                     .request(new OnPermissionCallback() {
                         @Override
-                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        public void onResult(@NonNull List<IPermission> grantedList, @NonNull List<IPermission> deniedList) {
+                            boolean allGranted = deniedList.isEmpty();
                             if (!allGranted) {
                                 Toast.makeText(getApplicationContext(),"获取部分权限成功，但部分权限未正常授予",Toast.LENGTH_SHORT).show();
                                 return;
                             }
-//                            String mac = UtilSharedPreference.getStringValue(MainActivity.this,"address");
-//                            if(StringUtils.isEmpty(mac)){
-                                searchDevice();
-                          //  }else{
-//                                //自动重连，默认软连接
-//                                UtilSharedPreference.saveInt(MainActivity.this,LmAPI.needHardconnection,0);
-//                                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-//                                startActivity(intent);
-//                                finish();
-                          //  }
+                            searchDevice();
                         }
 
-                        @Override
-                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
-                            if (doNotAskAgain) {
-                                Toast.makeText(getApplicationContext(),"被永久拒绝授权，请手动授予权限",Toast.LENGTH_SHORT).show();
-                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                XXPermissions.startPermissionActivity(MainActivity.this, permissions);
-                            } else {
-                                Toast.makeText(getApplicationContext(),"获取权限失败",Toast.LENGTH_SHORT).show();
-                            }
-                        }
                     });
         }
     }
@@ -213,6 +189,7 @@ public class MainActivity extends Activity {
             if (device == null || TextUtils.isEmpty(device.getName())) {
                 return;
             }
+            Logger.show("leScanCallback",device.getName());
 
             //是否符合条件，符合条件，会返回戒指设备信息
             BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);

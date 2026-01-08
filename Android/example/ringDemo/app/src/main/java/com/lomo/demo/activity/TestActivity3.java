@@ -162,6 +162,11 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                     public void getHIDSetting(byte sh, byte xh, byte dxz, byte nyn) {
 
                     }
+
+                    @Override
+                    public void pushHIDSetting(byte success, byte sh, byte xh, byte dxz, byte nyn) {
+
+                    }
                 });
             }
             if(v.getId()== R.id.bt_huoqushoushi) {
@@ -174,6 +179,11 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
                     @Override
                     public void getHIDSetting(byte sh, byte xh, byte dxz, byte nyn) {
+
+                    }
+
+                    @Override
+                    public void pushHIDSetting(byte success, byte sh, byte xh, byte dxz, byte nyn) {
 
                     }
                 });

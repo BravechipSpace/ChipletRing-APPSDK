@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import com.hjq.permissions.OnPermissionCallback;
-import com.hjq.permissions.Permission;
+
 import com.hjq.permissions.XXPermissions;
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
@@ -195,20 +195,6 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
 
     public void checkPermission() {
 
-        String[] permission;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permission = new String[]{Permission.ACCESS_FINE_LOCATION, Permission.BLUETOOTH_CONNECT, Permission.BLUETOOTH_SCAN};
-        } else {
-            permission = new String[]{Permission.READ_MEDIA_IMAGES, Permission.READ_MEDIA_VIDEO, Permission.READ_MEDIA_AUDIO, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_FINE_LOCATION};
-        }
-        XXPermissions.with(this).permission(permission)
-                .request(new OnPermissionCallback() {
-                    @Override
-                    public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
-                        if (!allGranted) {
-
-                            return;
-                        }
 
                         Logger.show("ConnectDevice", "mac :" + mac);
                         BluetoothDevice remote = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(mac);
@@ -234,10 +220,8 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
                         } else {
                             Logger.show("ConnectDevice", " 蓝牙1 startLeScan 连接   ");
                             BLEUtils.stopLeScan(TestActivity.this, leScanCallback);
-                            BLEUtils.startLeScan(TestActivity.this, leScanCallback);
-                        }
-                    }
-                });
+                            BLEUtils.startLeScan(TestActivity.this, leScanCallback);}
+
     }
 
     @SuppressLint("MissingPermission")

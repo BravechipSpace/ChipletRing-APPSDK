@@ -663,11 +663,6 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
                     });
                     Logger.show("OTA", "nota升级结束");
                     OtaApi.destoryOta(TestActivity2.this);
-                    //需要延时调用蓝牙重连
-//                        BLEUtils.disconnectBLE(TestActivity2.this);
-//                        BLEUtils.connectLockByBLE(TestActivity2.this,App.getInstance().getDeviceBean().getDevice());
-
-
                 }
 
                 @Override
