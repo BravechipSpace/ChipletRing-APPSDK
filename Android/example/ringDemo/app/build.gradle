@@ -4,7 +4,7 @@ android {
     compileSdk 35
     namespace = "com.lomo.demo"
     defaultConfig {
-        applicationId "com.lomo.demo"
+        applicationId "com.chiplet.ring"
         minSdkVersion 27
         targetSdkVersion 35
         versionCode 6
@@ -15,17 +15,26 @@ android {
             //解决编译时com.android.builder.merge.DuplicateRelativeFileException: More than one file was found with OS independent path 'META-INF/rxjava.properties'这个错误
             exclude 'META-INF/rxjava.properties'
         }
-
-//        ndk {
-//            // 设置支持的SO库架构
-//            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
-//        }
     }
 
+    signingConfigs {
+        release { // 这个名称可以自定义，例如 'myRelease'
+            storeFile file("chipletRingDemo.jks") // 替换为您的 jks 文件路径
+            storePassword "a123456"      // 替换为您的密钥库密码
+            keyAlias "key0"                   // 替换为您的密钥别名
+            keyPassword "a123456"             // 替换为您的密钥密码
+            enableV1Signing true // 必须为true，确保兼容所有Android版本
+            enableV2Signing true // 启用V2签名，提供更好的安全性和性能
+            enableV3Signing true // 启用V3签名，支持密钥轮换（可选但推荐）
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
+            // 确保这行存在并且指向正确的签名配置
+            signingConfig signingConfigs.release
+
+            // 其他配置
+            minifyEnabled false  // 先设为false测试
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -34,6 +43,7 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
     }
 
     compileOptions {
@@ -77,8 +87,7 @@ dependencies {
 //    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
 //    implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
 
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'org.greenrobot:greendao:3.3.0'
+
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'

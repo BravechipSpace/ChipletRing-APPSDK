@@ -95,7 +95,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
         findViewById(R.id.bt_fendashoushi).setOnClickListener(this);
         findViewById(R.id.bt_huoqushoushi).setOnClickListener(this);
         findViewById(R.id.bt_currentStep).setOnClickListener(this);
-
+        findViewById(R.id.bt_shuaxinlanyafuwu).setOnClickListener(this);
         mBluetoothDevice =   App.getInstance().getDeviceBean().getDevice();
         BLEUtils.isHIDDevice=false;//设置为不是配对戒指，防止sdk自动配对，进行手动进行配对操作
     }
@@ -188,24 +188,14 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                     }
                 });
             }
-        if(v.getId()==R.id.bt_currentStep) {
 
-            postView("当前用户的步数\n");
-            // BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);
-            //这个方法，获取广播，如果bleDeviceInfo.getStepAccumulation()>0，说明是新固件，支持每5分钟步数清零，重新累积功能
-            //如果不是新固件，获取步数还是使用以前的
-            LmAPI.GET_CURRENT_STEP_FROM_SERVER(true,mBluetoothDevice.getAddress(), new IWebStepResult() {
-                @Override
-                public void getCurrentSteps(double allStep) {
-                    postView("步数：\n"+allStep);
-                }
+        if(v.getId()==R.id.bt_shuaxinlanyafuwu) {
 
-                @Override
-                public void error(String message) {
+            postView("刷新蓝牙服务\n");
+           BLEService.refreshHidServices();
 
-                }
-            });
         }
+
 
     }
 
@@ -241,10 +231,10 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                     case BluetoothDevice.BOND_NONE://取消配对/未配对
                         Log.d("BLEService", "取消配对    =======");
                         postView("取消配对    =======\n");
-                        if(autoConnect){
-                            postView("用户点击取消配对后直连    =======\n");
-                            BLEUtils.connectLockByBLE(TestActivity3.this, mBluetoothDevice);
-                        }
+//                        if(autoConnect){
+//                            postView("用户点击取消配对后直连    =======\n");
+//                            BLEUtils.connectLockByBLE(TestActivity3.this, mBluetoothDevice);
+//                        }
 
                     default:
                         Log.d("BLEService", "default    =======");
