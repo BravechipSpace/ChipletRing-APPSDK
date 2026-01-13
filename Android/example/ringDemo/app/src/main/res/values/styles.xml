@@ -9,6 +9,16 @@
 
 
     </style>
+
+    <style name="toolbar_theme" parent="@style/Base.Widget.AppCompat.ActionBar">
+        <item name="colorControlNormal">#ff000000</item>
+        <item name="android:actionBarSize">46dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetRight">0dp</item>
+        <item name="actionMenuTextColor">#ff000000</item> <!--颜色-->
+    </style>
     <declare-styleable name="Chart_type">
         <attr name="chartType" format="enum">
             <enum name="heart_main" value="0" />

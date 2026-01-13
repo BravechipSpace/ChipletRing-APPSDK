@@ -590,6 +590,13 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         if (view.getId() == R.id.bt_version) {
             postView("\n开始获取版本信息");
             LmAPI.GET_VERSION((byte) 0x00);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    LmAPI.GET_VERSION((byte) 0x01);
+                }
+            },200);
+
         }
 
         if (view.getId() == R.id.bt_battery) {

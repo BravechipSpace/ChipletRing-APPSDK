@@ -4,11 +4,22 @@ android {
     compileSdk 35
     namespace = "com.lomo.demo"
     defaultConfig {
-        applicationId "com.chiplet.ring"
+        applicationId "com.lomo.demo"
         minSdkVersion 27
         targetSdkVersion 35
         versionCode 6
         versionName "2.0.5"
+
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                def buildType = variant.buildType.name
+                def versionName = variant.versionName
+                def versionCode = variant.versionCode
+                def date = new Date().format("yyyyMMddHHmmss")
+
+                outputFileName = "ChipletRingDemo_${versionName}_${buildType}_${date}.apk"
+            }
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         packagingOptions {

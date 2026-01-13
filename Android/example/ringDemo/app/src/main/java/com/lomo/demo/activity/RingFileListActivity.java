@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
@@ -38,7 +39,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class RingFileListActivity extends Activity {
+public class RingFileListActivity extends AppCompatActivity {
 
     private ScrollView offlineLayout;
     private EditText exerciseTotalDurationInput;

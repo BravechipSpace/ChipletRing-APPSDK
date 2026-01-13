@@ -35,7 +35,7 @@
             android:gravity="center_horizontal"
             android:text="--"
             android:textColor="@color/text_black_color"
-            android:textSize="@dimen/sp_10" />
+            android:textSize="10sp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,13 +49,13 @@
                 android:text="--"
                 android:gravity="center_vertical"
                 android:textColor="@color/text_black_color"
-                android:textSize="@dimen/sp_26"/>
+                android:textSize="26sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/sp_20"
+                android:textSize="20sp"
                 android:textColor="@color/text_black_color"/>
             <TextView
                 android:id="@+id/tv_sleep_min"
@@ -64,14 +64,14 @@
                 android:text="--"
                 android:gravity="center_vertical"
                 android:textColor="@color/text_black_color"
-                android:textSize="@dimen/sp_26"/>
+                android:textSize="26sp"/>
 
         </LinearLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_150">
+            android:layout_height="150dp">
             <com.lomo.demo.views.EchartView
                 android:id="@+id/echarts_view"
                 android:layout_width="match_parent"
@@ -88,16 +88,16 @@
         </RelativeLayout>
         <com.lomo.demo.views.MyScaleView
             android:id="@+id/main_scale"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginTop="5dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_60"
-            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="40dp"
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
         <LinearLayout
             android:id="@+id/in_sleep_layout"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -108,12 +108,12 @@
                 android:layout_centerVertical="true"
                 android:text="--"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="15sp" />
             <TextView
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_8"
+                android:textSize="8sp"
                 android:layout_centerVertical="true"
                 android:textColor="@color/text_gray"
                 android:text="入睡" />
@@ -123,7 +123,7 @@
                 android:id="@+id/end_sleep_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="15sp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/white"
@@ -131,7 +131,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_8"
+                android:textSize="8sp"
                 android:layout_centerVertical="true"
                 android:textColor="@color/text_gray"
                 android:text="清醒" />

@@ -27,7 +27,7 @@
             android:textSize="18sp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginRight="10dp"
             android:textColor="@color/white"/>
     </RelativeLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

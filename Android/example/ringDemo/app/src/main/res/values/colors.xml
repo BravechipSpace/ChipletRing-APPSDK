@@ -41,4 +41,5 @@
     <color name="text_gray">#AAAAAA</color>
     <color name="text_gray_small">#CCCCCC</color>
     <color name="text_gray_small2">#DDDDDD</color>
+    <color name="gray_B9">#B9B9B9</color>
 </resources>
