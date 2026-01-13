@@ -3,6 +3,7 @@ package com.lomo.demo.activity;
 import static com.lomo.demo.activity.TestActivity.mac;
 import static com.lomo.demo.activity.TestActivity.savePcmFile;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattService;
@@ -60,7 +61,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class TestActivity3 extends BaseActivity implements IResponseListener,  View.OnClickListener {
+public class TestActivity3 extends Activity implements IResponseListener,  View.OnClickListener {
 
     TextView tv_result2;
     private BluetoothDevice mBluetoothDevice;
@@ -98,6 +99,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
         findViewById(R.id.bt_shuaxinlanyafuwu).setOnClickListener(this);
         mBluetoothDevice =   App.getInstance().getDeviceBean().getDevice();
         BLEUtils.isHIDDevice=false;//设置为不是配对戒指，防止sdk自动配对，进行手动进行配对操作
+        LmAPI.addWLSCmdListener(this, this);
     }
 
 
@@ -266,6 +268,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LmAPI.removeWLSCmdListener(this);
         App.needAutoConnect=true;
     }
     /**
@@ -299,7 +302,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
             if (code == 7) {
 
                 BLEUtils.setGetToken(true);
-
+                postView("连接成功    =======\n");
         }
 
     }
