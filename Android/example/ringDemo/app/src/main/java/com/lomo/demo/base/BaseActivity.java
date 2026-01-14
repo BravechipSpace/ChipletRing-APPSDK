@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-            LmAPI.addWLSCmdListener(this, this);
+           // LmAPI.addWLSCmdListener(this, this);
             cmdListenerInit=true;
 
         ActManager.getAppManager().addActivity(this);
@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LmAPI.removeWLSCmdListener(this);
+       // LmAPI.removeWLSCmdListener(this);
         ActManager.getAppManager().finishActivity(this);
     }
 
