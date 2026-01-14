@@ -52,6 +52,7 @@ import com.lm.sdk.utils.UtilSharedPreference;
 import com.lomo.demo.R;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
+import com.lomo.demo.views.ActManager;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -61,7 +62,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class TestActivity3 extends Activity implements IResponseListener,  View.OnClickListener {
+public class TestActivity3 extends BaseActivity implements IResponseListener,  View.OnClickListener {
 
     TextView tv_result2;
     private BluetoothDevice mBluetoothDevice;
@@ -97,9 +98,11 @@ public class TestActivity3 extends Activity implements IResponseListener,  View.
         findViewById(R.id.bt_huoqushoushi).setOnClickListener(this);
         findViewById(R.id.bt_currentStep).setOnClickListener(this);
         findViewById(R.id.bt_shuaxinlanyafuwu).setOnClickListener(this);
+        findViewById(R.id.bt_shoushihuoqu).setOnClickListener(this);
+
         mBluetoothDevice =   App.getInstance().getDeviceBean().getDevice();
         BLEUtils.isHIDDevice=false;//设置为不是配对戒指，防止sdk自动配对，进行手动进行配对操作
-        LmAPI.addWLSCmdListener(this, this);
+      //  LmAPI.addWLSCmdListener(this, this);
     }
 
 
@@ -197,6 +200,29 @@ public class TestActivity3 extends Activity implements IResponseListener,  View.
            BLEService.refreshHidServices();
 
         }
+        if(v.getId()==R.id.bt_shoushihuoqu) {
+
+            postView("获取手势\n");
+            LmAPI.GET_HID_FENDA(new IHIDListener() {
+                @Override
+                public void setHIDSetting(boolean result) {
+
+                }
+
+                @Override
+                public void getHIDSetting(byte sh, byte xh, byte dxz, byte nyn) {
+                    postView("上滑："+sh+"\n");
+                    postView("下滑："+xh+"\n");
+                    postView("打响指："+dxz+"\n");
+                    postView("捏一捏："+nyn+"\n");
+                }
+
+                @Override
+                public void pushHIDSetting(byte success, byte sh, byte xh, byte dxz, byte nyn) {
+
+                }
+            });
+        }
 
 
     }
@@ -288,30 +314,35 @@ public class TestActivity3 extends Activity implements IResponseListener,  View.
 
     @Override
     public void lmBleConnecting(int code) {
-        postView("lmBleConnecting    =======\n");
-        BLEUtils.setConnecting(true);
+        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+            postView("lmBleConnecting    =======\n");
+            BLEUtils.setConnecting(true);
+        }
     }
 
     @Override
     public void lmBleConnectionSucceeded(int code) {
-        postView("lmBleConnectionSucceeded    =======\n");
+        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+            postView("lmBleConnectionSucceeded    =======\n");
 
-        BLEUtils.setConnecting(false);
+            BLEUtils.setConnecting(false);
 
-            Logger.show(TAG,"code="+code);
+            Logger.show(TAG, "code=" + code);
             if (code == 7) {
 
                 BLEUtils.setGetToken(true);
                 postView("连接成功    =======\n");
+            }
         }
-
     }
 
     @Override
     public void lmBleConnectionFailed(int code) {
-        postView("lmBleConnectionFailed    =======\n");
-        BLEUtils.setGetToken(false);
-        BLEUtils.setConnecting(false);
+        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+            postView("lmBleConnectionFailed    =======\n");
+            BLEUtils.setGetToken(false);
+            BLEUtils.setConnecting(false);
+        }
     }
 
     @Override

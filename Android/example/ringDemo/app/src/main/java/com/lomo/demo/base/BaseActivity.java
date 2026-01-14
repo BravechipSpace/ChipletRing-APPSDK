@@ -18,6 +18,7 @@ import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.mode.SystemControlBean;
+import com.lomo.demo.views.ActManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +42,33 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(!cmdListenerInit){
+
             LmAPI.addWLSCmdListener(this, this);
             cmdListenerInit=true;
-        }
 
+        ActManager.getAppManager().addActivity(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LmAPI.removeWLSCmdListener(this);
+        ActManager.getAppManager().finishActivity(this);
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LmAPI.addWLSCmdListener(this, this);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LmAPI.removeWLSCmdListener(this);
+    }
 
     /**
      * 请求权限
