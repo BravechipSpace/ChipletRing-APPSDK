@@ -314,15 +314,15 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
     @Override
     public void lmBleConnecting(int code) {
-        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+
             postView("lmBleConnecting    =======\n");
             BLEUtils.setConnecting(true);
         }
-    }
+
 
     @Override
     public void lmBleConnectionSucceeded(int code) {
-        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+
             postView("lmBleConnectionSucceeded    =======\n");
 
             BLEUtils.setConnecting(false);
@@ -333,16 +333,16 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                 BLEUtils.setGetToken(true);
                 postView("连接成功    =======\n");
             }
-        }
+
     }
 
     @Override
     public void lmBleConnectionFailed(int code) {
-        if (ActManager.getAppManager().currentActivity().getClass().getSimpleName().equals(TestActivity3.class.getSimpleName())) {
+
             postView("lmBleConnectionFailed    =======\n");
             BLEUtils.setGetToken(false);
             BLEUtils.setConnecting(false);
-        }
+
     }
 
     @Override
