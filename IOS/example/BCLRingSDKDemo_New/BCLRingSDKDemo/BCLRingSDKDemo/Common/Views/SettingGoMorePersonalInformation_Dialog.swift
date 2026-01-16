@@ -13,7 +13,7 @@ import UIKit
 class SettingGoMorePersonalInformation_Dialog: UIView {
     /// 确认回调，传入个人信息参数
     /// - Parameters:
-    ///   - age: 年龄（0-99）
+    ///   - age: 年龄（10-99）
     ///   - gender: 性别（0女性，1男性）
     ///   - height: 身高（100-220 cm）
     ///   - weight: 体重（10-150 kg）
@@ -262,7 +262,7 @@ class SettingGoMorePersonalInformation_Dialog: UIView {
 
     private lazy var ageLabel: UILabel = {
         let label = UILabel()
-        label.text = "年龄(0-99):"
+        label.text = "年龄(10-99):"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14)
         return label
@@ -443,7 +443,7 @@ class SettingGoMorePersonalInformation_Dialog: UIView {
             showErrorAlert("参数错误", message: "请输入有效的年龄")
             return
         }
-        guard age >= 0 && age <= 99 else {
+        guard age >= 10 && age <= 99 else {
             showErrorAlert("参数错误", message: "年龄范围: 0-99")
             return
         }

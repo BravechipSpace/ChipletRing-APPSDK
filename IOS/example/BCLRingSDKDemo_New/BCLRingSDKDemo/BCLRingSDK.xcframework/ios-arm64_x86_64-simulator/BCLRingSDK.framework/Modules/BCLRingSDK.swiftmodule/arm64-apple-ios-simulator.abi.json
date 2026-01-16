@@ -28955,6 +28955,848 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "BCLGoMoreAuthStep",
+        "printedName": "BCLGoMoreAuthStep",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "queryingDeviceAuthStatus",
+            "printedName": "queryingDeviceAuthStatus",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO014queryingDeviceE6StatusyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO014queryingDeviceE6StatusyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "queryingServerPKeyStatus",
+            "printedName": "queryingServerPKeyStatus",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO24queryingServerPKeyStatusyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO24queryingServerPKeyStatusyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "requestingPKey",
+            "printedName": "requestingPKey",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO14requestingPKeyyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO14requestingPKeyyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sendingPKeyToDevice",
+            "printedName": "sendingPKeyToDevice",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO19sendingPKeyToDeviceyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO19sendingPKeyToDeviceyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "savingAuthInfo",
+            "printedName": "savingAuthInfo",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO06savingE4InfoyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO06savingE4InfoyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "completed",
+            "printedName": "completed",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep.Type) -> BCLRingSDK.BCLGoMoreAuthStep",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthStep",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO9completedyA2CmF",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO9completedyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO11descriptionSSvp",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO11descriptionSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO11descriptionSSvg",
+                "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO11descriptionSSvg",
+                "moduleName": "BCLRingSDK",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "totalSteps",
+            "printedName": "totalSteps",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO10totalStepsSivpZ",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO10totalStepsSivpZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO10totalStepsSivgZ",
+                "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO10totalStepsSivgZ",
+                "moduleName": "BCLRingSDK",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "progressPercentage",
+            "printedName": "progressPercentage",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO18progressPercentageSivp",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO18progressPercentageSivp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO18progressPercentageSivg",
+                "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO18progressPercentageSivg",
+                "moduleName": "BCLRingSDK",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rawValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "BCLRingSDK.BCLGoMoreAuthStep?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO8rawValueACSgSi_tcfc",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO8rawValueACSgSi_tcfc",
+            "moduleName": "BCLRingSDK",
+            "implicit": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "rawValue",
+            "printedName": "rawValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO8rawValueSivp",
+            "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO8rawValueSivp",
+            "moduleName": "BCLRingSDK",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO8rawValueSivg",
+                "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO8rawValueSivg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO",
+        "mangledName": "$s10BCLRingSDK17BCLGoMoreAuthStepO",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "enumRawTypeName": "Int",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "BCLGoMoreAuthResult",
+        "printedName": "BCLGoMoreAuthResult",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "isAuthorized",
+            "printedName": "isAuthorized",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorizedSbvp",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorizedSbvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorizedSbvg",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorizedSbvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "mcuId",
+            "printedName": "mcuId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV5mcuIdSSvp",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV5mcuIdSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV5mcuIdSSvg",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV5mcuIdSSvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "macAddress",
+            "printedName": "macAddress",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV10macAddressSSvp",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV10macAddressSSvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV10macAddressSSvg",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV10macAddressSSvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "pKey",
+            "printedName": "pKey",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV4pKeySSSgvp",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV4pKeySSSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV4pKeySSSgvg",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV4pKeySSSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isNewlyAuthorized",
+            "printedName": "isNewlyAuthorized",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV17isNewlyAuthorizedSbvp",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV17isNewlyAuthorizedSbvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV17isNewlyAuthorizedSbvg",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV17isNewlyAuthorizedSbvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(isAuthorized:mcuId:macAddress:pKey:isNewlyAuthorized:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "BCLGoMoreAuthResult",
+                "printedName": "BCLRingSDK.BCLGoMoreAuthResult",
+                "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorized5mcuId10macAddress4pKey0g5NewlyH0ACSb_S3SSgSbtcfc",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV12isAuthorized5mcuId10macAddress4pKey0g5NewlyH0ACSb_S3SSgSbtcfc",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV",
+        "mangledName": "$s10BCLRingSDK19BCLGoMoreAuthResultV",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
@@ -49206,7 +50048,7 @@
           {
             "kind": "Function",
             "name": "getGoMoreSleepData",
-            "printedName": "getGoMoreSleepData(date:completion:)",
+            "printedName": "getGoMoreSleepData(date:userId:completion:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -49218,6 +50060,21 @@
                 "name": "Date",
                 "printedName": "Foundation.Date",
                 "usr": "s:10Foundation4DateV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeFunc",
@@ -49253,8 +50110,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:10BCLRingSDK0A7ManagerC18getGoMoreSleepData4date10completiony10Foundation4DateV_ys6ResultOyAA0aG5ModelCAA8BCLErrorOGctF",
-            "mangledName": "$s10BCLRingSDK0A7ManagerC18getGoMoreSleepData4date10completiony10Foundation4DateV_ys6ResultOyAA0aG5ModelCAA8BCLErrorOGctF",
+            "usr": "s:10BCLRingSDK0A7ManagerC18getGoMoreSleepData4date6userId10completiony10Foundation4DateV_SSSgys6ResultOyAA0aG5ModelCAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC18getGoMoreSleepData4date6userId10completiony10Foundation4DateV_SSSgys6ResultOyAA0aG5ModelCAA8BCLErrorOGctF",
             "moduleName": "BCLRingSDK",
             "declAttributes": [
               "RawDocComment"
@@ -49265,7 +50122,7 @@
           {
             "kind": "Function",
             "name": "getGoMoreSleepDataBatch",
-            "printedName": "getGoMoreSleepDataBatch(dates:completion:)",
+            "printedName": "getGoMoreSleepDataBatch(dates:userId:completion:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -49285,6 +50142,21 @@
                   }
                 ],
                 "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeFunc",
@@ -49328,8 +50200,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:10BCLRingSDK0A7ManagerC23getGoMoreSleepDataBatch5dates10completionySaySSG_ys6ResultOySayAA0aG8DayModelCGAA8BCLErrorOGctF",
-            "mangledName": "$s10BCLRingSDK0A7ManagerC23getGoMoreSleepDataBatch5dates10completionySaySSG_ys6ResultOySayAA0aG8DayModelCGAA8BCLErrorOGctF",
+            "usr": "s:10BCLRingSDK0A7ManagerC23getGoMoreSleepDataBatch5dates6userId10completionySaySSG_SSSgys6ResultOySayAA0aG8DayModelCGAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC23getGoMoreSleepDataBatch5dates6userId10completionySaySSG_SSSgys6ResultOySayAA0aG8DayModelCGAA8BCLErrorOGctF",
             "moduleName": "BCLRingSDK",
             "declAttributes": [
               "RawDocComment"
@@ -49362,7 +50234,7 @@
               {
                 "kind": "TypeFunc",
                 "name": "Function",
-                "printedName": "(Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> ()",
+                "printedName": "(Swift.Result<Swift.String?, BCLRingSDK.BCLError>) -> ()",
                 "children": [
                   {
                     "kind": "TypeNominal",
@@ -49372,13 +50244,21 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Result",
-                    "printedName": "Swift.Result<Swift.String, BCLRingSDK.BCLError>",
+                    "printedName": "Swift.Result<Swift.String?, BCLRingSDK.BCLError>",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "String",
-                        "printedName": "Swift.String",
-                        "usr": "s:SS"
+                        "name": "Optional",
+                        "printedName": "Swift.String?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "usr": "s:Sq"
                       },
                       {
                         "kind": "TypeNominal",
@@ -49393,8 +50273,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:10BCLRingSDK0A7ManagerC17requestGomorePKey8deviceId6apiKey10completionySS_SSys6ResultOySSAA8BCLErrorOGctF",
-            "mangledName": "$s10BCLRingSDK0A7ManagerC17requestGomorePKey8deviceId6apiKey10completionySS_SSys6ResultOySSAA8BCLErrorOGctF",
+            "usr": "s:10BCLRingSDK0A7ManagerC17requestGomorePKey8deviceId6apiKey10completionySS_SSys6ResultOySSSgAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC17requestGomorePKey8deviceId6apiKey10completionySS_SSys6ResultOySSSgAA8BCLErrorOGctF",
             "moduleName": "BCLRingSDK",
             "declAttributes": [
               "RawDocComment"
@@ -49471,6 +50351,150 @@
             "declKind": "Func",
             "usr": "s:10BCLRingSDK0A7ManagerC14saveGomorePKey13companyApiKey8deviceId3mac4pkey10completionySS_S3Sys6ResultOyytAA8BCLErrorOGctF",
             "mangledName": "$s10BCLRingSDK0A7ManagerC14saveGomorePKey13companyApiKey8deviceId3mac4pkey10completionySS_S3Sys6ResultOyytAA8BCLErrorOGctF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getGomorePKeyStatus",
+            "printedName": "getGomorePKeyStatus(deviceId:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<Swift.String?, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<Swift.String?, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Swift.String?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC19getGomorePKeyStatus8deviceId10completionySS_ys6ResultOySSSgAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC19getGomorePKeyStatus8deviceId10completionySS_ys6ResultOySSSgAA8BCLErrorOGctF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "checkAndAuthorizeGoMore",
+            "printedName": "checkAndAuthorizeGoMore(companyKey:progress:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLGoMoreAuthStep) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLGoMoreAuthStep",
+                    "printedName": "BCLRingSDK.BCLGoMoreAuthStep",
+                    "usr": "s:10BCLRingSDK17BCLGoMoreAuthStepO"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<BCLRingSDK.BCLGoMoreAuthResult, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<BCLRingSDK.BCLGoMoreAuthResult, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLGoMoreAuthResult",
+                        "printedName": "BCLRingSDK.BCLGoMoreAuthResult",
+                        "usr": "s:10BCLRingSDK19BCLGoMoreAuthResultV"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC23checkAndAuthorizeGoMore10companyKey8progress10completionySS_yAA05BCLGoH8AuthStepOcys6ResultOyAA0mhnP0VAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC23checkAndAuthorizeGoMore10companyKey8progress10completionySS_yAA05BCLGoH8AuthStepOcys6ResultOyAA0mhnP0VAA8BCLErrorOGctF",
             "moduleName": "BCLRingSDK",
             "declAttributes": [
               "RawDocComment"
@@ -133275,6 +134299,100 @@
           },
           {
             "kind": "Var",
+            "name": "seconds",
+            "printedName": "seconds",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int64",
+                "printedName": "Swift.Int64",
+                "usr": "s:s5Int64V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)seconds",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC7secondss5Int64Vvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)seconds",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7secondss5Int64Vvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setSeconds:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7secondss5Int64Vvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC7secondss5Int64VvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7secondss5Int64VvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "deepTime",
             "printedName": "deepTime",
             "children": [
@@ -133839,6 +134957,100 @@
           },
           {
             "kind": "Var",
+            "name": "sjTime",
+            "printedName": "sjTime",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int64",
+                "printedName": "Swift.Int64",
+                "usr": "s:s5Int64V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)sjTime",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC6sjTimes5Int64Vvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)sjTime",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC6sjTimes5Int64Vvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setSjTime:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC6sjTimes5Int64Vvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC6sjTimes5Int64VvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC6sjTimes5Int64VvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "xiaolv",
             "printedName": "xiaolv",
             "children": [
@@ -134215,6 +135427,100 @@
           },
           {
             "kind": "Var",
+            "name": "waso",
+            "printedName": "waso",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)waso",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC4wasoSivp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)waso",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC4wasoSivg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setWaso:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC4wasoSivs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC4wasoSivM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC4wasoSivM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "sleepDataType",
             "printedName": "sleepDataType",
             "children": [
@@ -134301,6 +135607,1138 @@
                 "declKind": "Accessor",
                 "usr": "s:10BCLRingSDK0A10SleepModelC13sleepDataTypeSivM",
                 "mangledName": "$s10BCLRingSDK0A10SleepModelC13sleepDataTypeSivM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "resultTemperture",
+            "printedName": "resultTemperture",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)resultTemperture",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC16resultTempertureSdvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)resultTemperture",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC16resultTempertureSdvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setResultTemperture:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC16resultTempertureSdvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC16resultTempertureSdvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC16resultTempertureSdvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "xshours",
+            "printedName": "xshours",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)xshours",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC7xshoursSivp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)xshours",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7xshoursSivg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setXshours:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7xshoursSivs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC7xshoursSivM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC7xshoursSivM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "xsminutes",
+            "printedName": "xsminutes",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)xsminutes",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC9xsminutesSivp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)xsminutes",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC9xsminutesSivg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setXsminutes:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC9xsminutesSivs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC9xsminutesSivM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC9xsminutesSivM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "xsAllhours",
+            "printedName": "xsAllhours",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)xsAllhours",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC10xsAllhoursSSSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)xsAllhours",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC10xsAllhoursSSSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setXsAllhours:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC10xsAllhoursSSSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC10xsAllhoursSSSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC10xsAllhoursSSSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "xsAllminutes",
+            "printedName": "xsAllminutes",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)xsAllminutes",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC12xsAllminutesSSSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)xsAllminutes",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC12xsAllminutesSSSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setXsAllminutes:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC12xsAllminutesSSSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC12xsAllminutesSSSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC12xsAllminutesSSSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "voMax",
+            "printedName": "voMax",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)voMax",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC5voMaxSivp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)voMax",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC5voMaxSivg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setVoMax:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC5voMaxSivs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC5voMaxSivM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC5voMaxSivM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sleepLog",
+            "printedName": "sleepLog",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)sleepLog",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC8sleepLogSSSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)sleepLog",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC8sleepLogSSSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setSleepLog:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC8sleepLogSSSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC8sleepLogSSSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC8sleepLogSSSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "historyBeanList",
+            "printedName": "historyBeanList",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[BCLRingSDK.BCLRingDBModel]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[BCLRingSDK.BCLRingDBModel]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLRingDBModel",
+                        "printedName": "BCLRingSDK.BCLRingDBModel",
+                        "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingDBModel"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)historyBeanList",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC15historyBeanListSayAA0A7DBModelCGSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[BCLRingSDK.BCLRingDBModel]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[BCLRingSDK.BCLRingDBModel]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLRingDBModel",
+                            "printedName": "BCLRingSDK.BCLRingDBModel",
+                            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingDBModel"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)historyBeanList",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC15historyBeanListSayAA0A7DBModelCGSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[BCLRingSDK.BCLRingDBModel]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[BCLRingSDK.BCLRingDBModel]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLRingDBModel",
+                            "printedName": "BCLRingSDK.BCLRingDBModel",
+                            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingDBModel"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setHistoryBeanList:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC15historyBeanListSayAA0A7DBModelCGSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC15historyBeanListSayAA0A7DBModelCGSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC15historyBeanListSayAA0A7DBModelCGSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "noSleepResult",
+            "printedName": "noSleepResult",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)noSleepResult",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC02noC6ResultSSSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)noSleepResult",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC02noC6ResultSSSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setNoSleepResult:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC02noC6ResultSSSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC02noC6ResultSSSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC02noC6ResultSSSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "shortSleepList",
+            "printedName": "shortSleepList",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[BCLRingSDK.BCLRingSleepModel]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[BCLRingSDK.BCLRingSleepModel]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLRingSleepModel",
+                        "printedName": "BCLRingSDK.BCLRingSleepModel",
+                        "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(py)shortSleepList",
+            "mangledName": "$s10BCLRingSDK0A10SleepModelC05shortC4ListSayACGSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[BCLRingSDK.BCLRingSleepModel]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[BCLRingSDK.BCLRingSleepModel]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLRingSleepModel",
+                            "printedName": "BCLRingSDK.BCLRingSleepModel",
+                            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)shortSleepList",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC05shortC4ListSayACGSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[BCLRingSDK.BCLRingSleepModel]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[BCLRingSDK.BCLRingSleepModel]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "BCLRingSleepModel",
+                            "printedName": "BCLRingSDK.BCLRingSleepModel",
+                            "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingSleepModel(im)setShortSleepList:",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC05shortC4ListSayACGSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A10SleepModelC05shortC4ListSayACGSgvM",
+                "mangledName": "$s10BCLRingSDK0A10SleepModelC05shortC4ListSayACGSgvM",
                 "moduleName": "BCLRingSDK",
                 "implicit": true,
                 "accessorKind": "_modify"
@@ -137577,35 +140015,35 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLSystemSettingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 22247,
+      "offset": 22289,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLSystemSettingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 22867,
+      "offset": 22909,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLSystemSettingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 22938,
+      "offset": 22980,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLSystemSettingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 22986,
+      "offset": 23028,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLSystemSettingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 23034,
+      "offset": 23076,
       "length": 1,
       "value": "0"
     },
@@ -137801,196 +140239,217 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 14662,
+      "offset": 1908,
+      "length": 24,
+      "value": "\"\/app\/getPKeyByDeviceId\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 13784,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 14705,
+      "offset": 13827,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 18786,
+      "offset": 17908,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 18829,
+      "offset": 17951,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 19884,
+      "offset": 19006,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 19927,
+      "offset": 19049,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 24003,
+      "offset": 23125,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 24046,
+      "offset": 23168,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 28228,
+      "offset": 27350,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 28295,
+      "offset": 27417,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 32904,
+      "offset": 32026,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 32971,
+      "offset": 32093,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 36856,
+      "offset": 35978,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 36923,
+      "offset": 36045,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 39477,
+      "offset": 38599,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 39544,
+      "offset": 38666,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 42758,
+      "offset": 41880,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 42825,
+      "offset": 41947,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 46292,
+      "offset": 45414,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 46359,
+      "offset": 45481,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 53078,
+      "offset": 52200,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 53145,
+      "offset": 52267,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 56567,
+      "offset": 55689,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 56634,
+      "offset": 55756,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 64483,
+      "offset": 64130,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 64550,
+      "offset": 64197,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 68031,
+      "offset": 67667,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 68098,
+      "offset": 67734,
+      "length": 8,
+      "value": "\"status\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 71180,
+      "length": 9,
+      "value": "\"message\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
+      "kind": "StringLiteral",
+      "offset": 71247,
       "length": 8,
       "value": "\"status\""
     },
@@ -139250,7 +141709,7 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 100631,
+      "offset": 104809,
       "length": 4,
       "value": "1000"
     },
@@ -139400,6 +141859,48 @@
       "offset": 3172,
       "length": 5,
       "value": "false"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4278,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4350,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4397,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4458,
+      "length": 1,
+      "value": "4"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4525,
+      "length": 1,
+      "value": "5"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLGoMoreAuthCmdAndRes.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4569,
+      "length": 1,
+      "value": "6"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLBloodPressureCmdAndRes.swift",
@@ -139740,7 +142241,7 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 50447,
+      "offset": 50989,
       "length": 5,
       "value": "false"
     },
@@ -139980,7 +142481,7 @@
       "kind": "StringLiteral",
       "offset": 329,
       "length": 8,
-      "value": "\"1.1.28\""
+      "value": "\"1.1.29\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
@@ -142182,106 +144683,113 @@
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
+      "kind": "StringLiteral",
+      "offset": 8698,
+      "length": 19,
+      "value": "\"measurementMarker\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5372,
+      "offset": 9697,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5410,
+      "offset": 9735,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5443,
+      "offset": 9768,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5479,
+      "offset": 9804,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5522,
+      "offset": 9847,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5558,
+      "offset": 9883,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5596,
+      "offset": 9921,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5643,
+      "offset": 9968,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5681,
+      "offset": 10006,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5719,
+      "offset": 10044,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5763,
+      "offset": 10088,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5799,
+      "offset": 10124,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5839,
+      "offset": 10164,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5873,
+      "offset": 10198,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingDBModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 5907,
+      "offset": 10232,
       "length": 1,
       "value": "0"
     },
@@ -143653,196 +146161,308 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 530,
+      "offset": 532,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 597,
+      "offset": 600,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 657,
+      "offset": 667,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 717,
+      "offset": 727,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 810,
+      "offset": 787,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 905,
+      "offset": 880,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 975,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1041,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "FloatLiteral",
-      "offset": 966,
+      "offset": 1102,
       "length": 3,
       "value": "0.0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "FloatLiteral",
-      "offset": 1031,
+      "offset": 1167,
       "length": 3,
       "value": "0.0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 1090,
+      "offset": 1226,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 1153,
+      "offset": 1313,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 1224,
+      "offset": 1423,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1547,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "FloatLiteral",
+      "offset": 1618,
+      "length": 3,
+      "value": "0.0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1719,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1820,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2092,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "Array",
-      "offset": 1308,
+      "offset": 2544,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1379,
-      "length": 481,
+      "offset": 2615,
+      "length": 750,
       "value": "\"RingSleepModel: hours = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1423,
+      "offset": 2659,
       "length": 1,
-      "value": "\", \nminutes = \""
+      "value": "\",\nminutes = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1454,
+      "offset": 2689,
       "length": 1,
-      "value": "\", \nsleepTime = \""
+      "value": "\",\nsleepTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1489,
+      "offset": 2723,
       "length": 1,
-      "value": "\", \ndeepTime = \""
+      "value": "\",\nseconds = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1522,
+      "offset": 2753,
       "length": 1,
-      "value": "\", \nlowTime = \""
+      "value": "\",\ndeepTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1553,
+      "offset": 2785,
       "length": 1,
-      "value": "\", \nydTime = \""
+      "value": "\",\nlowTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1582,
+      "offset": 2815,
       "length": 1,
-      "value": "\", \nqxTime = \""
+      "value": "\",\nydTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1611,
+      "offset": 2843,
       "length": 1,
-      "value": "\", \nstartTime = \""
+      "value": "\",\nqxTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1646,
+      "offset": 2871,
       "length": 1,
-      "value": "\", \nendTime = \""
+      "value": "\",\nstartTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1677,
+      "offset": 2905,
       "length": 1,
-      "value": "\", \nxiaolv = \""
+      "value": "\",\nendTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1706,
+      "offset": 2935,
       "length": 1,
-      "value": "\", \nshenshui = \""
+      "value": "\",\nsjTime = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1739,
+      "offset": 2963,
       "length": 1,
-      "value": "\", \nscore = \""
+      "value": "\",\nxiaolv = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1766,
+      "offset": 2991,
       "length": 1,
-      "value": "\", \nwakeupCount = \""
+      "value": "\",\nshenshui = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1805,
+      "offset": 3023,
       "length": 1,
-      "value": "\", \nsleepDataType = \""
+      "value": "\",\nscore = \""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 1848,
-      "length": 2923,
+      "offset": 3049,
+      "length": 1,
+      "value": "\",\nwakeupCount = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3087,
+      "length": 1,
+      "value": "\",\nwaso = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3111,
+      "length": 1,
+      "value": "\",\nsleepDataType = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3153,
+      "length": 1,
+      "value": "\",\nresultTemperture = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3201,
+      "length": 1,
+      "value": "\",\nxshours = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3231,
+      "length": 1,
+      "value": "\",\nxsminutes = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3265,
+      "length": 1,
+      "value": "\",\nvoMax = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3291,
+      "length": 1,
+      "value": "\",\nshortSleepList count = \""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3351,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 3353,
+      "length": 5226,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLRingSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 2249,
+      "offset": 4062,
       "length": 19,
       "value": "\"sleepDataBeanList\""
     },

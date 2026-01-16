@@ -345,6 +345,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 428, title: "查询指定时间范围的GoMore睡眠数据", category: .goMoreFunction, requiresConnection: false),
             FunctionDemoModel(id: 429, title: "获取Gomore授权PKey", category: .goMoreFunction, requiresConnection: false),
             FunctionDemoModel(id: 430, title: "保存Gomore授权设备信息", category: .goMoreFunction, requiresConnection: false),
+            FunctionDemoModel(id: 431, title: "通过服务端查询Gomore授权状态", category: .goMoreFunction, requiresConnection: false),
+            FunctionDemoModel(id: 432, title: "Gomore授权状态检查并自动授权处理", category: .goMoreFunction),
 
             // 自定义指令 (1001-1100)
             FunctionDemoModel(id: 1001, title: "发送自定义指令（开启）", category: .customCommand),
