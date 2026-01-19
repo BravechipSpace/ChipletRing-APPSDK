@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
@@ -197,7 +198,8 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
         if(v.getId()==R.id.bt_shuaxinlanyafuwu) {
 
             postView("刷新蓝牙服务\n");
-           BLEService.refreshHidServices();
+            // 监听蓝牙状态变化
+            refreshBluetoothServices();
 
         }
         if(v.getId()==R.id.bt_shoushihuoqu) {
@@ -223,7 +225,8 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
                 }
             });
         }
-
+        // 监听蓝牙状态变化
+        registerBluetoothStateReceiver();
 
     }
 
@@ -540,4 +543,55 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
     public void appRefresh(SystemControlBean systemControlBean) {
 
     }
+
+    private void refreshBluetoothServices() {
+
+
+        // 在子线程中执行刷新
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final boolean success = BLEService.refreshBluetoothServices();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        if (success) {
+
+                        } else {
+
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * 注册蓝牙状态广播接收器，监听刷新完成事件
+     */
+    private void registerBluetoothStateReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BLEService.BROADCAST_CONNECT_STATE_CHANGE);
+
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (BLEService.BROADCAST_CONNECT_STATE_CHANGE.equals(intent.getAction())) {
+                    int state = intent.getIntExtra(BLEService.BROADCAST_CONNECT_STATE_VALUE, -1);
+
+                    if (state == BLEService.CONNECT_STATE_SUCCESS) {
+                        // 连接成功，可能是刷新完成
+                        Log.d(TAG, "蓝牙连接状态：成功");
+
+                    }
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+    }
+
 }
