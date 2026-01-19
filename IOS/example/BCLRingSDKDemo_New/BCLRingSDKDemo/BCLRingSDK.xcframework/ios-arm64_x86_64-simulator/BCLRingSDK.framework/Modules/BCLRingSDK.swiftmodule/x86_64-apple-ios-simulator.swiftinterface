@@ -816,10 +816,12 @@ extension BCLRingManager {
   public func getServerStepCalculationResult(completion: @escaping (Result<Int, BCLError>) -> Void)
   public func getServerDeviceHistory(mac: String? = nil, startTime: Int64, endTime: Int64, completion: @escaping (Result<[BCLRingDBModel], BCLError>) -> Void)
   public func getTimeline(startTime: Int64, endTime: Int64, completion: @escaping (Result<[BCLTimelineItem], BCLError>) -> Void)
-  public func getGoMoreSleepData(date: Date, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
-  public func getGoMoreSleepDataBatch(dates: [String], completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
-  public func requestGomorePKey(deviceId: String, apiKey: String, completion: @escaping (Result<String, BCLError>) -> Void)
+  public func getGoMoreSleepData(date: Date, userId: String? = nil, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
+  public func getGoMoreSleepDataBatch(dates: [String], userId: String? = nil, completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
+  public func requestGomorePKey(deviceId: String, apiKey: String, completion: @escaping (Result<String?, BCLError>) -> Void)
   public func saveGomorePKey(companyApiKey: String, deviceId: String, mac: String, pkey: String, completion: @escaping (Result<Void, BCLError>) -> Void)
+  public func getGomorePKeyStatus(deviceId: String, completion: @escaping (Result<String?, BCLError>) -> Void)
+  public func checkAndAuthorizeGoMore(companyKey: String, progress: @escaping (BCLGoMoreAuthStep) -> Void, completion: @escaping (Result<BCLGoMoreAuthResult, BCLError>) -> Void)
 }
 extension BCLRingManager {
   public func queryAllHistoryData(macString: String, completion: @escaping (Result<[BCLRingDBModel], BCLError>) -> Void)
@@ -937,6 +939,36 @@ public struct BCLFirmwareProgress {
   public var isAuthorized: Bool?
   public var mcuIdHexString: String?
   @objc deinit
+}
+public enum BCLGoMoreAuthStep : Int, CustomStringConvertible {
+  case queryingDeviceAuthStatus
+  case queryingServerPKeyStatus
+  case requestingPKey
+  case sendingPKeyToDevice
+  case savingAuthInfo
+  case completed
+  public var description: String {
+    get
+  }
+  public static var totalSteps: Int {
+    get
+  }
+  public var progressPercentage: Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct BCLGoMoreAuthResult {
+  public let isAuthorized: Bool
+  public let mcuId: String
+  public let macAddress: String
+  public let pKey: String?
+  public let isNewlyAuthorized: Bool
+  public init(isAuthorized: Bool, mcuId: String, macAddress: String, pKey: String?, isNewlyAuthorized: Bool)
 }
 @_inheritsConvenienceInitializers public class BloodPressureCommand : BCLCommand {
   public static func createTake(collectTime: Int, waveformConfig: Int, progressConfig: Int) -> BloodPressureCommand
@@ -3242,17 +3274,30 @@ public func BDSetUpLogger(_ directoryPath: String = defaultLogDirectoryPath)
   @objc public var hours: Int
   @objc public var minutes: Int
   @objc public var sleepTime: Int64
+  @objc public var seconds: Int64
   @objc public var deepTime: Int64
   @objc public var lowTime: Int64
   @objc public var ydTime: Int64
   @objc public var qxTime: Int64
   @objc public var startTime: Int64
   @objc public var endTime: Int64
+  @objc public var sjTime: Int64
   @objc public var xiaolv: Double
   @objc public var shenshui: Double
   @objc public var score: Int
   @objc public var wakeupCount: Int
+  @objc public var waso: Int
   @objc public var sleepDataType: Int
+  @objc public var resultTemperture: Double
+  @objc public var xshours: Int
+  @objc public var xsminutes: Int
+  @objc public var xsAllhours: String?
+  @objc public var xsAllminutes: String?
+  @objc public var voMax: Int
+  @objc public var sleepLog: String?
+  @objc public var historyBeanList: [BCLRingDBModel]?
+  @objc public var noSleepResult: String?
+  @objc public var shortSleepList: [BCLRingSleepModel]?
   @objc public var sleepDataList: [BCLRingDBModel]
   @objc override dynamic public var description: String {
     @objc get
@@ -3299,6 +3344,9 @@ extension BCLRingSDK.BCLApolloResponse.CharacteristicType : Swift.Hashable {}
 extension BCLRingSDK.BCLFirmwareCommand : Swift.Equatable {}
 extension BCLRingSDK.BCLFirmwareCommand : Swift.Hashable {}
 extension BCLRingSDK.BCLFirmwareCommand : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLGoMoreAuthStep : Swift.Equatable {}
+extension BCLRingSDK.BCLGoMoreAuthStep : Swift.Hashable {}
+extension BCLRingSDK.BCLGoMoreAuthStep : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.Hashable {}
 extension BCLRingSDK.BCLBloodPressureMeasureStatus : Swift.RawRepresentable {}

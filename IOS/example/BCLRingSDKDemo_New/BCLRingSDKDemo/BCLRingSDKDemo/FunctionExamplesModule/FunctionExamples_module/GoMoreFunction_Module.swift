@@ -41,6 +41,10 @@ class GoMoreFunction_Module: BaseFunction_Module {
             presentGoMorePKeyRequestDialog()
         case 430: // 保存GoMore授权设备信息
             presentGoMorePKeySaveDialog()
+        case 431: // 通过服务端查询Gomore授权状态
+            presentGoMorePKeyStatusQueryDialog()
+        case 432: // Gomore授权状态检查并自动授权处理
+            presentGoMoreAutoAuthDialog()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -140,9 +144,12 @@ class GoMoreFunction_Module: BaseFunction_Module {
             self?.hideLoading()
 
             switch result {
-            case let .success(pKey):
-                BDLogger.info("✅ 获取GoMore PKey成功: \(pKey)")
-                self?.showAlert(title: "获取PKey成功", message: pKey)
+            case .success(let pKey):
+                guard let PKey = pKey else {
+                    BDLogger.info("未查询到该设备的授权信息，请重新进行授权")
+                    return
+                }
+                BDLogger.info("✅ 获取Gomore pKey成功：\(PKey)")
             case let .failure(error):
                 BDLogger.error("❌ 获取GoMore PKey失败: \(error)")
                 self?.showError("获取失败: \(error.localizedDescription)")
@@ -661,6 +668,56 @@ class GoMoreFunction_Module: BaseFunction_Module {
         }
     }
 
+    // MARK: - 431: 通过服务端查询Gomore授权状态
+
+    private func presentGoMorePKeyStatusQueryDialog() {
+        let contentView = GoMorePKeyStatusQueryConfig_Dialog(x: 0, y: 0, width: 320, height: 260)
+        contentView.confirmButtonCallback = { [weak self] deviceId in
+            self?.queryGoMorePKeyStatusFromServer(deviceId: deviceId)
+        }
+
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
+    private func queryGoMorePKeyStatusFromServer(deviceId: String) {
+        let trimmedDeviceId = deviceId.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmedDeviceId.isEmpty else {
+            showError("deviceId不能为空")
+            return
+        }
+
+        BDLogger.info("📤 查询Gomore授权状态（服务端）...")
+        BDLogger.info("Device ID: \(trimmedDeviceId)")
+        showLoading("查询授权状态中...", userInteractionEnabled: false)
+
+        BCLRingManager.shared.getGomorePKeyStatus(deviceId: trimmedDeviceId) { [weak self] result in
+            self?.hideLoading()
+
+            switch result {
+            case let .success(pKey):
+                if let pKey = pKey {
+                    // 已授权
+                    BDLogger.info("✅ Gomore授权状态查询成功")
+                    BDLogger.info("授权状态: 已授权")
+                    BDLogger.info("授权密钥(pKey): \(pKey)")
+                    self?.showAlert(title: "查询结果", message: "设备已授权")
+                } else {
+                    // 未授权
+                    BDLogger.info("✅ Gomore授权状态查询成功")
+                    BDLogger.info("授权状态: 未授权")
+                    self?.showAlert(title: "查询结果", message: "设备未授权，请先进行授权")
+                }
+            case let .failure(error):
+                BDLogger.error("❌ 查询Gomore授权状态失败: \(error)")
+                self?.showError("查询失败: \(error.localizedDescription)")
+            }
+        }
+    }
+
     // MARK: - Helper Methods
 
     private func formatSleepDuration(seconds: Int) -> String {
@@ -677,5 +734,127 @@ class GoMoreFunction_Module: BaseFunction_Module {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确定", style: .default))
         vc.present(alert, animated: true)
+    }
+
+    // MARK: - 432: Gomore授权状态检查并自动授权处理
+
+    private func presentGoMoreAutoAuthDialog() {
+        let contentView = GoMoreAutoAuthConfig_Dialog(x: 0, y: 0, width: 320, height: 300)
+        contentView.confirmButtonCallback = { [weak self] companyKey in
+            self?.checkAndAuthorizeGoMore(companyKey: companyKey)
+        }
+
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
+    private func checkAndAuthorizeGoMore(companyKey: String) {
+        let trimmedCompanyKey = companyKey.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmedCompanyKey.isEmpty else {
+            showError("公司密钥不能为空")
+            return
+        }
+
+        BDLogger.info("📤 开始GoMore授权状态检查并自动授权处理...")
+        BDLogger.info("Company Key: \(trimmedCompanyKey)")
+        showLoading("检查授权状态中...", userInteractionEnabled: false)
+
+        BCLRingManager.shared.checkAndAuthorizeGoMore(companyKey: trimmedCompanyKey) { [weak self] step in
+            // 更新进度提示
+            DispatchQueue.main.async {
+                BDLogger.info("当前步骤: \(step.description), 进度: \(step.progressPercentage)%")
+                self?.showLoading("[\(step.progressPercentage)%] \(step.description)")
+                if step.progressPercentage == 100 {
+                    self?.hideLoading()
+                }
+            }
+        } completion: { [weak self] result in
+            switch result {
+            case .success(let authResult):
+                BDLogger.info("✅ GoMore授权成功")
+                BDLogger.info("授权结果: \(authResult)")
+                self?.showSuccess("授权成功")
+            case .failure(let error):
+                self?.handleGoMoreAutoAuthError(error)
+            }
+        }
+    }
+
+    private func handleGoMoreAutoAuthError(_ error: BCLError) {
+        BDLogger.error("❌ GoMore自动授权失败: \(error)")
+
+        switch error {
+        // 1. 连接相关错误
+        case .connection(let connectionError):
+            switch connectionError {
+            case .disconnected:
+                showError("设备未连接，请先连接设备")
+            default:
+                showError("连接错误: \(connectionError.localizedDescription)")
+            }
+
+        // 2. GoMore授权相关错误
+        case .goMoreAuth(let goMoreError):
+            switch goMoreError {
+            case .invalidParameter:
+                showError("参数无效：请检查companyKey是否正确")
+            case .invalidPKeyLength:
+                showError("PKey长度错误：服务端返回的PKey格式不正确")
+            case .authorizationFailed:
+                showError("授权失败：设备拒绝授权或PKey无效")
+            case .unauthorized:
+                showError("设备未授权")
+            case .dataFormatError:
+                showError("数据格式错误：无法获取MCU ID")
+            case .unknown:
+                showError("未知GoMore错误")
+            }
+
+        // 3. 网络相关错误
+        case .network(let networkError):
+            switch networkError {
+            case .networkError(let message):
+                showError("网络错误: \(message)")
+            case .serverError(let code, let message):
+                showError("服务器错误[\(code)]: \(message)")
+            case .tokenError(let message):
+                showError("Token失效，需要重新登录: \(message)")
+            case .invalidParameters(let message):
+                showError("请求参数错误: \(message)")
+            case .invalidResponse:
+                showError("服务端响应数据无效")
+            default:
+                showError("网络错误: \(networkError.localizedDescription ?? "未知")")
+            }
+
+        // 4. 蓝牙命令发送错误
+        case .commandSending(let cmdError):
+            switch cmdError {
+            case .timeout:
+                showError("命令超时：设备响应超时，请检查设备状态")
+            case .invalidCommandFormat:
+                showError("命令格式错误")
+            case .characteristicNotFound:
+                showError("蓝牙特征值未找到，请重新连接设备")
+            default:
+                showError("命令发送错误: \(cmdError.localizedDescription)")
+            }
+
+        // 5. 其他错误
+        default:
+            showError("其他错误: \(error.localizedDescription)")
+        }
+    }
+
+    private func updateLoadingMessage(_ message: String) {
+        // 更新loading提示文字
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            QMUITips.hideAllTips(in: window)
+            QMUITips.showLoading(message, in: window)
+        }
     }
 }
