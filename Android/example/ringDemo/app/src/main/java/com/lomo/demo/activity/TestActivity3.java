@@ -547,26 +547,26 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
     private void refreshBluetoothServices() {
 
 
-        // 在子线程中执行刷新
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final boolean success = BLEService.refreshBluetoothServices();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        if (success) {
-
-                        } else {
-
-                        }
-                    }
-                });
-            }
-        }).start();
+//        // 在子线程中执行刷新
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                final boolean success = BLEService.refreshBluetoothServices();
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                        if (success) {
+//
+//                        } else {
+//
+//                        }
+//                    }
+//                });
+//            }
+//        }).start();
     }
 
     /**

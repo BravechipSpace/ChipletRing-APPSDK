@@ -23,6 +23,7 @@ import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.IFileListListener;
 import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
+import com.lm.sdk.inter.IRealTimePPGListener;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.inter.ITempListener;
 import com.lm.sdk.inter.IWebHistoryResult;
@@ -84,6 +85,8 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         findViewById(R.id.bt_file_list).setOnClickListener(this);
         findViewById(R.id.bt_file_content).setOnClickListener(this);
         findViewById(R.id.bt_test2).setOnClickListener(this);
+        findViewById(R.id.bt_star_ppg).setOnClickListener(this);
+        findViewById(R.id.bt_stop_ppg).setOnClickListener(this);
         READ_HISTORY_AUTO();
     }
 
@@ -769,6 +772,53 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
             Intent intent = new Intent();
                 intent.setClass(TestActivity2.this,TestActivity3.class);
                 startActivity(intent);
+
+        }
+
+        if(v.getId()==R.id.bt_star_ppg){
+
+            postView("\n开启实时ppg");
+            //postView("\n开始读取未上传数据");
+
+            LmAPI.START_REAL_TIME_PPG(30, 100, 20, 20, 20, 1, 1, new IRealTimePPGListener() {
+                @Override
+                public void time(long time, int zone) {
+                    postView("\ntime:"+time+",zone:"+zone);
+                }
+
+                @Override
+                public void waveformData(int seq, int number, List<String[]> waveData) {
+                    postView("\nwaveformData seq:"+seq+",number:"+number);
+
+                    for (String[] array : waveData) {
+                        postView("\nwaveData:"+Arrays.toString(array));
+                    }
+                }
+
+                @Override
+                public void progress(int progress) {
+                    postView("\nprogress :"+progress);
+                }
+
+                @Override
+                public void RRIData(int number, byte[] rriData) {
+                    postView("\nRRIData number:"+number+",rriData length:"+rriData.length);
+                }
+
+                @Override
+                public void result(int result0, int heartRate, int bloodOxygen, int temperature) {
+                    postView("\nresult result0:"+result0+",heartRate:"+heartRate+",bloodOxygen:"+bloodOxygen+",temperature:"+temperature);
+                }
+            });
+
+        }
+
+        if(v.getId()==R.id.bt_stop_ppg){
+
+            postView("\n停止实时ppg");
+            //postView("\n开始读取未上传数据");
+
+            LmAPI.STOP_REAL_TIME_PPG();
 
         }
     }

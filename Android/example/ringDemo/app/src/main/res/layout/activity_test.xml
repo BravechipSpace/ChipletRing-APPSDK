@@ -397,6 +397,15 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_jump_pressure"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="特定戒指历史血压"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

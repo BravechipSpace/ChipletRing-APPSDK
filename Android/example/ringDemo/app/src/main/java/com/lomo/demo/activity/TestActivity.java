@@ -40,6 +40,7 @@ import com.lm.sdk.inter.IShiMiListener;
 import com.lm.sdk.inter.IWebTimeLineResult;
 import com.lm.sdk.inter.LmOTACallback;
 import com.lm.sdk.inter.LmOtaProgressListener;
+import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.library.utils.PreferencesUtils;
 import com.lm.sdk.library.utils.ToastUtils;
 import com.lm.sdk.mode.BleDeviceInfo;
@@ -149,6 +150,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         findViewById(R.id.bt_jump_goMore).setOnClickListener(this);
         findViewById(R.id.bt_jump_historyTemp).setOnClickListener(this);
         findViewById(R.id.bt_timeline).setOnClickListener(this);
+        findViewById(R.id.bt_jump_pressure).setOnClickListener(this);
 
         File file = new File(outputPath);
         file.delete();
@@ -913,6 +915,38 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
             intent.setClass(TestActivity.this,HistoryListTempActivity.class);
             startActivity(intent);
         }
+        if (view.getId() == R.id.bt_jump_pressure) {
+            LmAPI.READ_HISTORY((byte) 0x1, 0,new IHistoryListener() {
+                @Override
+                public void error(int code) {
+                    if(code == 3){
+                        postView("\n出现了BIX的问题");
+                    }
+                    setMessage(TestActivity.this,"\n出现了BIX的问题");
+                }
+
+                @Override
+                public void success() {
+                    postView("\n读取记录完成");
+
+                }
+
+                @Override
+                public void progress(double progress, HistoryDataBean historyDataBean) {
+                    if(historyDataBean!=null){
+                        postView("\n读取记录进度:" + progress + "%");
+                        postView("\n血压内容:序号：" + historyDataBean.getIndexNumber()+","+ DateUtils.longToString(historyDataBean.getTime() * 1000, "yyyy-MM-dd HH:mm")+",高血压:"+historyDataBean.getHighBloodPressure()+",低血压："+historyDataBean.getLowBloodPressure());
+                    }
+
+                }
+
+                @Override
+                public void noNewDataAvailable() {
+
+                }
+            });
+        }
+
         if (view.getId() == R.id.bt_timeline) {
             // 获取当前日期(不含时间)
             LocalDate today = LocalDate.now();
