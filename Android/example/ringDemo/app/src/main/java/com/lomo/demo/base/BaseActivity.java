@@ -60,7 +60,7 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     @Override
     protected void onResume() {
         super.onResume();
-        LmAPI.removeWLSCmdListener(this);
+        LmAPI.clearWLSCmdListener();
         LmAPI.addWLSCmdListener(this, this);
 
     }
