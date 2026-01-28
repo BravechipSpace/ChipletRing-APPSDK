@@ -1,58 +1,77 @@
 package com.lomo.demo.activity;
 
-import android.app.Activity;
-import android.content.res.ColorStateList;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PersistableBundle;
+import android.provider.DocumentsContract;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.FileResponseCallback;
-import com.lm.sdk.inter.ICustomizeCmdListener;
+import com.lm.sdk.library.utils.ConvertUtils;
 import com.lm.sdk.library.utils.ToastUtils;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.CMDUtils;
 import com.lm.sdk.utils.LmApiDataUtils;
+import com.lm.sdk.utils.Logger;
 import com.lomo.demo.R;
+import com.lomo.demo.base.BaseActivity;
 import com.lomo.demo.file.CsvWriter;
 import com.lomo.demo.file.FileInfo;
+import com.lomo.demo.file.FileUtils;
 import com.lomo.demo.file.NotificationHandler;
+import com.lomo.demo.views.TipsDialog;
 
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class RingFileListActivity extends AppCompatActivity {
+public class RingFileListActivity extends BaseActivity {
 
     private ScrollView offlineLayout;
     private EditText exerciseTotalDurationInput;
-    private EditText exerciseSegmentDurationInput;
-    private TextView exerciseStatusText;
+    private RadioGroup radioGroup_time;
     private Button startExerciseButton;
     private Button stopExerciseButton;
     private TextView fileListStatus;
     private Button getFileListButton;
     private Button formatFileSystemButton;
+    private Button downloadOneFile;
     private LinearLayout fileListContainer;
     private Button downloadSelectedButton;
-    private Button downloadAll;
+    private Button uploadServer;
     private int currentFilePackets = 0;  // 当前文件总包数
     private int receivedPackets = 0;     // 已接收包数
     private Handler mainHandler;
@@ -63,7 +82,14 @@ public class RingFileListActivity extends AppCompatActivity {
     private int currentDownloadIndex = 0;
     private boolean isExercising = false;
 
-
+    private static  String TARGET_PACKAGE = "com.smart.bing";
+    private static final String TARGET_SUBDIR = "FileList";
+    private static String downloadProgress="";
+    private static double downloadSpeed=0;
+    private   long lastTimestamp=0;
+    private int   messageCount = 0;//接收的消息
+    private boolean mergeFiles=false;//是否将所有数据保存到一个文件里
+    private String oneFileName="";//合并文件为一个，文件名为第一个文件名的日期加上最后一个文件名的日期
     private FileResponseCallback fileResponseCallback=new FileResponseCallback() {
         @Override
         public void onFileListReceived(byte[] data) {
@@ -81,7 +107,7 @@ public class RingFileListActivity extends AppCompatActivity {
         }
         @Override
         public void onFileDataReceived(byte[] data) {
-            handleFileDataResponse(data);
+            handleBatchFileDataPush(data);
         }
 
         @Override
@@ -106,7 +132,7 @@ public class RingFileListActivity extends AppCompatActivity {
 
         @Override
         public void onDownloadAllFileProgress(byte[] data) {
-
+            handleFileDownloadProgress(data);
         }
 
         @Override
@@ -115,34 +141,34 @@ public class RingFileListActivity extends AppCompatActivity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ring_file_list);
         initView();
+        TARGET_PACKAGE=getPackageName();
+
         setupClickListeners();
         mainHandler = new Handler(Looper.getMainLooper());
-        if (exerciseTotalDurationInput != null) exerciseTotalDurationInput.setText("300");
-        if (exerciseSegmentDurationInput != null) exerciseSegmentDurationInput.setText("60");
+        if (exerciseTotalDurationInput != null) exerciseTotalDurationInput.setText("86400");//默认24小时
 
         // Set device command callback
         NotificationHandler.setDeviceCommandCallback(new NotificationHandler.DeviceCommandCallback() {
-
             @Override
             public void onExerciseStarted(int duration, int segmentTime) {
-                recordLog(String.format("[运动开始] Total: %d sec, Segment: %d sec", duration, segmentTime));
+                recordLog(String.format("[采集开始] Total: %d sec, Segment: %d sec", duration, segmentTime));
                 mainHandler.post(() -> {
                     updateExerciseUI(true);
-                    updateExerciseStatus("运动中...");
                 });
             }
 
             @Override
             public void onExerciseStopped() {
-                recordLog("[运动已停止]");
+                recordLog("[采集已停止]");
                 mainHandler.post(() -> {
                     updateExerciseUI(false);
-                    updateExerciseStatus("已停止");
                 });
             }
         });
@@ -153,25 +179,31 @@ public class RingFileListActivity extends AppCompatActivity {
 
     private void getFileList() {
         if (!BLEUtils.isGetToken()) {
-            Toast.makeText(this, "设备未连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.first_connect), Toast.LENGTH_SHORT).show();
             return;
         }
-
+        LmAPILite.STOP_EXERCISE();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                LmAPILite.GET_FILE_LIST(fileResponseCallback);
+            }
+        },300);
         recordLog("[Request File List] Using custom command");
         try {
-            LmAPI.GET_FILE_LIST(fileResponseCallback);
+
             fileList.clear();
             selectedFiles.clear();
             updateFileListUI();
 
             mainHandler.post(() -> {
-                getFileListButton.setText("获取中...");
+                getFileListButton.setText(getString(R.string.file_fetching));
                 getFileListButton.setEnabled(false);
             });
 
         } catch (Exception e) {
             recordLog("Failed to send file list request: " + e.getMessage());
-            Toast.makeText(this, "Failed to get file list", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.file_get_list_fail), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -211,110 +243,36 @@ public class RingFileListActivity extends AppCompatActivity {
                 }
             }
 
-            mainHandler.post(() -> {
-                setupFileList();
-                getFileListButton.setText("得到文件列表");
-                getFileListButton.setEnabled(true);
-            });
+            if(totalFiles==seqNum){
+                mainHandler.post(() -> {
+                    setupFileList();
+                    getFileListButton.setText(getString(R.string.file_get_filelist));
+                    getFileListButton.setEnabled(true);
+                });
+            }
+
+            if(!fileList.isEmpty()){
+                oneFileName="合并文件"+fileList.get(0).fileName+"至"+fileList.get(fileList.size()-1).fileName;
+            }
+
 
         } catch (Exception e) {
             recordLog("Failed to parse file list: " + e.getMessage());
             mainHandler.post(() -> {
-                getFileListButton.setText("得到文件列表");
+                getFileListButton.setText(getString(R.string.file_get_filelist));
                 getFileListButton.setEnabled(true);
             });
         }
     }
 
-    private void handleFileDataResponse(byte[] data) {
-        try {
-            if(handleBatchFileDataPush(data)){
-                return;
-            }
-            if (data.length < 4) {
-                recordLog("File data response length insufficient");
-                return;
-            }
 
-            if (data[2] == 0x36 && data[3] == 0x11) {
-
-                int offset = 4;
-
-                if (data.length < offset + 25) {
-                    recordLog("File data structure incomplete, requires at least 25 bytes header");
-                    recordLog("Actual length: " + (data.length - offset) + " bytes");
-                    return;
-                }
-
-                int fileStatus = data[offset] & 0xFF;
-                offset += 1;
-                int fileSize = readUInt32LE(data, offset);
-                offset += 4;
-                int totalPackets = readUInt32LE(data, offset);
-                offset += 4;
-                int currentPacket = readUInt32LE(data, offset);
-                offset += 4;
-                int currentPacketLength = readUInt32LE(data, offset);
-                offset += 4;
-                long timestamp = readUInt64LE(data, offset);
-                offset += 8;
-
-                // 更新包计数器
-                currentFilePackets = totalPackets;
-                receivedPackets = currentPacket;
-
-
-                recordLog(String.format("File packet %d/%d received, size: %d bytes",
-                        currentPacket, totalPackets, currentPacketLength));
-
-                // 实时更新下载进度到按钮
-                if (isDownloadingFiles && currentDownloadIndex < selectedFiles.size()) {
-                    FileInfo currentFile = selectedFiles.get(currentDownloadIndex);
-                    updateDownloadButtonProgress(currentDownloadIndex + 1, selectedFiles.size(),
-                            String.format("%s (%d/%d)", currentFile.fileName, currentPacket, totalPackets));
-                }
-
-
-                // 保存文件数据
-                if (isDownloadingFiles && currentDownloadIndex < selectedFiles.size()) {
-                    FileInfo currentFile = selectedFiles.get(currentDownloadIndex);
-
-                    byte[] contentDataByte=new byte[data.length - 4-17];
-                    System.arraycopy(data, 21, contentDataByte, 0, contentDataByte.length);
-                    List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
-                    //生成csv文件
-                    String fileName = currentFile.fileName;
-
-                    CsvWriter.appendToOptimizedCsv(RingFileListActivity.this,fileName,contentQingHua);
-
-                    // 检查是否是最后一个包
-                    if (currentPacket >= totalPackets) {
-                        recordLog("File download completed: " + fileName);
-
-                        // 显示文件完成状态
-                        updateDownloadButtonProgress(currentDownloadIndex + 1, selectedFiles.size(),
-                                fileName + " ✓ 结束");
-
-                        // 文件下载完成，处理下一个文件
-                        currentDownloadIndex++;
-
-                        // 短暂显示完成状态后开始下一个文件
-                        mainHandler.postDelayed(() -> downloadNextSelectedFile(), 800);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            recordLog("Failed to handle file data: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 
 
 
     private void updateDownloadButtonProgress(int currentFileIndex, int totalFiles, String statusText) {
         mainHandler.post(() -> {
             if (downloadSelectedButton != null) {
-                String buttonText = String.format("下载中 %d/%d\n%s",
+                String buttonText = String.format(getString(R.string.download_progress)+" %d/%d\n%s",
                         currentFileIndex, totalFiles, statusText);
                 downloadSelectedButton.setText(buttonText);
                 downloadSelectedButton.setEnabled(false);
@@ -324,7 +282,7 @@ public class RingFileListActivity extends AppCompatActivity {
 
     private void updateDownloadButtonFinish(){
         mainHandler.post(() -> {
-            downloadSelectedButton.setText("下载选中 (" + selectedFiles.size() + ")");
+            downloadSelectedButton.setText(getString(R.string.file_download_select)+" (" + selectedFiles.size() + ")");
             downloadSelectedButton.setEnabled(true);
         });
     }
@@ -332,19 +290,22 @@ public class RingFileListActivity extends AppCompatActivity {
     private void downloadAllFiles(){
         try {
 
-            LmAPI.DOWNLOAD_ALL_FILES(fileResponseCallback);
+            CsvWriter.clearOutputFile(RingFileListActivity.this);
+            lastTimestamp=System.currentTimeMillis();
+            downloadOneFile.setEnabled(false);
+            LmAPILite.DOWNLOAD_ALL_FILES(fileResponseCallback);
         } catch (Exception e) {
             recordLog("Download file failed: " + e.getMessage());
         }
     }
     private void downloadSelectedFiles() {
         if (selectedFiles.isEmpty()) {
-            Toast.makeText(this, "请先选择要下载的文件", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.file_select_download), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!BLEUtils.isGetToken()) {
-            Toast.makeText(this, "设备未连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.first_connect), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -356,7 +317,7 @@ public class RingFileListActivity extends AppCompatActivity {
         recordLog(String.format("[开始批量下载]所选文件: %d", selectedFiles.size()));
 //
         // 更新按钮显示初始状态
-        updateDownloadButtonProgress(0, 0, "正在初始化...");
+        updateDownloadButtonProgress(0, 0, getString(R.string.device_initializing));
 
         downloadNextSelectedFile();
     }
@@ -367,15 +328,15 @@ public class RingFileListActivity extends AppCompatActivity {
             // 所有文件下载完成
             isDownloadingFiles = false;
             mainHandler.post(() -> {
-                downloadSelectedButton.setText("下载选中 (" + selectedFiles.size() + ")");
+                downloadSelectedButton.setText(getString(R.string.file_download_select)+" (" + selectedFiles.size() + ")");
                 downloadSelectedButton.setEnabled(true);
-                Toast.makeText(this, "所有文件已下载", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.file_allfile_download), Toast.LENGTH_SHORT).show();
             });
             return;
         }
 
         FileInfo fileInfo = selectedFiles.get(currentDownloadIndex);
-        recordLog(String.format("正在下载文件 %d/%d: %s",
+        recordLog(String.format(getString(R.string.file_downloading)+" %d/%d: %s",
                 currentDownloadIndex + 1, selectedFiles.size(), fileInfo.fileName));
 
         // 重置当前文件的包计数器
@@ -384,14 +345,14 @@ public class RingFileListActivity extends AppCompatActivity {
 
         // 更新按钮显示
         updateDownloadButtonProgress(currentDownloadIndex + 1, selectedFiles.size(),
-                "开始 " + fileInfo.fileName + "...");
+                getString(R.string.star)+" " + fileInfo.fileName + "...");
 
         try {
 
            CsvWriter.clearOutputFile(RingFileListActivity.this, fileInfo.fileName);
 
             byte[] fileNameBytes = fileInfo.fileName.getBytes("UTF-8");
-            LmAPI.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
+            LmAPILite.DOWNLOAD_FILE(fileNameBytes,fileResponseCallback);
             recordLog("已发送下载命令: " + fileInfo.fileName);
 
         } catch (Exception e) {
@@ -419,13 +380,13 @@ public class RingFileListActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        CheckBox checkBox = new CheckBox(this);
-        checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#4C56F5")));
-        checkBox.setChecked(fileInfo.isSelected);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            fileInfo.isSelected = isChecked;
-            updateSelectedFiles();
-        });
+//        CheckBox checkBox = new CheckBox(this);
+//        checkBox.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#4C56F5")));
+//        checkBox.setChecked(fileInfo.isSelected);
+//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            fileInfo.isSelected = isChecked;
+//            updateSelectedFiles();
+//        });
 
         LinearLayout fileInfoLayout = new LinearLayout(this);
         fileInfoLayout.setOrientation(LinearLayout.VERTICAL);
@@ -446,11 +407,11 @@ public class RingFileListActivity extends AppCompatActivity {
         fileInfoLayout.addView(fileName);
         fileInfoLayout.addView(fileDetails);
 
-        fileItem.addView(checkBox);
+      // fileItem.addView(checkBox);
         fileItem.addView(fileInfoLayout);
 
         fileItem.setOnClickListener(v -> {
-            checkBox.setChecked(!checkBox.isChecked());
+          //checkBox.setChecked(!checkBox.isChecked());
         });
 
         fileListContainer.addView(fileItem);
@@ -468,11 +429,11 @@ public class RingFileListActivity extends AppCompatActivity {
 
     private void updateFileListUI() {
         mainHandler.post(() -> {
-            fileListStatus.setText(String.format("所有 %d 文件, %d 已选择", fileList.size(), selectedFiles.size()));
+            fileListStatus.setText(String.format(getString(R.string.file_all_file), fileList.size()));
 
             // 只有在不下载时才更新按钮文本
             if (!isDownloadingFiles) {
-                downloadSelectedButton.setText("下载所选内容 (" + selectedFiles.size() + ")");
+                downloadSelectedButton.setText(getString(R.string.file_download_select)+" (" + selectedFiles.size() + ")");
                 downloadSelectedButton.setEnabled(selectedFiles.size() > 0);
             }
         });
@@ -482,85 +443,92 @@ public class RingFileListActivity extends AppCompatActivity {
 
     private void startExercise() {
         if (!BLEUtils.isGetToken()) {
-            Toast.makeText(this, "设备未连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.first_connect), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (isExercising) {
-            Toast.makeText(this, "进行中", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.file_in_progress), Toast.LENGTH_SHORT).show();
             return;
         }
 
         try {
             String totalDurationStr = exerciseTotalDurationInput.getText().toString().trim();
-            String segmentDurationStr = exerciseSegmentDurationInput.getText().toString().trim();
+            String segmentDurationStr ="";
 
-            if (totalDurationStr.isEmpty() || segmentDurationStr.isEmpty()) {
-                Toast.makeText(this, "请输入锻炼持续时间和持续时间", Toast.LENGTH_SHORT).show();
+
+            int selectedId = radioGroup_time.getCheckedRadioButtonId();
+
+            if (selectedId == R.id.rb_10_minute) {
+                segmentDurationStr="10";
+            } else if (selectedId == R.id.rb_20_minute) {
+                segmentDurationStr="20";
+            } else if (selectedId == R.id.rb_30_minute) {
+                segmentDurationStr="30";
+            }  else if (selectedId == R.id.rb_60_minute) {
+                segmentDurationStr="60";
+            }
+            if (totalDurationStr.isEmpty() ) {
+                Toast.makeText(this, getString(R.string.file_enter_collection_time), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int totalDuration = Integer.parseInt(totalDurationStr);
-            int segmentDuration = Integer.parseInt(segmentDurationStr);
+            int segmentDuration = Integer.parseInt(segmentDurationStr)*60;
 
-            if (totalDuration < 60 || totalDuration > 86400) {
-                Toast.makeText(this, "总锻炼时间应在60-86400秒之间", Toast.LENGTH_SHORT).show();
+            if (totalDuration < 600 || totalDuration > 86400) {
+                Toast.makeText(this, getString(R.string.file_total_collection_time), Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (segmentDuration < 30 || segmentDuration > totalDuration) {
-                Toast.makeText(this, "持续时间应在30秒和总持续时间之间", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
             NotificationHandler.setExerciseParams(totalDuration, segmentDuration);
             boolean success = NotificationHandler.startExercise();
 
             if (success) {
                 isExercising = true;
-                recordLog(String.format("[开始运动] 总共: %d , 进行: %d ", totalDuration, segmentDuration));
+                recordLog(String.format("[开始采集] 总共: %d , 进行: %d ", totalDuration, segmentDuration));
                 updateExerciseUI(true);
-                updateExerciseStatus(String.format("运动战 - 总共: %d min, 进行: %d min", totalDuration/60, segmentDuration/60));
-                Toast.makeText(this, "运动开始", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.file_collection_begins), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "开始运动失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.file_failed_start_collection), Toast.LENGTH_SHORT).show();
             }
 
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "请输入有效数字", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.file_enter_valid_number), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            recordLog("开始运动失败: " + e.getMessage());
-            Toast.makeText(this, "开始运动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            recordLog("开始采集失败: " + e.getMessage());
+            Toast.makeText(this, getString(R.string.file_failed_start_collection) + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopExercise() {
-        if (!isExercising) {
-            Toast.makeText(this, "目前没有正在进行的运动", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!isExercising) {
+//            Toast.makeText(this, getString(R.string.file_there_are_currently_no_ongoing_collections), Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         try {
             boolean success = NotificationHandler.stopExercise();
             if (success) {
                 isExercising = false;
-                recordLog("[结束运动]用户手动停止");
+                recordLog("[结束采集]用户手动停止");
                 updateExerciseUI(false);
-                updateExerciseStatus("已停止");
-                Toast.makeText(this, "运动停止", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.file_collection_stopped), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "无法停止运动", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.file_unable_to_stop_collection), Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            recordLog("无法停止运动: " + e.getMessage());
-            Toast.makeText(this, "无法停止运动: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            recordLog("无法停止采集: " + e.getMessage());
+            Toast.makeText(this, getString(R.string.file_unable_to_stop_collection) + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void updateExerciseUI(boolean exercising) {
         if (startExerciseButton != null) {
+            isExercising=exercising;
             startExerciseButton.setEnabled(!exercising);
-            startExerciseButton.setText(exercising ? "运动中..." : "开始运动");
+            startExerciseButton.setText(exercising ? getString(R.string.file_collecting) : getString(R.string.file_collection_begins));
         }
 
         if (stopExerciseButton != null) {
@@ -569,11 +537,6 @@ public class RingFileListActivity extends AppCompatActivity {
         }
     }
 
-    private void updateExerciseStatus(String status) {
-        if (exerciseStatusText != null) {
-            exerciseStatusText.setText("运动状态: " + status);
-        }
-    }
 
     private void recordLog(String message) {
 
@@ -637,8 +600,9 @@ public class RingFileListActivity extends AppCompatActivity {
 
                 recordLog(String.format("接收批处理文件信息: [%d] %s", fileIndex, fileName));
 
+                downloadProgress=getString(R.string.file_progress)+" : " + fileIndex+"/"+fileList.size();
                 mainHandler.post(() -> {
-                    updateBatchDownloadProgress("收到: " + fileName);
+                    updateBatchDownloadProgress(downloadProgress);
                 });
 
             }
@@ -648,15 +612,28 @@ public class RingFileListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //更新每个文件下载的进度
+   // StringBuilder sb = new StringBuilder();
+    private void handleFileDownloadProgress(byte[] data) {
+//        int progress= data[4] & 0xFF;
+//            sb.setLength(0);
+//            sb.append(downloadProgress).append("(").append(progress).append("%").append(")");
+//        mainHandler.post(() -> {
+//            updateBatchDownloadProgress(sb.toString());
+//        });
+    }
+
+
     private void  handleFileDownloadEndResponse(byte[] data) {
         try {
+            recordLog("handleFileDownloadEndResponse: " + ConvertUtils.bytes2HexString(data));
 
             if (currentBatchFile != null) {
                 currentBatchFile.isComplete = true;
                 receivedBatchFiles.add(currentBatchFile);
 
                 saveBatchFileData(currentBatchFile);
-
 
                 currentBatchFile = null;
             }
@@ -716,9 +693,11 @@ public class RingFileListActivity extends AppCompatActivity {
                 ((long)(bytes[3] & 0xFF) << 24);
     }
 
+
     /**
      * 处理硬件推送的文件数据
      */
+    StringBuilder sbSpeed = new StringBuilder();
     private boolean handleBatchFileDataPush(byte[] data) {
 
         if (currentBatchFile == null) {
@@ -727,9 +706,36 @@ public class RingFileListActivity extends AppCompatActivity {
         }
 
         try {
+            String str_data1 = CMDUtils.toHexString(data);
+            Logger.show("文件采集", "===handleBatchFileDataPush=== " + str_data1);
             byte[] fileData = Arrays.copyOfRange(data, 4, data.length);
             currentBatchFile.fileDataPackets.add(fileData);
             currentBatchFile.receivedPackets++;
+
+            long now = System.currentTimeMillis();
+
+            // 计算时间差（毫秒）
+            long timeDiff = now - lastTimestamp;
+
+            if (timeDiff >= 1000) { // 超过1秒则计算速率
+                double   currentRate = (currentBatchFile.receivedPackets-messageCount) * 1000.0 / timeDiff;
+                if(currentRate>0){
+                    recordLog("速率:"+String.format(Locale.getDefault(), "%.1f", currentRate)+"条/秒");
+
+                    //更新每个文件下载的进度（每条175b）
+                    double rateKBS=currentRate*175/1024;
+                    sbSpeed.setLength(0);
+                    sbSpeed.append(downloadProgress).append(" ").append(getString(R.string.file_speed))
+                            .append(String.format(Locale.getDefault(), "%.1f", rateKBS)).append("kb/s");
+                    mainHandler.post(() -> {
+                        updateBatchDownloadProgress(sbSpeed.toString());
+                    });
+                }
+                lastTimestamp = now;
+                messageCount=currentBatchFile.receivedPackets;
+
+            }
+
             return true;
         } catch (Exception e) {
             recordLog("处理批处理文件数据时出错: " + e.getMessage());
@@ -742,22 +748,99 @@ public class RingFileListActivity extends AppCompatActivity {
      * 保存批量文件数据
      */
     private void saveBatchFileData(BatchFileInfo fileInfo) {
-        try {
+        // 使用单一线程的串行执行器确保写入顺序
+        ExecutorService executor = Executors.newSingleThreadExecutor();
 
-            String safeFileName = fileInfo.fileName.replace(":", "_");
+        executor.execute(() -> {
+            try {
+                String safeFileName = fileInfo.fileName.replace(":", "_");
+                List<String[]> allContent = new ArrayList<>();
 
-            for (int i = 0; i < fileInfo.fileDataPackets.size(); i++) {
-                byte[] packetData = fileInfo.fileDataPackets.get(i);
-                byte[] contentDataByte=new byte[packetData.length -17];
-                System.arraycopy(packetData, 17, contentDataByte, 0, contentDataByte.length);
-                List<String[]> contentQingHua = LmApiDataUtils.fileContentQingHua(contentDataByte);
-                CsvWriter.appendToOptimizedCsv(RingFileListActivity.this,safeFileName,contentQingHua);
+                String fileType= FileUtils.getFileType(safeFileName);
+                //先清理txt缓存的内容
+                CsvWriter.clearOutputFile(RingFileListActivity.this,safeFileName);
+                // 1. 先收集所有数据
+                for (int i = 0; i < fileInfo.fileDataPackets.size(); i++) {
+                    byte[] packetData = fileInfo.fileDataPackets.get(i);
+                    byte[] contentDataByte = new byte[packetData.length - 17];
+                    System.arraycopy(packetData, 17, contentDataByte, 0, contentDataByte.length);
+                    List<String[]> fileContent = new ArrayList<>();
+                    if(fileType.equals("7")){
+
+                        String str_data = CMDUtils.toHexString(contentDataByte);
+                        Logger.show("文件采集", "===文件内容=== " + str_data);
+
+                        CsvWriter.appendToTxt(RingFileListActivity.this, safeFileName,str_data);
+                        //fileContent = LmApiDataUtils.fileContentQingHua(contentDataByte);
+                    }else if(fileType.equals("9")){
+                        fileContent = LmApiDataUtils.fileContentType9(contentDataByte);
+                        allContent.addAll(fileContent);
+
+                    }
+                }
+                //是7类型，从缓存里获取所有数据
+                if(fileType.equals("7")) {
+                    String fromTxt = CsvWriter.readFromTxt(RingFileListActivity.this, safeFileName);
+                    //每158个字节转码一次
+                    byte[] bytes = CMDUtils.hexString2Bytes(fromTxt);
+
+                    // 存储所有转换结果的列表
+                    List<List<String[]>> allResults = new ArrayList<>();
+
+                    // 计算总段数
+                    int totalSegments = bytes.length / 158;
+
+                    // 按158字节分段处理
+                    for(int i = 0; i < totalSegments; ++i) {
+                        // 计算当前段的起始位置
+                        int start = i * 158;
+                        int end = Math.min(start + 158, bytes.length);
+
+                        // 提取当前158字节段
+                        byte[] segment = new byte[end - start];
+                        System.arraycopy(bytes, start, segment, 0, segment.length);
+
+                        // 对当前段进行转码
+                        List<String[]> segmentResult = LmApiDataUtils.fileContentQingHua(segment);
+                        allResults.add(segmentResult);
+                    }
+                    //合并到一个列表
+                    for(List<String[]> segmentList : allResults) {
+                        if(segmentList != null) {
+                            allContent.addAll(segmentList);
+                        }
+                    }
+
+
+
+                }
+
+                recordLog("先收集所有数据: " + allContent.size());
+                long time1=new Date().getTime();
+                recordLog("先收集所有数据: " + new Date());
+                // 2. 一次性写入所有数据
+
+                if(mergeFiles){
+                    safeFileName=oneFileName;
+                }
+                if(fileType.equals("7")){
+                    CsvWriter.appendToOptimizedCsv(RingFileListActivity.this, safeFileName, allContent,false);
+                }else if(fileType.equals("9")){
+                    CsvWriter.appendToOptimizedCsv(RingFileListActivity.this, safeFileName, allContent,true);
+                }
+
+                recordLog("写入文件中: " + (new Date().getTime()-time1));
+
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    recordLog("保存硬件批处理文件失败: " + e.getMessage());
+                    Toast.makeText(RingFileListActivity.this, getString(R.string.Failed), Toast.LENGTH_SHORT).show();
+                });
+                e.printStackTrace();
+            } finally {
+                executor.shutdown();
             }
-
-        } catch (Exception e) {
-            recordLog("保存硬件批处理文件失败: " + e.getMessage());
-            e.printStackTrace();
-        }
+        });
     }
     private String bytesToHexString(byte[] bytes) {
         if (bytes == null || bytes.length == 0) {
@@ -779,13 +862,16 @@ public class RingFileListActivity extends AppCompatActivity {
                 receivedBatchFiles.size(), downloadDuration));
 
         mainHandler.post(() -> {
-
-            ToastUtils.show("操作成功");
-            updateBatchDownloadProgress("已完成: " + receivedBatchFiles.size() + " 文件");
+           // uploadFileToServer("");
+            ToastUtils.show(R.string.operate_successfully);
+            updateBatchDownloadProgress(getString(R.string.file_completed)+": " + receivedBatchFiles.size() + " "+getString(R.string.file_files));
         });
 
         resetHardwareBatchDownloadState();
+
     }
+
+
     private void handleBatchDownloadStatusResponse(byte[] data) {
         try {
             if (data.length < 5) {
@@ -799,7 +885,7 @@ public class RingFileListActivity extends AppCompatActivity {
                 case 0: // 设备忙
                     recordLog("设备正忙，硬件批量下载失败");
                     mainHandler.post(() -> {
-                        Toast.makeText(this, "设备正忙，请稍后再试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.file_device_busy), Toast.LENGTH_SHORT).show();
                     });
                     resetHardwareBatchDownloadState();
                     break;
@@ -819,9 +905,9 @@ public class RingFileListActivity extends AppCompatActivity {
 
                 case 2: // 硬件一键下载完成
                     recordLog("硬件批量下载已完成。收到的文件总数: " + receivedBatchFiles.size());
-                    mainHandler.post(() -> {
-                        Toast.makeText(this, "硬件批量下载已完成", Toast.LENGTH_SHORT).show();
-                    });
+//                    mainHandler.post(() -> {
+//                        Toast.makeText(this, "硬件批量下载已完成", Toast.LENGTH_SHORT).show();
+//                    });
                     finalizeBatchDownload();
                     break;
 
@@ -845,9 +931,12 @@ public class RingFileListActivity extends AppCompatActivity {
      * 更新批量下载进度显示
      */
     private void updateBatchDownloadProgress(String status) {
-        if (downloadAll != null) {
-            downloadAll.setText("下载进度" + status);
+        if(mergeFiles){
+            if (downloadOneFile != null) {
+                downloadOneFile.setText(getString(R.string.download_progress) + status);
+            }
         }
+
     }
 
     private void resetHardwareBatchDownloadState() {
@@ -855,9 +944,10 @@ public class RingFileListActivity extends AppCompatActivity {
         currentBatchFile = null;
 
         mainHandler.post(() -> {
-            if (downloadAll != null) {
-                downloadAll.setText(R.string.download_all);
-                downloadAll.setEnabled(true);
+
+            if (downloadOneFile != null) {
+                downloadOneFile.setText(getString(R.string.file_download_one_file_local));
+                downloadOneFile.setEnabled(true);
             }
         });
     }
@@ -872,21 +962,19 @@ public class RingFileListActivity extends AppCompatActivity {
                 ((data[offset + 3] & 0xFF) << 24);
     }
     public void formatFileSystem() {
-        new android.app.AlertDialog.Builder(this)
-                .setTitle("格式化文件系统")
-                .setMessage("警告：此操作将永久删除设备中的所有文件数据！\n" +
-                        "\n" +
-                        "您确定要继续格式化吗？")
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.file_format_file_system))
+                .setMessage(getString(R.string.file_format_file_system_notice))
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("确认格式化", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.file_format_file_system_sure), (dialog, which) -> {
                     performFormatFileSystem();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.cancel) ,null)
                 .show();
     }
     private void performFormatFileSystem() {
         try {
-            LmAPI.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
+            LmAPILite.PERFORM_FORMAT_FILESYSTEM(fileResponseCallback);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -896,34 +984,76 @@ public class RingFileListActivity extends AppCompatActivity {
     private void initView() {
         offlineLayout = (ScrollView) findViewById(R.id.offlineLayout);
         exerciseTotalDurationInput = (EditText) findViewById(R.id.exerciseTotalDurationInput);
-        exerciseSegmentDurationInput = (EditText) findViewById(R.id.exerciseSegmentDurationInput);
-        exerciseStatusText = (TextView) findViewById(R.id.exerciseStatusText);
+        radioGroup_time=  findViewById(R.id.radioGroup_time);
         startExerciseButton = (Button) findViewById(R.id.startExerciseButton);
         stopExerciseButton = (Button) findViewById(R.id.stopExerciseButton);
         fileListStatus = (TextView) findViewById(R.id.fileListStatus);
         getFileListButton = (Button) findViewById(R.id.getFileListButton);
         formatFileSystemButton = (Button) findViewById(R.id.formatFileSystemButton);
+        downloadOneFile = (Button) findViewById(R.id.downloadOneFile);
         fileListContainer = (LinearLayout) findViewById(R.id.fileListContainer);
         downloadSelectedButton = (Button) findViewById(R.id.downloadSelectedButton);
-        downloadAll = (Button) findViewById(R.id.downloadAll);
+
+        uploadServer = (Button) findViewById(R.id.uploadServer);
+
     }
 
     private void setupClickListeners() {
 
         getFileListButton.setOnClickListener(v -> getFileList());
         downloadSelectedButton.setOnClickListener(v -> downloadSelectedFiles());
-        downloadAll.setOnClickListener(v-> downloadAllFiles());
+
         formatFileSystemButton.setOnClickListener(v-> formatFileSystem());
 
+        downloadOneFile.setOnClickListener(v->{
+            mergeFiles=true;
+            downloadAllFiles();
+        });
         // Exercise control buttons
         if (startExerciseButton != null) {
-            startExerciseButton.setOnClickListener(v -> startExercise());
+            startExerciseButton.setOnClickListener(v ->{
+                if (!BLEUtils.isGetToken()) {
+                    Toast.makeText(this, getString(R.string.file_device_no_connect), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                TipsDialog dialog = new TipsDialog(RingFileListActivity.this);
+
+                dialog.setDialogTitle(R.string.hint);
+                dialog.setDialogMsg(getString(R.string.file_format_file_system_first));
+                dialog.setCommitClickListener(getString(R.string.file_format_file_system_sure), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        performFormatFileSystem();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startExercise();
+                                dialog.dismiss();
+                            }
+                        },500);
+                    }
+                });
+                dialog.setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startExercise();
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
+
+            } );
         }
         if (stopExerciseButton != null) {
             stopExerciseButton.setOnClickListener(v -> stopExercise());
         }
 
     }
+
+
 
     private long readUInt64LE(byte[] data, int offset) {
         if (offset + 8 > data.length) {
@@ -936,4 +1066,110 @@ public class RingFileListActivity extends AppCompatActivity {
         return result;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void lmBleConnectionFailed(int code) {
+        super.lmBleConnectionFailed(code);
+        Log.e("lmBleConnecting", "连接失败");
+
+    }
+
+    private void openTargetFolder() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Android 11+ 使用SAF尝试打开
+            openWithStorageAccessFramework();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android 10 特殊处理
+            openWithMediaStore();
+        } else {
+            // Android 9及以下版本
+            openWithLegacyMethod();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void openWithStorageAccessFramework() {
+        // 方法1：尝试直接打开目标文件夹（可能不成功）
+        try {
+            Uri uri = Uri.parse("content://com.android.externalstorage.documents/tree/primary:Android%2Fdata%2F" +
+                    TARGET_PACKAGE + "%2Ffiles%2F" + TARGET_SUBDIR);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, "vnd.android.document/root");
+            intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(intent);
+        } catch (Exception e) {
+            // 方法1失败后尝试方法2：引导用户手动导航
+            openFallbackAlternative();
+        }
+    }
+
+    private void openFallbackAlternative() {
+        // 显示指导信息
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.file_operation_guide));
+        builder.setMessage(getString(R.string.file_manually_navigate_to) + TARGET_PACKAGE + " > files > " + TARGET_SUBDIR);
+        builder.setPositiveButton(getString(R.string.file_open_file_manager), (dialog, which) -> {
+            // 打开文件管理器根目录
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("content://com.android.externalstorage.documents/root/primary"));
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, getString(R.string.file_manager_application_not_found), Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private void openWithMediaStore() {
+        // Android 10的特殊处理方式
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("content://media/external/file"));
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, getString(R.string.file_manager_application_not_found), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openWithLegacyMethod() {
+        File targetDir = new File(Environment.getExternalStorageDirectory(),
+                "Android/data/" + TARGET_PACKAGE + "/files/" + TARGET_SUBDIR);
+
+        if (targetDir.exists()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = FileProvider.getUriForFile(this,
+                    getPackageName() + ".provider",
+                    targetDir);
+
+            intent.setDataAndType(uri, "resource/folder");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            // 授予临时权限
+            List<ResolveInfo> resInfoList = getPackageManager()
+                    .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                grantUriPermission(resolveInfo.activityInfo.packageName,
+                        uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, getString(R.string.file_manager_application_not_found), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.file_target_folder_does_not_exist), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

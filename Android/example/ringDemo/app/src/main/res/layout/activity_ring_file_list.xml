@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="#161B41"
-    android:fitsSystemWindows="true"
     >
 
     <include layout="@layout/layout_toolbar" />
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="10dp">
 
 
         <!-- 运动控制卡片 -->
@@ -29,70 +29,104 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
-            android:layout_marginBottom="16dp"
+
            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/exercise_control"
-                    android:textSize="16sp"
+                    android:text="@string/file_system_notice_1"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:layout_marginBottom="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total_exercise_duration"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginBottom="8dp" />
 
-                <EditText
-                    android:id="@+id/exerciseTotalDurationInput"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="300"
-                    android:inputType="number"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/exercise_segment_duration"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="vertical"
+                    >
 
-                <EditText
-                    android:id="@+id/exerciseSegmentDurationInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="60"
-                    android:inputType="number"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="12dp"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
 
-                <TextView
-                    android:id="@+id/exerciseStatusText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ready"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/file_total_collection_time_minus"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/exerciseTotalDurationInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="10"
+                        android:visibility="gone"
+                        android:inputType="number"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="12dp"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="16dp" />
+                    <RadioGroup
+                        android:id="@+id/radioGroup_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:orientation="vertical">
+
+
+                        <RadioButton
+                            android:id="@+id/rb_10_minute"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:checked="true"
+                            android:text="@string/minute_10"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_20_minute"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+
+                            android:text="@string/minute_20"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_30_minute"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+
+                            android:text="@string/minute_30"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_60_minute"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+
+                            android:text="@string/minute_60"/>
+
+
+
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,7 +138,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/start_exercise"
+                        android:text="@string/file_start_collection"
                         android:textSize="14sp"
                         android:background="@drawable/bg_button_blue"
                         android:textColor="@android:color/white"
@@ -115,14 +149,43 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/stop_exercise"
+                        android:text="@string/file_stop_collection"
                         android:textSize="14sp"
-                        android:background="@drawable/button_gray_bg"
+                        android:background="@drawable/button_red_bg"
                         android:textColor="@android:color/white"
                         android:layout_marginStart="8dp" />
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/getFileListButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/get_file_list"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_button_blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginEnd="8dp" />
+
+                    <Button
+                        android:id="@+id/formatFileSystemButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/format_file_system"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_button_blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -146,6 +209,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
+
                     android:layout_marginBottom="12dp">
 
                     <TextView
@@ -161,35 +225,20 @@
                         android:id="@+id/fileListStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="共 0 个文件，已选择 0 个"
+                        android:text=""
+                        android:visibility="gone"
                         android:textSize="12sp"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/getFileListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="@string/get_file_list"
-                    android:textSize="14sp"
-                    android:background="@drawable/bg_button_blue"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="16dp" />
-                <Button
-                    android:id="@+id/formatFileSystemButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="@string/format_file_system"
-                    android:textSize="14sp"
-                    android:background="@drawable/bg_button_blue"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="16dp" />
+
                 <!-- 文件列表容器 -->
                 <LinearLayout
                     android:id="@+id/fileListContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="300dp"
                     android:orientation="vertical"
                     android:background="@drawable/file_list_background"
                     android:padding="8dp"
@@ -199,23 +248,45 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/downloadOneFile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/file_download_one_file_local"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_button_blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginEnd="8dp" />
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/downloadSelectedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/download_selected"
+                    android:text="下载文件"
+                    android:visibility="gone"
                     android:textSize="14sp"
                     android:background="@drawable/bg_button_blue"
                     android:textColor="@android:color/white" />
-                <Button
-                    android:id="@+id/downloadAll"
-                    android:layout_marginTop="10dp"
 
+                <Button
+                    android:id="@+id/uploadServer"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:text="@string/download_all"
+                    android:layout_height="wrap_content"
+                    android:text="上传到服务器"
                     android:textSize="14sp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_button_blue"
                     android:textColor="@android:color/white" />
 

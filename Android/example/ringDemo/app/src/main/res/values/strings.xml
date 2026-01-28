@@ -22,5 +22,83 @@
     <string name="sleep_type2">浅睡眠</string>
     <string name="sleep_type3">快速眼动</string>
     <string name="sleep_type4">清醒时间</string>
+    <string name="file_system_label">文件系统标签</string>
+    <string name="sleep_label">睡眠标签</string>
+    <string name="step_counting_label">计步标签</string>
+    <string name="wear_label">佩戴标签</string>
+    <string name="file_system_notice_1">1.点击开始采集后，戒指传感器会发光连续采集数据\n2.根据设置的单个文件采集时长生成文件，不满设定时长按照实际时间计\n3.测试结束后，需要点击结束采集，才能获取录制的原始数据</string>
+    <string name="sleep_scene_1">场景1:正常睡眠，入睡时间18点后24点前</string>
+    <string name="sleep_scene_2">场景2：夜猫子，入睡时间24点后8点前</string>
+    <string name="sleep_scene_3">场景3：入睡困难和赖床，上床玩手机时间大于半小时或醒来玩手机时间大于半小时</string>
+    <string name="sleep_scene_4">场景4：起夜和回笼觉，起夜时间大于半小时或起夜次数大于3次，醒来之后再睡回笼觉半小时以上</string>
+    <string name="sleep_scene_5">场景5：摘戒指，睡前摘下戒指或醒来摘下戒指超过半小时</string>
+    <string name="sleep_scene_6">场景6：午睡，午睡时间超过半小时</string>
+    <string name="sleep_scene_7">场景7：时差，有时差，入睡时间8点后18点前</string>
 
+    <string name="file_enter_scenario_collection">请输入采集数据的场景</string>
+    <string name="file_device_busy">设备正忙，请稍后再试</string>
+    <string name="file_download_file_upload_server">下载全部文件并打标签</string>
+    <string name="file_format_file_system">格式化文件系统</string>
+    <string name="file_format_file_system_notice">警告：此操作将永久删除设备中的所有文件数据！您确定要继续格式化吗？</string>
+    <string name="file_format_file_system_sure">确认格式化</string>
+    <string name="file_device_no_connect">设备未连接</string>
+    <string name="file_format_file_system_first">⚠️⚠️⚠️开始采集之前，建议对文件系统进行格式化，否则有可能采集失败，现在进行格式化？</string>
+    <string name="file_operation_guide">操作指引</string>
+    <string name="file_manually_navigate_to">由于系统限制，请手动导航至：
+        内部存储 > Android > data ></string>
+    <string name="file_open_file_manager">打开文件管理器</string>
+    <string name="file_manager_application_not_found">未找到文件管理器应用</string>
+    <string name="file_target_folder_does_not_exist">目标文件夹不存在</string>
+
+    <string name="file_enter_collection_time">请输入采集时间</string>
+    <string name="file_total_collection_time">总采集时间应在10分钟-24小时之间</string>
+    <string name="file_enter_valid_number">请输入有效数字</string>
+
+    <string name="file_data_collection">数据采集</string>
+    <string name="file_total_collection_time_minus">单文件采集时长（分）</string>
+
+    <string name="file_start_collection">开始采集</string>
+    <string name="file_stop_collection">结束采集</string>
+
+    <string name="file_open_folder_saved">打开保存数据的文件夹</string>
+
+    <string name="collection_scenario">采集场景</string>
+    <string name="minute_10">10分钟</string>
+    <string name="minute_20">20分钟</string>
+    <string name="minute_30">30分钟</string>
+    <string name="minute_60">1小时</string>
+    <string name="upload_local_file">上传本地文件</string>
+
+    <string name="minute">分钟</string>
+    <string name="time">次</string>
+    <string name="file_download_one_file_local">合并文件并下载到本地</string>
+    <string name="first_connect">请先连接设备，再使用！</string>
+    <string name="file_system">戒指文件系统</string>
+    <string name="file_fetching">获取中...</string>
+    <string name="file_get_list_fail">获取列表失败</string>
+    <string name="file_get_filelist">得到文件列表</string>
+    <string name="file_finish">结束</string>
+    <string name="file_download_select">下载选中</string>
+    <string name="file_select_download">请先选择要下载的文件</string>
+    <string name="file_allfile_download">所有文件已下载</string>
+    <string name="file_downloading">正在下载文件</string>
+    <string name="file_all_file">所有 %d 文件</string>
+    <string name="file_in_progress">进行中</string>
+    <string name="file_collection_begins">采集开始</string>
+    <string name="file_failed_start_collection">开始采集失败</string>
+    <string name="file_there_are_currently_no_ongoing_collections">目前没有正在进行的采集</string>
+    <string name="file_collection_stopped">采集停止</string>
+    <string name="file_unable_to_stop_collection">无法停止采集</string>
+    <string name="file_collecting">采集中...</string>
+    <string name="file_progress">进度</string>
+    <string name="file_speed">速率：</string>
+    <string name="file_completed">已完成</string>
+    <string name="file_files">文件</string>
+    <string name="Failed">失败</string>
+    <string name="operate_successfully">操作成功</string>
+    <string name="cancel">取消</string>
+    <string name="device_initializing">设备正在初始化</string>
+    <string name="star">开始</string>
+    <string name="stop">停止</string>
+    <string name="hint">提示</string>
 </resources>
