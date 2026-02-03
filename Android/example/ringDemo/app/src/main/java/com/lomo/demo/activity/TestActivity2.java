@@ -779,8 +779,8 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
             postView("\n开启实时ppg");
             //postView("\n开始读取未上传数据");
-
-            LmAPI.START_REAL_TIME_PPG(30, 100, 20, 20, 20, 1, 1, new IRealTimePPGListener() {
+            final int[] numCount = {0};
+            LmAPI.START_REAL_TIME_PPG(40, 100, 20, 20, 20, 1, 1, new IRealTimePPGListener() {
                 @Override
                 public void time(long time, int zone) {
                     postView("\ntime:"+time+",zone:"+zone);
@@ -788,11 +788,12 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
 
                 @Override
                 public void waveformData(int seq, int number, List<String[]> waveData) {
-                    postView("\nwaveformData seq:"+seq+",number:"+number);
+                    numCount[0]=numCount[0]+waveData.size();
+                    postView("\nwaveformData seq:"+seq+",number:"+number+",总条数:"+numCount[0]);
 
-                    for (String[] array : waveData) {
-                        postView("\nwaveData:"+Arrays.toString(array));
-                    }
+//                    for (String[] array : waveData) {
+//                        postView("\nwaveData:"+Arrays.toString(array));
+//                    }
                 }
 
                 @Override
