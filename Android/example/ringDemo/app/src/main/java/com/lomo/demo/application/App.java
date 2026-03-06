@@ -25,7 +25,7 @@ public class App extends Application {
         app = this;
         LmAPI.init(this);
         LmAPI.setDebug(true);
-        AppConfig.setOverseas(true);
+        AppConfig.setOverseas(false);
         BLEUtils.contentTitle="ChipletRing Demo";
     }
 

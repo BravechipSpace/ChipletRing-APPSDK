@@ -36,6 +36,7 @@ import com.lm.sdk.mode.SleepBatchBean;
 import com.lm.sdk.mode.SleepBean;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.GoMoreUtils;
 import com.lm.sdk.utils.Logger;
 import com.lm.sdk.utils.UtilSharedPreference;
 import com.lomo.demo.R;
@@ -87,6 +88,8 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
         findViewById(R.id.bt_test2).setOnClickListener(this);
         findViewById(R.id.bt_star_ppg).setOnClickListener(this);
         findViewById(R.id.bt_stop_ppg).setOnClickListener(this);
+        findViewById(R.id.bt_testGomore).setOnClickListener(this);
+
         READ_HISTORY_AUTO();
     }
 
@@ -822,6 +825,31 @@ public class TestActivity2 extends BaseActivity implements IResponseListener, Vi
             LmAPI.STOP_REAL_TIME_PPG();
 
         }
+        if(v.getId()==R.id.bt_testGomore){
+
+            postView("\ngomore戒指授权");
+            GoMoreUtils.goMoreAuthorizationKey(mac,"76d07e37bfe341b1a25c76c0e25f457a",new GoMoreUtils.IGomoreListener() {
+                @Override
+                public void authorization() {
+                    postView("\nauthorization");
+
+                }
+
+                @Override
+                public void unauthorization() {
+                    postView("\nunauthorization");
+                }
+
+                @Override
+                public void error(int code, String msg) {
+                    postView("\nerror:"+msg);
+                }
+
+
+            });
+
+        }
+
     }
 
     @Override
