@@ -303,7 +303,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
 
                 @Override
                 public void dataUploadFinish() {
-                    //睡眠分期是开始时间，每30s增加一个，和Sleep2thBean的List<HistoryBean> historyBeanList里的sleepType含义一致
+                    //睡眠分期是开始时间，每60s增加一个，和Sleep2thBean的List<HistoryBean> historyBeanList里的sleepType含义一致
                     long stageTimeBase= overviewSleep.getStartTs();
                     List<HistoryDataBean> historyBeanList=new ArrayList<>();
                     for (GoMoreSleep sleep : sleepStaging) {

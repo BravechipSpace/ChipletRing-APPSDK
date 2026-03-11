@@ -564,7 +564,7 @@ public class TestActivity extends BaseActivity implements IResponseListener, Vie
         if (view.getId() == R.id.bt_start_update) {
             postView("\n打开注释，传入本固件的版本号，才能测试升级");
             //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
-//            OtaApi.otaUpdateWithCheckVersion("7.1.5.0Z3R", TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+//            OtaApi.otaUpdateWithCheckVersion("7.3.1.7Z5G", TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
 //                @Override
 //                public void error(String message) {
 //                    postView("\nota升级出错："+message);
