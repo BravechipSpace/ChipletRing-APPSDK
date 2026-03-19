@@ -10,7 +10,7 @@ import BCLRingSDK
 import QMUIKit
 import UIKit
 
-/// 主动测量——血压-功能模块(96-100)
+/// 主动测量——血压-功能模块(96-97)
 class MeasurementBloodPressure_Module: BaseFunction_Module {
     // MARK: - Properties
 
@@ -19,7 +19,7 @@ class MeasurementBloodPressure_Module: BaseFunction_Module {
     // MARK: - Initialization
 
     init() {
-        super.init(functionIdRange: 96 ... 100)
+        super.init(functionIdRange: 96 ... 97)
     }
 
     // MARK: - FunctionModule Protocol

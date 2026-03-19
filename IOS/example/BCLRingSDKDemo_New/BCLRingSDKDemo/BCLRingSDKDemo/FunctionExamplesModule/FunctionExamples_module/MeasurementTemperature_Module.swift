@@ -59,6 +59,9 @@ class MeasurementTemperature_Module: BaseFunction_Module {
                         case .busy:
                             BDLogger.error("设备繁忙")
                             self.showError("设备繁忙")
+                        case .disconnected:
+                            BDLogger.error("设备连接已断开")
+                            self.showError("设备连接已断开")
                         @unknown default:
                             BDLogger.error("未知温度错误")
                             self.showError("未知温度错误")
@@ -78,6 +81,7 @@ class MeasurementTemperature_Module: BaseFunction_Module {
                     self.showError("无效的温度数据")
                 }
             case let .failure(error):
+                self.hideLoading()
                 // 处理连接错误等其他错误
                 BDLogger.error("读取温度失败: \(error)")
                 self.showError("读取温度失败: \(error)")

@@ -223,9 +223,17 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 91, title: "开始心率测量", category: .measurementHeartRate),
             FunctionDemoModel(id: 92, title: "停止心率测量", category: .measurementHeartRate),
 
-            // 主动测量-血压 (96-100)
+            // 主动测量-血压 (96-97)
             FunctionDemoModel(id: 96, title: "开始血压测量", category: .measurementBloodPressure),
             FunctionDemoModel(id: 97, title: "停止血压测量", category: .measurementBloodPressure),
+
+            // 主动测量-血压曲线 (98-99)
+            FunctionDemoModel(id: 98, title: "开始血压曲线测量-（0X3A指令）", category: .measurementPPGBloodPressure),
+            FunctionDemoModel(id: 99, title: "停止血压曲线测量-（0X3A指令）", category: .measurementPPGBloodPressure),
+
+            // 主动测量-清华实时PPG (131-132)
+            FunctionDemoModel(id: 131, title: "开始清华定制实时PPG测量", category: .measurementQingHuaPPG),
+            FunctionDemoModel(id: 132, title: "停止清华定制实时PPG测量", category: .measurementQingHuaPPG),
 
             // 主动测量-血糖 (101-105)
             FunctionDemoModel(id: 101, title: "开始血糖测量", category: .measurementBloodGlucose),
@@ -273,7 +281,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 210, title: "下载特定固件文件", category: .sdkNetwork, requiresConnection: false),
             FunctionDemoModel(id: 211, title: "时间线数据", category: .sdkNetwork, requiresConnection: false),
             FunctionDemoModel(id: 212, title: "获取用户最新一条历史数据", category: .sdkNetwork, requiresConnection: false),
-            
+
             // 六轴传感器数据 (301-320)
             FunctionDemoModel(id: 301, title: "设置六轴传感器工作频率", category: .sixAxisProtocol),
             FunctionDemoModel(id: 302, title: "获取六轴传感器工作频率", category: .sixAxisProtocol),
@@ -322,6 +330,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 370, title: "单声道解码-adpcm格式（Z5J定制）", category: .audioTransmission),
 
             // 文件系统（381-400）
+            FunctionDemoModel(id: 388, title: "开始信息采集\n（部分固件支持）", category: .fileSystem),
+            FunctionDemoModel(id: 389, title: "采集数据配置信息获取（部分固件支持）", category: .fileSystem),
             FunctionDemoModel(id: 381, title: "获取文件系统空间信息", category: .fileSystem),
             FunctionDemoModel(id: 382, title: "获取文件系统状态", category: .fileSystem),
             FunctionDemoModel(id: 383, title: "格式化文件系统", category: .fileSystem),
@@ -333,7 +343,7 @@ class FunctionDemo_VC: UIViewController {
             // 睡眠数据获取（401-420）
             FunctionDemoModel(id: 401, title: "查询指定日期下的详细睡眠数据", category: .sleepData, requiresConnection: false),
             FunctionDemoModel(id: 402, title: "查询指定时间范围的睡眠数据", category: .sleepData, requiresConnection: false),
-            
+
             // GoMore功能（421-450）
             FunctionDemoModel(id: 421, title: "查询GoMore授权状态", category: .goMoreFunction),
             FunctionDemoModel(id: 422, title: "下发GoMore授权PKey", category: .goMoreFunction),
@@ -352,6 +362,10 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 1001, title: "发送自定义指令（开启）", category: .customCommand),
             FunctionDemoModel(id: 1002, title: "发送自定义指令（结束）", category: .customCommand),
             FunctionDemoModel(id: 1003, title: "分享Log日志", category: .customCommand, requiresConnection: false),
+
+            // 其他相关指令（2000-3000）
+            FunctionDemoModel(id: 2001, title: "设置SN码", category: .otherCommands),
+            FunctionDemoModel(id: 2002, title: "获取SN码", category: .otherCommands),
 
             // 测试功能，需要调整。
 //            FunctionDemoModel(id: 202, title: "PWTT", category: .measurementBloodPressure),

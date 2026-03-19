@@ -52,6 +52,8 @@ class FunctionExecutor {
             MeasurementBloodOxygen_Module(), // 86-90: 主动测量-血氧测量
             MeasurementHeartRate_Module(), // 91-95: 主动测量-心率测量
             MeasurementBloodPressure_Module(), // 96-100: 主动测量-血压测量
+            MeasurementPPGBloodPressure_Module(), // 98-99: 主动测量-PPG血压曲线
+            MeasurementQingHuaPPG_Module(), // 131-132: 主动测量-清华实时PPG
             MeasurementBloodGlucose_Module(), // 101-105: 主动测量-血糖测量
             MeasurementECG_Module(), // 106-110: 主动测量-心电测量
             StepCount_Module(), // 111-115: 计步功能
@@ -69,6 +71,7 @@ class FunctionExecutor {
             SleepData_Module(), // 401-420: 睡眠数据
             GoMoreFunction_Module(), // 421-450: GoMore功能
             CustomCommand_Module(), // 1001-1100: 自定义命令
+            OtherCommands_Module(), // 2000-3000: 其他相关指令
             
         ]
     }

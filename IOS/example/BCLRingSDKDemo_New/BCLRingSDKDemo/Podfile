@@ -9,6 +9,9 @@ target 'BCLRingSDKDemo' do
   pod 'SnapKit', '~> 5'         
 
   # Pods for BCLRingSDKDemo
+  pod 'RxCocoa', '~> 6.9.0'
+  
+  # Pods for BCLRingSDKDemo
   # SDK用到的库
   pod 'Foil', '~> 5.1.2'
   pod 'NordicDFU'

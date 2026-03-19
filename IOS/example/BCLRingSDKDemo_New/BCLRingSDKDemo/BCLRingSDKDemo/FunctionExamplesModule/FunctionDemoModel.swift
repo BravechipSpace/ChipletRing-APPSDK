@@ -21,6 +21,8 @@ enum FunctionCategory: String, CaseIterable {
     case measurementBloodOxygen = "主动测量-血氧"
     case measurementHeartRate = "主动测量-心率"
     case measurementBloodPressure = "主动测量-血压"
+    case measurementPPGBloodPressure = "主动测量-PPG血压曲线"
+    case measurementQingHuaPPG = "主动测量-清华实时PPG"
     case measurementBloodGlucose = "主动测量-血糖"
     case measurementECG = "主动测量-心电图"
     case stepCount = "计步"
@@ -40,6 +42,7 @@ enum FunctionCategory: String, CaseIterable {
     case keyEvent = "按键事件"
     case displayEvent = "显示事件"
     case customCommand = "自定义指令"
+    case otherCommands = "其他相关指令"
     case sdkNetwork = "SDK-网络相关"
     case sdkDatabase = "SDK-数据库相关"
     case sdkLog = "SDK-Log日志相关"
@@ -58,6 +61,8 @@ enum FunctionCategory: String, CaseIterable {
             .measurementBloodOxygen,
             .measurementHeartRate,
             .measurementBloodPressure,
+            .measurementPPGBloodPressure,
+            .measurementQingHuaPPG,
             .measurementBloodGlucose,
             .measurementECG,
             .stepCount,
@@ -78,6 +83,7 @@ enum FunctionCategory: String, CaseIterable {
             .sleepData,
             .goMoreFunction,
             .customCommand,
+            .otherCommands,
             .sdkDatabase,
             .sdkLog,
         ]

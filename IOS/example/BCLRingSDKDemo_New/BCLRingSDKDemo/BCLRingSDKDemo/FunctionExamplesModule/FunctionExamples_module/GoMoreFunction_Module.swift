@@ -778,6 +778,7 @@ class GoMoreFunction_Module: BaseFunction_Module {
                 BDLogger.info("授权结果: \(authResult)")
                 self?.showSuccess("授权成功")
             case .failure(let error):
+                self?.hideLoading()
                 self?.handleGoMoreAutoAuthError(error)
             }
         }
@@ -811,6 +812,8 @@ class GoMoreFunction_Module: BaseFunction_Module {
                 showError("数据格式错误：无法获取MCU ID")
             case .unknown:
                 showError("未知GoMore错误")
+            case .quotaExceeded:
+                showError("超出限定次数")
             }
 
         // 3. 网络相关错误

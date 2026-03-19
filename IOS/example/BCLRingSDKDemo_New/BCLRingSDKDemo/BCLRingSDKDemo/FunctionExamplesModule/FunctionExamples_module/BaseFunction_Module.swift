@@ -125,6 +125,9 @@ class BaseFunction_Module: NSObject, FunctionProtocol_Module {
         case .busy:
             BDLogger.error("设备繁忙")
             showError("设备繁忙")
+        case .disconnected:
+            BDLogger.error("设备已断开连接")
+            showError("设备已断开连接")
         }
     }
 }

@@ -132,7 +132,7 @@ class SceneDemo_VC: UIViewController {
 
     /// 5. 固件升级流程
     private func executeFirmwareUpgradeScenario() {
-        
+        navigationController?.pushViewController(Temp_VC(), animated: true)
     }
 
     // MARK: - Helper Methods

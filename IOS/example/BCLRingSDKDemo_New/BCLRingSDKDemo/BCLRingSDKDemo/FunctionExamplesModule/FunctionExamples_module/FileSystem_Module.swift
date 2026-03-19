@@ -18,6 +18,13 @@ class FileSystem_Module: BaseFunction_Module {
     private var collectedFiles: [FileInfoModel] = []
     /// 期望的文件总数
     private var expectedFileCount: Int = 0
+    /// 时间戳展示格式化器
+    private lazy var timestampFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "zh_CN")
+        return formatter
+    }()
 
     // MARK: - Initialization
 
@@ -43,6 +50,10 @@ class FileSystem_Module: BaseFunction_Module {
             deleteFileData()
         case 387: // 387 - 获取全部文件数据
             getAllFileData()
+        case 388: // 388 - 开始采集数据（部分固件支持）
+            startSportMode()
+        case 389: // 389 - 采集数据配置信息获取（部分固件支持）
+            getStartSportModeConfigInfo()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -193,7 +204,11 @@ class FileSystem_Module: BaseFunction_Module {
                 case "1": BDLogger.info("文件数据:三轴数据-数据：\(response.fileDataType1 ?? [])")
                 case "2": BDLogger.info("文件数据:六轴数据-数据：\(response.fileDataType2 ?? [])")
                 case "3": BDLogger.info("文件数据:PPG数据红外+红色+x加速度+y加速度+z加速度-数据：\(response.fileDataType3 ?? [])")
-                case "4": BDLogger.info("文件数据:PPG数据绿色-数据：\(response.fileDataType4 ?? [])")
+                case "4":
+                    // PPG数据绿色+三轴(HR)  (时间戳ms, [(绿色, 加速度X, 加速度Y, 加速度Z)]))
+                    BDLogger.info("文件数据:PPG数据绿色+三轴(HR)-时间戳：\(response.fileDataType4?.0 ?? 0)")
+                    BDLogger.info("文件数据:PPG数据绿色+三轴(HR)-数据：\(response.fileDataType4?.1 ?? [])")
+
                 case "5": BDLogger.info("文件数据:PPG数据红外-数据：\(response.fileDataType5 ?? [])")
                 case "6": BDLogger.info("文件数据:温度数据红外-数据：\(response.fileDataType6 ?? [])")
                 case "7":
@@ -249,6 +264,40 @@ class FileSystem_Module: BaseFunction_Module {
     private func getAllFileData() {
     }
 
+    // 388 - 开始采集数据（部分固件支持）
+    private func startSportMode() {
+        showStartSportModeConfigDialog()
+    }
+
+    // 389 - 采集数据配置信息获取（部分固件支持）
+    private func getStartSportModeConfigInfo() {
+        BCLRingManager.shared.getTimedStartSportMode { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(response):
+                let collectionMode = response.collectionMode ?? -1
+                let startTime = response.startTime ?? 0
+                let endTime = response.endTime ?? 0
+
+                BDLogger.info("获取定时启动运动采集配置成功: \(response)")
+                BDLogger.info("采集模式: \(collectionMode)")
+                BDLogger.info("开始时间: \(startTime)")
+                BDLogger.info("结束时间: \(endTime)")
+
+                let message = """
+                采集模式：\(self.collectionModeDescription(collectionMode))
+                开始时间：\(self.formatTimestamp(startTime))
+                结束时间：\(self.formatTimestamp(endTime))
+                """
+                self.showInfoAlert(title: "采集配置", message: message)
+
+            case let .failure(error):
+                BDLogger.error("获取定时启动运动采集配置失败: \(error)")
+                self.showError("获取采集配置失败: \(error.localizedDescription)")
+            }
+        }
+    }
+
     // MARK: - Dialog Methods
 
     /// 显示文件列表对话框
@@ -278,7 +327,7 @@ class FileSystem_Module: BaseFunction_Module {
         modalPresentation_VC.contentView = fileListDialog
         modalPresentation_VC.showWith(animated: true)
     }
-    
+
     // 获取指定文件数据（预设文件名）Dialog
     private func configGetFileDataNameDialog() {
         // 创建文件名输入对话框
@@ -303,4 +352,116 @@ class FileSystem_Module: BaseFunction_Module {
         modalPresentation_VC.showWith(animated: true)
     }
 
+    /// 开始采集参数配置对话框
+    private func showStartSportModeConfigDialog() {
+        guard let viewController = viewController else { return }
+
+        let defaultStartTime = Int(Date().addingTimeInterval(10).timeIntervalSince1970)
+        let defaultEndTime = Int(Date().addingTimeInterval(70).timeIntervalSince1970)
+
+        let alert = UIAlertController(
+            title: "开始信息采集参数",
+            message: "采集模式: 0=周期采集, 1=连续采集\n开始/结束时间使用秒级时间戳",
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { textField in
+            textField.placeholder = "采集模式（0/1）"
+            textField.text = "0"
+            textField.keyboardType = .numberPad
+        }
+
+        alert.addTextField { textField in
+            textField.placeholder = "开始时间（秒级时间戳）"
+            textField.text = "\(defaultStartTime)"
+            textField.keyboardType = .numbersAndPunctuation
+        }
+
+        alert.addTextField { textField in
+            textField.placeholder = "结束时间（秒级时间戳）"
+            textField.text = "\(defaultEndTime)"
+            textField.keyboardType = .numbersAndPunctuation
+        }
+
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "确认", style: .default) { [weak self, weak alert] _ in
+            guard let self = self else { return }
+            guard let textFields = alert?.textFields, textFields.count == 3 else {
+                self.showError("参数读取失败")
+                return
+            }
+
+            guard let modeText = textFields[0].text,
+                  let collectionMode = Int(modeText),
+                  collectionMode == 0 || collectionMode == 1
+            else {
+                self.showError("采集模式仅支持 0 或 1")
+                return
+            }
+
+            guard let startText = textFields[1].text,
+                  let startTime = TimeInterval(startText),
+                  let endText = textFields[2].text,
+                  let endTime = TimeInterval(endText)
+            else {
+                self.showError("时间戳格式错误，请输入数字")
+                return
+            }
+
+            guard endTime > startTime else {
+                self.showError("结束时间必须大于开始时间")
+                return
+            }
+
+            self.setTimedStartSportMode(collectionMode: collectionMode, startTime: startTime, endTime: endTime)
+        })
+
+        viewController.present(alert, animated: true)
+    }
+
+    /// 调用 SDK 设置定时启动运动采集
+    private func setTimedStartSportMode(collectionMode: Int, startTime: TimeInterval, endTime: TimeInterval) {
+        BDLogger.info("设置定时启动运动采集参数: mode=\(collectionMode), start=\(startTime), end=\(endTime)")
+        BCLRingManager.shared.setTimedStartSportMode(collectionMode: collectionMode, startTime: startTime, endTime: endTime) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(response):
+                let status = response.status ?? -1
+                BDLogger.info("设置定时启动运动采集返回: \(response)")
+
+                if status == 1 {
+                    let message = """
+                    设置成功
+                    采集模式：\(self.collectionModeDescription(collectionMode))
+                    开始时间：\(self.formatTimestamp(startTime))
+                    结束时间：\(self.formatTimestamp(endTime))
+                    """
+                    self.showInfoAlert(title: "开始信息采集", message: message)
+                } else {
+                    self.showError("设置采集失败，状态码: \(status)")
+                }
+
+            case let .failure(error):
+                BDLogger.error("设置定时启动运动采集失败: \(error)")
+                self.showError("设置采集失败: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func collectionModeDescription(_ mode: Int) -> String {
+        switch mode {
+        case 0:
+            return "周期采集(0)"
+        case 1:
+            return "连续采集(1)"
+        default:
+            return "未知模式(\(mode))"
+        }
+    }
+
+    private func formatTimestamp(_ timestamp: TimeInterval) -> String {
+        guard timestamp > 0 else { return "0" }
+        let date = Date(timeIntervalSince1970: timestamp)
+        return "\(Int(timestamp)) (\(timestampFormatter.string(from: date)))"
+    }
 }
