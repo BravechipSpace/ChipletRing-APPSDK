@@ -1,8 +1,5 @@
 package com.lomo.demo.activity;
 
-import static com.lomo.demo.activity.TestActivity.mac;
-import static com.lomo.demo.activity.TestActivity.savePcmFile;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -42,6 +39,7 @@ import com.lm.sdk.inter.IWebHistoryResult;
 import com.lm.sdk.inter.IWebSleepResult;
 import com.lm.sdk.inter.IWebStepResult;
 import com.lm.sdk.inter.LmOtaProgressListener;
+import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
 import com.lm.sdk.mode.SleepBean;
@@ -63,7 +61,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class TestActivity3 extends BaseActivity implements IResponseListener,  View.OnClickListener {
+public class TestActivity3 extends BaseActivity implements IResponseListenerLite,  View.OnClickListener {
 
     TextView tv_result2;
     private BluetoothDevice mBluetoothDevice;
@@ -158,7 +156,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
             }
             if(v.getId()==R.id.bt_fendashoushi) {
                 postView("奋达手势开启\n");
-                LmAPI.SET_HID_FENDA((byte) 1, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
+                LmAPILite.SET_HID_FENDA((byte) 1, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
                     @Override
                     public void setHIDSetting(boolean result) {
                         postView("setHIDSetting\n" + result + "\n");
@@ -177,7 +175,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
             }
             if(v.getId()== R.id.bt_huoqushoushi) {
                 postView("奋达手势关闭\n");
-                LmAPI.SET_HID_FENDA((byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
+                LmAPILite.SET_HID_FENDA((byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff, new IHIDListener() {
                     @Override
                     public void setHIDSetting(boolean result) {
                         postView("setHIDSetting\n" + result + "\n");
@@ -198,14 +196,12 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
         if(v.getId()==R.id.bt_shuaxinlanyafuwu) {
 
             postView("刷新蓝牙服务\n");
-            // 监听蓝牙状态变化
-            refreshBluetoothServices();
 
         }
         if(v.getId()==R.id.bt_shoushihuoqu) {
 
             postView("获取手势\n");
-            LmAPI.GET_HID_FENDA(new IHIDListener() {
+            LmAPILite.GET_HID_FENDA(new IHIDListener() {
                 @Override
                 public void setHIDSetting(boolean result) {
 
@@ -297,7 +293,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LmAPI.removeWLSCmdListener(this);
+        LmAPILite.removeWLSCmdListener(this);
         App.needAutoConnect=true;
     }
     /**
@@ -348,226 +344,7 @@ public class TestActivity3 extends BaseActivity implements IResponseListener,  V
 
     }
 
-    @Override
-    public void VERSION(byte type, String version) {
 
-    }
-
-    @Override
-    public void syncTime(byte datum, byte[] time) {
-
-    }
-
-    @Override
-    public void stepCount(byte[] bytesToInt) {
-
-    }
-
-    @Override
-    public void clearStepCount(byte data) {
-
-    }
-
-    @Override
-    public void battery(byte b, byte datum) {
-
-    }
-
-    @Override
-    public void battery_push(byte b, byte datum) {
-
-    }
-
-    @Override
-    public void timeOut() {
-
-    }
-
-    @Override
-    public void saveData(String str_data) {
-
-    }
-
-    @Override
-    public void reset(byte[] data) {
-
-    }
-
-    @Override
-    public void setCollection(byte result) {
-
-    }
-
-    @Override
-    public void getCollection(byte[] data) {
-
-    }
-
-    @Override
-    public void getSerialNum(byte[] serial) {
-
-    }
-
-    @Override
-    public void setSerialNum(byte data) {
-
-    }
-
-    @Override
-    public void cleanHistory(byte data) {
-
-    }
-
-    @Override
-    public void setBlueToolName(byte data) {
-
-    }
-
-    @Override
-    public void readBlueToolName(byte len, String name) {
-
-    }
-
-    @Override
-    public void stopRealTimeBP(byte isSend) {
-
-    }
-
-    @Override
-    public void BPwaveformData(byte seq, byte number, String waveDate) {
-
-    }
-
-    @Override
-    public void onSport(int type, byte[] data) {
-
-    }
-
-    @Override
-    public void breathLight(byte time) {
-
-    }
-
-    @Override
-    public void SET_HID(byte result) {
-
-    }
-
-    @Override
-    public void GET_HID(byte touch, byte gesture, byte system) {
-
-    }
-
-    @Override
-    public void GET_HID_CODE(byte[] bytes) {
-
-    }
-
-    @Override
-    public void GET_CONTROL_AUDIO_ADPCM(byte pcmType) {
-
-    }
-
-    @Override
-    public void SET_AUDIO_ADPCM_AUDIO(byte result) {
-
-    }
-
-    @Override
-    public void TOUCH_AUDIO_FINISH_XUN_FEI() {
-
-    }
-
-    @Override
-    public void setAudio(short totalLength, int index, byte[] audioData) {
-
-    }
-
-    @Override
-    public void stopHeart(byte data) {
-
-    }
-
-    @Override
-    public void stopQ2(byte data) {
-
-    }
-
-    @Override
-    public void GET_ECG(byte[] bytes) {
-
-    }
-
-    @Override
-    public void SystemControl(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void setUserInfo(byte result) {
-
-    }
-
-    @Override
-    public void getUserInfo(int sex, int height, int weight, int age) {
-
-    }
-
-
-    @Override
-    public void CONTROL_AUDIO(int seq, byte[] bytes) {
-
-    }
-
-    @Override
-    public void motionCalibration(byte sport_count) {
-
-    }
-
-    @Override
-    public void stopBloodPressure(byte data) {
-
-    }
-
-    @Override
-    public void appBind(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void appConnect(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void appRefresh(SystemControlBean systemControlBean) {
-
-    }
-
-    private void refreshBluetoothServices() {
-
-
-//        // 在子线程中执行刷新
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                final boolean success = BLEService.refreshBluetoothServices();
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//
-//                        if (success) {
-//
-//                        } else {
-//
-//                        }
-//                    }
-//                });
-//            }
-//        }).start();
-    }
 
     /**
      * 注册蓝牙状态广播接收器，监听刷新完成事件

@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.lm.sdk.LmAPI;
+import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.library.utils.TimeUtils;
@@ -263,7 +264,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
             postView("\ngomore睡眠");
             List<GoMoreSleep> sleepStaging=new ArrayList<>();
 
-            LmAPI.GET_GOMORE_SLEEP(new IGoMoreListener() {
+            LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
                 @Override
                 public void overviewOfSleep(GoMoreSleep goMoreSleep) {
                     StringBuilder stringBuilder=new StringBuilder();

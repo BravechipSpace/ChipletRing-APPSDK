@@ -150,13 +150,14 @@ public class MainActivity extends Activity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {
-                BleDeviceInfo  deviceBean = (BleDeviceInfo) o;
+                DeviceBean  deviceBean = (DeviceBean) o;
               //  BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
                 BLEUtils.isHIDDevice=false;
                  UtilSharedPreference.saveString(MainActivity.this,"address",deviceBean.getDevice().getAddress());
                 App.getInstance().setDeviceBean(deviceBean);
                 //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
                 Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                intent.putExtra("deviceBean",deviceBean);
                 startActivity(intent);
                 finish();
             }
@@ -196,12 +197,23 @@ public class MainActivity extends Activity {
             if(bleDeviceInfo==null){
                 return;
             }
+            DeviceBean deviceBean=new DeviceBean(device,rssi);
+            deviceBean.setDevice(bleDeviceInfo.getDevice());
+            deviceBean.setHidDevice(bleDeviceInfo.getHidDevice());
+            deviceBean.setRssi(bleDeviceInfo.getRssi());
+            deviceBean.setBindingIndicatorBit(bleDeviceInfo.getBindingIndicatorBit());
+            deviceBean.setChargingIndicator(bleDeviceInfo.getChargingIndicator());
+            deviceBean.setCommunicationProtocolVersion(bleDeviceInfo.getCommunicationProtocolVersion());
+            deviceBean.setSystemBind(bleDeviceInfo.isSystemBind());
+            if(bleDeviceInfo==null){
+                return;
+            }
             if (macList.contains(device.getAddress())) {
                 return;
             }
 
             macList.add(device.getAddress());
-            adapter.updateData(bleDeviceInfo);
+            adapter.updateData(deviceBean);
 
         }
     };

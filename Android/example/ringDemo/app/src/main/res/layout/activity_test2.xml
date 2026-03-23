@@ -58,13 +58,6 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
             <Button
                 android:id="@+id/bt_get_HID_code"
                 android:layout_width="0dp"
@@ -74,16 +67,9 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_set_audio_type"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置音频格式"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,11 +86,11 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
             <Button
-                android:id="@+id/bt_temp_test"
+                android:id="@+id/bt_set_audio_type"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="温度测量"
+                android:text="设置音频格式"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
@@ -123,64 +109,9 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_heart"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取心率"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_app_bind"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="二代绑定指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_connect"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="二代连接指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_refresh"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="二代刷新指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_calculate_sleep"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="睡眠逻辑"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -210,15 +141,6 @@
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_upload_history"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="上传历史数据到服务器"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
             <Button
                 android:id="@+id/btn_ota"
                 android:layout_width="0dp"

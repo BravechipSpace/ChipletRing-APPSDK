@@ -21,11 +21,11 @@ import java.util.List;
  * Created by sunshine on 2017/3/7.
  */
 
-public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHolder> implements Comparator<BleDeviceInfo> {
+public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHolder> implements Comparator<DeviceBean> {
 
 
     private OnItemClickListener onItemClickListener;
-    private List<BleDeviceInfo> dataEntityList = new ArrayList<>();
+    private List<DeviceBean> dataEntityList = new ArrayList<DeviceBean>();
 
     @Override
     public StrokeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +35,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHold
 
     @Override
     public void onBindViewHolder(StrokeHolder holder, int position) {
-        BleDeviceInfo resultEntity = dataEntityList.get(position);
+        DeviceBean resultEntity = dataEntityList.get(position);
         holder.setData(resultEntity);
     }
 
@@ -44,7 +44,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHold
         return Math.min(dataEntityList.size(), 50);
     }
 
-    public BleDeviceInfo getItemBean(int position) {
+    public DeviceBean getItemBean(int position) {
         return dataEntityList.get(position);
     }
 
@@ -52,7 +52,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHold
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void updateData(BleDeviceInfo deviceBean) {
+    public void updateData(DeviceBean deviceBean) {
         dataEntityList.add(deviceBean);
         dataEntityList.sort(this);
         notifyDataSetChanged();
@@ -64,7 +64,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHold
     }
 
     @Override
-    public int compare(BleDeviceInfo lhs, BleDeviceInfo rhs) {
+    public int compare(DeviceBean lhs, DeviceBean rhs) {
         return rhs.getRssi() - lhs.getRssi();
     }
 
@@ -89,7 +89,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.StrokeHold
         }
 
         @SuppressLint("MissingPermission")
-        public void setData(BleDeviceInfo resultEntity) {
+        public void setData(DeviceBean resultEntity) {
             tvDeviceName.setText(resultEntity.getDevice().getName());
             tvDeviceMac.setText(resultEntity.getDevice().getAddress());
             tvConnect.setText(String.valueOf(resultEntity.getRssi()));

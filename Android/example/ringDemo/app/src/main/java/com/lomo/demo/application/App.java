@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
 import com.lm.sdk.LmAPI;
+import com.lm.sdk.LmAPILite;
 import com.lm.sdk.library.AppConfig;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
@@ -16,15 +17,15 @@ import com.lomo.demo.adapter.DeviceBean;
  */
 public class App extends Application {
     private static App app;
-    private BleDeviceInfo deviceBean;
+    private DeviceBean deviceBean;
     private BluetoothAdapter mBluetoothAdapter;
     public static boolean needAutoConnect=true;//是否需要自动重连，默认true，如果测试断连情况，可以不需要重连
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
-        LmAPI.init(this);
-        LmAPI.setDebug(true);
+        LmAPILite.init(this);
+        LmAPILite.setDebug(true);
         AppConfig.setOverseas(false);
         BLEUtils.contentTitle="ChipletRing Demo";
     }
@@ -33,12 +34,12 @@ public class App extends Application {
     public static App getInstance() {
         return app;
     }
-    public void setDeviceBean(BleDeviceInfo deviceBean) {
+    public void setDeviceBean(DeviceBean deviceBean) {
         this.deviceBean = deviceBean;
 
     }
 
-    public BleDeviceInfo getDeviceBean() {
+    public DeviceBean getDeviceBean() {
         return deviceBean;
     }
 

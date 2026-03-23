@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.IResponseListener;
+import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lomo.demo.views.ActManager;
 
@@ -32,7 +33,7 @@ import java.util.List;
  * @author Lizhao
  */
 
-public class BaseActivity extends AppCompatActivity implements  IResponseListener{
+public class BaseActivity extends AppCompatActivity implements IResponseListenerLite {
 
 
 
@@ -60,15 +61,15 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     @Override
     protected void onResume() {
         super.onResume();
-        LmAPI.clearWLSCmdListener();
-        LmAPI.addWLSCmdListener(this, this);
+        LmAPILite.clearWLSCmdListener();
+        LmAPILite.addWLSCmdListener(this, this);
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LmAPI.removeWLSCmdListener(this);
+        LmAPILite.removeWLSCmdListener(this);
     }
 
     /**
@@ -212,37 +213,7 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
     }
 
     @Override
-    public void VERSION(byte type, String version) {
-
-    }
-
-    @Override
-    public void syncTime(byte datum, byte[] time) {
-
-    }
-
-    @Override
-    public void stepCount(byte[] bytesToInt) {
-
-    }
-
-    @Override
-    public void clearStepCount(byte data) {
-
-    }
-
-    @Override
-    public void battery(byte b, byte datum) {
-
-    }
-
-    @Override
-    public void battery_push(byte b, byte datum) {
-
-    }
-
-    @Override
-    public void timeOut() {
+    public void timeOut(String cmd) {
 
     }
 
@@ -251,158 +222,5 @@ public class BaseActivity extends AppCompatActivity implements  IResponseListene
 
     }
 
-    @Override
-    public void reset(byte[] data) {
 
-    }
-
-    @Override
-    public void setCollection(byte result) {
-
-    }
-
-    @Override
-    public void getCollection(byte[] data) {
-
-    }
-
-    @Override
-    public void getSerialNum(byte[] serial) {
-
-    }
-
-    @Override
-    public void setSerialNum(byte data) {
-
-    }
-
-    @Override
-    public void cleanHistory(byte data) {
-
-    }
-
-    @Override
-    public void setBlueToolName(byte data) {
-
-    }
-
-    @Override
-    public void readBlueToolName(byte len, String name) {
-
-    }
-
-    @Override
-    public void stopRealTimeBP(byte isSend) {
-
-    }
-
-    @Override
-    public void BPwaveformData(byte seq, byte number, String waveDate) {
-
-    }
-
-    @Override
-    public void onSport(int type, byte[] data) {
-
-    }
-
-    @Override
-    public void breathLight(byte time) {
-
-    }
-
-    @Override
-    public void SET_HID(byte result) {
-
-    }
-
-    @Override
-    public void GET_HID(byte touch, byte gesture, byte system) {
-
-    }
-
-    @Override
-    public void GET_HID_CODE(byte[] bytes) {
-
-    }
-
-    @Override
-    public void GET_CONTROL_AUDIO_ADPCM(byte pcmType) {
-
-    }
-
-    @Override
-    public void SET_AUDIO_ADPCM_AUDIO(byte result) {
-
-    }
-
-    @Override
-    public void TOUCH_AUDIO_FINISH_XUN_FEI() {
-
-    }
-
-    @Override
-    public void setAudio(short totalLength, int index, byte[] audioData) {
-
-    }
-
-    @Override
-    public void stopHeart(byte data) {
-
-    }
-
-    @Override
-    public void stopQ2(byte data) {
-
-    }
-
-    @Override
-    public void GET_ECG(byte[] bytes) {
-
-    }
-
-    @Override
-    public void SystemControl(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void setUserInfo(byte result) {
-
-    }
-
-    @Override
-    public void getUserInfo(int sex, int height, int weight, int age) {
-
-    }
-
-    @Override
-    public void CONTROL_AUDIO(int seq, byte[] bytes) {
-
-    }
-
-    @Override
-    public void motionCalibration(byte sport_count) {
-
-    }
-
-    @Override
-    public void stopBloodPressure(byte data) {
-
-    }
-
-    @Override
-    public void appBind(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void appConnect(SystemControlBean systemControlBean) {
-
-    }
-
-    @Override
-    public void appRefresh(SystemControlBean systemControlBean) {
-
-    }
 }
