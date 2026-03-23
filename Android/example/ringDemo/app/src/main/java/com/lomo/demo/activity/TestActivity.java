@@ -12,11 +12,8 @@ import android.widget.Toast;
 
 import com.lm.sdk.LmAPILite;
 
-import com.lm.sdk.LogicalApi;
-import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
-import com.lm.sdk.inter.ISNListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
@@ -24,6 +21,7 @@ import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
 import com.lm.sdk.lmApiInter.IHeartListenerLite;
 import com.lm.sdk.lmApiInter.IHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
+import com.lm.sdk.lmApiInter.ITooTestListener;
 import com.lm.sdk.lmApiInter.IStepListenerLite;
 import com.lm.sdk.lmApiInter.ISyncTimeListenerLite;
 import com.lm.sdk.lmApiInter.ISystemControlListenerLite;
@@ -35,10 +33,10 @@ import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
 import com.lomo.demo.GsonUtils;
 import com.lomo.demo.R;
-
 import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
+
 
 
 public class TestActivity extends BaseActivity implements IResponseListenerLite, View.OnClickListener {
@@ -73,6 +71,15 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             postView("设置序列号:"+success);
         }
 
+        @Override
+        public void getAirplaneMode(boolean open) {
+            postView("开启飞行模式:"+open);
+        }
+
+        @Override
+        public void setAirplaneMode(boolean success) {
+            postView("设置飞行模式:"+success);
+        }
 
         @Override
         public void setBlueToolName(boolean success) {
@@ -116,9 +123,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_setBluttoothName).setOnClickListener(this);
         findViewById(R.id.bt_getBluttoothName).setOnClickListener(this);
         findViewById(R.id.tv_connect).setOnClickListener(this);
+        findViewById(R.id.bt_reset).setOnClickListener(this);
+        findViewById(R.id.bt_led_open).setOnClickListener(this);
+        findViewById(R.id.bt_led_close).setOnClickListener(this);
+        findViewById(R.id.bt_app_unBind).setOnClickListener(this);
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
-        findViewById(R.id.bt_get_page2).setOnClickListener(this);
 
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
@@ -133,18 +143,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             finish();
         }
         READ_HISTORY_AUTO();
-
-        LogicalApi.createToken("76d07e37bfe341b1a25c76c0e25f457a", "1204491582@qq.com", new ICreateToken() {
-            @Override
-            public void getTokenSuccess() {
-
-            }
-
-            @Override
-            public void error(String msg) {
-
-            }
-        });
     }
 
 
@@ -190,12 +188,37 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.bt_app_bind){
-            postView("\nAPP_BIND");
-            LmAPILite.APP_BIND( new IBindConnectRefreshListenerLite() {
+            if(view.getId()==R.id.bt_app_bind){
+                postView("\nAPP_BIND");
+                LmAPILite.APP_BIND( new IBindConnectRefreshListenerLite() {
+                    @Override
+                    public void appBind(SystemControlLiteBean systemControlBean) {
+                        postView("\nappBind:"+systemControlBean);
+                    }
+
+                    @Override
+                    public void appConnect(SystemControlLiteBean systemControlBean) {
+
+                    }
+
+                    @Override
+                    public void appRefresh(SystemControlLiteBean systemControlBean) {
+
+                    }
+
+                    @Override
+                    public void appUnBind(SystemControlLiteBean systemControlLiteBean) {
+
+                    }
+                });
+            }
+        if(view.getId()==R.id.bt_app_unBind) {
+
+            postView("\nAPP_UNBIND");
+            LmAPILite.APP_UNBIND(new IBindConnectRefreshListenerLite() {
                 @Override
                 public void appBind(SystemControlLiteBean systemControlBean) {
-                    postView("\nappBind:"+systemControlBean);
+                    postView("\nappBind:" + systemControlBean);
                 }
 
                 @Override
@@ -207,31 +230,38 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 public void appRefresh(SystemControlLiteBean systemControlBean) {
 
                 }
+
+                @Override
+                public void appUnBind(SystemControlLiteBean systemControlLiteBean) {
+
+                }
             });
         }
+        if(view.getId()==R.id.bt_app_connect) {
+            postView("\nAPP_CONNECT");
+            LmAPILite.APP_CONNECT(0, new IBindConnectRefreshListenerLite() {
+                @Override
+                public void appBind(SystemControlLiteBean systemControlBean) {
 
+                }
 
-            if(view.getId()==R.id.bt_app_connect){
-                postView("\nAPP_CONNECT");
-                LmAPILite.APP_CONNECT(0, new IBindConnectRefreshListenerLite() {
-                    @Override
-                    public void appBind(SystemControlLiteBean systemControlBean) {
+                @Override
+                public void appConnect(SystemControlLiteBean systemControlBean) {
+                    postView("\nappConnect:" + systemControlBean);
+                }
 
-                    }
+                @Override
+                public void appRefresh(SystemControlLiteBean systemControlBean) {
 
-                    @Override
-                    public void appConnect(SystemControlLiteBean systemControlBean) {
-                        postView("\nappConnect:"+systemControlBean);
-                    }
+                }
 
-                    @Override
-                    public void appRefresh(SystemControlLiteBean systemControlBean) {
+                @Override
+                public void appUnBind(SystemControlLiteBean systemControlLiteBean) {
 
-                    }
-                });
-            }
-
-        if(view.getId()==R.id.bt_app_refresh){
+                }
+            });
+        }
+        if(view.getId()==R.id.bt_app_refresh) {
             postView("\nAPP_REFRESH");
             LmAPILite.APP_REFRESH(0, new IBindConnectRefreshListenerLite() {
                 @Override
@@ -246,12 +276,16 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 @Override
                 public void appRefresh(SystemControlLiteBean systemControlBean) {
-                    postView("\nappRefresh:"+systemControlBean);
+                    postView("\nappRefresh:" + systemControlBean);
+                }
+
+                @Override
+                public void appUnBind(SystemControlLiteBean systemControlLiteBean) {
+
                 }
             });
         }
-
-        if(view.getId()==R.id.bt_clear_step){
+        if(view.getId()==R.id.bt_clear_step) {
             postView("\n开始清空步数");
             LmAPILite.CLEAR_COUNTING(new IStepListenerLite() {
                 @Override
@@ -265,7 +299,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
-        if(view.getId()==R.id.bt_sync_time){
+        if(view.getId()==R.id.bt_sync_time) {
+
             postView("\n开始同步时间");
             LmAPILite.SYNC_TIME_ZONE((byte) 8, new ISyncTimeListenerLite() {
                 @Override
@@ -274,17 +309,17 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
-        if(view.getId()==R.id.bt_read_time){
+        if(view.getId()==R.id.bt_read_time) {
             postView("\n开始读取时间");
             LmAPILite.READ_TIME(new ISyncTimeListenerLite() {
                 @Override
                 public void syncTime(boolean updateTime, long timeStamp, long timeZone) {
-                    postView("\n读取时间"+ DateUtils.longToString(timeStamp, "yyyy-MM-dd HH:mm")+",时区："+timeZone);
+                    postView("\n读取时间" + DateUtils.longToString(timeStamp, "yyyy-MM-dd HH:mm") + ",时区：" + timeZone);
                 }
             });
         }
+        if(view.getId()==R.id.bt_soft_version) {
 
-        if(view.getId()==R.id.bt_soft_version){
             postView("\n开始获取软件版本信息");
             LmAPILite.GET_VERSION(true, new IVersionListenerLite() {
                 @Override
@@ -293,9 +328,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
+        if(view.getId()==R.id.bt_hardware_version) {
 
-
-        if(view.getId()==R.id.bt_hardware_version){
             postView("\n开始获取硬件版本信息");
             LmAPILite.GET_VERSION(false, new IVersionListenerLite() {
                 @Override
@@ -304,49 +338,52 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
-
-        if(view.getId()==R.id.bt_battery){
+        if(view.getId()==R.id.bt_battery) {
+//                postView("\n开始获取HID_CODE");
+//                LmAPI.GET_HID_CODE((byte) 0x00);
             postView("\n开始获取电量信息");
             LmAPILite.GET_BATTERY((byte) 0x00, new IBatteryListenerLite() {
                 @Override
                 public void battery(int type, int electricity) {
-                    if(type==0){
-                        postView("\n获取电量信息:"+electricity);
+                    if (type == 0) {
+                        postView("\n获取电量信息:" + electricity);
                     }
 
                 }
 
                 @Override
                 public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:"+electricity);
+                    postView("\n电量推送:" + electricity);
                 }
             });
         }
+        if(view.getId()==R.id.bt_battery_state) {
 
-        if(view.getId()==R.id.bt_battery_state){
+//                postView("\n开始获取HID_CODE");
+//                LmAPI.GET_HID_CODE((byte) 0x00);
             postView("\n获取充电状态");
             LmAPILite.GET_BATTERY((byte) 0x01, new IBatteryListenerLite() {
                 @Override
                 public void battery(int type, int electricity) {
-                    if(type==1){
-                        postView("\n获取充电状态:"+electricity);
+                    if (type == 1) {
+                        postView("\n获取充电状态:" + electricity);
                     }
 
                 }
 
                 @Override
                 public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:"+electricity);
+                    postView("\n电量推送:" + electricity);
                 }
             });
         }
+        if(view.getId()==R.id.bt_step) {
 
-        if(view.getId()==R.id.bt_step){
             postView("\n开始获取步数信息");
             LmAPILite.STEP_COUNTING(new IStepListenerLite() {
                 @Override
                 public void stepCount(int steps) {
-                    postView("\n步数信息:"+steps);
+                    postView("\n步数信息:" + steps);
                 }
 
                 @Override
@@ -355,29 +392,23 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
-
-        if(view.getId()==R.id.bt_blood_oxygen){
+        if(view.getId()==R.id.bt_blood_oxygen) {
             postView("\n开始测量血氧");
             LmAPILite.GET_HEART_Q2_WITH_TIME((byte) 1, (byte) 30, new IBloodOxygenListenerLite() {
 
                 @Override
-                public void progress(int progress) {
-                    postView("\nprogress：" + progress );
-                }
-
-                @Override
-                public void resultData(int bloodOxygen, int perfusion,int progress) {
-                    postView("\n血氧：" + bloodOxygen + ",灌注度：" + perfusion + "%"+ ",进度：" + progress);
+                public void resultData(int bloodOxygen, int perfusion, int progress) {
+                    postView("\n血氧：" + bloodOxygen + ",灌注度：" + perfusion + "%" + ",进度：" + progress);
                 }
 
                 @Override
                 public void waveformData(int serialNumber, int numberOfData, String waveformData) {
-                    postView("\n波形数据：" + waveformData );
+                    postView("\n波形数据：" + waveformData);
                 }
 
                 @Override
                 public void error(int code, String message) {
-                    postView("\nerror：" + code );
+                    postView("\nerror：" + code);
                 }
 
                 @Override
@@ -390,23 +421,22 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     postView("\n停止测量");
                 }
 
-
+                @Override
+                public void pushQ2(int q2, int perfusion) {
+                    postView("\n血氧推送：" + q2 + ",灌注度：" + perfusion + "%");
+                }
             });
-        }
 
+        }
         if(view.getId()==R.id.bt_heart) {
+
             postView("\n开始测量心率");
             LmAPILite.GET_HEART_ROTA((byte) 0, (byte) 30, new IHeartListenerLite() {
 
 
                 @Override
-                public void progress(int progress) {
-                    postView("\n进度：" + progress);
-                }
-
-                @Override
-                public void resultData(int heart, int heartRota, int yaLi, int temp) {
-                    postView("\n测量心率数据：" + heart);
+                public void resultData(int heart, int progress) {
+                    postView("\n测量心率数据：" + heart + ",进度：" + progress);
                 }
 
                 @Override
@@ -434,40 +464,47 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     postView("\n停止测量心率");
                 }
 
+                @Override
+                public void pushHeart(int heart) {
+                    postView("\n心率推送：" + heart);
+                }
+
 
             });
         }
-            if(view.getId()==R.id.bt_gomore_test) {
-                postView("\ngomore睡眠");
-                //postView("\n开始读取未上传数据");
-                LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
-                    @Override
-                    public void overviewOfSleep(GoMoreSleep goMoreSleep) {
-                        postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
-                        Log.e(TAG, "overviewOfSleep: " + GsonUtils.beanToJson(goMoreSleep));
-                    }
+        if(view.getId()==R.id.bt_gomore_test) {
 
-                    @Override
-                    public void sleepStaging(GoMoreSleep goMoreSleep) {
-                        postView("\ngomore睡眠 sleepStaging:" + GsonUtils.beanToJson(goMoreSleep));
-                        Log.e(TAG, "sleepStaging: " + GsonUtils.beanToJson(goMoreSleep));
-                    }
+            postView("\ngomore睡眠");
+            //postView("\n开始读取未上传数据");
+            LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+                @Override
+                public void overviewOfSleep(GoMoreSleep goMoreSleep) {
+                    postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
+                    Log.e(TAG, "overviewOfSleep: " + GsonUtils.beanToJson(goMoreSleep));
+                }
 
-                    @Override
-                    public void dataUploadFinish() {
+                @Override
+                public void sleepStaging(GoMoreSleep goMoreSleep) {
+                    postView("\ngomore睡眠 sleepStaging:" + GsonUtils.beanToJson(goMoreSleep));
+                    Log.e(TAG, "sleepStaging: " + GsonUtils.beanToJson(goMoreSleep));
+                }
 
-                    }
+                @Override
+                public void dataUploadFinish() {
 
-                    @Override
-                    public void noSleepData() {
-                        postView("\ngomore睡眠 noSleepData");
-                    }
-                });
-            }
+                }
+
+                @Override
+                public void noSleepData() {
+                    postView("\ngomore睡眠 noSleepData");
+                }
+            });
+        }
         if(view.getId()==R.id.bt_read_log) {
+
             postView("\n开始读取全部数据");
 
-            LmAPILite.READ_HISTORY((byte) 0x1, 0, new IHistoryListenerLite() {
+            LmAPILite.READ_HISTORY((byte) 0x0, 0, new IHistoryListenerLite() {
                 @Override
                 public void error(int code) {
 
@@ -498,22 +535,18 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 }
 
+                @Override
+                public void localMemoryFull(int capacitySize, int capacitySizeUsed, int totalNumber, int notUploadedNumber) {
 
+                }
             });
         }
         if(view.getId()==R.id.bt_test_temp) {
             postView("\n获取温度");
             LmAPILite.READ_TEMP(new ITempListenerLite() {
-
-
                 @Override
-                public void resultData(int temp) {
-                    postView("\n测量体温完成后的结果:" + temp);
-                }
-
-                @Override
-                public void testing(int temp) {
-
+                public void resultData(int temp, int progress) {
+                    postView("\n测量体温完成后的结果:" + temp + ",进度：" + progress);
                 }
 
                 @Override
@@ -523,6 +556,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             });
         }
         if(view.getId()==R.id.bt_setSn) {
+
             postView("\n请打开注释，设置正确的序列号");
 //                LmAPILite.SET_SERIAL("1234567890".getBytes(), iSystemControlListenerLite);
 //                LmAPILite.SET_SN("", new ISNListener() {
@@ -538,8 +572,9 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 //                });
         }
         if(view.getId()==R.id.bt_getSn) {
+
             postView("\n获取序列号");
-            LmAPILite.GET_SN(new ISNListener() {
+            LmAPILite.GET_SN(new ITooTestListener() {
                 @Override
                 public void getSn(String sn) {
                     postView("\n获取序列号:" + sn);
@@ -550,7 +585,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 }
             });
-
         }
         if(view.getId()==R.id.bt_setBluttoothName) {
 
@@ -558,8 +592,9 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             LmAPILite.Set_BlueTooth_Name("AQRingTest", iSystemControlListenerLite);
         }
         if(view.getId()==R.id.bt_getBluttoothName) {
-            postView("\n获取蓝牙名");
-            LmAPILite.Get_BlueTooth_Name(iSystemControlListenerLite);
+
+                postView("\n获取蓝牙名");
+                LmAPILite.Get_BlueTooth_Name(iSystemControlListenerLite);
         }
         if(view.getId()==R.id.bt_gomore_user) {
 
@@ -575,8 +610,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 }
             });
+
         }
         if(view.getId()==R.id.bt_get_gomore_user) {
+
             postView("\n获取Gomore个人信息");
             LmAPILite.GET_GOMORE_USERINFO(new IGoMoreUserListener() {
                 @Override
@@ -590,12 +627,23 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
+
         if(view.getId()==R.id.tv_connect) {
 
             BLEUtils.connectLockByBLE(TestActivity.this, bluetoothDevice);
         }
+        if(view.getId()==R.id.bt_reset) {
 
+            LmAPILite.RESET();
+        }
+        if(view.getId()==R.id.bt_led_open) {
 
+            LmAPILite.LED_STATUS(true);
+        }
+        if(view.getId()==R.id.bt_led_close) {
+
+            LmAPILite.LED_STATUS(false);
+        }
         if(view.getId()==R.id.bt_setCollection) {
 
             LmAPILite.SET_COLLECTION(5 * 60, iSystemControlListenerLite);
@@ -603,10 +651,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if(view.getId()==R.id.btn_getCollection) {
 
             LmAPILite.GET_COLLECTION(iSystemControlListenerLite);
-        }
-        if(view.getId()==R.id.bt_get_page2) {
-            Intent intent=new Intent(TestActivity.this, TestActivity2.class);
-            startActivity(intent);
         }
 
     }
@@ -662,7 +706,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             }
 
+            @Override
+            public void localMemoryFull(int capacitySize, int capacitySizeUsed, int totalNumber, int notUploadedNumber) {
 
+            }
         });
     }
 }

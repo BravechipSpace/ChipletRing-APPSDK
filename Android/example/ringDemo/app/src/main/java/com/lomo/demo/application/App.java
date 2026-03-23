@@ -5,10 +5,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LmAPILite;
-import com.lm.sdk.library.AppConfig;
-import com.lm.sdk.mode.BleDeviceInfo;
+
+
+import com.lm.sdk.inter.ICMDLogListener;
 import com.lm.sdk.utils.BLEUtils;
 import com.lomo.demo.adapter.DeviceBean;
 
@@ -24,9 +25,14 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        LmAPILite.init(this);
+        LmAPILite.init(this, new ICMDLogListener() {
+            @Override
+            public void log(String s, String s1) {
+
+            }
+        });
         LmAPILite.setDebug(true);
-        AppConfig.setOverseas(false);
+
         BLEUtils.contentTitle="ChipletRing Demo";
     }
 

@@ -26,14 +26,12 @@ import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.permissions.permission.PermissionLists;
 import com.hjq.permissions.permission.base.IPermission;
-import com.lm.sdk.BLEService;
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.Logger;
-import com.lm.sdk.utils.StringUtils;
-import com.lm.sdk.utils.UtilSharedPreference;
+
 import com.lomo.demo.R;
 import com.lomo.demo.adapter.DeviceAdapter;
 import com.lomo.demo.adapter.DeviceBean;
@@ -153,7 +151,7 @@ public class MainActivity extends Activity {
                 DeviceBean  deviceBean = (DeviceBean) o;
               //  BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
                 BLEUtils.isHIDDevice=false;
-                 UtilSharedPreference.saveString(MainActivity.this,"address",deviceBean.getDevice().getAddress());
+
                 App.getInstance().setDeviceBean(deviceBean);
                 //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
                 Intent intent = new Intent(MainActivity.this, TestActivity.class);

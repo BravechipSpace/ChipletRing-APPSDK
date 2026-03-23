@@ -89,6 +89,15 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/bt_app_unBind"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="解绑指令"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
                 android:id="@+id/bt_sync_time"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -345,25 +354,43 @@
 
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_get_page2"
+                android:id="@+id/bt_reset"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="跳转到下一页"
+                android:text="复位"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_led_open"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="开启led灯"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+
+            <Button
+                android:id="@+id/bt_led_close"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="关闭led灯"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
 
 
-
         </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

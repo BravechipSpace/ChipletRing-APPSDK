@@ -65,7 +65,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dp_7"
             android:paddingBottom="@dimen/dp_7"
-            android:text="@string/dialog_commit"
+            android:text="提交"
             android:textColor="@color/white"
             android:textFontWeight="400"
             android:textSize="@dimen/sp_16" />
