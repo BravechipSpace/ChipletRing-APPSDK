@@ -109789,6 +109789,136 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "startTime",
+            "printedName": "startTime",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Int?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK0A13SleepDayModelC9startTimeSiSgvp",
+            "mangledName": "$s10BCLRingSDK0A13SleepDayModelC9startTimeSiSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A13SleepDayModelC9startTimeSiSgvg",
+                "mangledName": "$s10BCLRingSDK0A13SleepDayModelC9startTimeSiSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "endTime",
+            "printedName": "endTime",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Int?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK0A13SleepDayModelC7endTimeSiSgvp",
+            "mangledName": "$s10BCLRingSDK0A13SleepDayModelC7endTimeSiSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK0A13SleepDayModelC7endTimeSiSgvg",
+                "mangledName": "$s10BCLRingSDK0A13SleepDayModelC7endTimeSiSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init(from:)",
@@ -151519,98 +151649,98 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "FloatLiteral",
-      "offset": 2444,
+      "offset": 2508,
       "length": 3,
       "value": "8.0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Array",
-      "offset": 3481,
+      "offset": 3545,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Array",
-      "offset": 4284,
+      "offset": 4348,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 6037,
+      "offset": 6101,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 6368,
+      "offset": 6432,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Dictionary",
-      "offset": 7170,
+      "offset": 7234,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 7362,
+      "offset": 7426,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8859,
+      "offset": 8923,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 8970,
+      "offset": 9034,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 9071,
+      "offset": 9135,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 9175,
+      "offset": 9239,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 9323,
+      "offset": 9387,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 9871,
+      "offset": 9935,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 51224,
+      "offset": 51288,
       "length": 5,
       "value": "false"
     },
@@ -151850,7 +151980,7 @@
       "kind": "StringLiteral",
       "offset": 329,
       "length": 7,
-      "value": "\"1.2.0\""
+      "value": "\"1.2.1\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
