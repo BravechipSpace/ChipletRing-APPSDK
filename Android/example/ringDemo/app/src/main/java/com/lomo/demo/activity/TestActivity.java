@@ -1,8 +1,12 @@
 package com.lomo.demo.activity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
+
+import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPILite;
 
 import com.lm.sdk.LogicalApi;
@@ -18,6 +25,7 @@ import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.ISNListener;
 import com.lm.sdk.library.utils.DateUtils;
+import com.lm.sdk.library.utils.Logger;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
 import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
@@ -29,16 +37,20 @@ import com.lm.sdk.lmApiInter.ISyncTimeListenerLite;
 import com.lm.sdk.lmApiInter.ISystemControlListenerLite;
 import com.lm.sdk.lmApiInter.ITempListenerLite;
 import com.lm.sdk.lmApiInter.IVersionListenerLite;
+import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.UtilSharedPreference;
 import com.lomo.demo.GsonUtils;
 import com.lomo.demo.R;
 
 import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
+
+import java.util.Set;
 
 
 public class TestActivity extends BaseActivity implements IResponseListenerLite, View.OnClickListener {
@@ -84,6 +96,28 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             postView("读取蓝牙名称:"+name+"，长度:"+len);
         }
     };
+
+
+    Handler handler = new Handler(new Handler.Callback() {
+
+
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+
+            if (msg.what == 101) {
+
+                String mac = UtilSharedPreference.getStringValue(TestActivity.this, "address");
+                if (!TextUtils.isEmpty(mac) && !BLEUtils.isGetToken() && App.needAutoConnect) {
+                    Log.e("TAG", "Handler  延迟重连  resetConnect 1111 ");
+                    BLEUtils.setConnecting(false);
+                    // BLEUtils.connectLockByBLE(TestActivity.this, deviceBean.getDevice());
+                    connect(mac);
+                }
+
+            }
+            return false;
+        }});
+
     static String mac;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,11 +182,37 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     }
 
 
+    /**
+     * 断联以后，重连
+     *
+     * @param mac
+     */
+    private void connect(String mac) {
+        Logger.show(TAG, "connect=" + mac, 6);
+        this.mac = mac;
+        //合并
+        checkPermission();
+    }
+
+    public void checkPermission() {
+
+
+        Logger.show("ConnectDevice", "mac :" + mac);
+        BluetoothDevice remote = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(mac);
+        if (BLEService.isGetToken()) {
+            Logger.show("ConnectDevice", " 蓝牙已连接");
+
+        } else if (remote != null && (mac).equalsIgnoreCase(remote.getAddress())) {
+                BLEUtils.connectLockByBLE(TestActivity.this, remote);
+        }
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         BLEUtils.disconnectBLE(this);
         LmAPILite.removeWLSCmdListener(this);
+        handler.removeMessages(101);
     }
 
     @Override
@@ -175,7 +235,13 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     @Override
     public void lmBleConnectionFailed(int i) {
         BLEUtils.setGetToken(false);
-        postView("\n连接失败");
+        postView("\n连接失败 ");
+
+        Log.e("ConnectDevice", " 蓝牙 connectionFailed");
+
+        handler.removeMessages(101);
+        handler.sendEmptyMessageDelayed(101, 5000);
+
     }
 
     @Override
