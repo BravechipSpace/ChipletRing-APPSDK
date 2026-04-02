@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import com.lm.sdk.LmAPILite;
 
+import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
+import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
@@ -129,6 +131,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_app_unBind).setOnClickListener(this);
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
+        findViewById(R.id.btn_ota).setOnClickListener(this);
 
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
@@ -656,6 +659,31 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if(view.getId()==R.id.btn_getCollection) {
 
             LmAPILite.GET_COLLECTION(iSystemControlListenerLite);
+        }
+        if(view.getId()==R.id.btn_ota) {
+
+            String outPath="/sdcard/7.3.3.7_AQ RING.bin";
+            OtaApi.otaUpdate(mac, outPath, TestActivity.this, new LmOtaProgressListener() {
+                @Override
+                public void error(String s) {
+
+                }
+
+                @Override
+                public void onProgress(int i) {
+
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+
+                @Override
+                public void isLatestVersion() {
+
+                }
+            });
         }
 
     }
