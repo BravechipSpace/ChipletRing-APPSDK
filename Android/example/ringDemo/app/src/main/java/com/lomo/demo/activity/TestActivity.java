@@ -539,6 +539,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 public void localMemoryFull(int capacitySize, int capacitySizeUsed, int totalNumber, int notUploadedNumber) {
 
                 }
+
+                @Override
+                public void historyRefreshPush() {
+
+                }
             });
         }
         if(view.getId()==R.id.bt_test_temp) {
@@ -708,6 +713,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             @Override
             public void localMemoryFull(int capacitySize, int capacitySizeUsed, int totalNumber, int notUploadedNumber) {
+
+            }
+
+            @Override
+            public void historyRefreshPush() {
 
             }
         });
