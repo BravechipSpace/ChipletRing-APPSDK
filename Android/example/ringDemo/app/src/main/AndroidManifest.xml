@@ -126,7 +126,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
+        <service
+            android:name=".amota.BluetoothLeService"
+            android:enabled="true" />
         <service
             android:name=".nfc.generic.MyHostApduService"
             android:exported="true"
