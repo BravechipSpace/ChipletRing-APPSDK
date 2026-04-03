@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.lm.sdk.ErrorEnum;
 import com.lm.sdk.LmAPILite;
 
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
@@ -213,7 +214,7 @@ public class BaseActivity extends AppCompatActivity implements IResponseListener
     }
 
     @Override
-    public void timeOut(String cmd) {
+    public void timeOut(ErrorEnum errorEnum) {
 
     }
 
