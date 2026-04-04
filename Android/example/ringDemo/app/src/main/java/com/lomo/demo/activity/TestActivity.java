@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.lm.sdk.ErrorEnum;
 import com.lm.sdk.LmAPILite;
 
 import com.lm.sdk.OtaApi;
@@ -18,6 +19,7 @@ import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
+import com.lm.sdk.lmApiInter.IBatteryPushListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
 import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
 import com.lm.sdk.lmApiInter.IHeartListenerLite;
@@ -145,7 +147,21 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             Toast.makeText(this, "未知设备，请重新选择!", Toast.LENGTH_SHORT).show();
             finish();
         }
+        //设置历史记录自动上传监听，复合指令（app_connect,app_refresh）会主动上传历史数据
         READ_HISTORY_AUTO();
+
+        /**
+         * 主动推送电量信息
+         * @param electricity 电量百分比
+         * @param remainingBatteryLife 剩余续航时间（秒）
+         * @param chargingStatus 充电状态 0未充电 1充电中 2充满
+         */
+        LmAPILite.SET_BATTERY_PUSH_LISTENER(new IBatteryPushListenerLite() {
+            @Override
+            public void battery_push(int electricity, long remainingBatteryLife, int chargingStatus) {
+                postView("电量推送\n"+"电量："+electricity+",续航:"+remainingBatteryLife+"秒"+",充电状态:"+chargingStatus);
+            }
+        });
     }
 
 
@@ -180,7 +196,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     }
 
     @Override
-    public void timeOut(String cmd) {
+    public void timeOut(ErrorEnum cmd) {
         postView("\n指令超时");
     }
 
@@ -354,10 +370,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 }
 
-                @Override
-                public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:" + electricity);
-                }
             });
         }
         if(view.getId()==R.id.bt_battery_state) {
@@ -374,10 +386,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 }
 
-                @Override
-                public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:" + electricity);
-                }
             });
         }
         if(view.getId()==R.id.bt_step) {
@@ -581,18 +589,18 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         if(view.getId()==R.id.bt_getSn) {
 
-            postView("\n获取序列号");
-            LmAPILite.GET_SN(new ITooTestListener() {
-                @Override
-                public void getSn(String sn) {
-                    postView("\n获取序列号:" + sn);
-                }
-
-                @Override
-                public void setSn(boolean success) {
-
-                }
-            });
+//            postView("\n获取序列号");
+//            LmAPILite.GET_SN(new ITooTestListener() {
+//                @Override
+//                public void getSn(String sn) {
+//                    postView("\n获取序列号:" + sn);
+//                }
+//
+//                @Override
+//                public void setSn(boolean success) {
+//
+//                }
+//            });
         }
         if(view.getId()==R.id.bt_setBluttoothName) {
 
