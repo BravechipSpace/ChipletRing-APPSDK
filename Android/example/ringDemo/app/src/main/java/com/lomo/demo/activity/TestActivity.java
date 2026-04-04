@@ -152,7 +152,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         /**
          * 主动推送电量信息
-         * @param electricity 电量百分比
+         * @param electricity 0~100%百分比，101为充电中，电量无效
+         * 102为充电完成，电量无效
          * @param remainingBatteryLife 剩余续航时间（秒）
          * @param chargingStatus 充电状态 0未充电 1充电中 2充满
          */
