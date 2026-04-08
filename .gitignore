@@ -284,3 +284,7 @@ Android/example/ringDemo/local.properties
 /Android/example/ringDemo/.idea
 /Android/example/ringDemo/.idea
 Android/example/ringDemo/local.properties
+Android/example/ringDemo/.idea/compiler.xml
+Android/example/ringDemo/.idea/gradle.xml
+Android/example/ringDemo/.idea/misc.xml
+Android/example/ringDemo/local.properties
