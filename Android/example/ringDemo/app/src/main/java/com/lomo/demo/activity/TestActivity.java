@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPILite;
 
@@ -42,6 +43,7 @@ import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.ImageSaverUtil;
 import com.lm.sdk.utils.UtilSharedPreference;
 import com.lomo.demo.GsonUtils;
 import com.lomo.demo.R;
@@ -50,6 +52,8 @@ import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -506,22 +510,31 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             if(view.getId()==R.id.bt_gomore_test) {
                 postView("\ngomore睡眠");
                 //postView("\n开始读取未上传数据");
+                List<GoMoreSleep> gomoreSleepList=new ArrayList<>();
                 LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
                     @Override
                     public void overviewOfSleep(GoMoreSleep goMoreSleep) {
-                        postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
-                        Log.e(TAG, "overviewOfSleep: " + GsonUtils.beanToJson(goMoreSleep));
+//                        postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
+//                        Log.e(TAG, "overviewOfSleep: " + GsonUtils.beanToJson(goMoreSleep));
+                        Gson gson = new Gson();
+                        String json = gson.toJson(goMoreSleep);
+                        gomoreSleepList.add(gson.fromJson(json, GoMoreSleep.class));
                     }
 
                     @Override
                     public void sleepStaging(GoMoreSleep goMoreSleep) {
-                        postView("\ngomore睡眠 sleepStaging:" + GsonUtils.beanToJson(goMoreSleep));
-                        Log.e(TAG, "sleepStaging: " + GsonUtils.beanToJson(goMoreSleep));
+//                        postView("\ngomore睡眠 sleepStaging:" + GsonUtils.beanToJson(goMoreSleep));
+//                        Log.e(TAG, "sleepStaging: " + GsonUtils.beanToJson(goMoreSleep));
+                        Gson gson = new Gson();
+                        String json = gson.toJson(goMoreSleep);
+                        gomoreSleepList.add(gson.fromJson(json, GoMoreSleep.class));
                     }
 
                     @Override
                     public void dataUploadFinish() {
-
+                       postView("\ngomore睡眠 :" + GsonUtils.beanToJson(gomoreSleepList));
+                       //Log.e(TAG, "gomore睡眠: " + GsonUtils.beanToJson(gomoreSleepList));
+                        ImageSaverUtil.saveImageToInternalStorage(TestActivity.this,"gomore睡眠: " + GsonUtils.beanToJson(gomoreSleepList),"LM","gomore.txt",true);
                     }
 
                     @Override
