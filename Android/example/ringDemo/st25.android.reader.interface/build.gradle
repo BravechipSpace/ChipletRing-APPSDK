@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('st25_android_reader_interface-1.0.13-release.aar'))
