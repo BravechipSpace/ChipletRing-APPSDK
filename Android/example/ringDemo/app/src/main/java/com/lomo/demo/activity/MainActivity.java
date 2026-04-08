@@ -37,8 +37,6 @@ import com.lomo.demo.adapter.DeviceAdapter;
 import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.adapter.OnItemClickListener;
 import com.lomo.demo.application.App;
-import com.lomo.demo.base.BaseActivity;
-import com.lomo.demo.nfc.NfcActivity;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -127,10 +125,7 @@ public class MainActivity extends Activity {
     private void initView() {
         recyclerView = findViewById(R.id.recyclerView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-        findViewById(R.id.tv_nfc).setOnClickListener(v->{
-            Intent intent=new Intent(MainActivity.this, NfcActivity.class);
-            startActivity(intent);
-        });
+
         // data是你的数据集合
         adapter = new DeviceAdapter();
         recyclerView.setAdapter(adapter);
