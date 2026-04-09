@@ -41,6 +41,7 @@ import com.lm.sdk.mode.SleepBean;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.mode.TouchSupport;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.CMDUtils;
 import com.lm.sdk.utils.FileUtil;
 import com.lm.sdk.utils.GoMoreUtils;
 import com.lm.sdk.utils.Logger;
@@ -91,9 +92,11 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         }
     };
     private IAudioListenerLite audiolistenerLite = new IAudioListenerLite() {
-        @Override
-        public void controlAudioResult(byte[] bytes) {
 
+
+        @Override
+        public void controlAudioResult(byte[] bytes, int audioType) {
+            postView("\n音频长度"+bytes.length+",类型1单声道2双声道："+audioType);
         }
 
         @Override
@@ -132,6 +135,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         findViewById(R.id.bt_get_HID).setOnClickListener(this);
         findViewById(R.id.bt_get_HID_code).setOnClickListener(this);
         findViewById(R.id.bt_set_audio_type).setOnClickListener(this);
+        findViewById(R.id.bt_stop_audio).setOnClickListener(this);
         findViewById(R.id.bt_get_audio_type).setOnClickListener(this);
 
         findViewById(R.id.bt_get_rssi).setOnClickListener(this);
@@ -208,7 +212,9 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         if(v.getId()== R.id.bt_get_audio_type){
             LmAPILite.GET_CONTROL_AUDIO_ADPCM(audiolistenerLite);
         }
-
+        if(v.getId()== R.id.bt_stop_audio){
+            LmAPILite.CONTROL_AUDIO_ADPCM((byte)0x0,audiolistenerLite); //0 pcm, 1 adpcm
+        }
 
 
         if(v.getId()== R.id.bt_unpair){

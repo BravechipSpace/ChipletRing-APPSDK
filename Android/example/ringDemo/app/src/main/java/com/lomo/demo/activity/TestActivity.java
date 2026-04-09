@@ -480,9 +480,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
 
                 @Override
-                public void waveformData(int seq, int number, String waveData) {
+                public void waveformData(int serialNumber, int numberOfData, String waveData, List<String[]> waveDataList) {
                     tv_result.setText(waveData);
                 }
+
+
 
                 @Override
                 public void rriData(int seq, int number, String data) {
