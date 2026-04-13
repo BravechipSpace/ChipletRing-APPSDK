@@ -53,7 +53,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     TextView tv_result;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
-
+    private SystemControlLiteBean systemControlBeanLite=new SystemControlLiteBean();
     private ISystemControlListenerLite iSystemControlListenerLite=new ISystemControlListenerLite() {
         @Override
         public void reset() {
@@ -140,6 +140,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
         findViewById(R.id.bt_gomore_mock).setOnClickListener(this);
+        findViewById(R.id.bt_get_gomore_auth).setOnClickListener(this);
+
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -219,6 +221,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     @Override
                     public void appBind(SystemControlLiteBean systemControlBean) {
                         postView("\nappBind:"+systemControlBean);
+                        systemControlBeanLite=systemControlBean;
                     }
 
                     @Override
@@ -244,6 +247,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void appBind(SystemControlLiteBean systemControlBean) {
                     postView("\nappBind:" + systemControlBean);
+                    systemControlBeanLite=systemControlBean;
                 }
 
                 @Override
@@ -273,6 +277,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void appConnect(SystemControlLiteBean systemControlBean) {
                     postView("\nappConnect:" + systemControlBean);
+                    systemControlBeanLite=systemControlBean;
                 }
 
                 @Override
@@ -629,6 +634,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             postView("\n设置蓝牙名");
             LmAPILite.Set_BlueTooth_Name("AQRingTest", iSystemControlListenerLite);
         }
+        if(view.getId()==R.id.bt_get_gomore_auth) {
+
+            postView("\n请先点击《连接指令》，gomore授权状态:"+(systemControlBeanLite.getGomoreAuthorization()==0));
+
+        }
+
         if(view.getId()==R.id.bt_getBluttoothName) {
 
                 postView("\n获取蓝牙名");
@@ -692,28 +703,28 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         if(view.getId()==R.id.btn_ota) {
 
-            String outPath="/sdcard/7.3.3.7_AQ RING.bin";
-            OtaApi.otaUpdate(mac, outPath, TestActivity.this, new LmOtaProgressListener() {
-                @Override
-                public void error(String s) {
-
-                }
-
-                @Override
-                public void onProgress(int i) {
-
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-
-                @Override
-                public void isLatestVersion() {
-
-                }
-            });
+//            String outPath="/sdcard/7.3.3.7_AQ RING.bin";
+//            OtaApi.otaUpdate(mac, outPath, TestActivity.this, new LmOtaProgressListener() {
+//                @Override
+//                public void error(String s) {
+//
+//                }
+//
+//                @Override
+//                public void onProgress(int i) {
+//
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//
+//                }
+//
+//                @Override
+//                public void isLatestVersion() {
+//
+//                }
+//            });
         }
 
     }

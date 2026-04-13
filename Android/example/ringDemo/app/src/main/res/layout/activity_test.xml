@@ -288,6 +288,16 @@
                 android:background="@drawable/button_bg_state"/>
 
 
+            <Button
+                android:id="@+id/bt_setBluttoothName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置蓝牙名"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+
 
         </LinearLayout>
 
@@ -299,22 +309,22 @@
 
 
             <Button
-                android:id="@+id/bt_setBluttoothName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置蓝牙名"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-            <Button
                 android:id="@+id/bt_getBluttoothName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="获取蓝牙名"
                 android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+
+            <Button
+                android:id="@+id/bt_get_gomore_auth"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="获取授权状态"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
             <Button
