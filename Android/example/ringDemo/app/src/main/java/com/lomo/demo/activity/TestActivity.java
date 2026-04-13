@@ -516,7 +516,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             postView("\n开始读取全部数据");
 
-            LmAPILite.READ_HISTORY((byte) 0x0, 0, new IHistoryListenerLite() {
+            LmAPILite.READ_HISTORY((byte) 0x1, 0, new IHistoryListenerLite() {
                 @Override
                 public void error(int code) {
 
