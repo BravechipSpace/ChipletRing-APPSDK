@@ -37,12 +37,14 @@ import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
 import com.lomo.demo.GsonUtils;
+import com.lomo.demo.ImageSaverUtilLib;
 import com.lomo.demo.R;
 import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -489,31 +491,36 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         if(view.getId()==R.id.bt_gomore_test) {
 
-            postView("\ngomore睡眠");
-            //postView("\n开始读取未上传数据");
-            LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
-                @Override
-                public void overviewOfSleep(GoMoreSleep goMoreSleep) {
-                    postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
-                    Log.e(TAG, "overviewOfSleep: " + GsonUtils.beanToJson(goMoreSleep));
-                }
+                postView("\ngomore睡眠");
+                //postView("\n开始读取未上传数据");
+                List<GoMoreSleep> goMoreSleepList=new ArrayList<>();
+                LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+                    @Override
+                    public void overviewOfSleep(GoMoreSleep goMoreSleep) {
+                        postView("\ngomore睡眠 overviewOfSleep:"+ GsonUtils.beanToJson(goMoreSleep));
+                        Log.e(TAG, "overviewOfSleep: "+ GsonUtils.beanToJson(goMoreSleep));
+                        goMoreSleepList.add(goMoreSleep);
+                    }
 
-                @Override
-                public void sleepStaging(GoMoreSleep goMoreSleep) {
-                    postView("\ngomore睡眠 sleepStaging:" + GsonUtils.beanToJson(goMoreSleep));
-                    Log.e(TAG, "sleepStaging: " + GsonUtils.beanToJson(goMoreSleep));
-                }
+                    @Override
+                    public void sleepStaging(GoMoreSleep goMoreSleep) {
+                        postView("\ngomore睡眠 sleepStaging:"+ GsonUtils.beanToJson(goMoreSleep));
+                        Log.e(TAG, "sleepStaging: "+ GsonUtils.beanToJson(goMoreSleep));
+                        goMoreSleepList.add(goMoreSleep);
+                    }
 
-                @Override
-                public void dataUploadFinish() {
+                    @Override
+                    public void dataUploadFinish() {
+                        ImageSaverUtilLib.saveImageToInternalStorage(App.getInstance(), GsonUtils.beanToJson(goMoreSleepList), "LM", "gomoreSleep.txt", false);
 
-                }
+                    }
 
-                @Override
-                public void noSleepData() {
-                    postView("\ngomore睡眠 noSleepData");
-                }
-            });
+                    @Override
+                    public void noSleepData() {
+                        postView("\ngomore睡眠 noSleepData");
+                    }
+                });
+
         }
         if(view.getId()==R.id.bt_gomore_mock) {
 
