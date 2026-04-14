@@ -36,6 +36,7 @@ import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
+import com.lm.sdk.utils.Logger;
 import com.lomo.demo.GsonUtils;
 import com.lomo.demo.ImageSaverUtilLib;
 import com.lomo.demo.R;
@@ -541,8 +542,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if(view.getId()==R.id.bt_read_log) {
 
             postView("\n开始读取全部数据");
-
-            LmAPILite.READ_HISTORY((byte) 0x1, 0, new IHistoryListenerLite() {
+            List<HistoryDataBean> historyDataBeanList=new ArrayList<>();
+            LmAPILite.READ_HISTORY((byte) 0x1, 0,new IHistoryListenerLite() {
                 @Override
                 public void error(int code) {
 
@@ -551,14 +552,16 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void success() {
                     postView("\n读取记录完成");
-
+                    Logger.show("READ_HISTORY", GsonUtils.beanToJson(historyDataBeanList));
+                    ImageSaverUtilLib.saveImageToInternalStorage(App.getInstance(), GsonUtils.beanToJson(historyDataBeanList), "LM", "history.txt", false);
                 }
 
                 @Override
                 public void progress(double progress, HistoryDataBean historyDataBean) {
-                    if (historyDataBean != null) {
+                    if(historyDataBean!=null){
                         postView("\n读取记录进度:" + progress + "%");
                         postView("\n记录内容:" + historyDataBean);
+                        historyDataBeanList.add(historyDataBean);
                     }
 
                 }
