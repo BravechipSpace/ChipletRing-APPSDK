@@ -521,7 +521,7 @@ extension FirmwareUpgrade_Module: UIDocumentPickerDelegate {
             showLoading("开始升级...")
 
             BCLRingManager.shared.phyUpgradeFirmware(filePath: fileURL.path) { [weak self] progress in
-                let progressPercent = Int(progress * 100)
+                let progressPercent = Int(progress)
                 BDLogger.info("Phy升级进度：\(progressPercent)%")
                 self?.showLoading("升级进度：\(progressPercent)%")
             } completion: { [weak self] res in
@@ -530,6 +530,7 @@ extension FirmwareUpgrade_Module: UIDocumentPickerDelegate {
                 case let .success(state):
                     BDLogger.info("Phy固件升级成功：\(state)")
                     self?.showSuccess("Phy固件升级成功")
+                    BDLogger.info("自行重连一下该设备")
                 case let .failure(error):
                     BDLogger.error("Phy固件升级失败：\(error)")
                     self?.showError("升级失败：\(error.localizedDescription)")

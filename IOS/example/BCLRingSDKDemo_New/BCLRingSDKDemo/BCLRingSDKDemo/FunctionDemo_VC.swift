@@ -211,6 +211,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 66, title: "恢复出厂设置", category: .deviceSystemSettings),
             FunctionDemoModel(id: 67, title: "设置个人信息", category: .deviceSystemSettings),
             FunctionDemoModel(id: 68, title: "读取个人信息", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 69, title: "设置自动采集配置(0x3727)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 70, title: "读取自动采集配置(0x3728)", category: .deviceSystemSettings),
 
             // 主动测量-温度 (81-85)
             FunctionDemoModel(id: 81, title: "温度读取", category: .measurementTemperature),
@@ -218,6 +220,7 @@ class FunctionDemo_VC: UIViewController {
             // 主动测量-血氧 (86-90)
             FunctionDemoModel(id: 86, title: "开始血氧测量", category: .measurementBloodOxygen),
             FunctionDemoModel(id: 87, title: "停止血氧测量", category: .measurementBloodOxygen),
+            FunctionDemoModel(id: 88, title: "配置血氧采集模式(0x88)", category: .measurementBloodOxygen),
 
             // 主动测量-心率 (91-95)
             FunctionDemoModel(id: 91, title: "开始心率测量", category: .measurementHeartRate),
@@ -328,10 +331,15 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 368, title: "结束录音（Z5J定制）", category: .audioTransmission),
             FunctionDemoModel(id: 369, title: "立体双声道解码-adpcm格式（Z5J定制）", category: .audioTransmission),
             FunctionDemoModel(id: 370, title: "单声道解码-adpcm格式（Z5J定制）", category: .audioTransmission),
+            FunctionDemoModel(id: 371, title: "开始音频传输-adpcm_1单声道", category: .audioTransmission),
+            FunctionDemoModel(id: 372, title: "停止音频传输-adpcm_1单声道", category: .audioTransmission),
+            FunctionDemoModel(id: 373, title: "开始音频传输-adpcm_1双声道", category: .audioTransmission),
+            FunctionDemoModel(id: 374, title: "停止音频传输-adpcm_1双声道", category: .audioTransmission),
 
             // 文件系统（381-400）
             FunctionDemoModel(id: 388, title: "开始信息采集\n（部分固件支持）", category: .fileSystem),
             FunctionDemoModel(id: 389, title: "采集数据配置信息获取（部分固件支持）", category: .fileSystem),
+            FunctionDemoModel(id: 390, title: "请求文件数据断点续传", category: .fileSystem),
             FunctionDemoModel(id: 381, title: "获取文件系统空间信息", category: .fileSystem),
             FunctionDemoModel(id: 382, title: "获取文件系统状态", category: .fileSystem),
             FunctionDemoModel(id: 383, title: "格式化文件系统", category: .fileSystem),

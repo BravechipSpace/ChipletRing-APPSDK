@@ -21,7 +21,7 @@ struct FileInfoModel {
 
     var fileTypeDescription: String {
         guard let type = fileType else { return "未知" }
-        switch type {
+        switch type.uppercased() {
         case "1": return "三轴数据"
         case "2": return "六轴数据"
         case "3": return "PPG(红外+红色+三轴)"
@@ -30,8 +30,12 @@ struct FileInfoModel {
         case "6": return "温度数据"
         case "7": return "综合数据"
         case "8": return "ADPCM音频"
+        case "B": return "按键捕获ADPCM音频"
+        case "D": return "ADPCM 8K单麦音频"
         case "9": return "OPUS音频"
-        case "10", "A", "a": return "攀岩日志"
+        case "C": return "按键捕获OPUS音频"
+        case "E": return "OPUS 8K单麦音频"
+        case "10", "A": return "攀岩日志"
         default: return "未知类型"
         }
     }

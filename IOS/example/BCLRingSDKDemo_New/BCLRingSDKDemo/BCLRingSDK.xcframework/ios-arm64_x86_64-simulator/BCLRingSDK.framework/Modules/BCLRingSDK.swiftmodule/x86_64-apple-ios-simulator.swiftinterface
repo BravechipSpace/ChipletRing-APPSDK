@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.2 effective-5.10 (swiftlang-6.0.2.1.2 clang-1600.0.26.4)
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
 // swift-module-flags: -target x86_64-apple-ios13-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name BCLRingSDK
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface
 @_exported import BCLRingSDK
@@ -168,6 +168,31 @@ extension SystemSettingCommand {
   @objc deinit
 }
 extension SystemSettingCommand {
+  public static func createSetCustomerAutoCollectionConfig(nightAllowed: Bool, morningAllowed: Bool, afternoonAllowed: Bool) -> SystemSettingCommand
+  public static func createGetCustomerAutoCollectionConfig() -> SystemSettingCommand
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLCustomerAutoCollectionConfigResponse : BCLResponse {
+  public var nightStatus: UInt8
+  public var morningStatus: UInt8
+  public var afternoonStatus: UInt8
+  public var nightAllowed: Bool {
+    get
+  }
+  public var morningAllowed: Bool {
+    get
+  }
+  public var afternoonAllowed: Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLSetCustomerAutoCollectionConfigResponse : BCLCustomerAutoCollectionConfigResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLGetCustomerAutoCollectionConfigResponse : BCLCustomerAutoCollectionConfigResponse {
+  @objc deinit
+}
+extension SystemSettingCommand {
   public static func createGoMoreSetPersonalInformation(age: UInt8, gender: UInt8, height: UInt8, weight: UInt8, maxHeartRate: Int16?, normalHeartRate: Int8?, maxOxygenUptake: Int8?) -> SystemSettingCommand
   public static func createGoMoreReadPersonalInformation() -> SystemSettingCommand
 }
@@ -327,6 +352,14 @@ public protocol BCLServerResponse {
   public var gomoreRestingHeartRate: UInt8?
   public var gomoreMaxOxygenUptake: UInt8?
   public var isBloodPressureCurveSupported: Bool
+  public var gomoreAuthorizationStatus: UInt8?
+  public var isGoMoreAuthorized: Bool? {
+    get
+  }
+  public var hidServiceEnabledStatus: UInt8?
+  public var isHIDServiceEnabled: Bool? {
+    get
+  }
   public var supportedFeaturesDescription: String {
     get
   }
@@ -420,6 +453,14 @@ public protocol BCLServerResponse {
   public var gomoreRestingHeartRate: UInt8?
   public var gomoreMaxOxygenUptake: UInt8?
   public var isBloodPressureCurveSupported: Bool
+  public var gomoreAuthorizationStatus: UInt8?
+  public var isGoMoreAuthorized: Bool? {
+    get
+  }
+  public var hidServiceEnabledStatus: UInt8?
+  public var isHIDServiceEnabled: Bool? {
+    get
+  }
   public var supportedFeaturesDescription: String {
     get
   }
@@ -525,6 +566,14 @@ public protocol BCLServerResponse {
   public var gomoreRestingHeartRate: UInt8?
   public var gomoreMaxOxygenUptake: UInt8?
   public var isBloodPressureCurveSupported: Bool
+  public var gomoreAuthorizationStatus: UInt8?
+  public var isGoMoreAuthorized: Bool? {
+    get
+  }
+  public var hidServiceEnabledStatus: UInt8?
+  public var isHIDServiceEnabled: Bool? {
+    get
+  }
   public var supportedFeaturesDescription: String {
     get
   }
@@ -802,7 +851,10 @@ extension BCLRingManager {
   public func readPPGRawDataDuration(completion: @escaping (Result<BCLReadPPGRawDataDurationResponse, BCLError>) -> Void)
   public func setAutoCollectionStatus(status: UInt8, completion: @escaping (Result<BCLSetAutoCollectionStatusResponse, BCLError>) -> Void)
   public func readAutoCollectionStatus(completion: @escaping (Result<BCLReadAutoCollectionStatusResponse, BCLError>) -> Void)
+  public func setCustomerAutoCollectionConfig(nightAllowed: Bool, morningAllowed: Bool, afternoonAllowed: Bool, completion: @escaping (Result<BCLSetCustomerAutoCollectionConfigResponse, BCLError>) -> Void)
+  public func getCustomerAutoCollectionConfig(completion: @escaping (Result<BCLGetCustomerAutoCollectionConfigResponse, BCLError>) -> Void)
   public func startBloodOxygen(collectTime: Int, collectFrequency: Int, waveformConfig: Int, progressConfig: Int, completion: @escaping (Result<BCLBloodOxygenResponse, BCLError>) -> Void)
+  public func configBloodOxygenCollectionMode(mode: BCLBloodOxygenCollectionMode, completion: @escaping (Result<BCLBloodOxygenCollectionModeConfigResponse, BCLError>) -> Void)
   public func stopBloodOxygen(completion: @escaping (Result<BCLStopBloodOxygenResponse, BCLError>) -> Void)
   public func startBloodPressure(collectTime: Int, waveformConfig: Int, progressConfig: Int, completion: @escaping (Result<BCLBloodPressureResponse, BCLError>) -> Void)
   public func stopBloodPressure(completion: @escaping (Result<BCLStopBloodPressureResponse, BCLError>) -> Void)
@@ -870,7 +922,7 @@ extension BCLRingManager {
   public func stop(completion: @escaping (Result<BCLTenMeterGameStopResponse, BCLError>) -> Void)
   public func accelerationCalibration(completion: @escaping (Result<BCLTenMeterGameAccelerationCalibrationResponse, BCLError>) -> Void)
   public func controlPCMFormatAudio(isOpen: Bool, completion: @escaping (Result<BCLControlPCMFormatResponse, BCLError>) -> Void)
-  public func controlADPCMFormatAudio(isOpen: Bool, completion: @escaping (Result<BCLControlADPCMFormatResponse, BCLError>) -> Void)
+  public func controlADPCMFormatAudio(mode: BCLADPCMAudioControlMode, isOpen: Bool, completion: @escaping (Result<BCLControlADPCMFormatResponse, BCLError>) -> Void)
   public func setActivePushAudioInfo(audioType: BCLAudioType, completion: @escaping (Result<BCLSetActivePushAudioInfoResponse, BCLError>) -> Void)
   public func getActivePushAudioInfo(completion: @escaping (Result<BCLGetActivePushAudioInfoResponse, BCLError>) -> Void)
   public func ringStartRecording(isOpen: Bool, totalDuration: UInt32, sliceDuration: UInt32, completion: @escaping (Result<BCLRingStartRecordingResponse, BCLError>) -> Void)
@@ -1329,9 +1381,20 @@ public enum BCLAudioType : UInt8 {
     get
   }
 }
+public enum BCLADPCMAudioControlMode : UInt8 {
+  case adpcm
+  case adpcm1Mono
+  case adpcm1Stereo
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
 @_inheritsConvenienceInitializers public class AudioCommand : BCLCommand {
   public static func createControlPCMFormat(isOpen: Bool) -> AudioCommand
   public static func createControlADPCMFormat(isOpen: Bool) -> AudioCommand
+  public static func createControlADPCMFormat(mode: BCLADPCMAudioControlMode, isOpen: Bool) -> AudioCommand
   public static func createSetActivePushAudioInfo(audioType: BCLAudioType) -> AudioCommand
   public static func createGetActivePushAudioInfo() -> AudioCommand
   public static func createRingStartRecording(isOpen: Bool, totalDuration: UInt32, sliceDuration: UInt32) -> AudioCommand
@@ -2284,6 +2347,7 @@ extension BCLCommand {
     public static let goMoreAuth: UInt8
     public static let ppgBloodPressure: UInt8
     public static let ppgBloodPressure_QingHua: UInt8
+    public static let bloodOxygenCollectionModeConfig: UInt8
   }
   public struct SubCmdType {
     public struct Time {
@@ -2316,6 +2380,9 @@ extension BCLCommand {
       public static let push: UInt8
       public static let stop: UInt8
       public static let bloodPressure: UInt8
+    }
+    public struct BloodOxygenCollectionModeConfig {
+      public static let config: UInt8
     }
     public struct PWTT {
       public static let take: UInt8
@@ -2358,6 +2425,7 @@ extension BCLCommand {
       public static let getAutoRecordMode: UInt8
       public static let getFileSystemStatus: UInt8
       public static let requestFileDataResume: UInt8
+      public static let requestFileDataResumeProgress: UInt8
       public static let requestFileDataOneKey: UInt8
       public static let fileUploadResponse: UInt8
       public static let fileUploadProgress: UInt8
@@ -2389,6 +2457,8 @@ extension BCLCommand {
       public static let readAutoCollectionStatus: UInt8
       public static let goMoreSetPersonalInformation: UInt8
       public static let goMoreReadPersonalInformation: UInt8
+      public static let setCustomerAutoCollectionConfig: UInt8
+      public static let getCustomerAutoCollectionConfig: UInt8
     }
     public struct SportMode {
       public static let start: UInt8
@@ -2467,6 +2537,8 @@ extension BCLCommand {
     public struct Audio {
       public static let controlPCMFormat: UInt8
       public static let controlADPCMFormat: UInt8
+      public static let controlADPCM1MonoFormat: UInt8
+      public static let controlADPCM1StereoFormat: UInt8
       public static let setActivePushAudioInfo: UInt8
       public static let getActivePushAudioInfo: UInt8
       public static let ringActivePushAudioComplete: UInt8
@@ -2553,6 +2625,37 @@ public struct BCLBloodOxygenCallbacks {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLStopBloodOxygenResponse : BCLResponse {
+  @objc deinit
+}
+public enum BCLBloodOxygenCollectionMode : UInt8 {
+  case normal
+  case kwd
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum BCLBloodOxygenCollectionModeConfigStatus : UInt8 {
+  case success
+  case failure
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class BloodOxygenCollectionModeConfigCommand : BCLCommand {
+  public static func createConfig(mode: BCLBloodOxygenCollectionMode) -> BloodOxygenCollectionModeConfigCommand
+  override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLBloodOxygenCollectionModeConfigResponse : BCLResponse {
+  public var statusRawValue: UInt8
+  public var status: BCLBloodOxygenCollectionModeConfigStatus?
+  public var isSuccess: Bool {
+    get
+  }
   @objc deinit
 }
 @_inheritsConvenienceInitializers public class TimeCommand : BCLCommand {
@@ -3316,6 +3419,28 @@ public struct BCLDataSyncCallbacks {
   public var errorCode: UInt8?
   @objc deinit
 }
+public enum BCLRingRawFileTypeCode : String {
+  case type1
+  case type2
+  case type3
+  case type4
+  case type5
+  case type6
+  case type7
+  case type8
+  case type9
+  case type10
+  case typeA
+  case typeB
+  case typeC
+  case typeD
+  case typeE
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileListResponse : BCLResponse {
   public var fileTotalCount: Int?
   public var fileIndex: Int?
@@ -3324,6 +3449,7 @@ public struct BCLDataSyncCallbacks {
   public var userId: String?
   public var fileDate: String?
   public var fileType: String?
+  public var rawFileType: BCLRingRawFileTypeCode?
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataResponse : BCLResponse {
@@ -3333,6 +3459,7 @@ public struct BCLDataSyncCallbacks {
   public var currentNumber: Int?
   public var currentLength: Int?
   public var fileType: String?
+  public var rawFileType: BCLRingRawFileTypeCode?
   public var fileDataType1: [(Int, Int, Int)]?
   public var fileDataType2: [Int]?
   public var fileDataType3: [(Int, Int, Int, Int, Int)]?
@@ -3342,6 +3469,10 @@ public struct BCLDataSyncCallbacks {
   public var fileDataType7: (Int64, [(Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)])?
   public var fileDataType8: Data?
   public var fileDataType9: Data?
+  public var fileDataTypeB: Data?
+  public var fileDataTypeC: Data?
+  public var fileDataTypeD: Data?
+  public var fileDataTypeE: Data?
   public var fileDataType10: [(String, String, Int32)]?
   @objc deinit
 }
@@ -3372,6 +3503,16 @@ public struct BCLDataSyncCallbacks {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataResumeResponse : BCLResponse {
+  public enum ResponseType {
+    case fileDataResume(status: Int, startTimestamp: Int64, endTimestamp: Int64)
+    case fileDataResumeProgress(progress: Int)
+    case fileContentData(fileDataResponse: BCLRequestFileDataResponse)
+  }
+  public var responseType: ResponseType?
+  public var rawFileTypeCode: String?
+  public var rawFileType: BCLRingRawFileTypeCode?
+  public var fileOffset: Int32?
+  public var fileName: String?
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLRequestFileDataOneKeyResponse : BCLResponse {
@@ -3392,10 +3533,16 @@ public struct BCLDataSyncCallbacks {
     case fileContentType6(fileContent: [Int]?)
     case fileContentType7(fileSystemStatus: Int, fileSize: Int, totalNumber: Int, currentNumber: Int, currentLength: Int, timestamp: Int64, fileContent: [(green: Int, red: Int, infrared: Int, xAccelerometer: Int, yAccelerometer: Int, zAccelerometer: Int, xGyroscope: Int, yGyroscope: Int, zGyroscope: Int, temp0: Int, temp1: Int, temp2: Int)]?)
     case fileContentType8(fileContent: Data?)
+    case fileContentTypeB(fileContent: Data?)
+    case fileContentTypeD(fileContent: Data?)
     case fileContentType9(fileContent: Data?)
+    case fileContentTypeC(fileContent: Data?)
+    case fileContentTypeE(fileContent: Data?)
     case fileContentType10(fileContent: [(macAddress: String, utcTime: String, laccValue: Int32)]?)
   }
   public var responseType: ResponseType?
+  public var rawFileTypeCode: String?
+  public var rawFileType: BCLRingRawFileTypeCode?
   public var fileType: FileContentType?
   @objc deinit
 }
@@ -3546,6 +3693,9 @@ extension BCLRingSDK.BCLRingManager.NetworkRegion : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLAudioType : Swift.Equatable {}
 extension BCLRingSDK.BCLAudioType : Swift.Hashable {}
 extension BCLRingSDK.BCLAudioType : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLADPCMAudioControlMode : Swift.Equatable {}
+extension BCLRingSDK.BCLADPCMAudioControlMode : Swift.Hashable {}
+extension BCLRingSDK.BCLADPCMAudioControlMode : Swift.RawRepresentable {}
 extension BCLRingSDK.ManufacturerIdentifier : Swift.Equatable {}
 extension BCLRingSDK.ManufacturerIdentifier : Swift.Hashable {}
 extension BCLRingSDK.BCLOTAType : Swift.Equatable {}
@@ -3630,6 +3780,12 @@ extension BCLRingSDK.CommandPriority : Swift.Hashable {}
 extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.Hashable {}
 extension BCLRingSDK.BCLBloodOxygenMeasureStatus : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionMode : Swift.Equatable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionMode : Swift.Hashable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionMode : Swift.RawRepresentable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionModeConfigStatus : Swift.Equatable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionModeConfigStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLBloodOxygenCollectionModeConfigStatus : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.Hashable {}
 extension BCLRingSDK.BCLTemperatureMeasureStatus : Swift.RawRepresentable {}
@@ -3656,6 +3812,9 @@ extension BCLRingSDK.BCLVibrationEffect : Swift.Hashable {}
 extension BCLRingSDK.BCLVibrationEffect : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Equatable {}
 extension BCLRingSDK.BCLDataSyncStatus : Swift.Hashable {}
+extension BCLRingSDK.BCLRingRawFileTypeCode : Swift.Equatable {}
+extension BCLRingSDK.BCLRingRawFileTypeCode : Swift.Hashable {}
+extension BCLRingSDK.BCLRingRawFileTypeCode : Swift.RawRepresentable {}
 extension BCLRingSDK.BCLLogLevel : Swift.Equatable {}
 extension BCLRingSDK.BCLLogLevel : Swift.Hashable {}
 extension BCLRingSDK.BCLLogLevel : Swift.RawRepresentable {}

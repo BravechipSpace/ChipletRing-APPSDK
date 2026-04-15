@@ -278,7 +278,7 @@ class VoiceRecord_VC: UIViewController {
     // MARK: - SDK音频控制
 
     private func controlADPCMFormatAudio(isOpen: Bool) {
-        BCLRingManager.shared.controlADPCMFormatAudio(isOpen: isOpen) { [weak self] result in
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Mono, isOpen: isOpen) { [weak self] result in
             switch result {
             case let .success(response):
                 BDLogger.info("ADPCM音频数据 - 长度: \(response.audioDataLength), 序号: \(response.seq)")

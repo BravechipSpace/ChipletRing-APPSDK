@@ -102,6 +102,10 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
                 BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
                 BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
+                BDLogger.info("GoMore授权状态值(0已授权,1未授权): \(String(describing: response.gomoreAuthorizationStatus))")
+                BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
+                BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
+                BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
             case let .failure(error):
                 switch error {
                 case let .responseParsing(reason):
@@ -214,6 +218,10 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
                 BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
                 BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
+                BDLogger.info("GoMore授权状态值(0已授权,1未授权): \(String(describing: response.gomoreAuthorizationStatus))")
+                BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
+                BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
+                BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
             case let .failure(error):
                 BDLogger.error("连接戒指指令执行-失败: \(error)")
             }
@@ -322,6 +330,10 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore最大心率: \(String(describing: response.gomoreMaxHeartRate))")
                 BDLogger.info("GoMore常态心率: \(String(describing: response.gomoreRestingHeartRate))")
                 BDLogger.info("GoMore最大摄氧量: \(String(describing: response.gomoreMaxOxygenUptake))")
+                BDLogger.info("GoMore授权状态值(0已授权,1未授权): \(String(describing: response.gomoreAuthorizationStatus))")
+                BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
+                BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
+                BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
             case let .failure(error):
                 BDLogger.error("刷新戒指指令执行-失败: \(error)")
             }

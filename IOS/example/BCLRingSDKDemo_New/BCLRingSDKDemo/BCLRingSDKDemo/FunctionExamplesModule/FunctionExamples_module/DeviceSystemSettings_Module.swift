@@ -37,6 +37,10 @@ class DeviceSystemSettings_Module: BaseFunction_Module {
             showSetUserInfoDialog()
         case 68: // 读取个人信息
             readPersonalInfo()
+        case 69: // 设置客户定制自动采集配置
+            showCustomerAutoCollectionConfigDialog()
+        case 70: // 读取客户定制自动采集配置
+            getCustomerAutoCollectionConfig()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -265,5 +269,93 @@ class DeviceSystemSettings_Module: BaseFunction_Module {
                 self.showError("获取失败：\(error)")
             }
         }
+    }
+
+    /// 显示客户定制自动采集配置弹窗
+    private func showCustomerAutoCollectionConfigDialog() {
+        let alert = UIAlertController(title: "设置客户定制自动采集配置",
+                                      message: "请输入 0 或 1，0=禁止，1=允许",
+                                      preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "夜间自动采集（0/1）"
+            textField.keyboardType = .numberPad
+            textField.text = "1"
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "上午自动采集（0/1）"
+            textField.keyboardType = .numberPad
+            textField.text = "1"
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "下午自动采集（0/1）"
+            textField.keyboardType = .numberPad
+            textField.text = "1"
+        }
+        let setAction = UIAlertAction(title: "设置", style: .default) { _ in
+            guard let nightText = alert.textFields?[0].text,
+                  let morningText = alert.textFields?[1].text,
+                  let afternoonText = alert.textFields?[2].text,
+                  let nightValue = Int(nightText),
+                  let morningValue = Int(morningText),
+                  let afternoonValue = Int(afternoonText),
+                  [0, 1].contains(nightValue),
+                  [0, 1].contains(morningValue),
+                  [0, 1].contains(afternoonValue) else {
+                self.showError("请输入有效配置：0=禁止，1=允许")
+                return
+            }
+            self.setCustomerAutoCollectionConfig(nightAllowed: nightValue == 1,
+                                                 morningAllowed: morningValue == 1,
+                                                 afternoonAllowed: afternoonValue == 1)
+        }
+        alert.addAction(setAction)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 69 - 设置客户定制自动采集配置
+    private func setCustomerAutoCollectionConfig(nightAllowed: Bool,
+                                                 morningAllowed: Bool,
+                                                 afternoonAllowed: Bool) {
+        BCLRingManager.shared.setCustomerAutoCollectionConfig(nightAllowed: nightAllowed,
+                                                              morningAllowed: morningAllowed,
+                                                              afternoonAllowed: afternoonAllowed) { result in
+            switch result {
+            case let .success(response):
+                let message = self.customerAutoCollectionConfigMessage(response)
+                BDLogger.info("设置客户定制自动采集配置成功: \(message)")
+                self.showSuccess("设置成功\n\(message)")
+            case let .failure(error):
+                BDLogger.error("设置客户定制自动采集配置失败: \(error)")
+                self.showError("设置客户定制自动采集配置失败")
+            }
+        }
+    }
+
+    /// 70 - 读取客户定制自动采集配置
+    private func getCustomerAutoCollectionConfig() {
+        BCLRingManager.shared.getCustomerAutoCollectionConfig { result in
+            switch result {
+            case let .success(response):
+                let message = self.customerAutoCollectionConfigMessage(response)
+                BDLogger.info("读取客户定制自动采集配置成功: \(message)")
+                self.showSuccess(message)
+            case let .failure(error):
+                BDLogger.error("读取客户定制自动采集配置失败: \(error)")
+                self.showError("读取客户定制自动采集配置失败")
+            }
+        }
+    }
+
+    private func customerAutoCollectionConfigMessage(_ response: BCLCustomerAutoCollectionConfigResponse) -> String {
+        return """
+        夜间：\(autoCollectionAllowedDescription(response.nightAllowed))(\(response.nightStatus))
+        上午：\(autoCollectionAllowedDescription(response.morningAllowed))(\(response.morningStatus))
+        下午：\(autoCollectionAllowedDescription(response.afternoonAllowed))(\(response.afternoonStatus))
+        """
+    }
+
+    private func autoCollectionAllowedDescription(_ allowed: Bool) -> String {
+        return allowed ? "允许" : "禁止"
     }
 }
