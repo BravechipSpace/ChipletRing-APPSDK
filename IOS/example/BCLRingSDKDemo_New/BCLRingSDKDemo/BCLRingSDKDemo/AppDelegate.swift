@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainTabBarController = BaseTabBar_VC()
         window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
+        
+        BCLRingManager.shared.commandTimeout = 8;
 
         //  检查蓝牙权限
         BCLRingManager.shared.checkBluetoothPermission { auth in

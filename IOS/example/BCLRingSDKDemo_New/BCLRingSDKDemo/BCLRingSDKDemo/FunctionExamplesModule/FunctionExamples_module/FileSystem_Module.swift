@@ -54,6 +54,8 @@ class FileSystem_Module: BaseFunction_Module {
             startSportMode()
         case 389: // 389 - 采集数据配置信息获取（部分固件支持）
             getStartSportModeConfigInfo()
+        case 390: // 390 - 请求文件数据断点续传
+            showRequestFileDataResumeDialog()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -196,11 +198,22 @@ class FileSystem_Module: BaseFunction_Module {
                 BDLogger.info("文件数据-总包数: \(response.totalNumber ?? 0)")
                 BDLogger.info("文件数据-当前包号: \(response.currentNumber ?? 0)")
                 BDLogger.info("文件数据-当前包长度: \(response.currentLength ?? 0)")
-                guard let type = response.fileType else {
+                let typeCode = (response.rawFileType?.rawValue ?? response.fileType ?? "").uppercased()
+                guard !typeCode.isEmpty else {
                     BDLogger.info("未知的文件类型")
                     return
                 }
-                switch type {
+
+                func logBinaryAudio(_ data: Data?, label: String) {
+                    if let data = data {
+                        let preview = data.map { String(format: "%02x", $0) }
+                        BDLogger.info("文件数据:\(label)，大小:\(data.count)字节，字节内容:\(preview)")
+                    } else {
+                        BDLogger.info("文件数据:\(label)：无数据")
+                    }
+                }
+
+                switch typeCode {
                 case "1": BDLogger.info("文件数据:三轴数据-数据：\(response.fileDataType1 ?? [])")
                 case "2": BDLogger.info("文件数据:六轴数据-数据：\(response.fileDataType2 ?? [])")
                 case "3": BDLogger.info("文件数据:PPG数据红外+红色+x加速度+y加速度+z加速度-数据：\(response.fileDataType3 ?? [])")
@@ -216,22 +229,18 @@ class FileSystem_Module: BaseFunction_Module {
                     BDLogger.info("文件内容----时间戳：\(response.fileDataType7?.0 ?? 0)")
                     BDLogger.info("文件内容----数据：\(response.fileDataType7?.1 ?? [])")
                 case "8":
-                    // adpcm音频
-                    if let data = response.fileDataType8 {
-                        let preview = data.map { String(format: "%02x", $0) }
-                        BDLogger.info("文件数据:adpcm音频，大小:\(data.count)字节，字节内容:\(preview)")
-                    } else {
-                        BDLogger.info("文件数据:adpcm音频：无数据")
-                    }
+                    logBinaryAudio(response.fileDataType8, label: "adpcm音频")
+                case "B":
+                    logBinaryAudio(response.fileDataTypeB, label: "按键捕获adpcm音频")
+                case "D":
+                    logBinaryAudio(response.fileDataTypeD, label: "adpcm 8K单麦音频")
                 case "9":
-                    // opus音频
-                    if let data = response.fileDataType9 {
-                        let preview = data.map { String(format: "%02x", $0) }
-                        BDLogger.info("文件数据:opus音频，大小:\(data.count)字节，字节内容:\(preview)")
-                    } else {
-                        BDLogger.info("文件数据:opus音频：无数据")
-                    }
-                case "10", "A", "a":
+                    logBinaryAudio(response.fileDataType9, label: "opus音频")
+                case "C":
+                    logBinaryAudio(response.fileDataTypeC, label: "按键捕获opus音频")
+                case "E":
+                    logBinaryAudio(response.fileDataTypeE, label: "opus 8K单麦音频")
+                case "10", "A":
                     if let climbingData = response.fileDataType10 {
                         for (macAddress, utcTime, laccValue) in climbingData {
                             BDLogger.info("文件数据:攀岩项目数据，MAC:\(macAddress)，时间:\(utcTime)，LACC:\(laccValue)")
@@ -298,6 +307,40 @@ class FileSystem_Module: BaseFunction_Module {
         }
     }
 
+    // 390 - 请求文件数据断点续传
+    private func requestFileDataResume(fileOffset: Int32, fileName: String) {
+        BCLRingManager.shared.requestFileDataResume(fileOffset: fileOffset, fileName: fileName) { [weak self] res in
+            guard let self = self else { return }
+            switch res {
+            case let .success(response):
+                guard let responseType = response.responseType else {
+                    BDLogger.warning("断点续传响应为空")
+                    return
+                }
+
+                switch responseType {
+                case let .fileDataResume(status, startTimestamp, endTimestamp):
+                    BDLogger.info("断点续传状态响应(3618): status=\(status), start=\(startTimestamp), end=\(endTimestamp)")
+                    if status == 2 {
+                        self.showSuccess("断点续传完成")
+                    }
+                case let .fileDataResumeProgress(progress):
+                    BDLogger.info("断点续传进度响应(3619): progress=\(progress)%")
+                    if progress >= 100 {
+                        self.showSuccess("断点续传进度100%，上传结束")
+                    }
+                case let .fileContentData(fileDataResponse):
+                    let typeCode = (fileDataResponse.rawFileType?.rawValue ?? fileDataResponse.fileType ?? "").uppercased()
+                    BDLogger.info("断点续传文件内容响应(3611): type=\(typeCode), total=\(fileDataResponse.totalNumber ?? 0), current=\(fileDataResponse.currentNumber ?? 0), length=\(fileDataResponse.currentLength ?? 0)")
+                }
+
+            case let .failure(error):
+                BDLogger.error("请求文件数据断点续传失败: \(error)")
+                self.showError("请求文件数据断点续传失败: \(error.localizedDescription)")
+            }
+        }
+    }
+
     // MARK: - Dialog Methods
 
     /// 显示文件列表对话框
@@ -350,6 +393,52 @@ class FileSystem_Module: BaseFunction_Module {
         modalPresentation_VC.isModal = true
         modalPresentation_VC.contentView = inputDialog
         modalPresentation_VC.showWith(animated: true)
+    }
+
+    /// 断点续传参数输入Dialog
+    private func showRequestFileDataResumeDialog() {
+        guard let viewController = viewController else { return }
+
+        let alert = UIAlertController(
+            title: "文件断点续传",
+            message: "请输入文件名与偏移量（字节）",
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { textField in
+            textField.placeholder = "文件名，例如：010203040506_2025_6_18:13:45:20_8.txt"
+        }
+
+        alert.addTextField { textField in
+            textField.placeholder = "偏移量（Int32）"
+            textField.text = "0"
+            textField.keyboardType = .numbersAndPunctuation
+        }
+
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "确认", style: .default) { [weak self, weak alert] _ in
+            guard let self = self else { return }
+            guard let textFields = alert?.textFields, textFields.count == 2 else { return }
+
+            guard let fileName = textFields[0].text?.trimmingCharacters(in: .whitespacesAndNewlines), !fileName.isEmpty else {
+                self.showError("文件名不能为空")
+                return
+            }
+
+            guard let offsetText = textFields[1].text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let offsetInt64 = Int64(offsetText),
+                  offsetInt64 >= Int64(Int32.min), offsetInt64 <= Int64(Int32.max)
+            else {
+                self.showError("偏移量必须是 Int32 范围内的整数")
+                return
+            }
+
+            let fileOffset = Int32(offsetInt64)
+            BDLogger.info("开始请求断点续传，fileName=\(fileName), fileOffset=\(fileOffset)")
+            self.requestFileDataResume(fileOffset: fileOffset, fileName: fileName)
+        })
+
+        viewController.present(alert, animated: true)
     }
 
     /// 开始采集参数配置对话框

@@ -42,6 +42,14 @@ class AudioTransmission_Module: BaseFunction_Module {
             openStereoAdpcmDecodePage()
         case 370: // 370 - 单声道解码-adpcm格式（Z5J定制）
             openMonoAdpcmDecodePage()
+        case 371: // 371 - 开始音频传输-adpcm_1单声道
+            startAudioTransmissionADPCM1Mono()
+        case 372: // 372 - 停止音频传输-adpcm_1单声道
+            stopAudioTransmissionADPCM1Mono()
+        case 373: // 373 - 开始音频传输-adpcm_1双声道
+            startAudioTransmissionADPCM1Stereo()
+        case 374: // 374 - 停止音频传输-adpcm_1双声道
+            stopAudioTransmissionADPCM1Stereo()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -82,7 +90,7 @@ class AudioTransmission_Module: BaseFunction_Module {
 
     // 363 - 开始音频传输-adpcm格式
     private func startAudioTransmissionADPCM() {
-        BCLRingManager.shared.controlADPCMFormatAudio(isOpen: true) { res in
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm, isOpen: true) { res in
             switch res {
             case let .success(response):
                 BDLogger.info("ADPCM格式音频传输-音频数据长度: \(response.audioDataLength)")
@@ -98,7 +106,7 @@ class AudioTransmission_Module: BaseFunction_Module {
 
     // 364 - 停止音频传输-adpcm格式
     private func stopAudioTransmissionADPCM() {
-        BCLRingManager.shared.controlADPCMFormatAudio(isOpen: false) { res in
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm, isOpen: false) { res in
             switch res {
             case .success:
                 BDLogger.info("关闭ADPCM格式音频传输-成功")
@@ -107,6 +115,68 @@ class AudioTransmission_Module: BaseFunction_Module {
             case let .failure(error):
                 BDLogger.error("关闭ADPCM格式音频传输-失败: \(error)")
                 self.showError("关闭ADPCM格式音频传输-失败: \(error)")
+            }
+        }
+    }
+
+    // 371 - 开始音频传输-adpcm_1单声道
+    private func startAudioTransmissionADPCM1Mono() {
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Mono, isOpen: true) { res in
+            switch res {
+            case let .success(response):
+                BDLogger.info("ADPCM_1单声道音频传输-音频数据长度: \(response.audioDataLength)")
+                BDLogger.info("ADPCM_1单声道音频传输-音频数据序号: \(response.seq)")
+                BDLogger.info("ADPCM_1单声道音频传输-音频数据: \(response.audioData)")
+                self.showLoading("ADPCM_1单声道音频传输-\n音频数据长度: \(response.audioDataLength)\n音频数据序号: \(response.seq)\n音频数据: \(response.audioData)", userInteractionEnabled: false)
+            case let .failure(error):
+                BDLogger.error("开启ADPCM_1单声道音频传输失败: \(error)")
+                self.showError("开启ADPCM_1单声道音频传输失败: \(error)")
+            }
+        }
+    }
+
+    // 372 - 停止音频传输-adpcm_1单声道
+    private func stopAudioTransmissionADPCM1Mono() {
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Mono, isOpen: false) { res in
+            switch res {
+            case .success:
+                BDLogger.info("关闭ADPCM_1单声道音频传输-成功")
+                self.hideLoading()
+                self.showSuccess("关闭ADPCM_1单声道音频传输-成功")
+            case let .failure(error):
+                BDLogger.error("关闭ADPCM_1单声道音频传输-失败: \(error)")
+                self.showError("关闭ADPCM_1单声道音频传输-失败: \(error)")
+            }
+        }
+    }
+
+    // 373 - 开始音频传输-adpcm_1双声道
+    private func startAudioTransmissionADPCM1Stereo() {
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Stereo, isOpen: true) { res in
+            switch res {
+            case let .success(response):
+                BDLogger.info("ADPCM_1双声道音频传输-音频数据长度: \(response.audioDataLength)")
+                BDLogger.info("ADPCM_1双声道音频传输-音频数据序号: \(response.seq)")
+                BDLogger.info("ADPCM_1双声道音频传输-音频数据: \(response.audioData)")
+                self.showLoading("ADPCM_1双声道音频传输-\n音频数据长度: \(response.audioDataLength)\n音频数据序号: \(response.seq)\n音频数据: \(response.audioData)", userInteractionEnabled: false)
+            case let .failure(error):
+                BDLogger.error("开启ADPCM_1双声道音频传输失败: \(error)")
+                self.showError("开启ADPCM_1双声道音频传输失败: \(error)")
+            }
+        }
+    }
+
+    // 374 - 停止音频传输-adpcm_1双声道
+    private func stopAudioTransmissionADPCM1Stereo() {
+        BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Stereo, isOpen: false) { res in
+            switch res {
+            case .success:
+                BDLogger.info("关闭ADPCM_1双声道音频传输-成功")
+                self.hideLoading()
+                self.showSuccess("关闭ADPCM_1双声道音频传输-成功")
+            case let .failure(error):
+                BDLogger.error("关闭ADPCM_1双声道音频传输-失败: \(error)")
+                self.showError("关闭ADPCM_1双声道音频传输-失败: \(error)")
             }
         }
     }
@@ -203,8 +273,8 @@ class AudioTransmission_Module: BaseFunction_Module {
         let stereoAdpcmDecodeVC = StereoAdpcmDecode_VC()
         vc.navigationController?.pushViewController(stereoAdpcmDecodeVC, animated: true)
     }
-    
-    // 370 - 单声道解码-adpcm格式（Z5J定制）
+
+    // 370 - 单声道解码-adpcm格式
     private func openMonoAdpcmDecodePage() {
         guard let vc = viewController else {
             BDLogger.error("当前ViewController为空")

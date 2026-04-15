@@ -26,6 +26,8 @@ class MeasurementBloodOxygen_Module: BaseFunction_Module {
             showBloodOxygenConfigDialog()
         case 87: // 主动测量-停止血氧测量
             stopBloodOxygenMeasurement()
+        case 88: // 配置血氧采集模式
+            showBloodOxygenCollectionModeConfigDialog()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -173,6 +175,61 @@ class MeasurementBloodOxygen_Module: BaseFunction_Module {
                 BDLogger.error("停止血氧测量失败: \(error)")
                 self.showError("停止血氧测量失败: \(error)")
             }
+        }
+    }
+
+    /// 显示血氧采集模式配置弹窗
+    private func showBloodOxygenCollectionModeConfigDialog() {
+        let alert = UIAlertController(title: "配置血氧采集模式",
+                                      message: "请选择血氧采集模式",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "正常使用模式", style: .default) { _ in
+            self.configBloodOxygenCollectionMode(.normal)
+        })
+        alert.addAction(UIAlertAction(title: "KWD模式", style: .default) { _ in
+            self.configBloodOxygenCollectionMode(.kwd)
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 88 - 配置血氧采集模式
+    private func configBloodOxygenCollectionMode(_ mode: BCLBloodOxygenCollectionMode) {
+        BCLRingManager.shared.configBloodOxygenCollectionMode(mode: mode) { result in
+            switch result {
+            case let .success(response):
+                let modeText = self.bloodOxygenCollectionModeDescription(mode)
+                let statusText = self.bloodOxygenCollectionModeConfigStatusDescription(response)
+                BDLogger.info("配置血氧采集模式完成: \(modeText), 结果: \(statusText)(\(response.statusRawValue))")
+                if response.isSuccess {
+                    self.showSuccess("配置成功\n模式：\(modeText)")
+                } else {
+                    self.showError("配置失败\n模式：\(modeText)\n结果：\(statusText)(\(response.statusRawValue))")
+                }
+            case let .failure(error):
+                BDLogger.error("配置血氧采集模式失败: \(error)")
+                self.showError("配置血氧采集模式失败")
+            }
+        }
+    }
+
+    private func bloodOxygenCollectionModeDescription(_ mode: BCLBloodOxygenCollectionMode) -> String {
+        switch mode {
+        case .normal:
+            return "正常使用模式"
+        case .kwd:
+            return "KWD模式"
+        }
+    }
+
+    private func bloodOxygenCollectionModeConfigStatusDescription(_ response: BCLBloodOxygenCollectionModeConfigResponse) -> String {
+        switch response.status {
+        case .success:
+            return "成功"
+        case .failure:
+            return "失败"
+        case .none:
+            return "未知"
         }
     }
 }

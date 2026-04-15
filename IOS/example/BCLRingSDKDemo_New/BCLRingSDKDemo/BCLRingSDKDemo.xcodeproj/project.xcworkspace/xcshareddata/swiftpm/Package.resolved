@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jessesquires/Foil",
       "state" : {
-        "revision" : "b7839568d23a05614d97d053a450ca88541fe4a5",
-        "version" : "6.0.0"
+        "revision" : "251c7cef038641ab7a46455797b7c3cb51b99824",
+        "version" : "6.1.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveX/RxSwift",
       "state" : {
-        "revision" : "5dd1907d64f0d36f158f61a466bab75067224893",
-        "version" : "6.9.0"
+        "revision" : "132aea4f236ccadc51590b38af0357a331d51fa2",
+        "version" : "6.10.2"
       }
     },
     {
