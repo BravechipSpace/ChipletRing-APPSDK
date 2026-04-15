@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
             if (device == null || TextUtils.isEmpty(device.getName())) {
                 return;
             }
-            Logger.show("leScanCallback",device.getName());
+
 
             //是否符合条件，符合条件，会返回戒指设备信息
             BleDeviceInfo bleDeviceInfo = LogicalApi.getBleDeviceInfoWhenBleScan(device, rssi, bytes,false);

@@ -552,7 +552,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void success() {
                     postView("\n读取记录完成");
-                    Logger.show("READ_HISTORY", GsonUtils.beanToJson(historyDataBeanList));
+                    //Logger.show("READ_HISTORY", GsonUtils.beanToJson(historyDataBeanList));
                     ImageSaverUtilLib.saveImageToInternalStorage(App.getInstance(), GsonUtils.beanToJson(historyDataBeanList), "LM", "history.txt", false);
                 }
 

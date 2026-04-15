@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 8
-        versionName "2.0.7"
+        versionCode 9
+        versionName "2.0.8"
 
         applicationVariants.all { variant ->
             variant.outputs.all {
