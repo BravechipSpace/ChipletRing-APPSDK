@@ -207,13 +207,13 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         }
 
         if(v.getId()== R.id.bt_set_audio_type){
-            LmAPILite.CONTROL_AUDIO_ADPCM((byte)0x01,audiolistenerLite); //0 pcm, 1 adpcm
+            LmAPILite.CONTROL_AUDIO_ADPCM((byte)0x01,audiolistenerLite);
         }
         if(v.getId()== R.id.bt_get_audio_type){
             LmAPILite.GET_CONTROL_AUDIO_ADPCM(audiolistenerLite);
         }
         if(v.getId()== R.id.bt_stop_audio){
-            LmAPILite.CONTROL_AUDIO_ADPCM((byte)0x0,audiolistenerLite); //0 pcm, 1 adpcm
+            LmAPILite.CONTROL_AUDIO_ADPCM((byte)0x0,audiolistenerLite);
         }
 
 
