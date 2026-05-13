@@ -23,6 +23,7 @@ import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.IFileListListener;
 import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
+import com.lm.sdk.inter.IKeyDownListener;
 import com.lm.sdk.inter.IRealTimePPGListener;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.inter.ITempListener;
@@ -152,6 +153,30 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         findViewById(R.id.bt_star_ppg).setOnClickListener(this);
         findViewById(R.id.bt_stop_ppg).setOnClickListener(this);
         findViewById(R.id.bt_testGomore).setOnClickListener(this);
+        findViewById(R.id.btn_touch_test_open).setOnClickListener(this);
+        findViewById(R.id.btn_touch_test_close).setOnClickListener(this);
+
+
+        /**
+         * 获取戒指主动推送的按键信息
+         * @param key
+         * 0x0:长按
+         * 0x1:单击
+         * 0x2:双击
+         * 0x3:三击
+         * 0x4:上滑
+         * 0x5:下滑
+         * 0x6:左滑
+         * 0x7:右滑
+         */
+        LmAPILite.KEY_DOWN_LISTENER(new IKeyDownListener() {
+            @Override
+            public void ringPushKeyDownResult(int key) {
+
+                postView("触摸测试："+key+"\n");
+            }
+        });
+
     }
 
 
@@ -483,6 +508,18 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
             });
 
         }
+
+        if(v.getId()==R.id.btn_touch_test_open){
+
+            LmAPILite.OPEN_TOUCH_TEST();
+
+        }
+        if(v.getId()==R.id.btn_touch_test_close){
+
+            LmAPILite.CLOSE_TOUCH_TEST();
+
+        }
+
 
     }
 
