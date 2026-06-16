@@ -168,7 +168,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         LmAPILite.SET_BATTERY_PUSH_LISTENER(new IBatteryPushListenerLite() {
             @Override
             public void battery_push(int electricity, long remainingBatteryLife, int chargingStatus) {
-                postView("电量推送\n"+"电量："+electricity+",续航:"+remainingBatteryLife+"秒"+",充电状态:"+chargingStatus);
+                postView("\n电量推送\n"+"电量："+electricity+",续航:"+remainingBatteryLife+"秒"+",充电状态:"+chargingStatus);
             }
         });
     }
@@ -426,7 +426,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 @Override
                 public void waveformData(int serialNumber, int numberOfData, String waveformData) {
-                    postView("\n波形数据：" + waveformData);
+                   // postView("\n波形数据：" + waveformData);
                 }
 
                 @Override
@@ -464,7 +464,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
                 @Override
                 public void waveformData(int seq, int number, String waveData) {
-                    tv_result.setText(waveData);
+                   // tv_result.setText(waveData);
                 }
 
                 @Override
