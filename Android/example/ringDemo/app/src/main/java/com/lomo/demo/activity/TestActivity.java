@@ -622,14 +622,16 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             postView("\n获取序列号");
             LmAPILite.GET_SN(new ISNListener() {
                 @Override
-                public void getSn(String sn) {
-                    postView("\n获取序列号:" + sn);
+                public void getInfo(String sn) {
+
                 }
 
                 @Override
-                public void setSn(boolean success) {
+                public void setInfo(boolean success) {
 
                 }
+
+
             });
 
         }

@@ -95,13 +95,14 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
     private IAudioListenerLite audiolistenerLite = new IAudioListenerLite() {
 
 
+
         @Override
-        public void controlAudioResult(byte[] bytes, int audioType) {
+        public void controlAudioResult(byte[] bytes, int audioType, int samplingFrequency, int audioAccuracy) {
             postView("\n音频长度"+bytes.length+",类型1单声道2双声道："+audioType);
         }
 
         @Override
-        public void controlAudioRawDataResult(byte[] bytes) {
+        public void controlAudioRawDataResult(int seq, byte[] bytes) {
 
         }
 
@@ -372,19 +373,12 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
                 @Override
                 public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
                     postView("\nGET_FILE_LIST：" + "fileCount：" + fileCount + ",fileIndex：" + fileIndex + ",fileSize：" + fileSize + ",fileName：" + fileName);
-                    //取其中一个测试，填入自己读取到的数据，EDB435685884_F53D0B68_8.txt只是个demo
-                    if (fileName.equals("EDB435685884_F53D0B68_8.txt")) {
+                    //取其中一个测试，填入自己读取到的数据，010203040506_2026_07_02:13:07:12_8.bin只是个demo
+                    if (fileName.equals("010203040506_2026_07_02:13:07:12_8.bin")) {
                         fileNameByte = rawDataByte;
                     }
 
-                    // 去掉文件扩展名
-                    String withoutExtension = fileName.substring(0, fileName.lastIndexOf(".txt"));
 
-                    // 分割字符串
-                    String[] parts = withoutExtension.split("_");
-
-                    // 获取最后一个部分，即 "8"
-                    String result = parts[parts.length - 1];
                 }
 
                 @Override
@@ -406,9 +400,9 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         if(v.getId()==R.id.bt_file_content) {
 
             /**
-             * 类型和文件名的最后一部分保持一致，EDB435685884_10FF0A68_8.txt，类型是8
+             * 类型和文件名的最后一部分保持一致，010203040506_2026_07_02:13:07:12_8.bin，类型是8
              */
-            LmAPILite.GET_FILE_CONTENT(8, fileNameByte, new IFileListListener() {
+            LmAPILite.GET_FILE_CONTENT("8", fileNameByte, new IFileListListener() {
                 @Override
                 public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
                 }
