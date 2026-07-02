@@ -26,6 +26,8 @@ class HIDFunction_Module: BaseFunction_Module {
             getHIDFunctionCode()
         case 122:
             getCurrentHIDMode()
+        case 123:
+            presentSetHIDModeDialog()
         case 129:
             setGestureDialog()
         case 130:
@@ -76,17 +78,93 @@ class HIDFunction_Module: BaseFunction_Module {
 
     /// 122 - 获取当前HID模式
     private func getCurrentHIDMode() {
-        BCLRingManager.shared.getCurrentHIDMode { res in
+        showLoading("读取中...")
+        BCLRingManager.shared.getCurrentHIDMode { [weak self] res in
+            guard let self = self else { return }
+            self.hideLoading()
+
             switch res {
             case let .success(response):
+                let touchModeValue = String(format: "0x%02X", response.touchHIDMode.rawValue)
+                let gestureModeValue = String(format: "0x%02X", response.gestureHIDMode.rawValue)
+                let systemTypeValue = String(format: "0x%02X", response.systemType.rawValue)
                 BDLogger.info("获取当前HID模式成功: \(response)")
-                BDLogger.info("触摸模式: \(response.touchHIDMode)")
-                BDLogger.info("手势模式: \(response.gestureHIDMode)")
-                BDLogger.info("系统类型: \(response.systemType)")
+                BDLogger.info("触摸模式: \(touchModeValue) - \(response.touchHIDMode.description)")
+                BDLogger.info("手势模式: \(gestureModeValue) - \(response.gestureHIDMode.description)")
+                BDLogger.info("系统类型: \(systemTypeValue) - \(response.systemType.description)")
+
+                let message = """
+                触摸模式: \(touchModeValue) - \(response.touchHIDMode.description)
+                手势模式: \(gestureModeValue) - \(response.gestureHIDMode.description)
+                系统类型: \(systemTypeValue) - \(response.systemType.description)
+                """
+                self.showInfoAlert(title: "当前HID模式", message: message)
 
             case let .failure(error):
                 BDLogger.error("获取当前HID模式失败: \(error)")
                 self.showError("获取当前HID模式失败: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    /// 123 - 设置HID触摸模式
+    private func presentSetHIDModeDialog() {
+        guard let viewController = viewController else { return }
+
+        let touchModes: [BCLTouchHIDMode] = [
+            .videoMode,
+            .photoMode,
+            .musicMode,
+            .pptMode,
+            .audioUploadMode,
+            .doubleTapAudioUploadMode,
+            .allEnabledMode,
+            .disabled,
+        ]
+        let alert = UIAlertController(title: "设置HID触摸模式", message: "请选择触摸模式", preferredStyle: .alert)
+        for mode in touchModes {
+            let rawValue = String(format: "0x%02X", mode.rawValue)
+            alert.addAction(UIAlertAction(title: "\(rawValue) - \(mode.description)", style: .default) { [weak self] _ in
+                self?.setHIDMode(touchMode: mode)
+            })
+        }
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController.present(alert, animated: true)
+    }
+
+    private func setHIDMode(touchMode: BCLTouchHIDMode) {
+        let manager = BCLRingManager.shared
+        let rawValue = String(format: "0x%02X", touchMode.rawValue)
+
+        if touchMode == .audioUploadMode || touchMode == .doubleTapAudioUploadMode || touchMode == .allEnabledMode {
+            manager.hidTouchAudioDataBlock = { dataLength, seq, audioData, isEnd in
+                BDLogger.info("HID触摸音频数据: 长度=\(dataLength), 包序号=\(seq), 是否结束=\(isEnd), 数据=\(audioData)")
+            }
+        } else {
+            manager.hidTouchAudioDataBlock = nil
+        }
+
+        showLoading("设置中...")
+        manager.setHIDMode(touchMode: Int(touchMode.rawValue),
+                           gestureMode: Int(BCLGestureHIDMode.disabled.rawValue),
+                           systemType: Int(BCLSystemTypeHIDMode.iOS.rawValue),
+                           deviceModelName: manager.getMobileDeviceModelName(),
+                           screenHeightPixel: manager.getMobileDeviceScreenHeightPixel(),
+                           screenWidthPixel: manager.getMobileDeviceScreenWidthPixel()) { [weak self] result in
+            guard let self = self else { return }
+            self.hideLoading()
+
+            switch result {
+            case let .success(response):
+                BDLogger.info("设置HID触摸模式完成: \(rawValue) - \(touchMode.description), status=\(response.status)")
+                if response.status == 1 {
+                    self.showSuccess("已设置: \(touchMode.description)")
+                } else {
+                    self.showError("设置HID触摸模式失败")
+                }
+            case let .failure(error):
+                BDLogger.error("设置HID触摸模式失败: \(error)")
+                self.showError("设置HID触摸模式失败: \(error.localizedDescription)")
             }
         }
     }

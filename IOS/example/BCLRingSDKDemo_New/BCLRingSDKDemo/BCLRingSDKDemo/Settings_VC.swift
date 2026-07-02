@@ -14,6 +14,7 @@ import BCLRingSDK
 enum SettingItemType {
     case deviceList
     case logViewer
+    case centralManagerConfiguration
     case about
     case clearCache
     case sdkVersion
@@ -142,7 +143,17 @@ class Settings_VC: UIViewController {
 //            ]
 //        ]
         
-        settingSections = []
+        settingSections = [
+            [
+                SettingItem(
+                    type: .centralManagerConfiguration,
+                    title: "CBCentralManager初始化配置",
+                    subtitle: "查看queue/options配置示例",
+                    icon: "antenna.radiowaves.left.and.right",
+                    accessoryType: .disclosureIndicator
+                )
+            ]
+        ]
 
         tableView.reloadData()
     }
@@ -156,6 +167,9 @@ class Settings_VC: UIViewController {
 
         case .logViewer:
             openLogViewer()
+
+        case .centralManagerConfiguration:
+            SDKCentralManagerConfigurationExample.presentStatus(from: self)
 
         case .clearCache:
             clearCache()

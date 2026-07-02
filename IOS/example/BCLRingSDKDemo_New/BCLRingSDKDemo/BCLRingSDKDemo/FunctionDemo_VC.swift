@@ -265,6 +265,7 @@ class FunctionDemo_VC: UIViewController {
             // HID功能 (121-130)
             FunctionDemoModel(id: 121, title: "获取HID功能码", category: .hidControl),
             FunctionDemoModel(id: 122, title: "获取当前HID模式", category: .hidControl),
+            FunctionDemoModel(id: 123, title: "设置HID触摸模式", category: .hidControl),
             FunctionDemoModel(id: 129, title: "手势功能开启(Z4I定制)", category: .hidControl),
             FunctionDemoModel(id: 130, title: "手势功能配置读取(Z4I定制)", category: .hidControl),
             FunctionDemoModel(id: 128, title: "刷新蓝牙服务相关信息(Z4I定制)", category: .hidControl),
@@ -374,6 +375,11 @@ class FunctionDemo_VC: UIViewController {
             // 其他相关指令（2000-3000）
             FunctionDemoModel(id: 2001, title: "设置SN码", category: .otherCommands),
             FunctionDemoModel(id: 2002, title: "获取SN码", category: .otherCommands),
+            FunctionDemoModel(id: 2003, title: "LED状态指示灯校验", category: .otherCommands),
+            FunctionDemoModel(id: 2004, title: "读取Touch Button ID", category: .otherCommands),
+            FunctionDemoModel(id: 2005, title: "读取电池AD采样值", category: .otherCommands),
+            FunctionDemoModel(id: 2006, title: "设置Shipmode（运输模式）", category: .otherCommands),
+            FunctionDemoModel(id: 2007, title: "复位测试", category: .otherCommands),
 
             // 测试功能，需要调整。
 //            FunctionDemoModel(id: 202, title: "PWTT", category: .measurementBloodPressure),

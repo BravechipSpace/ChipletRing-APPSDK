@@ -24837,6 +24837,84 @@
           },
           {
             "kind": "Function",
+            "name": "createReadBatteryADSampleValue",
+            "printedName": "createReadBatteryADSampleValue()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FixtureTestingCommand",
+                "printedName": "BCLRingSDK.FixtureTestingCommand",
+                "usr": "s:10BCLRingSDK21FixtureTestingCommandC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK21FixtureTestingCommandC30createReadBatteryADSampleValueACyFZ",
+            "mangledName": "$s10BCLRingSDK21FixtureTestingCommandC30createReadBatteryADSampleValueACyFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "createSetShipmode",
+            "printedName": "createSetShipmode()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FixtureTestingCommand",
+                "printedName": "BCLRingSDK.FixtureTestingCommand",
+                "usr": "s:10BCLRingSDK21FixtureTestingCommandC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK21FixtureTestingCommandC17createSetShipmodeACyFZ",
+            "mangledName": "$s10BCLRingSDK21FixtureTestingCommandC17createSetShipmodeACyFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "createLEDStatusIndicatorCheck",
+            "printedName": "createLEDStatusIndicatorCheck(isOn:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FixtureTestingCommand",
+                "printedName": "BCLRingSDK.FixtureTestingCommand",
+                "usr": "s:10BCLRingSDK21FixtureTestingCommandC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK21FixtureTestingCommandC29createLEDStatusIndicatorCheck4isOnACSb_tFZ",
+            "mangledName": "$s10BCLRingSDK21FixtureTestingCommandC29createLEDStatusIndicatorCheck4isOnACSb_tFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "createAgingMode",
             "printedName": "createAgingMode(isMode:)",
             "children": [
@@ -25048,6 +25126,30 @@
             "declKind": "Func",
             "usr": "s:10BCLRingSDK21FixtureTestingCommandC11createResetACyFZ",
             "mangledName": "$s10BCLRingSDK21FixtureTestingCommandC11createResetACyFZ",
+            "moduleName": "BCLRingSDK",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "createReadTouchButtonID",
+            "printedName": "createReadTouchButtonID()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FixtureTestingCommand",
+                "printedName": "BCLRingSDK.FixtureTestingCommand",
+                "usr": "s:10BCLRingSDK21FixtureTestingCommandC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK21FixtureTestingCommandC23createReadTouchButtonIDACyFZ",
+            "mangledName": "$s10BCLRingSDK21FixtureTestingCommandC23createReadTouchButtonIDACyFZ",
             "moduleName": "BCLRingSDK",
             "static": true,
             "declAttributes": [
@@ -26588,6 +26690,189 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "BCLFixtureTestingBatteryADSampleValueReadResponse",
+        "printedName": "BCLFixtureTestingBatteryADSampleValueReadResponse",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "adSampleValue",
+            "printedName": "adSampleValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Int?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvp",
+            "mangledName": "$s10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvg",
+                "mangledName": "$s10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvs",
+                "mangledName": "$s10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvM",
+                "mangledName": "$s10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC08adSampleG0SiSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC",
+        "mangledName": "$s10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "superclassUsr": "s:10BCLRingSDK11BCLResponseC",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "BCLRingSDK.BCLResponse"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "BCLFixtureTestingShipmodeResponse",
+        "printedName": "BCLFixtureTestingShipmodeResponse",
+        "declKind": "Class",
+        "usr": "s:10BCLRingSDK33BCLFixtureTestingShipmodeResponseC",
+        "mangledName": "$s10BCLRingSDK33BCLFixtureTestingShipmodeResponseC",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "superclassUsr": "s:10BCLRingSDK11BCLResponseC",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "BCLRingSDK.BCLResponse"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "BCLFixtureTestingAgingSettingResponse",
         "printedName": "BCLFixtureTestingAgingSettingResponse",
         "children": [
@@ -27607,6 +27892,189 @@
         "declKind": "Class",
         "usr": "s:10BCLRingSDK30BCLFixtureTestingResetResponseC",
         "mangledName": "$s10BCLRingSDK30BCLFixtureTestingResetResponseC",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "superclassUsr": "s:10BCLRingSDK11BCLResponseC",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "BCLRingSDK.BCLResponse"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "BCLFixtureTestingTouchButtonIDReadResponse",
+        "printedName": "BCLFixtureTestingTouchButtonIDReadResponse",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "touchButtonID",
+            "printedName": "touchButtonID",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Int?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvp",
+            "mangledName": "$s10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvg",
+                "mangledName": "$s10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvs",
+                "mangledName": "$s10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvM",
+                "mangledName": "$s10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC05touchF2IDSiSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC",
+        "mangledName": "$s10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "superclassUsr": "s:10BCLRingSDK11BCLResponseC",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "BCLRingSDK.BCLResponse"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "BCLFixtureTestingLEDStatusIndicatorCheckResponse",
+        "printedName": "BCLFixtureTestingLEDStatusIndicatorCheckResponse",
+        "declKind": "Class",
+        "usr": "s:10BCLRingSDK48BCLFixtureTestingLEDStatusIndicatorCheckResponseC",
+        "mangledName": "$s10BCLRingSDK48BCLFixtureTestingLEDStatusIndicatorCheckResponseC",
         "moduleName": "BCLRingSDK",
         "declAttributes": [
           "AccessControl",
@@ -47735,6 +48203,72 @@
           },
           {
             "kind": "Function",
+            "name": "configureCentralManagerInitialization",
+            "printedName": "configureCentralManagerInitialization(queue:options:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Dispatch.DispatchQueue?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DispatchQueue",
+                    "printedName": "Dispatch.DispatchQueue",
+                    "usr": "c:objc(cs)OS_dispatch_queue"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC016configureCentralC14Initialization5queue7optionsSbSo012OS_dispatch_G0CSg_SDySSypGSgtF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC016configureCentralC14Initialization5queue7optionsSbSo012OS_dispatch_G0CSg_SDySSypGSgtF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "DiscardableResult",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "configLogPath",
             "printedName": "configLogPath(directoryPath:)",
             "children": [
@@ -53057,6 +53591,301 @@
           },
           {
             "kind": "Function",
+            "name": "readBatteryADSampleValue",
+            "printedName": "readBatteryADSampleValue(completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<BCLRingSDK.BCLFixtureTestingBatteryADSampleValueReadResponse, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<BCLRingSDK.BCLFixtureTestingBatteryADSampleValueReadResponse, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLFixtureTestingBatteryADSampleValueReadResponse",
+                        "printedName": "BCLRingSDK.BCLFixtureTestingBatteryADSampleValueReadResponse",
+                        "usr": "s:10BCLRingSDK49BCLFixtureTestingBatteryADSampleValueReadResponseC"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC24readBatteryADSampleValue10completionyys6ResultOyAA017BCLFixtureTestingefG12ReadResponseCAA8BCLErrorOGc_tF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC24readBatteryADSampleValue10completionyys6ResultOyAA017BCLFixtureTestingefG12ReadResponseCAA8BCLErrorOGc_tF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setShipmode",
+            "printedName": "setShipmode(completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<BCLRingSDK.BCLFixtureTestingShipmodeResponse, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<BCLRingSDK.BCLFixtureTestingShipmodeResponse, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLFixtureTestingShipmodeResponse",
+                        "printedName": "BCLRingSDK.BCLFixtureTestingShipmodeResponse",
+                        "usr": "s:10BCLRingSDK33BCLFixtureTestingShipmodeResponseC"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC11setShipmode10completionyys6ResultOyAA017BCLFixtureTestingE8ResponseCAA8BCLErrorOGc_tF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC11setShipmode10completionyys6ResultOyAA017BCLFixtureTestingE8ResponseCAA8BCLErrorOGc_tF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setLEDStatusIndicatorCheck",
+            "printedName": "setLEDStatusIndicatorCheck(isOn:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<BCLRingSDK.BCLFixtureTestingLEDStatusIndicatorCheckResponse, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<BCLRingSDK.BCLFixtureTestingLEDStatusIndicatorCheckResponse, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLFixtureTestingLEDStatusIndicatorCheckResponse",
+                        "printedName": "BCLRingSDK.BCLFixtureTestingLEDStatusIndicatorCheckResponse",
+                        "usr": "s:10BCLRingSDK48BCLFixtureTestingLEDStatusIndicatorCheckResponseC"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC26setLEDStatusIndicatorCheck4isOn10completionySb_ys6ResultOyAA017BCLFixtureTestingefG8ResponseCAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC26setLEDStatusIndicatorCheck4isOn10completionySb_ys6ResultOyAA017BCLFixtureTestingefG8ResponseCAA8BCLErrorOGctF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setLEDStatusIndicatorCheckObjC",
+            "printedName": "setLEDStatusIndicatorCheckObjC(isOn:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Foundation.NSNumber?, Foundation.NSError?) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Foundation.NSNumber?, Foundation.NSError?)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Foundation.NSNumber?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NSNumber",
+                            "printedName": "Foundation.NSNumber",
+                            "usr": "c:objc(cs)NSNumber"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Foundation.NSError?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "NSError",
+                            "printedName": "Foundation.NSError",
+                            "usr": "c:objc(cs)NSError"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@BCLRingSDK@objc(cs)BCLRingManager(im)setLEDStatusIndicatorCheckWithIsOn:completion:",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC30setLEDStatusIndicatorCheckObjC4isOn10completionySb_ySo8NSNumberCSg_So7NSErrorCSgtctF",
+            "moduleName": "BCLRingSDK",
+            "objc_name": "setLEDStatusIndicatorCheckWithIsOn:completion:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "touchButtonIDRead",
+            "printedName": "touchButtonIDRead(completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<BCLRingSDK.BCLFixtureTestingTouchButtonIDReadResponse, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<BCLRingSDK.BCLFixtureTestingTouchButtonIDReadResponse, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLFixtureTestingTouchButtonIDReadResponse",
+                        "printedName": "BCLRingSDK.BCLFixtureTestingTouchButtonIDReadResponse",
+                        "usr": "s:10BCLRingSDK42BCLFixtureTestingTouchButtonIDReadResponseC"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC17touchButtonIDRead10completionyys6ResultOyAA022BCLFixtureTestingToucheF8ResponseCAA8BCLErrorOGc_tF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC17touchButtonIDRead10completionyys6ResultOyAA022BCLFixtureTestingToucheF8ResponseCAA8BCLErrorOGc_tF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "setSNCode",
             "printedName": "setSNCode(snCode:completion:)",
             "children": [
@@ -56032,6 +56861,79 @@
             "declKind": "Func",
             "usr": "s:10BCLRingSDK0A7ManagerC13uploadHistory11historyData3mac10completionySayAA0A7DBModelCG_SSys6ResultOyytAA8BCLErrorOGctF",
             "mangledName": "$s10BCLRingSDK0A7ManagerC13uploadHistory11historyData3mac10completionySayAA0A7DBModelCG_SSys6ResultOyytAA8BCLErrorOGctF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "debugUploadHistoryPayload",
+            "printedName": "debugUploadHistoryPayload(historyData:mac:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[BCLRingSDK.BCLRingDBModel]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLRingDBModel",
+                    "printedName": "BCLRingSDK.BCLRingDBModel",
+                    "usr": "c:@M@BCLRingSDK@objc(cs)BCLRingDBModel"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<Swift.String, BCLRingSDK.BCLError>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<Swift.String, BCLRingSDK.BCLError>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLError",
+                        "printedName": "BCLRingSDK.BCLError",
+                        "usr": "s:10BCLRingSDK8BCLErrorO"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10BCLRingSDK0A7ManagerC25debugUploadHistoryPayload11historyData3mac10completionySayAA0A7DBModelCG_SSys6ResultOySSAA8BCLErrorOGctF",
+            "mangledName": "$s10BCLRingSDK0A7ManagerC25debugUploadHistoryPayload11historyData3mac10completionySayAA0A7DBModelCG_SSys6ResultOySSAA8BCLErrorOGctF",
             "moduleName": "BCLRingSDK",
             "declAttributes": [
               "RawDocComment"
@@ -68016,6 +68918,90 @@
           },
           {
             "kind": "Var",
+            "name": "doubleTapAudioUploadMode",
+            "printedName": "doubleTapAudioUploadMode",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLTouchHIDMode.Type) -> BCLRingSDK.BCLTouchHIDMode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLTouchHIDMode",
+                    "printedName": "BCLRingSDK.BCLTouchHIDMode",
+                    "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLTouchHIDMode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLTouchHIDMode",
+                        "printedName": "BCLRingSDK.BCLTouchHIDMode",
+                        "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode@BCLTouchHIDModeDoubleTapAudioUploadMode",
+            "mangledName": "$s10BCLRingSDK15BCLTouchHIDModeO24doubleTapAudioUploadModeyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "fixedbinaryorder": 5
+          },
+          {
+            "kind": "Var",
+            "name": "allEnabledMode",
+            "printedName": "allEnabledMode",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(BCLRingSDK.BCLTouchHIDMode.Type) -> BCLRingSDK.BCLTouchHIDMode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BCLTouchHIDMode",
+                    "printedName": "BCLRingSDK.BCLTouchHIDMode",
+                    "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "BCLRingSDK.BCLTouchHIDMode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BCLTouchHIDMode",
+                        "printedName": "BCLRingSDK.BCLTouchHIDMode",
+                        "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@BCLRingSDK@E@BCLTouchHIDMode@BCLTouchHIDModeAllEnabledMode",
+            "mangledName": "$s10BCLRingSDK15BCLTouchHIDModeO14allEnabledModeyA2CmF",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "RawDocComment",
+              "ObjC"
+            ],
+            "fixedbinaryorder": 6
+          },
+          {
+            "kind": "Var",
             "name": "disabled",
             "printedName": "disabled",
             "children": [
@@ -68054,7 +69040,7 @@
               "RawDocComment",
               "ObjC"
             ],
-            "fixedbinaryorder": 5
+            "fixedbinaryorder": 7
           },
           {
             "kind": "Var",
@@ -78746,6 +79732,13 @@
             "mangledName": "$ss9EscapableP"
           }
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "BCLRingSDK"
       },
       {
         "kind": "TypeDecl",
@@ -100482,6 +101475,102 @@
                 "children": [
                   {
                     "kind": "Var",
+                    "name": "readBatteryADSampleValue",
+                    "printedName": "readBatteryADSampleValue",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "declKind": "Var",
+                    "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV24readBatteryADSampleValues5UInt8VvpZ",
+                    "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV24readBatteryADSampleValues5UInt8VvpZ",
+                    "moduleName": "BCLRingSDK",
+                    "static": true,
+                    "declAttributes": [
+                      "HasInitialValue",
+                      "HasStorage",
+                      "AccessControl",
+                      "RawDocComment"
+                    ],
+                    "isLet": true,
+                    "hasStorage": true,
+                    "accessors": [
+                      {
+                        "kind": "Accessor",
+                        "name": "Get",
+                        "printedName": "Get()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "UInt8",
+                            "printedName": "Swift.UInt8",
+                            "usr": "s:s5UInt8V"
+                          }
+                        ],
+                        "declKind": "Accessor",
+                        "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV24readBatteryADSampleValues5UInt8VvgZ",
+                        "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV24readBatteryADSampleValues5UInt8VvgZ",
+                        "moduleName": "BCLRingSDK",
+                        "static": true,
+                        "implicit": true,
+                        "accessorKind": "get"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Var",
+                    "name": "setShipmode",
+                    "printedName": "setShipmode",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "declKind": "Var",
+                    "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV11setShipmodes5UInt8VvpZ",
+                    "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV11setShipmodes5UInt8VvpZ",
+                    "moduleName": "BCLRingSDK",
+                    "static": true,
+                    "declAttributes": [
+                      "HasInitialValue",
+                      "HasStorage",
+                      "AccessControl",
+                      "RawDocComment"
+                    ],
+                    "isLet": true,
+                    "hasStorage": true,
+                    "accessors": [
+                      {
+                        "kind": "Accessor",
+                        "name": "Get",
+                        "printedName": "Get()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "UInt8",
+                            "printedName": "Swift.UInt8",
+                            "usr": "s:s5UInt8V"
+                          }
+                        ],
+                        "declKind": "Accessor",
+                        "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV11setShipmodes5UInt8VvgZ",
+                        "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV11setShipmodes5UInt8VvgZ",
+                        "moduleName": "BCLRingSDK",
+                        "static": true,
+                        "implicit": true,
+                        "accessorKind": "get"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Var",
                     "name": "reset",
                     "printedName": "reset",
                     "children": [
@@ -100521,6 +101610,54 @@
                         "declKind": "Accessor",
                         "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV5resets5UInt8VvgZ",
                         "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV5resets5UInt8VvgZ",
+                        "moduleName": "BCLRingSDK",
+                        "static": true,
+                        "implicit": true,
+                        "accessorKind": "get"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Var",
+                    "name": "readTouchButtonID",
+                    "printedName": "readTouchButtonID",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "declKind": "Var",
+                    "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV17readTouchButtonIDs5UInt8VvpZ",
+                    "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV17readTouchButtonIDs5UInt8VvpZ",
+                    "moduleName": "BCLRingSDK",
+                    "static": true,
+                    "declAttributes": [
+                      "HasInitialValue",
+                      "HasStorage",
+                      "AccessControl",
+                      "RawDocComment"
+                    ],
+                    "isLet": true,
+                    "hasStorage": true,
+                    "accessors": [
+                      {
+                        "kind": "Accessor",
+                        "name": "Get",
+                        "printedName": "Get()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "UInt8",
+                            "printedName": "Swift.UInt8",
+                            "usr": "s:s5UInt8V"
+                          }
+                        ],
+                        "declKind": "Accessor",
+                        "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV17readTouchButtonIDs5UInt8VvgZ",
+                        "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV17readTouchButtonIDs5UInt8VvgZ",
                         "moduleName": "BCLRingSDK",
                         "static": true,
                         "implicit": true,
@@ -100665,6 +101802,54 @@
                         "declKind": "Accessor",
                         "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV19communicationUploads5UInt8VvgZ",
                         "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV19communicationUploads5UInt8VvgZ",
+                        "moduleName": "BCLRingSDK",
+                        "static": true,
+                        "implicit": true,
+                        "accessorKind": "get"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Var",
+                    "name": "ledStatusIndicatorCheck",
+                    "printedName": "ledStatusIndicatorCheck",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "UInt8",
+                        "printedName": "Swift.UInt8",
+                        "usr": "s:s5UInt8V"
+                      }
+                    ],
+                    "declKind": "Var",
+                    "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV23ledStatusIndicatorChecks5UInt8VvpZ",
+                    "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV23ledStatusIndicatorChecks5UInt8VvpZ",
+                    "moduleName": "BCLRingSDK",
+                    "static": true,
+                    "declAttributes": [
+                      "HasInitialValue",
+                      "HasStorage",
+                      "AccessControl",
+                      "RawDocComment"
+                    ],
+                    "isLet": true,
+                    "hasStorage": true,
+                    "accessors": [
+                      {
+                        "kind": "Accessor",
+                        "name": "Get",
+                        "printedName": "Get()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "UInt8",
+                            "printedName": "Swift.UInt8",
+                            "usr": "s:s5UInt8V"
+                          }
+                        ],
+                        "declKind": "Accessor",
+                        "usr": "s:10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV23ledStatusIndicatorChecks5UInt8VvgZ",
+                        "mangledName": "$s10BCLRingSDK10BCLCommandC10SubCmdTypeV14FixtureTestingV23ledStatusIndicatorChecks5UInt8VvgZ",
                         "moduleName": "BCLRingSDK",
                         "static": true,
                         "implicit": true,
@@ -125169,6 +126354,124 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "sleepOverviewId",
+            "printedName": "sleepOverviewId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.NSNumber?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSNumber",
+                    "printedName": "Foundation.NSNumber",
+                    "usr": "c:objc(cs)NSNumber"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@BCLRingSDK@objc(cs)BCLGoMoreSleepModel(py)sleepOverviewId",
+            "mangledName": "$s10BCLRingSDK19BCLGoMoreSleepModelC15sleepOverviewIdSo8NSNumberCSgvp",
+            "moduleName": "BCLRingSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.NSNumber?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "NSNumber",
+                        "printedName": "Foundation.NSNumber",
+                        "usr": "c:objc(cs)NSNumber"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLGoMoreSleepModel(im)sleepOverviewId",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreSleepModelC15sleepOverviewIdSo8NSNumberCSgvg",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.NSNumber?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "NSNumber",
+                        "printedName": "Foundation.NSNumber",
+                        "usr": "c:objc(cs)NSNumber"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@BCLRingSDK@objc(cs)BCLGoMoreSleepModel(im)setSleepOverviewId:",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreSleepModelC15sleepOverviewIdSo8NSNumberCSgvs",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10BCLRingSDK19BCLGoMoreSleepModelC15sleepOverviewIdSo8NSNumberCSgvM",
+                "mangledName": "$s10BCLRingSDK19BCLGoMoreSleepModelC15sleepOverviewIdSo8NSNumberCSgvM",
+                "moduleName": "BCLRingSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init()",
@@ -131411,6 +132714,16 @@
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
           }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "BCLRingSDK",
+        "declAttributes": [
+          "RawDocComment"
         ]
       },
       {
@@ -155720,196 +157033,196 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 17908,
+      "offset": 20090,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 17951,
+      "offset": 20133,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 19006,
+      "offset": 21188,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 19049,
+      "offset": 21231,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 23125,
+      "offset": 25307,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 23168,
+      "offset": 25350,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 27350,
+      "offset": 29532,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 27417,
+      "offset": 29599,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 32026,
+      "offset": 34208,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 32093,
+      "offset": 34275,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 35978,
+      "offset": 38160,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 36045,
+      "offset": 38227,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 38599,
+      "offset": 40781,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 38666,
+      "offset": 40848,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 41880,
+      "offset": 44062,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 41947,
+      "offset": 44129,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 45414,
+      "offset": 47596,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 45481,
+      "offset": 47663,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 52200,
+      "offset": 54382,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 52267,
+      "offset": 54449,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 55689,
+      "offset": 58019,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 55756,
+      "offset": 58086,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 64300,
+      "offset": 66630,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 64367,
+      "offset": 66697,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 69269,
+      "offset": 71599,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 69336,
+      "offset": 71666,
       "length": 8,
       "value": "\"status\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 72782,
+      "offset": 75112,
       "length": 9,
       "value": "\"message\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingNetworkManager.swift",
       "kind": "StringLiteral",
-      "offset": 72849,
+      "offset": 75179,
       "length": 8,
       "value": "\"status\""
     },
@@ -156413,266 +157726,266 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 44742,
+      "offset": 44103,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 44810,
+      "offset": 44171,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 44866,
+      "offset": 44227,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 45015,
+      "offset": 44376,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 45073,
+      "offset": 44434,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 45140,
+      "offset": 44501,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 46946,
+      "offset": 46307,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47051,
+      "offset": 46412,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47137,
+      "offset": 46498,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47222,
+      "offset": 46583,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47302,
+      "offset": 46663,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47398,
+      "offset": 46759,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47519,
+      "offset": 46880,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47607,
+      "offset": 46968,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47700,
+      "offset": 47061,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47788,
+      "offset": 47149,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 47868,
+      "offset": 47229,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48220,
+      "offset": 47581,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48299,
+      "offset": 47660,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48386,
+      "offset": 47747,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48467,
+      "offset": 47828,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48551,
+      "offset": 47912,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48631,
+      "offset": 47992,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48713,
+      "offset": 48074,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48795,
+      "offset": 48156,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48870,
+      "offset": 48231,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 48947,
+      "offset": 48308,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 49039,
+      "offset": 48400,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 49130,
+      "offset": 48491,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 49208,
+      "offset": 48569,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 49302,
+      "offset": 48663,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 50170,
+      "offset": 49531,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 52538,
+      "offset": 51899,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "Array",
-      "offset": 53093,
+      "offset": 52454,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 53226,
+      "offset": 52587,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 53286,
+      "offset": 52647,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 53795,
+      "offset": 53156,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLCompositeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 53901,
+      "offset": 53262,
       "length": 5,
       "value": "false"
     },
@@ -156686,203 +157999,203 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6284,
+      "offset": 7647,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6289,
+      "offset": 7652,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6387,
+      "offset": 7750,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6392,
+      "offset": 7755,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6484,
+      "offset": 7847,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6489,
+      "offset": 7852,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6566,
+      "offset": 7929,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6571,
+      "offset": 7934,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6650,
+      "offset": 8013,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6655,
+      "offset": 8018,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6733,
+      "offset": 8096,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6738,
+      "offset": 8101,
       "length": 1,
       "value": "5"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6817,
+      "offset": 8180,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6822,
+      "offset": 8185,
       "length": 1,
       "value": "6"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6911,
+      "offset": 8274,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6916,
+      "offset": 8279,
       "length": 1,
       "value": "7"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6997,
+      "offset": 8360,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 7002,
+      "offset": 8365,
       "length": 1,
       "value": "8"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 7080,
+      "offset": 8443,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 7085,
+      "offset": 8448,
       "length": 1,
       "value": "9"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 7168,
+      "offset": 8531,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 9945,
+      "offset": 11308,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 10708,
+      "offset": 12842,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11395,
+      "offset": 13529,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11452,
+      "offset": 13586,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11507,
+      "offset": 13641,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11615,
+      "offset": 13749,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11680,
+      "offset": 13814,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLFixtureTestingCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 11757,
+      "offset": 13891,
       "length": 1,
       "value": "0"
     },
@@ -157078,119 +158391,119 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "BooleanLiteral",
-      "offset": 2871,
+      "offset": 3538,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 2917,
+      "offset": 3584,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 2954,
+      "offset": 3621,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "BooleanLiteral",
-      "offset": 3855,
+      "offset": 4522,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 3901,
+      "offset": 4568,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 3938,
+      "offset": 4605,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "BooleanLiteral",
-      "offset": 4827,
+      "offset": 5494,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 4873,
+      "offset": 5540,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 4910,
+      "offset": 5577,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "BooleanLiteral",
-      "offset": 5813,
+      "offset": 6480,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 5859,
+      "offset": 6526,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 5896,
+      "offset": 6563,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 52941,
+      "offset": 53608,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 54422,
+      "offset": 55089,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 64118,
+      "offset": 64785,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 64981,
+      "offset": 65648,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager+Public.swift",
       "kind": "IntegerLiteral",
-      "offset": 114714,
+      "offset": 118805,
       "length": 4,
       "value": "1000"
     },
@@ -157610,119 +158923,126 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 672,
+      "offset": 864,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1227,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 1502,
+      "offset": 2057,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 1544,
+      "offset": 2099,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "FloatLiteral",
-      "offset": 2508,
+      "offset": 3063,
       "length": 3,
       "value": "8.0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Array",
-      "offset": 3545,
+      "offset": 4100,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Array",
-      "offset": 4348,
+      "offset": 4903,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 6101,
+      "offset": 6656,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 6432,
+      "offset": 6987,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "Dictionary",
-      "offset": 7234,
+      "offset": 7789,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 7426,
+      "offset": 7981,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8923,
+      "offset": 9478,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 9034,
+      "offset": 9589,
       "length": 3,
       "value": "300"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 9135,
+      "offset": 9690,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 9239,
+      "offset": 9794,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 9387,
+      "offset": 9942,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 9935,
+      "offset": 10490,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Manager\/BCLRingManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 51288,
+      "offset": 52125,
       "length": 5,
       "value": "false"
     },
@@ -157983,7 +159303,7 @@
       "kind": "StringLiteral",
       "offset": 329,
       "length": 7,
-      "value": "\"1.2.2\""
+      "value": "\"1.2.6\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
@@ -158149,266 +159469,280 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 5364,
+      "offset": 5398,
+      "length": 4,
+      "value": "0x10"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5444,
+      "length": 4,
+      "value": "0x14"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5484,
       "length": 4,
       "value": "0xFF"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 5849,
+      "offset": 6089,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 5893,
+      "offset": 6133,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 5937,
+      "offset": 6177,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 5976,
+      "offset": 6216,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6035,
+      "offset": 6275,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6072,
+      "offset": 6312,
       "length": 4,
       "value": "0xFF"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6541,
+      "offset": 6781,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6570,
+      "offset": 6810,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6607,
+      "offset": 6847,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6643,
+      "offset": 6883,
       "length": 4,
       "value": "0xFF"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 6976,
+      "offset": 7216,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 7009,
+      "offset": 7249,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8446,
+      "offset": 8686,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8486,
+      "offset": 8726,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8526,
+      "offset": 8766,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8566,
+      "offset": 8806,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8606,
+      "offset": 8846,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8646,
+      "offset": 8886,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8686,
+      "offset": 8926,
       "length": 4,
       "value": "0x06"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8726,
+      "offset": 8966,
       "length": 4,
       "value": "0x07"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8766,
+      "offset": 9006,
       "length": 4,
       "value": "0x08"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8806,
+      "offset": 9046,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8847,
+      "offset": 9087,
       "length": 4,
       "value": "0x0A"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8891,
+      "offset": 9131,
       "length": 4,
       "value": "0x0B"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8935,
+      "offset": 9175,
       "length": 4,
       "value": "0x0C"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 8979,
+      "offset": 9219,
       "length": 4,
       "value": "0xF4"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9023,
+      "offset": 9263,
       "length": 4,
       "value": "0xF5"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9064,
+      "offset": 9304,
       "length": 4,
       "value": "0xF6"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9104,
+      "offset": 9344,
       "length": 4,
       "value": "0xF7"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9144,
+      "offset": 9384,
       "length": 4,
       "value": "0xF8"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9184,
+      "offset": 9424,
       "length": 4,
       "value": "0xF9"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9224,
+      "offset": 9464,
       "length": 4,
       "value": "0xFA"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9264,
+      "offset": 9504,
       "length": 4,
       "value": "0xFB"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9304,
+      "offset": 9544,
       "length": 4,
       "value": "0xFC"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9344,
+      "offset": 9584,
       "length": 4,
       "value": "0xFD"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9384,
+      "offset": 9624,
       "length": 4,
       "value": "0xFE"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 9424,
+      "offset": 9664,
       "length": 4,
       "value": "0xFF"
     },
@@ -158464,7 +159798,7 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommandQueue.swift",
       "kind": "BooleanLiteral",
-      "offset": 1941,
+      "offset": 2066,
       "length": 5,
       "value": "false"
     },
@@ -159563,434 +160897,462 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 18947,
+      "offset": 18977,
+      "length": 4,
+      "value": "0x03"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 19082,
+      "length": 4,
+      "value": "0x05"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 19161,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19041,
+      "offset": 19261,
+      "length": 4,
+      "value": "0x1B"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 19355,
       "length": 4,
       "value": "0x18"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19142,
+      "offset": 19456,
       "length": 4,
       "value": "0x3A"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19241,
+      "offset": 19555,
       "length": 4,
       "value": "0x3B"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19357,
+      "offset": 19664,
+      "length": 4,
+      "value": "0x3D"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 19780,
       "length": 4,
       "value": "0x31"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19443,
+      "offset": 19866,
       "length": 4,
       "value": "0x41"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19526,
+      "offset": 19949,
       "length": 4,
       "value": "0x42"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19622,
+      "offset": 20045,
       "length": 4,
       "value": "0x49"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19705,
+      "offset": 20128,
       "length": 4,
       "value": "0x16"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19787,
+      "offset": 20210,
       "length": 4,
       "value": "0x45"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 19869,
+      "offset": 20292,
       "length": 4,
       "value": "0x46"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20043,
+      "offset": 20466,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20164,
+      "offset": 20587,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20282,
+      "offset": 20705,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20427,
+      "offset": 20850,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20604,
+      "offset": 21027,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20778,
+      "offset": 21201,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 20979,
+      "offset": 21402,
       "length": 4,
       "value": "0x06"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21088,
+      "offset": 21511,
       "length": 4,
       "value": "0x07"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21197,
+      "offset": 21620,
       "length": 4,
       "value": "0x08"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21301,
+      "offset": 21724,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21474,
+      "offset": 21897,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21562,
+      "offset": 21985,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21647,
+      "offset": 22070,
       "length": 4,
       "value": "0xFF"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21734,
+      "offset": 22157,
       "length": 4,
       "value": "0x06"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 21912,
+      "offset": 22335,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22099,
+      "offset": 22522,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22269,
+      "offset": 22692,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22462,
+      "offset": 22885,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22570,
+      "offset": 22993,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22648,
+      "offset": 23071,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22751,
+      "offset": 23174,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 22930,
+      "offset": 23353,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23039,
+      "offset": 23462,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23164,
+      "offset": 23587,
       "length": 4,
       "value": "0x08"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23291,
+      "offset": 23714,
       "length": 4,
       "value": "0x09"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23427,
+      "offset": 23850,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23541,
+      "offset": 23964,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23677,
+      "offset": 24100,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23775,
+      "offset": 24198,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 23997,
+      "offset": 24420,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24119,
+      "offset": 24542,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24229,
+      "offset": 24652,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24358,
+      "offset": 24781,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24476,
+      "offset": 24899,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24645,
+      "offset": 25068,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24741,
+      "offset": 25164,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 24928,
+      "offset": 25351,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25108,
+      "offset": 25531,
       "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25194,
+      "offset": 25617,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25384,
+      "offset": 25807,
       "length": 4,
       "value": "0x00"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25471,
+      "offset": 25894,
       "length": 4,
       "value": "0x01"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25566,
+      "offset": 25989,
       "length": 4,
       "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 25644,
+      "offset": 26067,
       "length": 4,
       "value": "0x03"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
-      "kind": "IntegerLiteral",
-      "offset": 25726,
-      "length": 4,
-      "value": "0xFF"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
-      "kind": "IntegerLiteral",
-      "offset": 25915,
-      "length": 4,
-      "value": "0x00"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
-      "kind": "IntegerLiteral",
-      "offset": 25993,
-      "length": 4,
-      "value": "0x01"
-    },
-    {
-      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
-      "kind": "IntegerLiteral",
-      "offset": 26075,
-      "length": 4,
-      "value": "0x02"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
       "offset": 26149,
       "length": 4,
+      "value": "0xFF"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 26338,
+      "length": 4,
+      "value": "0x00"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 26416,
+      "length": 4,
+      "value": "0x01"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 26498,
+      "length": 4,
+      "value": "0x02"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
+      "kind": "IntegerLiteral",
+      "offset": 26572,
+      "length": 4,
       "value": "0x03"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 26227,
+      "offset": 26650,
       "length": 4,
       "value": "0x04"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 26310,
+      "offset": 26733,
       "length": 4,
       "value": "0x05"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCommand.swift",
       "kind": "IntegerLiteral",
-      "offset": 26392,
+      "offset": 26815,
       "length": 4,
       "value": "0xFF"
     },
@@ -160662,301 +162024,315 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11366,
+      "offset": 11741,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11479,
+      "offset": 11854,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11576,
+      "offset": 11951,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11682,
+      "offset": 12057,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11779,
+      "offset": 12154,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 11877,
+      "offset": 12252,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "FloatLiteral",
-      "offset": 12012,
+      "offset": 12387,
       "length": 5,
       "value": "100.0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12148,
+      "offset": 12523,
       "length": 482,
       "value": "\"BCLGoMoreSleepModel(Overview):\n  resType=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12227,
+      "offset": 12602,
       "length": 1,
       "value": "\", startTs=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12247,
+      "offset": 12622,
       "length": 1,
       "value": "\", endTs=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12263,
+      "offset": 12638,
       "length": 5,
       "value": "\"\n  score=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12292,
+      "offset": 12667,
       "length": 1,
       "value": "\", efficiency=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12325,
+      "offset": 12700,
       "length": 1,
       "value": "\"%, type=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 12343,
+      "offset": 12718,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12347,
+      "offset": 12722,
       "length": 8,
       "value": "\"长睡\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12358,
+      "offset": 12733,
       "length": 8,
       "value": "\"短睡\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12367,
+      "offset": 12742,
       "length": 14,
       "value": "\"\n  totalSleepTime=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12414,
+      "offset": 12789,
       "length": 3,
       "value": "\"min, deepNumMinutes=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12451,
+      "offset": 12826,
       "length": 3,
       "value": "\"min\n  lightNumMinutes=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12503,
+      "offset": 12878,
       "length": 3,
       "value": "\"min, remNumMinutes=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12538,
+      "offset": 12913,
       "length": 3,
       "value": "\"min\n  wakeNumMinutes=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12588,
+      "offset": 12963,
       "length": 3,
       "value": "\"min, latency=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12611,
+      "offset": 12986,
       "length": 3,
       "value": "\"min\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12683,
-      "length": 312,
+      "offset": 13058,
+      "length": 370,
       "value": "\"BCLGoMoreSleepModel(Stages):\n  resType=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12760,
+      "offset": 13135,
       "length": 1,
       "value": "\", startTs=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12780,
+      "offset": 13155,
       "length": 1,
       "value": "\", endTs=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12796,
+      "offset": 13171,
       "length": 6,
       "value": "\"\n  packNo=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12827,
+      "offset": 13202,
       "length": 1,
       "value": "\"\/\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12838,
+      "offset": 13213,
       "length": 1,
       "value": "\", stageNum=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12860,
+      "offset": 13235,
+      "length": 1,
+      "value": "\", sleepOverviewId=\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 13287,
+      "length": 5,
+      "value": "\"nil\""
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
+      "kind": "StringLiteral",
+      "offset": 13293,
       "length": 6,
       "value": "\"\n  stages=[\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 12899,
+      "offset": 13332,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12940,
+      "offset": 13373,
       "length": 3,
       "value": "\",\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12945,
+      "offset": 13378,
       "length": 1,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 12962,
+      "offset": 13395,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12967,
+      "offset": 13400,
       "length": 5,
       "value": "\"...\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12975,
+      "offset": 13408,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 12978,
+      "offset": 13411,
       "length": 1,
       "value": "\"]\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13044,
+      "offset": 13477,
       "length": 49,
       "value": "\"BCLGoMoreSleepModel(NoData): resType=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13092,
+      "offset": 13525,
       "length": 1,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13145,
+      "offset": 13578,
       "length": 52,
       "value": "\"BCLGoMoreSleepModel(EndOfData): resType=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13196,
+      "offset": 13629,
       "length": 1,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13234,
+      "offset": 13667,
       "length": 50,
       "value": "\"BCLGoMoreSleepModel(Unknown): resType=\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Model\/BCLGoMoreSleepModel.swift",
       "kind": "StringLiteral",
-      "offset": 13283,
+      "offset": 13716,
       "length": 1,
       "value": "\"\""
     },
@@ -161152,161 +162528,161 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 4519,
+      "offset": 4563,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5178,
+      "offset": 5222,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5297,
+      "offset": 5341,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5396,
+      "offset": 5440,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5494,
+      "offset": 5538,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5587,
+      "offset": 5631,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5696,
+      "offset": 5740,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5830,
+      "offset": 5874,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 5931,
+      "offset": 5975,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 6037,
+      "offset": 6081,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 6138,
+      "offset": 6182,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 6231,
+      "offset": 6275,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6356,
+      "offset": 6400,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 6454,
+      "offset": 6498,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 6533,
+      "offset": 6577,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 6622,
+      "offset": 6666,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 12363,
+      "offset": 12407,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 12425,
+      "offset": 12469,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "BooleanLiteral",
-      "offset": 17272,
+      "offset": 17316,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 17355,
+      "offset": 17399,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 17436,
+      "offset": 17480,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 17515,
+      "offset": 17559,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLHIDModeCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 17595,
+      "offset": 17639,
       "length": 1,
       "value": "0"
     },
@@ -161549,6 +162925,41 @@
       "value": "false"
     },
     {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Utils\/BCLGoMoreSleepMergeUtil.swift",
+      "kind": "IntegerLiteral",
+      "offset": 575,
+      "length": 2,
+      "value": "-1"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Utils\/BCLGoMoreSleepMergeUtil.swift",
+      "kind": "IntegerLiteral",
+      "offset": 676,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Utils\/BCLGoMoreSleepMergeUtil.swift",
+      "kind": "IntegerLiteral",
+      "offset": 717,
+      "length": 2,
+      "value": "10"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Utils\/BCLGoMoreSleepMergeUtil.swift",
+      "kind": "IntegerLiteral",
+      "offset": 822,
+      "length": 2,
+      "value": "60"
+    },
+    {
+      "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Utils\/BCLGoMoreSleepMergeUtil.swift",
+      "kind": "IntegerLiteral",
+      "offset": 947,
+      "length": 1,
+      "value": "8"
+    },
+    {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLBatteryCmdAndRes.swift",
       "kind": "IntegerLiteral",
       "offset": 1575,
@@ -161705,203 +163116,203 @@
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "Dictionary",
-      "offset": 14455,
+      "offset": 14394,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "Dictionary",
-      "offset": 14584,
+      "offset": 14523,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "Dictionary",
-      "offset": 14714,
+      "offset": 14653,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 15193,
+      "offset": 15132,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 15253,
+      "offset": 15192,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22356,
+      "offset": 22246,
       "length": 3,
       "value": "\"1\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22377,
+      "offset": 22267,
       "length": 3,
       "value": "\"2\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22398,
+      "offset": 22288,
       "length": 3,
       "value": "\"3\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22419,
+      "offset": 22309,
       "length": 3,
       "value": "\"4\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22440,
+      "offset": 22330,
       "length": 3,
       "value": "\"5\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22461,
+      "offset": 22351,
       "length": 3,
       "value": "\"6\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22482,
+      "offset": 22372,
       "length": 3,
       "value": "\"7\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22503,
+      "offset": 22393,
       "length": 3,
       "value": "\"8\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22539,
+      "offset": 22429,
       "length": 3,
       "value": "\"9\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22575,
+      "offset": 22465,
       "length": 4,
       "value": "\"10\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22637,
+      "offset": 22527,
       "length": 3,
       "value": "\"A\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22698,
+      "offset": 22588,
       "length": 3,
       "value": "\"B\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22746,
+      "offset": 22636,
       "length": 3,
       "value": "\"C\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22793,
+      "offset": 22683,
       "length": 3,
       "value": "\"D\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "StringLiteral",
-      "offset": 22838,
+      "offset": 22728,
       "length": 3,
       "value": "\"E\""
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 29850,
+      "offset": 29740,
       "length": 1,
       "value": "8"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 29894,
+      "offset": 29784,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 67102,
+      "offset": 66992,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 67161,
+      "offset": 67051,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 67223,
+      "offset": 67113,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 67287,
+      "offset": 67177,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "IntegerLiteral",
-      "offset": 67351,
+      "offset": 67241,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "Array",
-      "offset": 78756,
+      "offset": 78646,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/jiandan\/Desktop\/ChipletRing-APP-SDK\/IOS\/source\/BCLRingSDK_New\/BCLRingSDK\/Sources\/BCLRingSDK\/Common\/BCLCmdAndRes\/BCLRingDataCmdAndRes.swift",
       "kind": "Array",
-      "offset": 78897,
+      "offset": 78787,
       "length": 2,
       "value": "[]"
     },

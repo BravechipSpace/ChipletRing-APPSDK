@@ -7,9 +7,6 @@ target 'BCLRingSDKDemo' do
   pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']
   pod 'QMUIKit','4.8.0'
   pod 'SnapKit', '~> 5'         
-
-  # Pods for BCLRingSDKDemo
-  pod 'RxCocoa', '~> 6.9.0'
   
   # Pods for BCLRingSDKDemo
   # SDK用到的库

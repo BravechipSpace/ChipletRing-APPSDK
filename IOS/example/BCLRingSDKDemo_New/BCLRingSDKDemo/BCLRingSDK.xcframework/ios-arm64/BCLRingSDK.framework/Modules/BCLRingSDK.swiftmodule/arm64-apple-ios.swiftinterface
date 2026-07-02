@@ -601,12 +601,16 @@ public protocol BCLServerResponse {
   public static func createOneKeySelfInspection() -> FixtureTestingCommand
   public static func createCommunicationLoopback(dataLength: Int) -> FixtureTestingCommand
   public static func createCommunicationUpload(isStart: Bool = true) -> FixtureTestingCommand
+  public static func createReadBatteryADSampleValue() -> FixtureTestingCommand
+  public static func createSetShipmode() -> FixtureTestingCommand
+  public static func createLEDStatusIndicatorCheck(isOn: Bool) -> FixtureTestingCommand
   public static func createAgingMode(isMode: Int) -> FixtureTestingCommand
   public static func createReadAgingMode() -> FixtureTestingCommand
   public static func configureLinearMotorParameters(pattern: Int, dutyCycle: Int, execution: Int, repetitions: Int) -> FixtureTestingCommand
   public static func createFDKeyVerification(parameter_1: Int, parameter_2: Int, parameter_3: Int, parameter_4: Int, parameter_5: Int, parameter_6: Int, parameter_7: Int, parameter_8: Int) -> FixtureTestingCommand
   public static func createReadMCUId() -> FixtureTestingCommand
   public static func createReset() -> FixtureTestingCommand
+  public static func createReadTouchButtonID() -> FixtureTestingCommand
   public static func createSetSNCode(snCode: String) -> FixtureTestingCommand
   public static func createGetSNCode() -> FixtureTestingCommand
   override public init(frameType: Swift.UInt8 = super, cmd: Swift.UInt8, subCmd: Swift.UInt8, data: Foundation.Data? = nil, serviceType: BCLRingSDK.BCLServiceType = super, isContinuous: Swift.Bool = super, priority: BCLRingSDK.CommandPriority = super)
@@ -670,6 +674,13 @@ public protocol BCLServerResponse {
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingCommunicationUploadResponse : BCLResponse {
   @objc deinit
 }
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingBatteryADSampleValueReadResponse : BCLResponse {
+  public var adSampleValue: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingShipmodeResponse : BCLResponse {
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingAgingSettingResponse : BCLResponse {
   public var agingMode: Int
   @objc deinit
@@ -695,6 +706,13 @@ public protocol BCLServerResponse {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingResetResponse : BCLResponse {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingTouchButtonIDReadResponse : BCLResponse {
+  public var touchButtonID: Int?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingLEDStatusIndicatorCheckResponse : BCLResponse {
   @objc deinit
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BCLFixtureTestingSetSNCodeResponse : BCLResponse {
@@ -806,6 +824,8 @@ extension Double {
   public func jd_rounded(toPlaces places: Int) -> Double
 }
 extension BCLRingManager {
+  @discardableResult
+  public func configureCentralManagerInitialization(queue: DispatchQueue? = nil, options: [String : Any]? = nil) -> Bool
   public func configLogPath(directoryPath: String = defaultLogDirectoryPath)
   public func configLogLevels(consoleLogLevel: BCLLogLevel = .verbose, fileLogLevel: BCLLogLevel = .verbose)
   public func checkBluetoothPermission(completion: @escaping (CBManagerAuthorization) -> Void)
@@ -898,6 +918,11 @@ extension BCLRingManager {
   public func fdKeyVerification(parameter_1: Int, parameter_2: Int, parameter_3: Int, parameter_4: Int, parameter_5: Int, parameter_6: Int, parameter_7: Int, parameter_8: Int, completion: @escaping (Result<BCLFixtureTestingFDKeyVerificationResponse, BCLError>) -> Void)
   public func mcuIDRead(completion: @escaping (Result<BCLFixtureTestingMCUIdReadResponse, BCLError>) -> Void)
   public func reset(completion: @escaping (Result<BCLFixtureTestingResetResponse, BCLError>) -> Void)
+  public func readBatteryADSampleValue(completion: @escaping (Result<BCLFixtureTestingBatteryADSampleValueReadResponse, BCLError>) -> Void)
+  public func setShipmode(completion: @escaping (Result<BCLFixtureTestingShipmodeResponse, BCLError>) -> Void)
+  public func setLEDStatusIndicatorCheck(isOn: Bool, completion: @escaping (Result<BCLFixtureTestingLEDStatusIndicatorCheckResponse, BCLError>) -> Void)
+  @objc(setLEDStatusIndicatorCheckWithIsOn:completion:) dynamic public func setLEDStatusIndicatorCheckObjC(isOn: Bool, completion: @escaping (NSNumber?, NSError?) -> Void)
+  public func touchButtonIDRead(completion: @escaping (Result<BCLFixtureTestingTouchButtonIDReadResponse, BCLError>) -> Void)
   public func setSNCode(snCode: String, completion: @escaping (Result<BCLFixtureTestingSetSNCodeResponse, BCLError>) -> Void)
   public func getSNCode(completion: @escaping (Result<BCLFixtureTestingGetSNCodeResponse, BCLError>) -> Void)
   public func configureLinearMotorParameters(pattern: Int, dutyCycle: Int, execution: Int, repetitions: Int, completion: @escaping (Result<BCLFixtureTestingConfigureLinearMotorParametersResponse, BCLError>) -> Void)
@@ -955,6 +980,7 @@ extension BCLRingManager {
   public func downloadFirmware(url: String, fileName: String, destinationPath: String, progress: @escaping (Double) -> Void, completion: @escaping (Result<String, BCLError>) -> Void)
   public func getFirmwareVersionList(category: String, completion: @escaping (Result<[FirmwareVersionItem], BCLError>) -> Void)
   public func uploadHistory(historyData: [BCLRingDBModel], mac: String, completion: @escaping (Result<Void, BCLError>) -> Void)
+  public func debugUploadHistoryPayload(historyData: [BCLRingDBModel], mac: String, completion: @escaping (Result<String, BCLError>) -> Void)
   public func getSleepData(date: Date, timeZone: BCLRingTimeZone = .East8, completion: @escaping (Result<BCLRingSleepModel, BCLError>) -> Void)
   public func getSleepDataByTimeRange(datas: [String], completion: @escaping (Result<[BCLRingSleepDayModel], BCLError>) -> Void)
   public func loadUserLatestHistory(completion: @escaping (Result<BCLRingDBModel?, BCLError>) -> Void)
@@ -1595,6 +1621,8 @@ public struct BCLBluetoothDeviceState {
   case musicMode = 2
   case pptMode = 3
   case audioUploadMode = 4
+  case doubleTapAudioUploadMode = 0x10
+  case allEnabledMode = 0x14
   case disabled = 0xFF
   public var description: String {
     get
@@ -2489,10 +2517,14 @@ extension BCLCommand {
       public static let unbind: UInt8
     }
     public struct FixtureTesting {
+      public static let readBatteryADSampleValue: UInt8
+      public static let setShipmode: UInt8
       public static let reset: UInt8
+      public static let readTouchButtonID: UInt8
       public static let oneKeySelfInspection: UInt8
       public static let communicationLoopback: UInt8
       public static let communicationUpload: UInt8
+      public static let ledStatusIndicatorCheck: UInt8
       public static let configureLinearMotorParameters: UInt8
       public static let agingSetting: UInt8
       public static let agingRead: UInt8
@@ -2980,6 +3012,7 @@ public enum BCLVibrationMotorType : Int {
   @objc public var packNo: Int
   @objc public var stageNum: Int
   @objc public var stages: [Int16]
+  @objc public var sleepOverviewId: NSNumber?
   @objc override dynamic public init()
   @objc public init?(data: Data)
   required public init(from decoder: Decoder) throws
