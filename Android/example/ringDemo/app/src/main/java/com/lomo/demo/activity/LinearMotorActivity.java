@@ -1,9 +1,12 @@
 package com.lomo.demo.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.lmApiInter.ILinearMotorCountListenerLite;
@@ -20,6 +23,7 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
 
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
+    EditText etNormalIntensity, etNormalTime, etTargetIntensity, etTargetTime, etTargetValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,11 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.activity_linear_motor);
 
         tv_result = findViewById(R.id.tv_result);
+        etNormalIntensity = findViewById(R.id.et_normal_intensity);
+        etNormalTime = findViewById(R.id.et_normal_time);
+        etTargetIntensity = findViewById(R.id.et_target_intensity);
+        etTargetTime = findViewById(R.id.et_target_time);
+        etTargetValue = findViewById(R.id.et_target_value);
 
         // 振动配置
         findViewById(R.id.bt_get_vibration_config).setOnClickListener(this);
@@ -53,9 +62,9 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
                 public void getVibrationConfigResult(int normalIntensity, int normalTime, int targetIntensity, int targetTime) {
                     postView("\n振动配置:");
                     postView("\n  常规震动强度: " + normalIntensity);
-                    postView("\n  常规震动时间: " + (normalTime ) + "ms");
+                    postView("\n  常规震动时间: " + (normalTime * 5) + "ms");
                     postView("\n  目标震动强度: " + targetIntensity);
-                    postView("\n  目标震动时间: " + (targetTime ) + "ms");
+                    postView("\n  目标震动时间: " + (targetTime * 5) + "ms");
                 }
 
                 @Override
@@ -68,10 +77,10 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         // ==================== 设置振动配置（Subcmd=0x07）====================
         if (id == R.id.bt_set_vibration_config) {
             postView("\n设置振动配置");
-            int normalIntensity = 100;  // 常规震动强度 0~255
-            int normalTime = 20;        // 常规震动时间（单位5ms），即100ms
-            int targetIntensity = 150;  // 目标震动强度 0~255
-            int targetTime = 10;        // 目标震动时间（单位5ms），即50ms
+            int normalIntensity = TextUtils.isEmpty(etNormalIntensity.getText()) ? 100 : Integer.parseInt(etNormalIntensity.getText().toString());
+            int normalTime = TextUtils.isEmpty(etNormalTime.getText()) ? 20 : Integer.parseInt(etNormalTime.getText().toString());
+            int targetIntensity = TextUtils.isEmpty(etTargetIntensity.getText()) ? 150 : Integer.parseInt(etTargetIntensity.getText().toString());
+            int targetTime = TextUtils.isEmpty(etTargetTime.getText()) ? 10 : Integer.parseInt(etTargetTime.getText().toString());
 
             LmAPILite.SET_VIBRATION_CONFIG(normalIntensity, normalTime, targetIntensity, targetTime, new IVibrationConfigListenerLite() {
                 @Override
@@ -105,7 +114,7 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         // ==================== 设置目标值（Subcmd=0x09）====================
         if (id == R.id.bt_set_target) {
             postView("\n设置目标值");
-            int target = 500;  // uint32_t 目标值
+            int target = TextUtils.isEmpty(etTargetValue.getText()) ? 500 : Integer.parseInt(etTargetValue.getText().toString());  // uint32_t 目标值
 
             LmAPILite.SET_LINEAR_MOTOR_TARGET(target, new ILinearMotorTargetListenerLite() {
                 @Override
