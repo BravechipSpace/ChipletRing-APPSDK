@@ -125,6 +125,11 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         public void recordingResult(boolean result) {
 
         }
+
+        @Override
+        public void getOfflineRecordingStatus(int status) {
+
+        }
     };
 
     @Override

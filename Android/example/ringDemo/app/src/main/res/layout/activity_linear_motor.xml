@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.LinearMotorActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="线性马达测试(cmd=0x83)"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="数据区域"
+        android:scrollbars="vertical"
+        android:padding="10dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <!-- 振动配置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_get_vibration_config"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="读取振动配置(0x06)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_set_vibration_config"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="设置振动配置(0x07)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+            <!-- 目标值 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_get_target"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="读取目标值(0x08)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_set_target"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="设置目标值(0x09)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+            <!-- 计数值 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_get_count"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="读取计数值(0x0A)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_clear_count"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="清空计数值(0x0B)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+            <!-- 计数值监听 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_set_count_listener"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="设置计数值监听"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

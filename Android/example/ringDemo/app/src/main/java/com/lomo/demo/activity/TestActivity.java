@@ -157,7 +157,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.bt_get_page2).setOnClickListener(this);
-
+        findViewById(R.id.bt_linear_motor).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -691,7 +691,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             Intent intent=new Intent(TestActivity.this, TestActivity2.class);
             startActivity(intent);
         }
-
+        if(view.getId()==R.id.bt_linear_motor) {
+            Intent intent=new Intent(this,LinearMotorActivity.class);
+            startActivity(intent);
+        }
     }
 
 

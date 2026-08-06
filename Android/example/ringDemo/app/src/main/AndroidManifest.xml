@@ -72,6 +72,13 @@
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:exported="false" />
         <activity
+            android:name=".activity.LinearMotorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="user">
+
+        </activity>
+        <activity
             android:name=".nfc.NfcActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:exported="false">
