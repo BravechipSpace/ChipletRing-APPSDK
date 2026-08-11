@@ -34,6 +34,7 @@ import com.lm.sdk.lmApiInter.IAudioListenerLite;
 import com.lm.sdk.lmApiInter.IHIDListenerLite;
 import com.lm.sdk.lmApiInter.IHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
+import com.lm.sdk.lmApiInter.IVersionListenerLite;
 import com.lm.sdk.mode.GestureSupport;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
@@ -151,7 +152,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         findViewById(R.id.bt_ecg_demo).setOnClickListener(this);
         findViewById(R.id.bt_sleep_sevice).setOnClickListener(this);
 
-        findViewById(R.id.btn_ota).setOnClickListener(this);
+
 
         findViewById(R.id.bt_file_list).setOnClickListener(this);
         findViewById(R.id.bt_file_content).setOnClickListener(this);
@@ -301,77 +302,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
             });
         }
 
-        if(v.getId()==R.id.btn_ota) {
 
-            //提供给第三方使用的ota升级，已包含检查当前版本号是否需要更新
-//            OtaApi.otaUpdateWithCheckVersion("7.2.7.2Z5I", TestActivity2.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
-//                @Override
-//                public void error(String message) {
-//                    postView("\nota升级出错：" + message);
-//                }
-//
-//                @Override
-//                public void onProgress(int i) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            postView("\nota升级进度:"+i);
-//                        }
-//                    });
-//
-//                    Logger.show("OTA", "OTA升级" + i);
-//
-//                }
-//
-//                @Override
-//                public void onComplete() {
-//
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            postView("\nota升级结束");
-//                        }
-//                    });
-//                    Logger.show("OTA", "nota升级结束");
-//                    OtaApi.destoryOta(TestActivity2.this);
-//                }
-//
-//                @Override
-//                public void isLatestVersion() {
-//                    postView("\n已是最新版本");
-//                }
-//            });
-//                //检查当前硬件版本是否需要更新，用于第三方公司，页面上显示更新信息
-//                OtaApi.checkCurrentVersionNeedUpdate("", TestActivity.this, new ICheckOtaVersion() {
-//                    @Override
-//                    public void checkVersionResult(boolean needUpdate) {
-//
-//                    }
-//                });
-            //
-//                OtaApi.otaUpdateWithVersion("", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
-//                    @Override
-//                    public void error(String message) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onProgress(int i) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//
-//                    @Override
-//                    public void isLatestVersion() {
-//
-//                    }
-//                });
-
-        }
         if(v.getId()==R.id.bt_file_list) {
 
             LmAPILite.GET_FILE_LIST(new IFileListListener() {

@@ -21,10 +21,12 @@ import com.lm.sdk.BLEService;
 import com.lm.sdk.LmAPILite;
 
 import com.lm.sdk.LogicalApi;
+import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.ISNListener;
+import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.library.utils.Logger;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
@@ -158,6 +160,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.bt_get_page2).setOnClickListener(this);
         findViewById(R.id.bt_linear_motor).setOnClickListener(this);
+        findViewById(R.id.btn_ota).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -694,6 +697,56 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if(view.getId()==R.id.bt_linear_motor) {
             Intent intent=new Intent(this,LinearMotorActivity.class);
             startActivity(intent);
+        }
+
+        if(view.getId()==R.id.btn_ota) {
+            LmAPILite.GET_VERSION(true, new IVersionListenerLite() {
+                @Override
+                public void versionResult(String softwareVersion, String hardwareVersion) {
+                    postView("\n等待OTA升级");
+                    //提供给测试人员测试的方法，如果第三方需要对接，换成 OtaApi.otaUpdateWithCheckVersion，已经通过复合指令，获取到了版本号，不需要再调用LmAPILite.GET_VERSION
+                    OtaApi.otaUpdateWithCheckVersionForTester(true,softwareVersion, TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+                        @Override
+                        public void error(String message) {
+                            postView("\nota升级出错：" + message);
+                        }
+
+                        @Override
+                        public void onProgress(int i) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    postView("\nota升级进度:"+i);
+                                }
+                            });
+
+                           Logger.show("OTA", "OTA升级" + i);
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    postView("\nota升级结束");
+                                }
+                            });
+                            Logger.show("OTA", "nota升级结束");
+                            OtaApi.destoryOta(TestActivity.this);
+                        }
+
+                        @Override
+                        public void isLatestVersion() {
+                            postView("\n已是最新版本");
+                        }
+                    });
+                }
+            });
+
+
+
         }
     }
 
