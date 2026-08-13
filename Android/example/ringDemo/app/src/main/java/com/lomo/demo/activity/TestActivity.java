@@ -444,7 +444,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
 
                 @Override
-                public void waveformData(int serialNumber, int numberOfData, String waveformData) {
+                public void waveformData(int serialNumber, int numberOfData, String waveformData, List<String[]> waveDataList) {
                     postView("\n波形数据：" + waveformData );
                 }
 
@@ -740,6 +740,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                         @Override
                         public void isLatestVersion() {
                             postView("\n已是最新版本");
+                        }
+
+                        @Override
+                        public void upgradeDescribe(String msg) {
+                            postView("\n更新说明:"+msg);
                         }
                     });
                 }
