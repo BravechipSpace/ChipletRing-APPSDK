@@ -227,7 +227,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
     @Override
     public void onClick(View v) {
         if(v.getId()== R.id.bt_set_HID){
-            LmAPILite.SET_HID(0x04,(byte) 0xFF,TestActivity2.this,ihidListenerLite);
+            LmAPILite.SET_HID(0,-1,TestActivity2.this,ihidListenerLite);
         }
 
         if(v.getId()== R.id.bt_get_HID){
