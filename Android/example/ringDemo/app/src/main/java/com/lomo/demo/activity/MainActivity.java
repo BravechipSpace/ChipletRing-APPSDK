@@ -151,8 +151,8 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(Object o, int position) {
                 DeviceBean  deviceBean = (DeviceBean) o;
-              //  BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
-                BLEUtils.isHIDDevice=false;
+                BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
+               // BLEUtils.isHIDDevice=false;
                  UtilSharedPreference.saveString(MainActivity.this,"address",deviceBean.getDevice().getAddress());
                 App.getInstance().setDeviceBean(deviceBean);
                 //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
