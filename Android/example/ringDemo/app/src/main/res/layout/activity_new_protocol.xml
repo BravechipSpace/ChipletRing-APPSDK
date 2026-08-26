@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:fitsSystemWindows="true"
-    tools:context=".activity.TestActivity">
+    tools:context=".activity.NewProtocolActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,20 +16,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试DEMO"
+            android:text="新增协议测试"
             android:textSize="18sp"
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
-        <TextView
-            android:id="@+id/tv_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="连接"
-            android:textSize="14sp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/white"/>
+
     </RelativeLayout>
     <TextView
         android:id="@+id/tv_result"
@@ -48,372 +39,313 @@
         android:padding="10dp"
         android:orientation="vertical">
 
+        <!-- 灯光特效 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_app_bind"
+                android:id="@+id/bt_set_light_effect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="绑定指令(清空历史)"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-            <Button
-                android:id="@+id/bt_app_connect"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="连接指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_app_refresh"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="刷新指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_sync_time"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="同步时间"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_read_time"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="读取时间"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_battery"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取电量"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_battery_state"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取充电状态"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_soft_version"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="软件版本信息"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_hardware_version"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="硬件版本信息"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_clear_step"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="清除步数"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_step"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取步数"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_heart"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="心率测量"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_blood_oxygen"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="血氧测量"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_read_log"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="读取所有记录"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_test_temp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="测量温度"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_setSn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置序列号"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_getSn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取序列号"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_setCollection"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置采集周期"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/btn_getCollection"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取采集周期"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/bt_setBluttoothName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置蓝牙名"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-            <Button
-                android:id="@+id/bt_getBluttoothName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取蓝牙名"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_gomore_user"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置Gomore信息"
+                android:text="设置灯光特效"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
             <Button
-                android:id="@+id/bt_get_gomore_user"
+                android:id="@+id/bt_get_light_effect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="获取Gomore信息"
+                android:text="获取灯光特效"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
 
+        <!-- 震动特效 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_gomore_test"
+                android:id="@+id/bt_set_vibration_effect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="获取gomore睡眠"
+                android:text="设置震动特效"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_get_page2"
+                android:id="@+id/bt_get_vibration_effect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="跳转到下一页"
+                android:text="获取震动特效"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
-
-
         </LinearLayout>
+
+        <!-- 戒指控制 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/btn_ota"
+                android:id="@+id/bt_start_find_ring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="勇芯测试人员专用固件预发布OTA功能"
-                android:textSize="14sp"
+                android:text="启动查找戒指"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_stop_find_ring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="结束查找戒指"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
             <Button
-                android:id="@+id/bt_linear_motor"
+                android:id="@+id/bt_start_dnd"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="辉扬线性马达"
-                android:textSize="14sp"
+                android:text="启动勿扰模式"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
+            <Button
+                android:id="@+id/bt_stop_dnd"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="结束勿扰模式"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
-
             <Button
-                android:id="@+id/bt_new_protocol"
+                android:id="@+id/bt_start_always_on"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="新协议测试"
-                android:textSize="14sp"
+                android:text="启动常亮模式"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
-
+            <Button
+                android:id="@+id/bt_stop_always_on"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="结束常亮模式"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_start_light_vibration"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="启动灯光震动特效"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_stop_light_vibration"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="结束灯光震动特效"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 心率压力报警 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_set_alarm_param"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置报警参数"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_get_alarm_param"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取报警参数"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 闹钟设置 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_set_alarm_clock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置闹钟"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_get_alarm_clock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="获取闹钟"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 读取勿扰模式 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_get_dnd_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取勿扰模式(0x8B/0x08)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 报警上传监听 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_set_alarm_upload_listener"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置报警上传监听(0x8C/0x03)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 电量计信息 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_get_electricity_meter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取电量计信息(0x12/0x05)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 血氧模式 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_set_blood_oxygen_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置血氧模式(0x37/0x29)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_get_blood_oxygen_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取血氧模式(0x37/0x2A)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <!-- 血氧采集周期 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_set_blood_oxygen_collection"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="设置血氧采集周期(0x37/0x2B)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_get_blood_oxygen_collection"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取血氧采集周期(0x37/0x2C)"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

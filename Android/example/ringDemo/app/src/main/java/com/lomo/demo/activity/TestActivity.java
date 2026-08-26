@@ -161,6 +161,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_get_page2).setOnClickListener(this);
         findViewById(R.id.bt_linear_motor).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
+        findViewById(R.id.bt_new_protocol).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -752,6 +753,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
 
 
+        }
+        if(view.getId()==R.id.bt_new_protocol) {
+            Intent intent=new Intent(this,NewProtocolActivity.class);
+            startActivity(intent);
         }
     }
 

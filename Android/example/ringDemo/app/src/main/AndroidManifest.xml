@@ -134,7 +134,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.NewProtocolActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="user">
 
+        </activity>
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />
