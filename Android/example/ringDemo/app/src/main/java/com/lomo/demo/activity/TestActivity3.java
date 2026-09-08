@@ -24,8 +24,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
-import com.lm.sdk.BaseLmAPi;
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
@@ -293,7 +292,6 @@ public class TestActivity3 extends BaseActivity implements IResponseListenerLite
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LmAPILite.removeWLSCmdListener(this);
         App.needAutoConnect=true;
     }
     /**

@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.lm.sdk.AdPcmTool;
 import com.lm.sdk.BLEService;
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
@@ -129,6 +129,26 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
 
         @Override
         public void getOfflineRecordingStatus(int status) {
+
+        }
+
+        @Override
+        public void timedRecordingResult(boolean success) {
+
+        }
+
+        @Override
+        public void getTimedRecordingResult(int enabled, int intervalTime, int recordTime) {
+
+        }
+
+        @Override
+        public void setSingleRecordingDurationResult(boolean success) {
+
+        }
+
+        @Override
+        public void getSingleRecordingDurationResult(int duration) {
 
         }
     };
@@ -267,11 +287,6 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         }
 
 
-           if(v.getId()==R.id.bt_ecg_demo) {
-
-
-               LogicalApi.startECGActivity(TestActivity2.this);
-           }
         if(v.getId()==R.id.bt_sleep_sevice) {
 
             String dateTimeString = "2025-02-15 23:59:59";

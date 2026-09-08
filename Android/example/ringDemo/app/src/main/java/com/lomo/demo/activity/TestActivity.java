@@ -129,7 +129,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        LmAPILite.addWLSCmdListener(this, this);
 
         tv_result=findViewById(R.id.tv_result);
 
@@ -219,7 +218,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     protected void onDestroy() {
         super.onDestroy();
         BLEUtils.disconnectBLE(this);
-        LmAPILite.removeWLSCmdListener(this);
         handler.removeMessages(101);
     }
 

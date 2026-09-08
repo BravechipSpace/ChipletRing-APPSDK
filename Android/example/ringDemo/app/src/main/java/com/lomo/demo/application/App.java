@@ -5,7 +5,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
-import com.lm.sdk.LmAPI;
+import com.lm.sdk.BLEService;
+import com.lm.sdk.BaseLmAPi;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.library.AppConfig;
 import com.lm.sdk.mode.BleDeviceInfo;
@@ -26,8 +27,11 @@ public class App extends Application {
         app = this;
         LmAPILite.init(this);
         LmAPILite.setDebug(true);
-        AppConfig.setOverseas(false);
-        BLEUtils.contentTitle="ChipletRing Demo";
+        // 设置发送指令回调（解耦蓝牙连接）
+        BaseLmAPi.setSendCommandCallback(data -> {
+            // 通过 BLEService 发送指令
+            BLEService.sendCmd(data);
+        });
     }
 
 

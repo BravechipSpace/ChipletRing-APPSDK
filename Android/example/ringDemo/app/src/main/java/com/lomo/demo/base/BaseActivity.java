@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.lm.sdk.LmAPI;
+
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
@@ -61,15 +61,13 @@ public class BaseActivity extends AppCompatActivity implements IResponseListener
     @Override
     protected void onResume() {
         super.onResume();
-        LmAPILite.clearWLSCmdListener();
-        LmAPILite.addWLSCmdListener(this, this);
+
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LmAPILite.removeWLSCmdListener(this);
     }
 
     /**

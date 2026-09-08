@@ -26,8 +26,6 @@ import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.permissions.permission.PermissionLists;
 import com.hjq.permissions.permission.base.IPermission;
-import com.lm.sdk.BLEService;
-import com.lm.sdk.LmAPI;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;

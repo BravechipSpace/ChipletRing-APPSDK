@@ -15,6 +15,7 @@ import com.lm.sdk.lmApiInter.ILightEffectListenerLite;
 import com.lm.sdk.lmApiInter.IVibrationEffectListenerLite;
 import com.lm.sdk.mode.AlarmClockBean;
 import com.lm.sdk.mode.AlarmParamBean;
+import com.lm.sdk.mode.HolidayResult;
 import com.lm.sdk.mode.LightEffectBean;
 import com.lm.sdk.mode.VibrationEffectBean;
 import com.lomo.demo.R;
@@ -352,7 +353,27 @@ public class NewProtocolActivity extends BaseActivity implements  View.OnClickLi
 
                 setAlarmClockData.add(alarmClockBean);
            }
-            LmAPILite.ALARM_CLOCK_SETTING(setAlarmClockData);
+            LmAPILite.ALARM_CLOCK_SETTING(setAlarmClockData, new IAlarmClockListenerLite() {
+                @Override
+                public void result(List<AlarmClockBean> alarmClockBeanList) {
+
+                }
+
+                @Override
+                public void holidayResult(HolidayResult holidayResult) {
+
+                }
+
+                @Override
+                public void setAlarmResult(boolean success) {
+
+                }
+
+                @Override
+                public void setHolidayResult(boolean success) {
+
+                }
+            });
             postView("\n已发送设置闹钟指令");
         }
 

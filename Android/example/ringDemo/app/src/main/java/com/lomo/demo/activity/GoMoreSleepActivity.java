@@ -6,13 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.library.utils.DateUtils;
