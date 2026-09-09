@@ -50,79 +50,13 @@
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
 
-        <activity
-            android:name=".activity.GoMoreSleepActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
+
 
         <activity
             android:name=".activity.TestActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:exported="false" />
-        <activity
-            android:name=".activity.TestActivity2"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.TestActivity3"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.CollectionActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.LinearMotorActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="true"
-            android:screenOrientation="user">
 
-        </activity>
-        <activity
-            android:name=".nfc.NfcActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="http" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.TAG_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <data android:mimeType="application/vnd.wfa.wsc" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.TECH_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/filter_nfc" />
-        </activity>
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
@@ -134,13 +68,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.NewProtocolActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="true"
-            android:screenOrientation="user">
 
-        </activity>
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />
@@ -155,18 +83,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service
-            android:name=".nfc.generic.MyHostApduService"
-            android:exported="true"
-            android:permission="android.permission.BIND_NFC_SERVICE">
-            <intent-filter>
-                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.nfc.cardemulation.host_apdu_service"
-                android:resource="@xml/apduservice" />
-        </service>
     </application>
 
 </manifest>

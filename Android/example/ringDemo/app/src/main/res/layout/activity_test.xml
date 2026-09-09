@@ -346,24 +346,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_get_page2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="跳转到下一页"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
 
-
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -374,46 +357,11 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="勇芯测试人员专用固件预发布OTA功能"
+                android:text="固件OTA功能"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bt_linear_motor"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="辉扬线性马达"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/bt_new_protocol"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="新协议测试"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

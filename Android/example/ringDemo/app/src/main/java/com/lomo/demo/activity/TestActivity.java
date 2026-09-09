@@ -131,7 +131,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         setContentView(R.layout.activity_test);
 
         tv_result=findViewById(R.id.tv_result);
-
+        LmAPILite.addWLSCmdListener(this, this);
         findViewById(R.id.bt_app_bind).setOnClickListener(this);
         findViewById(R.id.bt_app_connect).setOnClickListener(this);
         findViewById(R.id.bt_app_refresh).setOnClickListener(this);
@@ -157,10 +157,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.tv_connect).setOnClickListener(this);
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
-        findViewById(R.id.bt_get_page2).setOnClickListener(this);
-        findViewById(R.id.bt_linear_motor).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
-        findViewById(R.id.bt_new_protocol).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -175,17 +172,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         READ_HISTORY_AUTO();
 
-        LogicalApi.createToken("76d07e37bfe341b1a25c76c0e25f457a", "1204491582@qq.com", new ICreateToken() {
-            @Override
-            public void getTokenSuccess() {
-
-            }
-
-            @Override
-            public void error(String msg) {
-
-            }
-        });
     }
 
 
@@ -219,6 +205,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         super.onDestroy();
         BLEUtils.disconnectBLE(this);
         handler.removeMessages(101);
+        LmAPILite.removeWLSCmdListener(this);
     }
 
     @Override
@@ -689,22 +676,15 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             LmAPILite.GET_COLLECTION(iSystemControlListenerLite);
         }
-        if(view.getId()==R.id.bt_get_page2) {
-            Intent intent=new Intent(TestActivity.this, TestActivity2.class);
-            startActivity(intent);
-        }
-        if(view.getId()==R.id.bt_linear_motor) {
-            Intent intent=new Intent(this,LinearMotorActivity.class);
-            startActivity(intent);
-        }
+
 
         if(view.getId()==R.id.btn_ota) {
             LmAPILite.GET_VERSION(true, new IVersionListenerLite() {
                 @Override
                 public void versionResult(String softwareVersion, String hardwareVersion) {
                     postView("\n等待OTA升级");
-                    //提供给测试人员测试的方法，如果第三方需要对接，换成 OtaApi.otaUpdateWithCheckVersion，已经通过复合指令，获取到了版本号，不需要再调用LmAPILite.GET_VERSION
-                    OtaApi.otaUpdateWithCheckVersionForTester(true,softwareVersion, TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+                    //已经通过复合指令，获取到了版本号，不需要再调用LmAPILite.GET_VERSION
+                    OtaApi.otaUpdateWithCheckVersion(softwareVersion, TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
                         @Override
                         public void error(String message) {
                             postView("\nota升级出错：" + message);
@@ -749,13 +729,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
 
-
-
         }
-        if(view.getId()==R.id.bt_new_protocol) {
-            Intent intent=new Intent(this,NewProtocolActivity.class);
-            startActivity(intent);
-        }
+
     }
 
 
