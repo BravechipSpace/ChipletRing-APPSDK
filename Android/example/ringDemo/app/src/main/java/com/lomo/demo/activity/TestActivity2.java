@@ -20,6 +20,8 @@ import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
+import com.lm.sdk.inter.FileResponseCallback;
+import com.lm.sdk.inter.ICommonListener;
 import com.lm.sdk.inter.IFileListListener;
 import com.lm.sdk.inter.IHeartListener;
 import com.lm.sdk.inter.IHistoryListener;
@@ -35,6 +37,7 @@ import com.lm.sdk.lmApiInter.IHIDListenerLite;
 import com.lm.sdk.lmApiInter.IHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.lmApiInter.IVersionListenerLite;
+import com.lm.sdk.mode.AlarmParamBean;
 import com.lm.sdk.mode.GestureSupport;
 import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.Sleep2thBean;
@@ -44,6 +47,7 @@ import com.lm.sdk.mode.SystemControlBean;
 import com.lm.sdk.mode.TouchSupport;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.CMDUtils;
+import com.lm.sdk.utils.DataCovertUtils;
 import com.lm.sdk.utils.FileUtil;
 import com.lm.sdk.utils.GoMoreUtils;
 import com.lm.sdk.utils.Logger;
@@ -54,6 +58,7 @@ import com.lomo.demo.base.BaseActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -71,7 +76,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
     private Handler handler = new Handler();  // 创建一个 Handler 实例
     private Runnable runnable;                 // 创建一个 Runnable 来定义任务
     String outputPath = com.lomo.demo.FileUtil.getSDPath(App.getInstance(), "保存" + ".pcm");
-    private byte[] fileNameByte=new byte[]{};
+    private byte[] fileNameByteTest=new byte[]{};//测试文件系统功能的文件名
 
     private IHIDListenerLite ihidListenerLite=new IHIDListenerLite() {
         @Override
@@ -131,8 +136,120 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         public void getOfflineRecordingStatus(int status) {
 
         }
-    };
 
+        @Override
+        public void timedRecordingResult(boolean success) {
+
+        }
+
+        @Override
+        public void getTimedRecordingResult(int enabled, int intervalTime, int recordTime) {
+
+        }
+
+        @Override
+        public void setSingleRecordingDurationResult(boolean success) {
+
+        }
+
+        @Override
+        public void getSingleRecordingDurationResult(int duration) {
+
+        }
+    };
+    FileResponseCallback fileResponseCallback=new FileResponseCallback() {
+        @Override
+        public void onFileListReceived(byte[] data) {
+            byte[] fileCountByte = new byte[4];
+
+            System.arraycopy(data, 4, fileCountByte, 0, fileCountByte.length);
+            int fileCount = DataCovertUtils.byteArray2LittleInt(fileCountByte);
+
+            byte[] fileIndexByte = new byte[4];
+
+            System.arraycopy(data, 8, fileIndexByte, 0, fileCountByte.length);
+            int fileIndex = DataCovertUtils.byteArray2LittleInt(fileIndexByte);
+
+            byte[] fileSizeByte = new byte[4];
+            System.arraycopy(data, 12, fileSizeByte, 0, fileSizeByte.length);
+            int fileSize = DataCovertUtils.byteArray2LittleInt(fileSizeByte) / 1024;
+
+            byte[] fileNameByte = new byte[data.length-16];
+            System.arraycopy(data, 16, fileNameByte, 0, fileNameByte.length);
+            String fileName = new String(fileNameByte, StandardCharsets.UTF_8);
+            Logger.show("fileSize", fileSize + "");
+            Logger.show("result", fileName);
+            if(fileIndex==1){
+                fileNameByteTest=fileNameByte;//第一个文件，作为测试数据
+            }
+            postView("\nonFileListReceived：" + "fileCount：" + fileCount + ",fileIndex：" + fileIndex + ",fileSize：" + fileSize + ",fileName：" + fileName);
+        }
+
+        @Override
+        public void onFileInfoReceived(byte[] data) {
+            postView("\nonFileInfoReceived");
+        }
+
+        @Override
+        public void onFileDelete(boolean success, int deleteStatus) {
+            postView("\nonFileDelete,success:"+success);
+        }
+
+        @Override
+        public void onFileDownloadEndReceived(byte[] data) {
+            postView("onFileDownloadEndReceived");
+        }
+
+        @Override
+        public void onDownloadAllFileProgress(byte[] data) {
+            postView("\nonDownloadAllFileProgress");
+        }
+
+        @Override
+        public void oneFileDownloadSuccess() {
+            postView("\noneFileDownloadSuccess");
+        }
+
+        @Override
+        public void onDownloadStatusReceived(byte[] data) {
+            postView("\nonDownloadStatusReceived");
+        }
+
+        @Override
+        public void onFileDataReceived(byte[] data) {
+          //  postView("\nonFileDataReceived");
+        }
+
+        @Override
+        public void onFileState(int data) {
+            postView("\nonFileState");
+        }
+
+        @Override
+        public void onFilePushFileName(byte[] data) {
+            postView("\nonFilePushFileName");
+        }
+
+        @Override
+        public void onFilePushFileData(byte[] data) {
+            postView("\nonFilePushFileData");
+        }
+
+        @Override
+        public void onFileResumeBreakpoint(int state, long startTime, long endTime) {
+            postView("\nonFileResumeBreakpoint,state:"+state+",startTime:"+startTime+",endTime:"+endTime);
+        }
+
+        @Override
+        public void onFileResumeBreakpointProgress(int progress) {
+            postView("\nonFileResumeBreakpointProgress:"+progress);
+        }
+
+        @Override
+        public void localMemoryFull(int capacitySize, int capacitySizeUsed, int capacitySizeNotUsed) {
+            postView("\nlocalMemoryFull,capacitySize:"+capacitySize+",capacitySizeUsed:"+capacitySizeUsed+",capacitySizeNotUsed:"+capacitySizeNotUsed);
+        }
+    };
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +279,8 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         findViewById(R.id.bt_testGomore).setOnClickListener(this);
         findViewById(R.id.btn_touch_test_open).setOnClickListener(this);
         findViewById(R.id.btn_touch_test_close).setOnClickListener(this);
+        findViewById(R.id.bt_test_vibration).setOnClickListener(this);
+        findViewById(R.id.bt_resume_breakpoint).setOnClickListener(this);
 
 
         /**
@@ -305,60 +424,38 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
 
         if(v.getId()==R.id.bt_file_list) {
 
-            LmAPILite.GET_FILE_LIST(new IFileListListener() {
-                @Override
-                public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
-                    postView("\nGET_FILE_LIST：" + "fileCount：" + fileCount + ",fileIndex：" + fileIndex + ",fileSize：" + fileSize + ",fileName：" + fileName);
-                    //取其中一个测试，填入自己读取到的数据，010203040506_2026_07_02:13:07:12_8.bin只是个demo
-                    if (fileName.equals("010203040506_2026_07_02:13:07:12_8.bin")) {
-                        fileNameByte = rawDataByte;
-                    }
-
-
-                }
-
-                @Override
-                public void fileContent(String content) {
-
-                }
-
-                @Override
-                public void AudioFileContent(byte[] content) {
-
-                }
-
-                @Override
-                public void getFileContentFinish() {
-
-                }
-            });
+            LmAPILite.GET_FILE_LIST(fileResponseCallback);
         }
         if(v.getId()==R.id.bt_file_content) {
 
-            /**
-             * 类型和文件名的最后一部分保持一致，010203040506_2026_07_02:13:07:12_8.bin，类型是8
-             */
-            LmAPILite.GET_FILE_CONTENT("8", fileNameByte, new IFileListListener() {
+            LmAPILite.DOWNLOAD_FILE(fileNameByteTest, fileResponseCallback);
+        }
+        if(v.getId()==R.id.bt_resume_breakpoint) {
+
+            LmAPILite.RESUME_BREAKPOINT(20, fileNameByteTest,fileResponseCallback);
+        }
+        if(v.getId()==R.id.bt_test_vibration) {
+            //设置参数
+            LmAPILite.SET_MOTOR_LINEAR(1, 144, 5, 5, new ICommonListener() {
                 @Override
-                public void file(int fileCount, int fileIndex, int fileSize, String fileName, byte[] rawDataByte) {
+                public void success() {
+                    //进行震动
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            LmAPILite.MOTOR_VIBRATION_TEST();
+                        }
+                    },200);
+
                 }
 
                 @Override
-                public void fileContent(String content) {
-                    postView("\nGET_FILE_CONTENT：" + content);
-                }
-
-                @Override
-                public void AudioFileContent(byte[] content) {
-
-                }
-
-                @Override
-                public void getFileContentFinish() {
+                public void error() {
 
                 }
             });
         }
+
         if(v.getId()==R.id.bt_test2){
 
             Intent intent = new Intent();
