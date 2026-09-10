@@ -194,7 +194,18 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             finish();
         }
         READ_HISTORY_AUTO();
+        //仅为测试在线OTA功能，获取Token
+        LogicalApi.createToken("76d07e37bfe341b1a25c76c0e25f457a", "1204491582@qq.com", new ICreateToken() {
+            @Override
+            public void getTokenSuccess() {
 
+            }
+
+            @Override
+            public void error(String msg) {
+
+            }
+        });
     }
 
 
