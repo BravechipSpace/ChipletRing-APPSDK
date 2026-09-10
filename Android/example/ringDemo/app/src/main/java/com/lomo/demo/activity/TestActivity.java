@@ -158,6 +158,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
+        findViewById(R.id.btn_ota_local).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -730,7 +731,56 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             });
 
         }
+        if(view.getId()==R.id.btn_ota_local) {
 
+              postView("\n本地OTA升级");
+            //先将升级固件保存在本地，放在/storage/emulated/0/Android/data/com.lomo.demo/files文件里，才能进行OTA升级
+            OtaApi.setUpdateFile("/storage/emulated/0/Android/data/com.lomo.demo/files/BCL603S3L_7.3.6.2Z5X.bin");
+            //设置文件名
+            OtaApi.fileName="BCL603S3L_7.3.6.2Z5X.bin";
+            //只传入版本号
+            OtaApi.otaUpdateWithVersion("7.3.6.2Z5X", "", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), TestActivity.this, new LmOtaProgressListener() {
+                @Override
+                public void error(String message) {
+                    postView("\nota升级出错：" + message);
+                }
+
+                @Override
+                public void onProgress(int i) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级进度:"+i);
+                        }
+                    });
+
+                    Logger.show("OTA", "OTA升级" + i);
+                }
+
+                @Override
+                public void onComplete() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级结束");
+                        }
+                    });
+                    Logger.show("OTA", "nota升级结束");
+                    OtaApi.destoryOta(TestActivity.this);
+                }
+
+                @Override
+                public void isLatestVersion() {
+                }
+
+                @Override
+                public void upgradeDescribe(String msg) {
+
+                }
+            });
+
+
+        }
     }
 
 
