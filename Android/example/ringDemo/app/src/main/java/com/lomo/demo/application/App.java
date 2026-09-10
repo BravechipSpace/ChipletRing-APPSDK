@@ -4,10 +4,12 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.lm.sdk.BLEService;
 import com.lm.sdk.BaseLmAPi;
 import com.lm.sdk.LmAPILite;
+import com.lm.sdk.inter.ICMDLogListener;
 import com.lm.sdk.library.AppConfig;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
@@ -25,7 +27,12 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        LmAPILite.init(this);
+        LmAPILite.init(this, new ICMDLogListener() {
+            @Override
+            public void log(String label, String type, String logs) {
+                Log.d(type,logs);
+            }
+        });
         LmAPILite.setDebug(true);
         // 设置发送指令回调（解耦蓝牙连接）
         BaseLmAPi.setSendCommandCallback(data -> {

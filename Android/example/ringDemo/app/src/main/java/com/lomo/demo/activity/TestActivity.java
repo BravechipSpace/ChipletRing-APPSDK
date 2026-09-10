@@ -3,6 +3,8 @@ package com.lomo.demo.activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,10 +12,13 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -54,6 +59,9 @@ import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -62,8 +70,10 @@ import java.util.Set;
 public class TestActivity extends BaseActivity implements IResponseListenerLite, View.OnClickListener {
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
+    EditText et_collection_period;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
+    private ActivityResultLauncher<Intent> filePickerLauncher;
 
     private ISystemControlListenerLite iSystemControlListenerLite=new ISystemControlListenerLite() {
         @Override
@@ -78,7 +88,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         @Override
         public void setCollection(boolean success) {
-            postView("设置周期:"+"300秒");
+            postView("设置采集周期:"+(success ? "成功" : "失败"));
         }
 
         @Override
@@ -131,6 +141,18 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         setContentView(R.layout.activity_test);
 
         tv_result=findViewById(R.id.tv_result);
+        et_collection_period=findViewById(R.id.et_collection_period);
+
+        //注册文件选择器，兼容高版本Android
+        filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri uri = result.getData().getData();
+                if (uri != null) {
+                    handleSelectedFirmware(uri);
+                }
+            }
+        });
+
         LmAPILite.addWLSCmdListener(this, this);
         findViewById(R.id.bt_app_bind).setOnClickListener(this);
         findViewById(R.id.bt_app_connect).setOnClickListener(this);
@@ -670,8 +692,24 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
 
         if(view.getId()==R.id.bt_setCollection) {
-
-            LmAPILite.SET_COLLECTION(5 * 60, iSystemControlListenerLite);
+            String input = et_collection_period.getText().toString().trim();
+            if (TextUtils.isEmpty(input)) {
+                Toast.makeText(this, "请输入采集周期，单位秒", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            int period;
+            try {
+                period = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "请输入正确的采集周期", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            //0表示关闭周期采集，正常值最小60秒
+            if (period != 0 && period < 60) {
+                Toast.makeText(this, "采集周期为0或最小60秒", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            LmAPILite.SET_COLLECTION(period, iSystemControlListenerLite);
         }
         if(view.getId()==R.id.btn_getCollection) {
 
@@ -732,14 +770,54 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         }
         if(view.getId()==R.id.btn_ota_local) {
+            postView("\n选择固件文件");
+            //启动文件选择器，尝试过滤.bin文件（部分设备支持）
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/octet-stream");
+            filePickerLauncher.launch(intent);
+        }
+    }
 
-              postView("\n本地OTA升级");
-            //先将升级固件保存在本地，放在/storage/emulated/0/Android/data/com.lomo.demo/files文件里，才能进行OTA升级
-            OtaApi.setUpdateFile("/storage/emulated/0/Android/data/com.lomo.demo/files/BCL603S3L_7.3.6.2Z5X.bin");
+    /**
+     * 处理选中的固件文件
+     */
+    private void handleSelectedFirmware(Uri uri) {
+        try {
+            //获取文件名
+            String fileName = getFileNameFromUri(uri);
+            if (TextUtils.isEmpty(fileName)) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //校验文件扩展名是否为.bin
+            if (!fileName.toLowerCase().endsWith(".bin")) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //解析版本号
+            String version = extractVersionFromFileName(fileName);
+            if (TextUtils.isEmpty(version)) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            postView("\n本地OTA升级");
+            postView("\n固件文件：" + fileName);
+            postView("\n版本号：" + version);
+
+            //将文件拷贝到应用私有目录
+            File destFile = new File(getExternalFilesDir(null), fileName);
+            copyUriToFile(uri, destFile);
+
+            //设置升级文件
+            OtaApi.setUpdateFile(destFile.getAbsolutePath());
             //设置文件名
-            OtaApi.fileName="BCL603S3L_7.3.6.2Z5X.bin";
-            //只传入版本号
-            OtaApi.otaUpdateWithVersion("7.3.6.2Z5X", "", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), TestActivity.this, new LmOtaProgressListener() {
+            OtaApi.fileName = fileName;
+            //开始OTA升级
+            OtaApi.otaUpdateWithVersion(version, "", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), TestActivity.this, new LmOtaProgressListener() {
                 @Override
                 public void error(String message) {
                     postView("\nota升级出错：" + message);
@@ -779,11 +857,99 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            postView("\n固件文件处理失败：" + e.getMessage());
+            Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * 从Uri获取文件名
+     */
+    private String getFileNameFromUri(Uri uri) {
+        String fileName = null;
+        
+        //尝试从ContentResolver获取文件名
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
+            if (nameIndex >= 0) {
+                fileName = cursor.getString(nameIndex);
+            }
+            cursor.close();
+        }
+        
+        //如果获取失败，从Uri路径解析
+        if (TextUtils.isEmpty(fileName)) {
+            String path = uri.getPath();
+            if (!TextUtils.isEmpty(path)) {
+                fileName = path.substring(path.lastIndexOf('/') + 1);
+            }
+        }
+        
+        return fileName;
+    }
 
+    /**
+     * 从文件名中提取版本号
+     * 规则：如果有下划线，舍弃下划线前边部分，取.bin前的内容
+     */
+    private String extractVersionFromFileName(String fileName) {
+        if (TextUtils.isEmpty(fileName)) {
+            return null;
+        }
+        
+        //移除.bin扩展名
+        String nameWithoutExt = fileName;
+        if (fileName.toLowerCase().endsWith(".bin")) {
+            nameWithoutExt = fileName.substring(0, fileName.length() - 4);
+        }
+        
+        //查找下划线
+        int underscoreIndex = nameWithoutExt.lastIndexOf('_');
+        if (underscoreIndex >= 0 && underscoreIndex < nameWithoutExt.length() - 1) {
+            //返回下划线后的部分
+            return nameWithoutExt.substring(underscoreIndex + 1);
+        } else {
+            //没有下划线，返回整个名称（不含扩展名）
+            return nameWithoutExt;
+        }
+    }
+
+    /**
+     * 将Uri内容拷贝到文件
+     */
+    private void copyUriToFile(Uri uri, File destFile) throws Exception {
+        InputStream inputStream = null;
+        FileOutputStream outputStream = null;
+        try {
+            inputStream = getContentResolver().openInputStream(uri);
+            outputStream = new FileOutputStream(destFile);
+            
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     /**
      * @param value 打印的log

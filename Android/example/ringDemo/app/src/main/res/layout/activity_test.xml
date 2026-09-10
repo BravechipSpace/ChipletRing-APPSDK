@@ -255,9 +255,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_collection_period"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="采集周期(秒)"
+                android:inputType="number"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:importantForAutofill="no" />
             <Button
                 android:id="@+id/bt_setCollection"
                 android:layout_width="0dp"
@@ -366,15 +376,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black_27"
-               android:textSize="12sp"
-               android:text="先将固件保存在/storage/emulated/0/Android/data/com.lomo.demo/files文件里，现在支持BCL603S3L_7.3.6.2Z5X.bin，如测试其他固件，请修改代码"/>
-            <Button
+                <Button
                 android:id="@+id/btn_ota_local"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"

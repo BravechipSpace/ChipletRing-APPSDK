@@ -8,7 +8,7 @@ android {
         minSdkVersion 27
         targetSdkVersion 35
         versionCode 8
-        versionName "2.0.7"//页面增加测试人员OTA
+        versionName "2.0.8"//skg增加本地OTA，增加日志回调
 
         applicationVariants.all { variant ->
             variant.outputs.all {
