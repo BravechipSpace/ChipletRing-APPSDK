@@ -5,7 +5,7 @@ android {
     namespace = "com.lomo.demo"
     defaultConfig {
         applicationId "com.lomo.demo"
-        minSdkVersion 27
+        minSdkVersion 23
         targetSdkVersion 35
         versionCode 8
         versionName "2.0.8"//skg增加本地OTA，增加日志回调

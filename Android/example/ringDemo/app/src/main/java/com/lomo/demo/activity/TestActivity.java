@@ -152,8 +152,9 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             }
         });
-
+        //监听蓝牙连接状态，如果用户自己管理蓝牙状态，这块可以删除
         LmAPILite.addWLSCmdListener(this, this);
+
         findViewById(R.id.bt_app_bind).setOnClickListener(this);
         findViewById(R.id.bt_app_connect).setOnClickListener(this);
         findViewById(R.id.bt_app_refresh).setOnClickListener(this);
@@ -306,6 +307,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             if(view.getId()==R.id.bt_app_connect){
                 postView("\nAPP_CONNECT");
+                //实际开发需要传入服务器上最后一条历史数据的时间戳
                 LmAPILite.APP_CONNECT(0, new IBindConnectRefreshListenerLite() {
                     @Override
                     public void appBind(SystemControlLiteBean systemControlBean) {
@@ -326,6 +328,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         if(view.getId()==R.id.bt_app_refresh){
             postView("\nAPP_REFRESH");
+            //实际开发需要传入服务器上最后一条历史数据的时间戳
             LmAPILite.APP_REFRESH(0, new IBindConnectRefreshListenerLite() {
                 @Override
                 public void appBind(SystemControlLiteBean systemControlBean) {

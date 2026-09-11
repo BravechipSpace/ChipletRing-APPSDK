@@ -30,7 +30,7 @@ public class App extends Application {
         LmAPILite.init(this, new ICMDLogListener() {
             @Override
             public void log(String label, String type, String logs) {
-                Log.d(type,logs);
+                Log.d(label,type+" "+logs);
             }
         });
         LmAPILite.setDebug(true);
