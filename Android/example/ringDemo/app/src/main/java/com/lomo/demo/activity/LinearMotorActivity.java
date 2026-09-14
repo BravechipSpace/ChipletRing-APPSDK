@@ -6,12 +6,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.lmApiInter.ILinearMotorCountListenerLite;
 import com.lm.sdk.lmApiInter.ILinearMotorTargetListenerLite;
 import com.lm.sdk.lmApiInter.IVibrationConfigListenerLite;
+import com.lm.sdk.lmApiInter.IVibrationControlListenerLite;
 import com.lomo.demo.R;
 import com.lomo.demo.base.BaseActivity;
 
@@ -40,6 +40,9 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         // 振动配置
         findViewById(R.id.bt_get_vibration_config).setOnClickListener(this);
         findViewById(R.id.bt_set_vibration_config).setOnClickListener(this);
+        // 立即振动和停止振动
+        findViewById(R.id.bt_immediate_vibration).setOnClickListener(this);
+        findViewById(R.id.bt_stop_vibration).setOnClickListener(this);
         // 目标值
         findViewById(R.id.bt_get_target).setOnClickListener(this);
         findViewById(R.id.bt_set_target).setOnClickListener(this);
@@ -91,6 +94,38 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void setVibrationConfigResult(boolean success) {
                     postView("\n设置振动配置结果: " + (success ? "成功" : "失败"));
+                }
+            });
+        }
+
+        // ==================== 立即振动（Subcmd=0x04）====================
+        if (id == R.id.bt_immediate_vibration) {
+            postView("\n立即振动（强力振动）");
+            LmAPILite.IMMEDIATE_VIBRATION(0x01, new IVibrationControlListenerLite() {
+                @Override
+                public void onImmediateVibrationResult(boolean success) {
+                    postView("\n立即振动结果: " + (success ? "成功" : "失败"));
+                }
+
+                @Override
+                public void onStopVibrationResult(boolean success) {
+                    // 立即振动不会触发此回调
+                }
+            });
+        }
+
+        // ==================== 停止振动（Subcmd=0x05）====================
+        if (id == R.id.bt_stop_vibration) {
+            postView("\n停止振动");
+            LmAPILite.STOP_VIBRATION(new IVibrationControlListenerLite() {
+                @Override
+                public void onImmediateVibrationResult(boolean success) {
+                    // 停止振动不会触发此回调
+                }
+
+                @Override
+                public void onStopVibrationResult(boolean success) {
+                    postView("\n停止振动结果: " + (success ? "成功" : "失败"));
                 }
             });
         }
