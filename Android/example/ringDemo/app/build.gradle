@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo"
         minSdkVersion 23
         targetSdkVersion 35
-        versionCode 8
-        versionName "2.0.8"//skg增加本地OTA，增加日志回调
+        versionCode 9
+        versionName "2.0.9"//1.sdk去掉so文件。2.Gomore设置个人信息，增加输入框。
 
         applicationVariants.all { variant ->
             variant.outputs.all {

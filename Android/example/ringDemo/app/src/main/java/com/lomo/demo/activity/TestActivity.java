@@ -71,6 +71,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
     EditText et_collection_period;
+    EditText et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
     private ActivityResultLauncher<Intent> filePickerLauncher;
@@ -142,6 +143,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         tv_result=findViewById(R.id.tv_result);
         et_collection_period=findViewById(R.id.et_collection_period);
+        et_gomore_age = findViewById(R.id.et_gomore_age);
+        et_gomore_sex = findViewById(R.id.et_gomore_sex);
+        et_gomore_height = findViewById(R.id.et_gomore_height);
+        et_gomore_weight = findViewById(R.id.et_gomore_weight);
 
         //注册文件选择器，兼容高版本Android
         filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -671,9 +676,26 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             LmAPILite.Get_BlueTooth_Name(iSystemControlListenerLite);
         }
         if(view.getId()==R.id.bt_gomore_user) {
-
+            int age = parseGomoreInput(et_gomore_age.getText().toString().trim());
+            int sex = parseGomoreInput(et_gomore_sex.getText().toString().trim());
+            int height = parseGomoreInput(et_gomore_height.getText().toString().trim());
+            int weight = parseGomoreInput(et_gomore_weight.getText().toString().trim());
+            boolean valid = age >= 0 && sex >= 0 && height >= 0 && weight >= 0
+                    && age <= 99
+                    && (sex == 0 || sex == 1)
+                    && height <= 220
+                    && weight >= 10 && weight <= 150;
+            if (!valid) {
+                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            //身高小于100设置为100
+            if (height < 100) {
+                height = 100;
+            }
+            final int fAge = age, fSex = sex, fHeight = height, fWeight = weight;
             postView("\n设置Gomore个人信息");
-            LmAPILite.SET_GOMORE_USER(35, 1, 183, 70, -1, -1, -1, new IGoMoreUserListener() {
+            LmAPILite.SET_GOMORE_USER(fAge, fSex, fHeight, fWeight, -1, -1, -1, new IGoMoreUserListener() {
                 @Override
                 public void setUserInfoResult(boolean success) {
                     postView("\n设置Gomore个人信息:" + success);
@@ -962,6 +984,23 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /**
+     * 解析Gomore个人信息输入框
+     *
+     * @param input 输入内容
+     * @return 解析后的整数，输入为空或非法时返回 -1
+     */
+    private int parseGomoreInput(String input) {
+        if (TextUtils.isEmpty(input)) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return -1;
         }
     }
 

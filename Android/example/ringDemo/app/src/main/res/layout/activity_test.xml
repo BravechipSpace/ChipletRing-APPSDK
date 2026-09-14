@@ -321,6 +321,57 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_gomore_age"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="年龄(0-99)"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/et_gomore_sex"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="性别(0女1男)"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/et_gomore_height"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="身高(100-220)"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/et_gomore_weight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="体重(10-150)"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
