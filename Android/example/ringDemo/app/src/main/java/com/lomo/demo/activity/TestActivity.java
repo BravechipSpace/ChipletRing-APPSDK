@@ -187,6 +187,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
         findViewById(R.id.btn_ota_local).setOnClickListener(this);
+        findViewById(R.id.bt_six_axis_sensor).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         Intent intent = getIntent();
         if (intent != null) {
@@ -812,6 +813,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("application/octet-stream");
             filePickerLauncher.launch(intent);
+        }
+        if(view.getId()==R.id.bt_six_axis_sensor) {
+            Intent intent=new Intent(this,SixAxisSensorActivity.class);
+            startActivity(intent);
         }
     }
 

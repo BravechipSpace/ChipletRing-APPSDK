@@ -317,6 +317,16 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+
+            <Button
+                android:id="@+id/bt_six_axis_sensor"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="6轴传感器"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
 
         <LinearLayout
@@ -437,6 +447,7 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
