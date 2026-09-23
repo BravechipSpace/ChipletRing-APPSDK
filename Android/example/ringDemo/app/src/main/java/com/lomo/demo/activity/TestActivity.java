@@ -29,6 +29,7 @@ import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IGoMoreListener;
+import com.lm.sdk.inter.IExceptionLogListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.ISNListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
@@ -186,6 +187,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_setCollection).setOnClickListener(this);
         findViewById(R.id.btn_getCollection).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
+        findViewById(R.id.bt_get_exception_log).setOnClickListener(this);
+        findViewById(R.id.bt_delete_exception_log).setOnClickListener(this);
         findViewById(R.id.btn_ota_local).setOnClickListener(this);
         findViewById(R.id.bt_six_axis_sensor).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
@@ -719,6 +722,34 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void getUserInfoResult(int age, int sex, int height, int weight, int maximumHeartRate, int normalHeartRate, int maximalOxygenUptake) {
                     postView("\n获取Gomore个人信息:" + age + "," + sex + "," + height + "," + weight + "," + maximumHeartRate + "," + normalHeartRate + "," + maximalOxygenUptake);
+                }
+            });
+        }
+        if (view.getId() == R.id.bt_get_exception_log) {
+            postView("\n读取异常日志");
+            LmAPILite.GET_EXCEPTION_LOG(new IExceptionLogListener() {
+                @Override
+                public void onGetExceptionLogResult(long timestamp, String log) {
+                    postView("\n读取异常日志 时间戳:" + timestamp + " 日志:" + log);
+                }
+
+                @Override
+                public void onDeleteExceptionLogResult(boolean success) {
+                    // 读取操作不会触发此回调
+                }
+            });
+        }
+        if (view.getId() == R.id.bt_delete_exception_log) {
+            postView("\n删除异常日志");
+            LmAPILite.DELETE_EXCEPTION_LOG(new IExceptionLogListener() {
+                @Override
+                public void onGetExceptionLogResult(long timestamp, String log) {
+                    // 删除操作不会触发此回调
+                }
+
+                @Override
+                public void onDeleteExceptionLogResult(boolean success) {
+                    postView("\n删除异常日志:" + (success ? "成功" : "失败"));
                 }
             });
         }
