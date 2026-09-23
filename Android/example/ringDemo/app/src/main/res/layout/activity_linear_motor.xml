@@ -42,74 +42,35 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-            <!-- 振动配置输入框 -->
-            <LinearLayout
+            <!-- 振动配置动态行容器（限高，内部滚动） -->
+            <ScrollView
+                android:id="@+id/sv_vibration_config_rows"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:scrollbars="vertical">
+                <LinearLayout
+                    android:id="@+id/ll_vibration_config_rows"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="常规强度:"
-                    android:textSize="12sp"/>
-                <EditText
-                    android:id="@+id/et_normal_intensity"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="0~255"
-                    android:text="100"
-                    android:inputType="number"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="常规时间:"
-                    android:textSize="12sp"/>
-                <EditText
-                    android:id="@+id/et_normal_time"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="单位5ms"
-                    android:text="20"
-                    android:inputType="number"
-                    android:textSize="12sp"/>
-            </LinearLayout>
+                    android:orientation="vertical" />
+            </ScrollView>
+
+            <!-- 添加配置行按钮 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="目标强度:"
-                    android:textSize="12sp"/>
-                <EditText
-                    android:id="@+id/et_target_intensity"
+                <Button
+                    android:id="@+id/bt_add_vibration_config_row"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="0~255"
-                    android:text="150"
-                    android:inputType="number"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="目标时间:"
-                    android:textSize="12sp"/>
-                <EditText
-                    android:id="@+id/et_target_time"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="单位5ms"
-                    android:text="10"
-                    android:inputType="number"
-                    android:textSize="12sp"/>
+                    android:text="+ 添加配置(最多20)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state" />
             </LinearLayout>
 
             <!-- 振动配置按钮 -->
