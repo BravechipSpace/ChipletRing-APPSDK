@@ -338,8 +338,8 @@ public class NewProtocolActivity extends BaseActivity implements  View.OnClickLi
              AlarmClockBean alarmClockBean = new AlarmClockBean();
              if(i==0){//测试只设置一个闹铃的情况
                  alarmClockBean.setOnOrOff((byte) 1);
-                 alarmClockBean.setVibrationEffect((byte) 1);
-                 alarmClockBean.setTime(1786524900);
+                 alarmClockBean.setVibrationEffect((byte) 0);
+                 alarmClockBean.setTime(1788328680);
                  alarmClockBean.setRepetitiveType((byte) 0);
                  alarmClockBean.setWeekday(new int[]{});
              }else{//其他补0
@@ -366,7 +366,7 @@ public class NewProtocolActivity extends BaseActivity implements  View.OnClickLi
 
                 @Override
                 public void setAlarmResult(boolean success) {
-
+                    postView("\nsetAlarmResult："+success);
                 }
 
                 @Override
@@ -399,7 +399,7 @@ public class NewProtocolActivity extends BaseActivity implements  View.OnClickLi
                 }
 
                 @Override
-                public void holidayResult(com.lm.sdk.mode.HolidayResult holidayResult) {
+                public void holidayResult(HolidayResult holidayResult) {
                 }
 
                 @Override

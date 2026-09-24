@@ -12,8 +12,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lm.sdk.LmAPILite;
+import com.lm.sdk.lmApiInter.IConfigVibrationControlListenerLite;
 import com.lm.sdk.lmApiInter.ILinearMotorCountListenerLite;
 import com.lm.sdk.lmApiInter.ILinearMotorTargetListenerLite;
+import com.lm.sdk.lmApiInter.IMinCountIntervalListenerLite;
 import com.lm.sdk.lmApiInter.IVibrationConfigListenerLite;
 import com.lm.sdk.lmApiInter.IVibrationControlListenerLite;
 import com.lomo.demo.R;
@@ -25,12 +27,17 @@ import java.util.List;
 /**
  * 线性马达测试Activity（cmd=0x83）
  * 包含振动配置、目标值、计数值的测试
+ * 光之萤火：立即振动按配置(0x0C)、停止振动(0x0D)、最小计数间隔(0x0E/0x0F)
  */
 public class LinearMotorActivity extends BaseActivity implements View.OnClickListener {
 
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
     EditText etTargetValue;
+    /** 按配置振动的配置下标输入框（光之萤火） */
+    EditText etVibrationConfigIndex;
+    /** 最小计数间隔输入框，取值12~15（光之萤火） */
+    EditText etMinCountInterval;
     /** 振动配置动态行容器 */
     LinearLayout llVibrationConfigRows;
     /** 振动配置行容器外层滚动视图 */
@@ -46,6 +53,8 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
 
         tv_result = findViewById(R.id.tv_result);
         etTargetValue = findViewById(R.id.et_target_value);
+        etVibrationConfigIndex = findViewById(R.id.et_vibration_config_index);
+        etMinCountInterval = findViewById(R.id.et_min_count_interval);
         llVibrationConfigRows = findViewById(R.id.ll_vibration_config_rows);
         svVibrationConfigRows = findViewById(R.id.sv_vibration_config_rows);
 
@@ -67,6 +76,11 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.bt_clear_count).setOnClickListener(this);
         // 计数值监听
         findViewById(R.id.bt_set_count_listener).setOnClickListener(this);
+        // 光之萤火：按配置振动、最小计数间隔
+        findViewById(R.id.bt_immediate_vibration_by_config).setOnClickListener(this);
+        findViewById(R.id.bt_stop_vibration_by_config).setOnClickListener(this);
+        findViewById(R.id.bt_set_min_count_interval).setOnClickListener(this);
+        findViewById(R.id.bt_get_min_count_interval).setOnClickListener(this);
     }
 
     /**
@@ -307,6 +321,76 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onClearResult(boolean success) {
                     // 监听器不会触发此回调
+                }
+            });
+        }
+
+        // ==================== 立即振动（按配置，Subcmd=0x0C）-光之萤火 ====================
+        if (id == R.id.bt_immediate_vibration_by_config) {
+            int configIndex = TextUtils.isEmpty(etVibrationConfigIndex.getText()) ? 0 : Integer.parseInt(etVibrationConfigIndex.getText().toString());
+            postView("\n立即振动（按第" + configIndex + "个配置）");
+            LmAPILite.IMMEDIATE_VIBRATION_BY_CONFIG(configIndex, new IConfigVibrationControlListenerLite() {
+                @Override
+                public void onConfigImmediateVibrationResult(boolean success) {
+                    postView("\n立即振动（按配置）结果: " + (success ? "成功" : "失败"));
+                }
+
+                @Override
+                public void onConfigStopVibrationResult(boolean success) {
+                    // 立即振动不会触发此回调
+                }
+            });
+        }
+
+        // ==================== 停止振动（Subcmd=0x0D）-光之萤火 ====================
+        if (id == R.id.bt_stop_vibration_by_config) {
+            postView("\n停止振动（按配置）");
+            LmAPILite.STOP_VIBRATION_BY_CONFIG(new IConfigVibrationControlListenerLite() {
+                @Override
+                public void onConfigImmediateVibrationResult(boolean success) {
+                    // 停止振动不会触发此回调
+                }
+
+                @Override
+                public void onConfigStopVibrationResult(boolean success) {
+                    postView("\n停止振动（按配置）结果: " + (success ? "成功" : "失败"));
+                }
+            });
+        }
+
+        // ==================== 配置最小计数间隔（Subcmd=0x0E）-光之萤火 ====================
+        if (id == R.id.bt_set_min_count_interval) {
+            int interval = TextUtils.isEmpty(etMinCountInterval.getText()) ? 12 : Integer.parseInt(etMinCountInterval.getText().toString());
+            if (interval < 12 || interval > 15) {
+                postView("\n最小计数间隔取值范围为12~15");
+                return;
+            }
+            postView("\n配置最小计数间隔: " + interval);
+            LmAPILite.SET_MIN_COUNT_INTERVAL(interval, new IMinCountIntervalListenerLite() {
+                @Override
+                public void setMinCountIntervalResult(boolean success) {
+                    postView("\n配置最小计数间隔结果: " + (success ? "成功" : "失败"));
+                }
+
+                @Override
+                public void getMinCountIntervalResult(int interval) {
+                    // 配置操作不会触发此回调
+                }
+            });
+        }
+
+        // ==================== 读取最小计数间隔（Subcmd=0x0F）-光之萤火 ====================
+        if (id == R.id.bt_get_min_count_interval) {
+            postView("\n读取最小计数间隔");
+            LmAPILite.GET_MIN_COUNT_INTERVAL(new IMinCountIntervalListenerLite() {
+                @Override
+                public void setMinCountIntervalResult(boolean success) {
+                    // 读取操作不会触发此回调
+                }
+
+                @Override
+                public void getMinCountIntervalResult(int interval) {
+                    postView("\n最小计数间隔: " + interval);
                 }
             });
         }
