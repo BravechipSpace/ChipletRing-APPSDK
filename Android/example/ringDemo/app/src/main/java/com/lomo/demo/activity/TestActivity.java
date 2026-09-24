@@ -32,8 +32,10 @@ import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IExceptionLogListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.ISNListener;
+import com.lm.sdk.inter.IWriteHistoryDataListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.DateUtils;
+import com.lm.sdk.utils.CMDUtils;
 import com.lm.sdk.library.utils.Logger;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
@@ -73,6 +75,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     TextView tv_result;
     EditText et_collection_period;
     EditText et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
+    EditText et_write_history_data;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
     private ActivityResultLauncher<Intent> filePickerLauncher;
@@ -148,6 +151,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         et_gomore_sex = findViewById(R.id.et_gomore_sex);
         et_gomore_height = findViewById(R.id.et_gomore_height);
         et_gomore_weight = findViewById(R.id.et_gomore_weight);
+        et_write_history_data = findViewById(R.id.et_write_history_data);
 
         //注册文件选择器，兼容高版本Android
         filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -189,6 +193,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.btn_ota).setOnClickListener(this);
         findViewById(R.id.bt_get_exception_log).setOnClickListener(this);
         findViewById(R.id.bt_delete_exception_log).setOnClickListener(this);
+        findViewById(R.id.bt_write_history_data).setOnClickListener(this);
         findViewById(R.id.btn_ota_local).setOnClickListener(this);
         findViewById(R.id.bt_six_axis_sensor).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
@@ -750,6 +755,25 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void onDeleteExceptionLogResult(boolean success) {
                     postView("\n删除异常日志:" + (success ? "成功" : "失败"));
+                }
+            });
+        }
+        if (view.getId() == R.id.bt_write_history_data) {
+            String hex = et_write_history_data.getText().toString().trim();
+            if (TextUtils.isEmpty(hex)) {
+                Toast.makeText(this, "请输入HEX内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            byte[] content = CMDUtils.hexString2Bytes(hex);
+            if (content == null || content.length == 0) {
+                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            postView("\n写入历史数据:" + hex);
+            LmAPILite.WRITE_HISTORY_DATA(content, new IWriteHistoryDataListener() {
+                @Override
+                public void onWriteHistoryDataResult(boolean success) {
+                    postView("\n写入历史数据:" + (success ? "成功" : "失败"));
                 }
             });
         }

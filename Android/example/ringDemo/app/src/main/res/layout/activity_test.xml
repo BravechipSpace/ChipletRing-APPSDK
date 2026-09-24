@@ -229,6 +229,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
+            android:visibility="gone"
             android:orientation="horizontal">
             <Button
                 android:id="@+id/bt_setSn"
@@ -272,7 +273,7 @@
                 android:id="@+id/bt_setCollection"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:text="设置采集周期"
                 android:textSize="14sp"
                 android:textColor="@color/white"
@@ -281,7 +282,7 @@
                 android:id="@+id/btn_getCollection"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:text="获取采集周期"
                 android:textSize="14sp"
                 android:textColor="@color/white"
@@ -445,34 +446,58 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_write_history_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="输入HEX内容，如010203"
+                android:importantForAutofill="no"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/bt_write_history_data"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_state"
+                android:text="写入历史数据"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_ota"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:text="云端固件OTA功能"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-                <Button
+            <Button
                 android:id="@+id/btn_ota_local"
-                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:text="本地固件OTA功能"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
