@@ -379,12 +379,12 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
             <Button
                 android:id="@+id/bt_linear_motor"
                 android:layout_width="0dp"
@@ -394,13 +394,6 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
 
 
             <Button
@@ -413,7 +406,15 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
 
-
+            <Button
+                android:id="@+id/bt_touch_setting"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="touch设置"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

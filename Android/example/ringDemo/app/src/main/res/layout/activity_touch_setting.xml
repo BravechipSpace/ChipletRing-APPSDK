@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.TouchSettingActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="touch设置（0x84）"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="数据区域"
+        android:scrollbars="vertical"
+        android:padding="10dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- Touch控制（0x84）-辉扬：空置时间输入 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="空置时间(uint16):"
+                    android:textSize="12sp"/>
+                <EditText
+                    android:id="@+id/et_touch_idle_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="空置多少时间停止计数"
+                    android:text="60"
+                    android:inputType="number"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <!-- 设置/读取空置时间（0x05/0x06）-辉扬 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_set_touch_idle_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="设置空置时间(0x05)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_get_touch_idle_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="读取空置时间(0x06)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+            <!-- 休眠/唤醒Touch（0x07/0x08）-辉扬 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_sleep_touch"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="休眠Touch(0x07)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_wakeup_touch"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="唤醒Touch(0x08)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

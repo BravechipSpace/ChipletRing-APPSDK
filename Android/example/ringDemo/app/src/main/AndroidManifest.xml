@@ -72,6 +72,22 @@
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:exported="false" />
         <activity
+            android:name=".activity.TouchSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:screenOrientation="user">
+
+        </activity>
+        <activity
+            android:name=".activity.TouchSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:screenOrientation="user">
+
+        </activity>
+        <activity
             android:name=".activity.LinearMotorActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
