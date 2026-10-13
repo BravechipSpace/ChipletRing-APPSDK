@@ -733,9 +733,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if (view.getId() == R.id.bt_get_exception_log) {
             postView("\n读取异常日志");
             LmAPILite.GET_EXCEPTION_LOG(new IExceptionLogListener() {
+
                 @Override
-                public void onGetExceptionLogResult(long timestamp, String log) {
-                    postView("\n读取异常日志 时间戳:" + timestamp + " 日志:" + log);
+                public void onGetExceptionLogResult(int totalPackets, int packetIndex, long timestamp, String log) {
+                    postView("\n读取异常日志 totalPackets:+"+totalPackets+",packetIndex:"+packetIndex+",时间戳:" + timestamp + " 日志:" + log);
                 }
 
                 @Override
@@ -747,9 +748,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if (view.getId() == R.id.bt_delete_exception_log) {
             postView("\n删除异常日志");
             LmAPILite.DELETE_EXCEPTION_LOG(new IExceptionLogListener() {
+
                 @Override
-                public void onGetExceptionLogResult(long timestamp, String log) {
-                    // 删除操作不会触发此回调
+                public void onGetExceptionLogResult(int totalPackets, int packetIndex, long timestamp, String log) {
+
                 }
 
                 @Override
