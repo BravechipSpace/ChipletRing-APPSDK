@@ -361,8 +361,8 @@ public class LinearMotorActivity extends BaseActivity implements View.OnClickLis
         // ==================== 配置最小计数间隔（Subcmd=0x0E）-光之萤火 ====================
         if (id == R.id.bt_set_min_count_interval) {
             int interval = TextUtils.isEmpty(etMinCountInterval.getText()) ? 12 : Integer.parseInt(etMinCountInterval.getText().toString());
-            if (interval < 12 || interval > 15) {
-                postView("\n最小计数间隔取值范围为12~15");
+            if (interval < 12 || interval > 100) {
+                postView("\n最小计数间隔取值范围为12~100");
                 return;
             }
             postView("\n配置最小计数间隔: " + interval);

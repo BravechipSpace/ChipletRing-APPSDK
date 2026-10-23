@@ -239,14 +239,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="间隔(12~15):"
+                    android:text="间隔(12~100):"
                     android:textSize="12sp"/>
                 <EditText
                     android:id="@+id/et_min_count_interval"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="12~15"
+                    android:hint="12~100"
                     android:text="12"
                     android:inputType="number"
                     android:textSize="12sp"/>

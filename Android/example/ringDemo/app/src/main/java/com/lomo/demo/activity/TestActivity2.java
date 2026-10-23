@@ -35,6 +35,7 @@ import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.lmApiInter.IAudioListenerLite;
 import com.lm.sdk.lmApiInter.IHIDListenerLite;
 import com.lm.sdk.lmApiInter.IHistoryListenerLite;
+import com.lm.sdk.lmApiInter.INtcAdcListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.lmApiInter.IVersionListenerLite;
 import com.lm.sdk.mode.AlarmParamBean;
@@ -281,6 +282,7 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
         findViewById(R.id.btn_touch_test_close).setOnClickListener(this);
         findViewById(R.id.bt_test_vibration).setOnClickListener(this);
         findViewById(R.id.bt_resume_breakpoint).setOnClickListener(this);
+        findViewById(R.id.bt_get_ntc_adc).setOnClickListener(this);
 
 
         /**
@@ -545,6 +547,21 @@ public class TestActivity2 extends BaseActivity implements IResponseListenerLite
 
             LmAPILite.CLOSE_TOUCH_TEST();
 
+        }
+        if(v.getId()==R.id.bt_get_ntc_adc){
+
+            postView("\n读取多个NTC的ADC值");
+            LmAPILite.GET_NTC_ADC(new INtcAdcListenerLite() {
+                @Override
+                public void onNtcAdcResult(int ntcCount, int[] ntcValues) {
+                    StringBuilder sb = new StringBuilder("\n温度个数: " + ntcCount);
+                    for (int i = 0; i < ntcCount; i++) {
+                        float temp = ntcValues[i] / 100.0f;
+                        sb.append("\n温度").append(i).append(": ").append(temp).append("℃");
+                    }
+                    postView(sb.toString());
+                }
+            });
         }
 
 
