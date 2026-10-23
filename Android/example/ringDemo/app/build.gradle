@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 9
-        versionName "2.0.8"//新增touch测试页面
+        versionCode 10
+        versionName "2.0.9"//增加Bugly
 
         applicationVariants.all { variant ->
             variant.outputs.all {
@@ -98,7 +98,7 @@ dependencies {
 //    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
 //    implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
 
-
+    implementation "com.tencent.bugly:crashreport:latest.release"
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
