@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,44 +63,46 @@ import java.util.Set;
 public class TestActivity extends BaseActivity implements IResponseListenerLite, View.OnClickListener {
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
+    EditText et_collection_period, et_bluetooth_name, et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
+    private int lastSetPeriod = 0;//记录最近一次设置的采集周期，用于回调提示
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
 
     private ISystemControlListenerLite iSystemControlListenerLite=new ISystemControlListenerLite() {
         @Override
         public void reset() {
-            postView("恢复出厂设置");
+            postView("恢复出厂设置"+"\n");
         }
 
         @Override
         public void getSerialNum(String serial) {
-            postView("得到序列号:"+serial);
+            postView("得到序列号:"+serial+"\n");
         }
 
         @Override
         public void setCollection(boolean success) {
-            postView("设置周期:"+"300秒");
+            postView("设置周期:"+lastSetPeriod+"秒:"+(success?"成功":"失败")+"\n");
         }
 
         @Override
         public void getCollection(int data) {
-            postView("得到周期:"+data+"秒");
+            postView("得到周期:"+data+"秒"+"\n");
         }
 
         @Override
         public void setSerialNum(boolean success) {
-            postView("设置序列号:"+success);
+            postView("设置序列号:"+success+"\n");
         }
 
 
         @Override
         public void setBlueToolName(boolean success) {
-            postView("设置蓝牙名称:"+success);
+            postView("设置蓝牙名称:"+success+"\n");
         }
 
         @Override
         public void readBlueToolName(int len, String name) {
-            postView("读取蓝牙名称:"+name+"，长度:"+len);
+            postView("读取蓝牙名称:"+name+"，长度:"+len+"\n");
         }
     };
 
@@ -132,6 +135,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         LmAPILite.addWLSCmdListener(this, this);
 
         tv_result=findViewById(R.id.tv_result);
+        et_collection_period = findViewById(R.id.et_collection_period);
+        et_bluetooth_name = findViewById(R.id.et_bluetooth_name);
+        et_gomore_age = findViewById(R.id.et_gomore_age);
+        et_gomore_sex = findViewById(R.id.et_gomore_sex);
+        et_gomore_height = findViewById(R.id.et_gomore_height);
+        et_gomore_weight = findViewById(R.id.et_gomore_weight);
 
         findViewById(R.id.bt_app_bind).setOnClickListener(this);
         findViewById(R.id.bt_app_connect).setOnClickListener(this);
@@ -647,18 +656,34 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         }
         if(view.getId()==R.id.bt_setBluttoothName) {
-
-            postView("\n设置蓝牙名");
-            LmAPILite.Set_BlueTooth_Name("AQRingTest", iSystemControlListenerLite);
+            String btName = et_bluetooth_name.getText().toString().trim();
+            if (TextUtils.isEmpty(btName)) {
+                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            postView("\n设置蓝牙名:" + btName);
+            LmAPILite.Set_BlueTooth_Name(btName, iSystemControlListenerLite);
         }
         if(view.getId()==R.id.bt_getBluttoothName) {
             postView("\n获取蓝牙名");
             LmAPILite.Get_BlueTooth_Name(iSystemControlListenerLite);
         }
         if(view.getId()==R.id.bt_gomore_user) {
-
-            postView("\n设置Gomore个人信息");
-            LmAPILite.SET_GOMORE_USER(35, 1, 183, 70, -1, -1, -1, new IGoMoreUserListener() {
+            int age = parseGomoreInput(et_gomore_age.getText().toString());
+            int sex = parseGomoreInput(et_gomore_sex.getText().toString());
+            int height = parseGomoreInput(et_gomore_height.getText().toString());
+            int weight = parseGomoreInput(et_gomore_weight.getText().toString());
+            //年龄0-99，性别0/1，身高100-220（小于100置为100），体重10-150
+            if (age < 0 || age > 99 || (sex != 0 && sex != 1)
+                    || height < 0 || height > 220 || weight < 10 || weight > 150) {
+                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (height < 100) {
+                height = 100;
+            }
+            postView("\n设置Gomore个人信息:" + age + "," + sex + "," + height + "," + weight);
+            LmAPILite.SET_GOMORE_USER(age, sex, height, weight, -1, -1, -1, new IGoMoreUserListener() {
                 @Override
                 public void setUserInfoResult(boolean success) {
                     postView("\n设置Gomore个人信息:" + success);
@@ -691,8 +716,14 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
 
         if(view.getId()==R.id.bt_setCollection) {
-
-            LmAPILite.SET_COLLECTION(5 * 60, iSystemControlListenerLite);
+            int period = parseGomoreInput(et_collection_period.getText().toString());
+            if (period <= 0) {
+                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            lastSetPeriod = period;
+            postView("\n设置采集周期:" + period + "秒");
+            LmAPILite.SET_COLLECTION(period, iSystemControlListenerLite);
         }
         if(view.getId()==R.id.btn_getCollection) {
 
@@ -787,6 +818,20 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         else
             tv_result.scrollTo(0, 0);
 
+    }
+
+    /**
+     * 解析输入框内容，空值或非数字返回-1
+     */
+    private int parseGomoreInput(String text) {
+        if (TextUtils.isEmpty(text)) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(text.trim());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
     private void READ_HISTORY_AUTO() {
 
