@@ -164,13 +164,19 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_new_protocol).setOnClickListener(this);
         findViewById(R.id.bt_touch_setting).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
+        //部分OPPO/华为机型上Parcelable回读可能失败返回null，直接调用getDevice()会NPE闪退
         Intent intent = getIntent();
-        if (intent != null) {
-            deviceBean = intent.getParcelableExtra("deviceBean");
+        deviceBean = intent != null ? intent.getParcelableExtra("deviceBean") : null;
+        if (deviceBean != null && deviceBean.getDevice() != null) {
             bluetoothDevice = deviceBean.getDevice();
             mac = bluetoothDevice.getAddress();
             App.getInstance().setDeviceBean(deviceBean);
-            BLEUtils.connectLockByBLE(this, deviceBean.getDevice());
+            try {
+                BLEUtils.connectLockByBLE(this, deviceBean.getDevice());
+            } catch (SecurityException e) {
+                //OPPO/华为部分机型会回收BLUETOOTH_CONNECT权限，连接时抛SecurityException
+                Toast.makeText(this, "缺少蓝牙权限，请到系统设置中授予", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "未知设备，请重新选择!", Toast.LENGTH_SHORT).show();
             finish();

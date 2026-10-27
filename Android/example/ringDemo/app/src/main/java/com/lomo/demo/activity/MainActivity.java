@@ -41,6 +41,7 @@ import com.lomo.demo.adapter.OnItemClickListener;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
 import com.lomo.demo.nfc.NfcActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -150,16 +151,27 @@ public class MainActivity extends Activity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {
-                DeviceBean  deviceBean = (DeviceBean) o;
-                BLEUtils.isHIDDevice=deviceBean.getBindingIndicatorBit()==1;
-               // BLEUtils.isHIDDevice=false;
-                 UtilSharedPreference.saveString(MainActivity.this,"address",deviceBean.getDevice().getAddress());
-                App.getInstance().setDeviceBean(deviceBean);
-                //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                intent.putExtra("deviceBean",deviceBean);
-                startActivity(intent);
-                finish();
+                DeviceBean deviceBean = (DeviceBean) o;
+                //OPPO/华为部分机型扫描回调中device可能为空，直接调用getAddress会NPE闪退
+                if (deviceBean == null || deviceBean.getDevice() == null) {
+                    Toast.makeText(MainActivity.this, "设备信息为空，请下拉刷新后重试", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    BLEUtils.isHIDDevice = deviceBean.getBindingIndicatorBit() == 1;
+                    //BLEUtils.isHIDDevice=false;
+                    UtilSharedPreference.saveString(MainActivity.this, "address", deviceBean.getDevice().getAddress());
+                    App.getInstance().setDeviceBean(deviceBean);
+                    //关闭当前页面，跳转到TestActivity并且携带deviceBean对象
+                    Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                    intent.putExtra("deviceBean", deviceBean);
+                    startActivity(intent);
+                    finish();
+                } catch (Throwable t) {
+                    //兜底：任何异常都上报Bugly并写入本地崩溃日志，避免静默闪退无日志
+                    CrashReport.postCatchedException(t);
+                    Toast.makeText(MainActivity.this, "打开设备页面失败:" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -187,9 +199,10 @@ public class MainActivity extends Activity {
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] bytes) {
-            if (device == null || TextUtils.isEmpty(device.getName())) {
-                return;
-            }
+            try {
+                if (device == null || TextUtils.isEmpty(device.getName())) {
+                    return;
+                }
             Logger.show("leScanCallback",device.getName());
 
             //是否符合条件，符合条件，会返回戒指设备信息
@@ -205,16 +218,16 @@ public class MainActivity extends Activity {
             deviceBean.setChargingIndicator(bleDeviceInfo.getChargingIndicator());
             deviceBean.setCommunicationProtocolVersion(bleDeviceInfo.getCommunicationProtocolVersion());
             deviceBean.setSystemBind(bleDeviceInfo.isSystemBind());
-            if(bleDeviceInfo==null){
-                return;
-            }
             if (macList.contains(device.getAddress())) {
                 return;
             }
 
             macList.add(device.getAddress());
             adapter.updateData(deviceBean);
-
+            } catch (Throwable t) {
+                //getName()/getAddress()在权限被回收的OPPO/华为机型上抛SecurityException
+                Logger.show("leScanCallback", "扫描回调异常:" + t);
+            }
         }
     };
 }
