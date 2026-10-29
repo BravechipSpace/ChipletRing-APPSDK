@@ -26,24 +26,25 @@ import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
-import com.lm.sdk.inter.ISNListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
 import com.lm.sdk.library.utils.DateUtils;
 import com.lm.sdk.library.utils.Logger;
+import com.lm.sdk.lmApiInter.IAirplaneModeListenerLite;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
 import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
+import com.lm.sdk.lmApiInter.IExceptionLogListenerLite;
 import com.lm.sdk.lmApiInter.IHeartListenerLite;
-import com.lm.sdk.lmApiInter.IHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.lmApiInter.IStepListenerLite;
 import com.lm.sdk.lmApiInter.ISyncTimeListenerLite;
 import com.lm.sdk.lmApiInter.ISystemControlListenerLite;
 import com.lm.sdk.lmApiInter.ITempListenerLite;
 import com.lm.sdk.lmApiInter.IVersionListenerLite;
+import com.lm.sdk.lmApiInter.IWearStatusListenerLite;
+import com.lm.sdk.lmApiInter.IWorkModeListenerLite;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.mode.GoMoreSleep;
-import com.lm.sdk.mode.HistoryDataBean;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
 import com.lm.sdk.utils.ImageSaverUtil;
@@ -54,6 +55,7 @@ import com.lomo.demo.R;
 import com.lomo.demo.adapter.DeviceBean;
 import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
+import com.lomo.demo.utils.CmdLogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +65,7 @@ import java.util.Set;
 public class TestActivity extends BaseActivity implements IResponseListenerLite, View.OnClickListener {
     public String TAG = getClass().getSimpleName();
     TextView tv_result;
-    EditText et_collection_period, et_bluetooth_name, et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
-    private int lastSetPeriod = 0;//记录最近一次设置的采集周期，用于回调提示
+    EditText et_bluetooth_name, et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
 
@@ -81,7 +82,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         @Override
         public void setCollection(boolean success) {
-            postView("设置周期:"+lastSetPeriod+"秒:"+(success?"成功":"失败")+"\n");
+            postView("设置采集周期:"+(success?"成功":"失败")+"\n");
         }
 
         @Override
@@ -103,6 +104,50 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         @Override
         public void readBlueToolName(int len, String name) {
             postView("读取蓝牙名称:"+name+"，长度:"+len+"\n");
+        }
+    };
+
+    /** 佩戴检测监听（0x31/0x5，V0.3新增，查询响应/主动推送） */
+    private IWearStatusListenerLite iWearStatusListenerLite = new IWearStatusListenerLite() {
+        @Override
+        public void onWearStatus(int wearStatus) {
+            postView("\n佩戴检测:" + (wearStatus == 1 ? "佩戴" : "未佩戴"));
+        }
+    };
+
+    /** 飞行模式监听（0x37/0x6，V0.3新增） */
+    private IAirplaneModeListenerLite iAirplaneModeListenerLite = new IAirplaneModeListenerLite() {
+        @Override
+        public void onSetAirplaneModeResult(boolean success) {
+            postView("\n设置飞行模式:" + (success ? "成功" : "失败"));
+        }
+    };
+
+    /** 工作模式监听（0x37/0x39，V0.3新增，查询响应/主动推送） */
+    private IWorkModeListenerLite iWorkModeListenerLite = new IWorkModeListenerLite() {
+        @Override
+        public void onWorkMode(int workMode) {
+            String mode;
+            switch (workMode) {
+                case 0: mode = "日常"; break;
+                case 1: mode = "运动"; break;
+                case 2: mode = "睡眠"; break;
+                default: mode = "未知(" + workMode + ")"; break;
+            }
+            postView("\n戒指工作模式:" + mode);
+        }
+    };
+
+    /** 异常日志监听（0x36/0x25读取、0x36/0x26删除，V0.3新增） */
+    private IExceptionLogListenerLite iExceptionLogListenerLite = new IExceptionLogListenerLite() {
+        @Override
+        public void onExceptionLog(int totalPack, int packNo, long timestamp, String log) {
+            postView("\n异常日志(包" + (packNo + 1) + "/" + totalPack + ",时间戳" + timestamp + "):" + log);
+        }
+
+        @Override
+        public void onExceptionLogDeleted(boolean success) {
+            postView("\n删除异常日志:" + (success ? "成功" : "失败"));
         }
     };
 
@@ -135,7 +180,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         LmAPILite.addWLSCmdListener(this, this);
 
         tv_result=findViewById(R.id.tv_result);
-        et_collection_period = findViewById(R.id.et_collection_period);
         et_bluetooth_name = findViewById(R.id.et_bluetooth_name);
         et_gomore_age = findViewById(R.id.et_gomore_age);
         et_gomore_sex = findViewById(R.id.et_gomore_sex);
@@ -144,7 +188,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         findViewById(R.id.bt_app_bind).setOnClickListener(this);
         findViewById(R.id.bt_app_connect).setOnClickListener(this);
-        findViewById(R.id.bt_app_refresh).setOnClickListener(this);
         findViewById(R.id.bt_sync_time).setOnClickListener(this);
         findViewById(R.id.bt_read_time).setOnClickListener(this);
         findViewById(R.id.bt_battery).setOnClickListener(this);
@@ -155,23 +198,22 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_step).setOnClickListener(this);
         findViewById(R.id.bt_heart).setOnClickListener(this);
         findViewById(R.id.bt_blood_oxygen).setOnClickListener(this);
-        findViewById(R.id.bt_read_log).setOnClickListener(this);
         findViewById(R.id.bt_test_temp).setOnClickListener(this);
         findViewById(R.id.bt_gomore_test).setOnClickListener(this);
         findViewById(R.id.bt_gomore_user).setOnClickListener(this);
         findViewById(R.id.bt_get_gomore_user).setOnClickListener(this);
-        findViewById(R.id.bt_setSn).setOnClickListener(this);
-        findViewById(R.id.bt_getSn).setOnClickListener(this);
         findViewById(R.id.bt_setBluttoothName).setOnClickListener(this);
         findViewById(R.id.bt_getBluttoothName).setOnClickListener(this);
-        findViewById(R.id.tv_connect).setOnClickListener(this);
-        findViewById(R.id.bt_setCollection).setOnClickListener(this);
-        findViewById(R.id.btn_getCollection).setOnClickListener(this);
-        findViewById(R.id.bt_get_page2).setOnClickListener(this);
-        findViewById(R.id.bt_linear_motor).setOnClickListener(this);
+        findViewById(R.id.tv_cmd_log_btn).setOnClickListener(this);
+        findViewById(R.id.bt_aivela_protocol).setOnClickListener(this);
+        findViewById(R.id.bt_wear_status).setOnClickListener(this);
+        findViewById(R.id.bt_airplane_mode).setOnClickListener(this);
+        findViewById(R.id.bt_work_mode).setOnClickListener(this);
+        findViewById(R.id.bt_get_exception_log).setOnClickListener(this);
+        findViewById(R.id.bt_delete_exception_log).setOnClickListener(this);
+        findViewById(R.id.bt_ship_mode).setOnClickListener(this);
+        findViewById(R.id.bt_reset_restart).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
-        findViewById(R.id.bt_new_protocol).setOnClickListener(this);
-        findViewById(R.id.bt_touch_setting).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         //部分OPPO/华为机型上Parcelable回读可能失败返回null，直接调用getDevice()会NPE闪退
         Intent intent = getIntent();
@@ -190,7 +232,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             Toast.makeText(this, "未知设备，请重新选择!", Toast.LENGTH_SHORT).show();
             finish();
         }
-        READ_HISTORY_AUTO();
 
         LogicalApi.createToken("76d07e37bfe341b1a25c76c0e25f457a", "1204491582@qq.com", new ICreateToken() {
             @Override
@@ -321,25 +362,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 });
             }
 
-        if(view.getId()==R.id.bt_app_refresh){
-            postView("\nAPP_REFRESH");
-            LmAPILite.APP_REFRESH(0, new IBindConnectRefreshListenerLite() {
-                @Override
-                public void appBind(SystemControlLiteBean systemControlBean) {
-
-                }
-
-                @Override
-                public void appConnect(SystemControlLiteBean systemControlBean) {
-
-                }
-
-                @Override
-                public void appRefresh(SystemControlLiteBean systemControlBean) {
-                    postView("\nappRefresh:"+systemControlBean);
-                }
-            });
-        }
 
         if(view.getId()==R.id.bt_clear_step){
             postView("\n开始清空步数");
@@ -407,8 +429,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
 
                 @Override
-                public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:"+electricity);
+                public void battery_push(int electricity, int chargingStatus) {
+                    postView("\n电量推送:电量=" + electricity + ",充电状态=" + (chargingStatus == 0 ? "未充电" : (chargingStatus == 1 ? "充电中" : (chargingStatus == 2 ? "充满" : String.valueOf(chargingStatus)))));
                 }
             });
         }
@@ -425,8 +447,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
 
                 @Override
-                public void battery_push(int type, int electricity) {
-                    postView("\n电量推送:"+electricity);
+                public void battery_push(int electricity, int chargingStatus) {
+                    postView("\n电量推送:电量=" + electricity + ",充电状态=" + (chargingStatus == 0 ? "未充电" : (chargingStatus == 1 ? "充电中" : (chargingStatus == 2 ? "充满" : String.valueOf(chargingStatus)))));
                 }
             });
         }
@@ -565,43 +587,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     }
                 });
             }
-        if(view.getId()==R.id.bt_read_log) {
-            postView("\n开始读取全部数据");
-
-            LmAPILite.READ_HISTORY((byte) 0x1, 0, new IHistoryListenerLite() {
-                @Override
-                public void error(int code) {
-
-                }
-
-                @Override
-                public void success() {
-                    postView("\n读取记录完成");
-
-                }
-
-                @Override
-                public void progress(double progress, HistoryDataBean historyDataBean) {
-                    if (historyDataBean != null) {
-                        postView("\n读取记录进度:" + progress + "%");
-                        postView("\n记录内容:" + historyDataBean);
-                    }
-
-                }
-
-                @Override
-                public void clearHistory() {
-
-                }
-
-                @Override
-                public void noNewDataAvailable() {
-
-                }
-
-
-            });
-        }
         if(view.getId()==R.id.bt_test_temp) {
             postView("\n获取温度");
             LmAPILite.READ_TEMP(new ITempListenerLite() {
@@ -622,38 +607,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     postView("\nerror:" + code);
                 }
             });
-        }
-        if(view.getId()==R.id.bt_setSn) {
-            postView("\n请打开注释，设置正确的序列号");
-//                LmAPILite.SET_SERIAL("1234567890".getBytes(), iSystemControlListenerLite);
-//                LmAPILite.SET_SN("", new ISNListener() {
-//                    @Override
-//                    public void getSn(String sn) {
-//
-//                    }
-//
-//                    @Override
-//                    public void setSn(boolean success) {
-//
-//                    }
-//                });
-        }
-        if(view.getId()==R.id.bt_getSn) {
-            postView("\n获取序列号");
-            LmAPILite.GET_SN(new ISNListener() {
-                @Override
-                public void getInfo(String sn) {
-
-                }
-
-                @Override
-                public void setInfo(boolean success) {
-
-                }
-
-
-            });
-
         }
         if(view.getId()==R.id.bt_setBluttoothName) {
             String btName = et_bluetooth_name.getText().toString().trim();
@@ -709,33 +662,51 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
-        if(view.getId()==R.id.tv_connect) {
-
-            BLEUtils.connectLockByBLE(TestActivity.this, bluetoothDevice);
+        if(view.getId()==R.id.tv_cmd_log_btn) {
+            //右上角查看指令日志（多页面共用CmdLogManager）
+            CmdLogManager.getInstance().show(this);
         }
 
 
-        if(view.getId()==R.id.bt_setCollection) {
-            int period = parseGomoreInput(et_collection_period.getText().toString());
-            if (period <= 0) {
-                Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            lastSetPeriod = period;
-            postView("\n设置采集周期:" + period + "秒");
-            LmAPILite.SET_COLLECTION(period, iSystemControlListenerLite);
-        }
-        if(view.getId()==R.id.btn_getCollection) {
-
-            LmAPILite.GET_COLLECTION(iSystemControlListenerLite);
-        }
-        if(view.getId()==R.id.bt_get_page2) {
-            Intent intent=new Intent(TestActivity.this, TestActivity2.class);
+        if(view.getId()==R.id.bt_aivela_protocol) {
+            Intent intent=new Intent(this,AivelaProtocolActivity.class);
             startActivity(intent);
         }
-        if(view.getId()==R.id.bt_linear_motor) {
-            Intent intent=new Intent(this,LinearMotorActivity.class);
-            startActivity(intent);
+
+        // ==== V0.3新增协议入口 ====
+        if(view.getId()==R.id.bt_wear_status) {
+            postView("\n佩戴检测状态查询（0x31/0x5，设备主动推送时同样回调）");
+            LmAPILite.GET_WEAR_STATUS(iWearStatusListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_airplane_mode) {
+            postView("\n设置飞行模式（0x37/0x6）");
+            LmAPILite.SET_AIRPLANE_MODE(iAirplaneModeListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_work_mode) {
+            postView("\n获取戒指工作模式（0x37/0x39，设备主动推送时同样回调）");
+            LmAPILite.GET_WORK_MODE(iWorkModeListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_get_exception_log) {
+            postView("\n读取异常日志（0x36/0x25）");
+            LmAPILite.GET_EXCEPTION_LOG(iExceptionLogListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_delete_exception_log) {
+            postView("\n删除异常日志（0x36/0x26）");
+            LmAPILite.DELETE_EXCEPTION_LOG(iExceptionLogListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_ship_mode) {
+            postView("\n设置Shipmode运输模式（0xF2/0x5），戒指将进入运输模式");
+            LmAPILite.SET_SHIP_MODE();
+        }
+
+        if(view.getId()==R.id.bt_reset_restart) {
+            postView("\n复位测试，重启戒指（0xF2/0x9）");
+            LmAPILite.RESET_RESTART();
         }
 
         if(view.getId()==R.id.btn_ota) {
@@ -792,14 +763,6 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
 
         }
-        if(view.getId()==R.id.bt_new_protocol) {
-            Intent intent=new Intent(this,NewProtocolActivity.class);
-            startActivity(intent);
-        }
-        if(view.getId()==R.id.bt_touch_setting) {
-            Intent intent=new Intent(this,TouchSettingActivity.class);
-            startActivity(intent);
-        }
     }
 
 
@@ -832,42 +795,5 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         } catch (NumberFormatException e) {
             return -1;
         }
-    }
-    private void READ_HISTORY_AUTO() {
-
-        LmAPILite.READ_HISTORY_AUTO( new IHistoryListenerLite() {
-            @Override
-            public void error(int code) {
-                if (code == 3) {
-                    postView("\n出现了BIX的问题");
-                }
-                // setMessage(TestActivity.this,"\n出现了BIX的问题");
-            }
-
-            @Override
-            public void success() {
-                postView("\n读取记录完成");
-
-
-            }
-
-            @Override
-            public void progress(double progress, HistoryDataBean historyDataBean) {
-                postView("\n读取记录进度:" + progress + "%");
-                postView("\n记录内容:" + historyDataBean.toString());
-            }
-
-            @Override
-            public void clearHistory() {
-
-            }
-
-            @Override
-            public void noNewDataAvailable() {
-
-            }
-
-
-        });
     }
 }

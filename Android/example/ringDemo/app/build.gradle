@@ -4,11 +4,11 @@ android {
     compileSdk 35
     namespace = "com.lomo.demo"
     defaultConfig {
-        applicationId "com.lomo.demo"
+        applicationId "com.lomo.demo.aivela"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 11
-        versionName "2.1.0"//本地增加闪退日志
+        versionCode 12
+        versionName "2.1.1"//aivela定制app
 
         applicationVariants.all { variant ->
             variant.outputs.all {

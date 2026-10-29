@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ring Demo</string>
+    <string name="app_name">aivela Demo</string>
     <string name="exercise_control">运动控制</string>
     <string name="total_exercise_duration">总运动时长（秒）</string>
     <string name="exercise_segment_duration">运动片段时长（秒）</string>

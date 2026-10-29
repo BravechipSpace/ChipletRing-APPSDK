@@ -14,9 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
-import com.lm.sdk.inter.IResponseListener;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
 import com.lm.sdk.mode.SystemControlBean;
 import com.lomo.demo.views.ActManager;

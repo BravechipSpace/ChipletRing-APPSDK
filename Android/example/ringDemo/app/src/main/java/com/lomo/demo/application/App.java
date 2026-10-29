@@ -7,12 +7,12 @@ import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 
-import com.lm.sdk.LmAPI;
 import com.lm.sdk.LmAPILite;
 import com.lm.sdk.library.AppConfig;
 import com.lm.sdk.mode.BleDeviceInfo;
 import com.lm.sdk.utils.BLEUtils;
 import com.lomo.demo.adapter.DeviceBean;
+import com.lomo.demo.utils.CmdLogManager;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
@@ -37,7 +37,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        LmAPILite.init(this);
+        //全局指令日志监听：App启动注册一次，切换页面日志不丢失；
+        //各页面右上角"查看日志"共用CmdLogManager的日志缓冲和对话框
+        LmAPILite.init(this, CmdLogManager.getInstance().listener);
         LmAPILite.setDebug(true);
         AppConfig.setOverseas(false);
         BLEUtils.contentTitle="ChipletRing Demo";

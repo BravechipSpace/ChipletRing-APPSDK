@@ -51,50 +51,9 @@
         tools:ignore="LockedOrientationActivity">
 
         <activity
-            android:name=".activity.GoMoreSleepActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-
-        <activity
             android:name=".activity.TestActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:exported="false" />
-        <activity
-            android:name=".activity.TestActivity2"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.TestActivity3"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.CollectionActivity"
-            android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
-            android:exported="false" />
-        <activity
-            android:name=".activity.TouchSettingActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="true"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:screenOrientation="user">
-
-        </activity>
-        <activity
-            android:name=".activity.TouchSettingActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="true"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:screenOrientation="user">
-
-        </activity>
-        <activity
-            android:name=".activity.LinearMotorActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="true"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:screenOrientation="user">
-
-        </activity>
         <activity
             android:name=".nfc.NfcActivity"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
@@ -152,9 +111,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NewProtocolActivity"
+            android:name=".activity.AivelaProtocolActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:screenOrientation="user">
 
         </activity>

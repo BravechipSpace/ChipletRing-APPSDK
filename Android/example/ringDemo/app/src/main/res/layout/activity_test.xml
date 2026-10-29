@@ -21,10 +21,10 @@
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
         <TextView
-            android:id="@+id/tv_connect"
+            android:id="@+id/tv_cmd_log_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="连接"
+            android:text="查看日志"
             android:textSize="14sp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
@@ -69,15 +69,6 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="连接指令"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_app_refresh"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="刷新指令"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
@@ -207,15 +198,6 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_read_log"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="读取所有记录"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
                 android:id="@+id/bt_test_temp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -225,74 +207,6 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/bt_setSn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置序列号"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/bt_getSn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取序列号"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/et_collection_period"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:hint="周期(秒)"
-                android:inputType="number"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:importantForAutofill="no" />
-            <Button
-                android:id="@+id/bt_setCollection"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="设置采集周期"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-            <Button
-                android:id="@+id/btn_getCollection"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="获取采集周期"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -434,24 +348,6 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_get_page2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="跳转到下一页"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-            <Button
                 android:id="@+id/btn_ota"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -462,41 +358,108 @@
                 android:background="@drawable/button_bg_state"/>
         </LinearLayout>
 
+        <!-- ==== V0.3新增协议入口 start ==== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/bt_linear_motor"
+                android:id="@+id/bt_wear_status"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="辉扬线性马达"
-                android:textSize="14sp"
+                android:text="佩戴检测"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_airplane_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="飞行模式"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_work_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="工作模式"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_get_exception_log"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="读取异常日志"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_delete_exception_log"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="删除异常日志"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_ship_mode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Shipmode运输模式"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_reset_restart"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="复位测试"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+        <!-- ==== V0.3新增协议入口 end ==== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt_new_protocol"
+                android:id="@+id/bt_aivela_protocol"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="新协议测试"
+                android:text="aivela定制协议"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
 
-            <Button
-                android:id="@+id/bt_touch_setting"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="touch设置"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg_state"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
