@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo.aivela"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 12
-        versionName "2.1.1"//aivela定制app
+        versionCode 13
+        versionName "2.1.2"//增加本地和云端OTA功能
 
         applicationVariants.all { variant ->
             variant.outputs.all {
