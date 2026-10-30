@@ -2,7 +2,7 @@
 
 > 本文档汇总 com.lomo.demo（demo app 模块）针对 aivela 定制协议的全部修改，另一个项目可按本文档直接复制。
 > 前提：使用本项目最新的 blelibrary（SDK 层改动见《aivela定制协议.md》）。
-> 协议版本：V0.3（历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、新增佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
+> 协议版本：V0.4（新增删除全部历史记录指令 0x36/0x3、蓝牙名称长度上限 12→20、0xA0 绑定/连接请求删 timeMillis 且响应精简为固定 28 字节；含 V0.3：历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
 
 ## 一、修改清单
 
@@ -12,8 +12,8 @@
 | 2 | `app/src/main/res/layout/activity_aivela_protocol.xml` | 新增 | 测试页布局（四大分区标题栏；V0.3 长睡参数两行输入） |
 | 3 | `app/src/main/res/layout/dialog_cmd_log.xml` | 新增 | 指令日志全屏对话框布局 |
 | 4 | `app/src/main/AndroidManifest.xml` | 修改 | 注册 AivelaProtocolActivity |
-| 5 | `app/src/main/java/com/lomo/demo/activity/TestActivity.java` | 修改 | 跳转按钮 + V0.3 新增 7 个协议入口（佩戴检测/飞行模式/工作模式/异常日志读取/删除/Shipmode/复位测试）+ 电量推送充电状态显示 |
-| 6 | `app/src/main/res/layout/activity_test.xml` | 修改 | 添加 V0.3 七个协议按钮（"aivela定制协议"跳转按钮放最下面） |
+| 5 | `app/src/main/java/com/lomo/demo/activity/TestActivity.java` | 修改 | 跳转按钮 + V0.3 新增 7 个协议入口（佩戴检测/飞行模式/工作模式/异常日志读取/删除/Shipmode/复位测试）+ 电量推送充电状态显示 + V0.4 新增删除历史记录入口、APP_CONNECT 调用适配新签名 |
+| 6 | `app/src/main/res/layout/activity_test.xml` | 修改 | 添加 V0.3 七个协议按钮（"aivela定制协议"跳转按钮放最下面）+ V0.4 异常日志行追加"删除历史记录"按钮 |
 | 7 | `app/src/main/java/com/lomo/demo/application/App.java` | 修改 | `LmAPILite.init` 换成带 `ICMDLogListener` 的重载 |
 | 8 | `app/src/main/java/com/lomo/demo/activity/MainActivity.java` | 修改 | 删除 `import com.lm.sdk.LmAPI;`（LmAPI 类已删除，统一用 LmAPILite） |
 
@@ -22,8 +22,8 @@
 另一个项目直接整体替换为本项目的 blelibrary 即可，demo 层代码依赖以下 SDK 能力：
 
 - 接口：`com.lm.sdk.inter.ICMDLogListener`（指令日志回调）
-- Lite 系列接口（`com.lm.sdk.lmApiInter`）：`IHistoryRecordListenerLite`、`ISedentaryReminderListenerLite`、`IAllDayStaminaListenerLite`、`ILongSleepTimeListenerLite`、`ISportStatusPushListenerLite`、`IMenstrualHistoryListenerLite`、`IMenstrualPredictionListenerLite`、`IWearStatusListenerLite`（V0.3）、`IAirplaneModeListenerLite`（V0.3）、`IWorkModeListenerLite`（V0.3）、`IExceptionLogListenerLite`（V0.3）、`IBatteryListenerLite`（已有，V0.3 签名变更）
-- 数据类：`com.lm.sdk.mode.HistoryRecordLite`（V0.3 新增 wearStatus 字段）、`com.lm.sdk.mode.GoMoreSleep`（已有，V0.3 新增 reportTs 字段）
+- Lite 系列接口（`com.lm.sdk.lmApiInter`）：`IHistoryRecordListenerLite`、`ISedentaryReminderListenerLite`、`IAllDayStaminaListenerLite`、`ILongSleepTimeListenerLite`、`ISportStatusPushListenerLite`、`IMenstrualHistoryListenerLite`、`IMenstrualPredictionListenerLite`、`IWearStatusListenerLite`（V0.3）、`IAirplaneModeListenerLite`（V0.3）、`IWorkModeListenerLite`（V0.3）、`IExceptionLogListenerLite`（V0.3）、`IDeleteHistoryListenerLite`（V0.4 新增）、`IBindConnectRefreshListenerLite`（已有，V0.4 回调数据类精简）、`IBatteryListenerLite`（已有，V0.3 签名变更）
+- 数据类：`com.lm.sdk.mode.HistoryRecordLite`（V0.3 新增 wearStatus 字段）、`com.lm.sdk.mode.GoMoreSleep`（已有，V0.3 新增 reportTs 字段）、`com.lm.sdk.mode.SystemControlLiteBean`（已有，V0.4 按协议重写为 8 字段：固件版本、硬件版本、电量、充电状态、当前计步、自检标识、gomore授权、工作模式）
 - 老接口：`com.lm.sdk.inter.IGoMoreListener`（Gomore睡眠复用已有接口）
 - `LmAPILite` 方法：
   - `init(Application, ICMDLogListener)`（初始化重载）
@@ -45,6 +45,9 @@
   - `DELETE_EXCEPTION_LOG(IExceptionLogListenerLite)`（0x36/0x26，V0.3 新增）
   - `SET_SHIP_MODE()`（0xF2/0x5，V0.3 新增，无回调）
   - `RESET_RESTART()`（0xF2/0x9，已有，无回调）
+  - `DELETE_HISTORY_RECORD(IDeleteHistoryListenerLite)`（0x36/0x3，V0.4 新增，删除全部本地数据历史记录；系统繁忙时设备空闲执行，收到响应即回调成功）
+  - `APP_BIND(IBindConnectRefreshListenerLite)` / `APP_CONNECT(IBindConnectRefreshListenerLite)`（0xA0/0x0、0xA0/0x1，已有，V0.4 删除 timeMillis 入参，请求时间由 SDK 内部取系统当前时间；响应 Data 固定 28 字节，解析为精简后的 SystemControlLiteBean）
+  - `Set_BlueTooth_Name(String, ISystemControlListenerLite)` / `Get_BlueTooth_Name(ISystemControlListenerLite)`（0x37/0x3、0x37/0x4，已有，V0.4 蓝牙名称长度上限由 12 改为 20，设置成功后设备 1s 自动断开并以新名称重新广播，demo 调用代码无需改动）
   - `GET_BATTERY(byte, IBatteryListenerLite)`（已有，V0.3 电量推送 Data 改 2 字节，`battery_push(electricity, chargingStatus)` 签名变更，旧固件 1 字节时 chargingStatus 回调 -1）
 - 工具类：`com.lm.sdk.utils.ImageSaverUtil.saveImageToInternalStorage(Context, String, String, String, boolean)`（已有）
 
@@ -1214,16 +1217,17 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
 
 ### 5. TestActivity.java
 
-（1）import 区添加（V0.3 新增接口）：
+（1）import 区添加（V0.3/V0.4 新增接口）：
 
 ```java
 import com.lm.sdk.lmApiInter.IWearStatusListenerLite;
 import com.lm.sdk.lmApiInter.IAirplaneModeListenerLite;
 import com.lm.sdk.lmApiInter.IWorkModeListenerLite;
 import com.lm.sdk.lmApiInter.IExceptionLogListenerLite;
+import com.lm.sdk.lmApiInter.IDeleteHistoryListenerLite;
 ```
 
-（2）类成员区添加 4 个监听器（V0.3）：
+（2）类成员区添加 5 个监听器（V0.3 新增 4 个 + V0.4 新增 1 个）：
 
 ```java
 /** 佩戴检测监听（0x31/0x5，V0.3新增，查询响应/主动推送） */
@@ -1269,6 +1273,14 @@ private IExceptionLogListenerLite iExceptionLogListenerLite = new IExceptionLogL
         postView("\n删除异常日志:" + (success ? "成功" : "失败"));
     }
 };
+
+/** 删除历史记录监听（0x36/0x3，V0.4新增） */
+private IDeleteHistoryListenerLite iDeleteHistoryListenerLite = new IDeleteHistoryListenerLite() {
+    @Override
+    public void onDeleteHistoryResult(boolean success) {
+        postView("\n删除全部历史记录:" + (success ? "成功" : "失败"));
+    }
+};
 ```
 
 （3）`onCreate` 中其他 `findViewById(...).setOnClickListener(this);` 之后添加：
@@ -1280,6 +1292,7 @@ findViewById(R.id.bt_airplane_mode).setOnClickListener(this);
 findViewById(R.id.bt_work_mode).setOnClickListener(this);
 findViewById(R.id.bt_get_exception_log).setOnClickListener(this);
 findViewById(R.id.bt_delete_exception_log).setOnClickListener(this);
+findViewById(R.id.bt_delete_history).setOnClickListener(this);
 findViewById(R.id.bt_ship_mode).setOnClickListener(this);
 findViewById(R.id.bt_reset_restart).setOnClickListener(this);
 ```
@@ -1318,6 +1331,12 @@ if(view.getId()==R.id.bt_delete_exception_log) {
     LmAPILite.DELETE_EXCEPTION_LOG(iExceptionLogListenerLite);
 }
 
+// ==== V0.4新增协议入口 ====
+if(view.getId()==R.id.bt_delete_history) {
+    postView("\n删除全部本地数据历史记录（0x36/0x3，系统繁忙时空闲执行）");
+    LmAPILite.DELETE_HISTORY_RECORD(iDeleteHistoryListenerLite);
+}
+
 if(view.getId()==R.id.bt_ship_mode) {
     postView("\n设置Shipmode运输模式（0xF2/0x5），戒指将进入运输模式");
     LmAPILite.SET_SHIP_MODE();
@@ -1354,9 +1373,33 @@ if (sportType == 0) {
 }
 ```
 
+（7）V0.4 APP_CONNECT 调用适配：`LmAPILite.APP_CONNECT` 删除 timeMillis 入参（原第二参数时间戳不再传，SDK 内部自动取系统当前时间组帧），回调 bean 为 V0.4 精简后的 `SystemControlLiteBean`（8 字段：固件版本、硬件版本、电量、充电状态、当前计步、自检标识、gomore授权、工作模式；`IBindConnectRefreshListenerLite`、`SystemControlLiteBean` 的 import 原工程已存在）：
+
+```java
+if(view.getId()==R.id.bt_app_connect){
+    postView("\nAPP_CONNECT");
+    LmAPILite.APP_CONNECT(new IBindConnectRefreshListenerLite() {
+        @Override
+        public void appBind(SystemControlLiteBean systemControlBean) {
+
+        }
+
+        @Override
+        public void appConnect(SystemControlLiteBean systemControlBean) {
+            postView("\nappConnect:"+systemControlBean);
+        }
+
+        @Override
+        public void appRefresh(SystemControlLiteBean systemControlBean) {
+
+        }
+    });
+}
+```
+
 ### 6. activity_test.xml
 
-在按钮区末尾（最下面）添加 V0.3 七个协议按钮和"aivela定制协议"跳转按钮（跳转按钮放在最后）：
+在按钮区末尾（最下面）添加 V0.3 七个协议按钮和"aivela定制协议"跳转按钮（跳转按钮放在最后）；V0.4 在异常日志行追加"删除历史记录"按钮（bt_delete_history，一排三个按钮）：
 
 ```xml
 <!-- ==== V0.3新增协议入口 start ==== -->
@@ -1414,6 +1457,15 @@ if (sportType == 0) {
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="删除异常日志"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_bg_state"/>
+    <Button
+        android:id="@+id/bt_delete_history"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="删除历史记录"
         android:textSize="12sp"
         android:textColor="@color/white"
         android:background="@drawable/button_bg_state"/>
@@ -1516,3 +1568,4 @@ import com.lm.sdk.LmAPI;  // 删除此行
 
 - 2026-10-28：创建文档；包含 aivela 测试页、指令日志捕获与对话框、TestActivity 跳转、App 初始化改造、LmAPI 删除统一到 LmAPILite
 - 2026-10-29：按协议 V0.3 更新：历史记录 Subcmd 0x25/0x26→0x2E/0x2F；AivelaProtocolActivity 长睡设置扩为 4 参数（新增计步阈值、PPG时长输入框）；TestActivity 新增佩戴检测/飞行模式/工作模式/异常日志读取/删除/Shipmode/复位测试 7 个入口及 4 个监听器；电量推送 `battery_push` 签名变更并显示充电状态；运动开始/停止/被动停止结果显示；"aivela定制协议"跳转按钮调整到页面最下面
+- 2026-10-30：按协议 V0.4 更新：新增删除全部本地数据历史记录指令（0x36/0x3，TestActivity 异常日志按钮行追加"删除历史记录"按钮 + IDeleteHistoryListenerLite 监听）；蓝牙名称长度上限 12→20（Set_BlueTooth_Name/Get_BlueTooth_Name，设置后设备 1s 自动断开并重广播，demo 调用代码无需改动）；0xA0 绑定/连接 APP_BIND/APP_CONNECT 删除 timeMillis 入参（SDK 内部取当前时间）、响应 Data 精简为固定 28 字节（SystemControlLiteBean 重写为 8 字段并新增工作模式 workMode），TestActivity 的 APP_CONNECT 调用同步适配

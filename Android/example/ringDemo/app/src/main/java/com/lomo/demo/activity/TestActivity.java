@@ -37,6 +37,7 @@ import com.lm.sdk.lmApiInter.IAirplaneModeListenerLite;
 import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
 import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
+import com.lm.sdk.lmApiInter.IDeleteHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IExceptionLogListenerLite;
 import com.lm.sdk.lmApiInter.IHeartListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
@@ -159,6 +160,14 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
     };
 
+    /** 删除历史记录监听（0x36/0x3，V0.4新增） */
+    private IDeleteHistoryListenerLite iDeleteHistoryListenerLite = new IDeleteHistoryListenerLite() {
+        @Override
+        public void onDeleteHistoryResult(boolean success) {
+            postView("\n删除全部历史记录:" + (success ? "成功" : "失败"));
+        }
+    };
+
 
     Handler handler = new Handler(new Handler.Callback() {
 
@@ -228,6 +237,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_work_mode).setOnClickListener(this);
         findViewById(R.id.bt_get_exception_log).setOnClickListener(this);
         findViewById(R.id.bt_delete_exception_log).setOnClickListener(this);
+        findViewById(R.id.bt_delete_history).setOnClickListener(this);
         findViewById(R.id.bt_ship_mode).setOnClickListener(this);
         findViewById(R.id.bt_reset_restart).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
@@ -362,7 +372,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
             if(view.getId()==R.id.bt_app_connect){
                 postView("\nAPP_CONNECT");
-                LmAPILite.APP_CONNECT(0, new IBindConnectRefreshListenerLite() {
+                LmAPILite.APP_CONNECT(new IBindConnectRefreshListenerLite() {
                     @Override
                     public void appBind(SystemControlLiteBean systemControlBean) {
 
@@ -715,6 +725,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         if(view.getId()==R.id.bt_delete_exception_log) {
             postView("\n删除异常日志（0x36/0x26）");
             LmAPILite.DELETE_EXCEPTION_LOG(iExceptionLogListenerLite);
+        }
+
+        // ==== V0.4新增协议入口 ====
+        if(view.getId()==R.id.bt_delete_history) {
+            postView("\n删除全部本地数据历史记录（0x36/0x3，系统繁忙时空闲执行）");
+            LmAPILite.DELETE_HISTORY_RECORD(iDeleteHistoryListenerLite);
         }
 
         if(view.getId()==R.id.bt_ship_mode) {
