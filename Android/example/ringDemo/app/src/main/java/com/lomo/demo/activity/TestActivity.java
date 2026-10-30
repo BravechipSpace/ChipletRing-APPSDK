@@ -3,6 +3,8 @@ package com.lomo.demo.activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -57,6 +61,9 @@ import com.lomo.demo.application.App;
 import com.lomo.demo.base.BaseActivity;
 import com.lomo.demo.utils.CmdLogManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -68,6 +75,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     EditText et_bluetooth_name, et_gomore_age, et_gomore_sex, et_gomore_height, et_gomore_weight;
     private DeviceBean deviceBean;
     private BluetoothDevice bluetoothDevice;
+    private ActivityResultLauncher<Intent> filePickerLauncher;
 
     private ISystemControlListenerLite iSystemControlListenerLite=new ISystemControlListenerLite() {
         @Override
@@ -177,6 +185,15 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        //注册文件选择器，兼容高版本Android
+        filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri uri = result.getData().getData();
+                if (uri != null) {
+                    handleSelectedFirmware(uri);
+                }
+            }
+        });
         LmAPILite.addWLSCmdListener(this, this);
 
         tv_result=findViewById(R.id.tv_result);
@@ -214,6 +231,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_ship_mode).setOnClickListener(this);
         findViewById(R.id.bt_reset_restart).setOnClickListener(this);
         findViewById(R.id.btn_ota).setOnClickListener(this);
+        findViewById(R.id.btn_ota_local).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         //部分OPPO/华为机型上Parcelable回读可能失败返回null，直接调用getDevice()会NPE闪退
         Intent intent = getIntent();
@@ -714,8 +732,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void versionResult(String softwareVersion, String hardwareVersion) {
                     postView("\n等待OTA升级");
-                    //提供给测试人员测试的方法，如果第三方需要对接，换成 OtaApi.otaUpdateWithCheckVersion，已经通过复合指令，获取到了版本号，不需要再调用LmAPILite.GET_VERSION
-                    OtaApi.otaUpdateWithCheckVersionForTester(true,softwareVersion, TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
+                    //已经通过复合指令，获取到了版本号，不需要再调用LmAPILite.GET_VERSION
+                    OtaApi.otaUpdateWithCheckVersion(softwareVersion, TestActivity.this, App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), new LmOtaProgressListener() {
                         @Override
                         public void error(String message) {
                             postView("\nota升级出错：" + message);
@@ -759,9 +777,186 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     });
                 }
             });
+        }
+        if(view.getId()==R.id.btn_ota_local) {
+            postView("\n选择固件文件");
+            //启动文件选择器，尝试过滤.bin文件（部分设备支持）
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/octet-stream");
+            filePickerLauncher.launch(intent);
+        }
+    }
 
+    /**
+     * 处理选中的固件文件
+     */
+    private void handleSelectedFirmware(Uri uri) {
+        try {
+            //获取文件名
+            String fileName = getFileNameFromUri(uri);
+            if (TextUtils.isEmpty(fileName)) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            //校验文件扩展名是否为.bin
+            if (!fileName.toLowerCase().endsWith(".bin")) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            //解析版本号
+            String version = extractVersionFromFileName(fileName);
+            if (TextUtils.isEmpty(version)) {
+                Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            postView("\n本地OTA升级");
+            postView("\n固件文件：" + fileName);
+            postView("\n版本号：" + version);
+
+            //将文件拷贝到应用私有目录
+            File destFile = new File(getExternalFilesDir(null), fileName);
+            copyUriToFile(uri, destFile);
+
+            //设置升级文件
+            OtaApi.setUpdateFile(destFile.getAbsolutePath());
+            //设置文件名
+            OtaApi.fileName = fileName;
+            //开始OTA升级
+            OtaApi.otaUpdateWithVersion(version, "", App.getInstance().getDeviceBean().getDevice(), App.getInstance().getDeviceBean().getRssi(), TestActivity.this, new LmOtaProgressListener() {
+                @Override
+                public void error(String message) {
+                    postView("\nota升级出错：" + message);
+                }
+
+                @Override
+                public void onProgress(int i) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级进度:"+i);
+                        }
+                    });
+
+                    Logger.show("OTA", "OTA升级" + i);
+                }
+
+                @Override
+                public void onComplete() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            postView("\nota升级结束");
+                        }
+                    });
+                    Logger.show("OTA", "nota升级结束");
+                    OtaApi.destoryOta(TestActivity.this);
+                }
+
+                @Override
+                public void isLatestVersion() {
+                }
+
+                @Override
+                public void upgradeDescribe(String msg) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            postView("\n固件文件处理失败：" + e.getMessage());
+            Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 从Uri获取文件名
+     */
+    private String getFileNameFromUri(Uri uri) {
+        String fileName = null;
+
+        //尝试从ContentResolver获取文件名
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
+            if (nameIndex >= 0) {
+                fileName = cursor.getString(nameIndex);
+            }
+            cursor.close();
+        }
+
+        //如果获取失败，从Uri路径解析
+        if (TextUtils.isEmpty(fileName)) {
+            String path = uri.getPath();
+            if (!TextUtils.isEmpty(path)) {
+                fileName = path.substring(path.lastIndexOf('/') + 1);
+            }
+        }
+
+        return fileName;
+    }
+
+    /**
+     * 从文件名中提取版本号
+     * 规则：如果有下划线，舍弃下划线前边部分，取.bin前的内容
+     */
+    private String extractVersionFromFileName(String fileName) {
+        if (TextUtils.isEmpty(fileName)) {
+            return null;
+        }
+
+        //移除.bin扩展名
+        String nameWithoutExt = fileName;
+        if (fileName.toLowerCase().endsWith(".bin")) {
+            nameWithoutExt = fileName.substring(0, fileName.length() - 4);
+        }
+
+        //查找下划线
+        int underscoreIndex = nameWithoutExt.lastIndexOf('_');
+        if (underscoreIndex >= 0 && underscoreIndex < nameWithoutExt.length() - 1) {
+            //返回下划线后的部分
+            return nameWithoutExt.substring(underscoreIndex + 1);
+        } else {
+            //没有下划线，返回整个名称（不含扩展名）
+            return nameWithoutExt;
+        }
+    }
+
+    /**
+     * 将Uri内容拷贝到文件
+     */
+    private void copyUriToFile(Uri uri, File destFile) throws Exception {
+        InputStream inputStream = null;
+        FileOutputStream outputStream = null;
+        try {
+            inputStream = getContentResolver().openInputStream(uri);
+            outputStream = new FileOutputStream(destFile);
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
