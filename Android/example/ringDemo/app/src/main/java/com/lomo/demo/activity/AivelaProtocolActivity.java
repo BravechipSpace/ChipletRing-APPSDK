@@ -15,6 +15,7 @@ import com.lm.sdk.lmApiInter.ILongSleepTimeListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualPredictionListenerLite;
 import com.lm.sdk.lmApiInter.ISedentaryReminderListenerLite;
+import com.lm.sdk.lmApiInter.ISedentaryTriggerListenerLite;
 import com.lm.sdk.lmApiInter.ISportStatusPushListenerLite;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryRecordLite;
@@ -58,6 +59,10 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
     EditText etStamina;
     /** 久坐提醒配置组，格式"类型,开始分钟,结束分钟"，多组分号隔开 */
     EditText etSedentaryGroups;
+    /** 久坐重复模式（0单次提醒，1提醒三次每15分钟一次，V0.5） */
+    EditText etSedentaryAlarmMode;
+    /** 久坐触发时间（秒，1200-7200，V0.5） */
+    EditText etSedentaryTriggerTime;
     /** 长睡开始小时（0-23） */
     EditText etLongSleepStart;
     /** 长睡结束小时（0-23） */
@@ -91,6 +96,8 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         etWeekday = findViewById(R.id.et_weekday);
         etStamina = findViewById(R.id.et_stamina);
         etSedentaryGroups = findViewById(R.id.et_sedentary_groups);
+        etSedentaryAlarmMode = findViewById(R.id.et_sedentary_alarm_mode);
+        etSedentaryTriggerTime = findViewById(R.id.et_sedentary_trigger_time);
         etLongSleepStart = findViewById(R.id.et_long_sleep_start);
         etLongSleepEnd = findViewById(R.id.et_long_sleep_end);
         etStepThreshold = findViewById(R.id.et_step_threshold);
@@ -108,6 +115,8 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.bt_get_sedentary).setOnClickListener(this);
         findViewById(R.id.bt_set_stamina).setOnClickListener(this);
         findViewById(R.id.bt_set_long_sleep).setOnClickListener(this);
+        findViewById(R.id.bt_set_sedentary_trigger).setOnClickListener(this);
+        findViewById(R.id.bt_get_sedentary_trigger).setOnClickListener(this);
         // 三、运动状态推送（0x38）
         findViewById(R.id.bt_set_sport_status_listener).setOnClickListener(this);
         // 四、女性健康（0xC0）
@@ -156,6 +165,22 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
             int weekday = parseInt(etWeekday, 1);
             postView("\n获取久坐提醒: weekday=" + weekday);
             LmAPILite.GET_SEDENTARY_REMINDER(weekday, sedentaryListener);
+        }
+
+        // ==================== 设置久坐触发时间和重复模式（0x37/0x3A，V0.5）====================
+        if (id == R.id.bt_set_sedentary_trigger) {
+            int alarmMode = parseInt(etSedentaryAlarmMode, 0);
+            int triggerTime = parseInt(etSedentaryTriggerTime, 1200);
+            postView("\n设置久坐触发时间和重复模式: 重复模式=" + alarmMode
+                    + (alarmMode == 1 ? "（提醒三次每15分钟一次）" : "（单次提醒）")
+                    + ", 触发时间=" + triggerTime + "秒");
+            LmAPILite.SET_SEDENTARY_TRIGGER(alarmMode, triggerTime, sedentaryTriggerListener);
+        }
+
+        // ==================== 获取久坐触发时间和重复模式（0x37/0x3B，V0.5）====================
+        if (id == R.id.bt_get_sedentary_trigger) {
+            postView("\n获取久坐触发时间和重复模式");
+            LmAPILite.GET_SEDENTARY_TRIGGER(sedentaryTriggerListener);
         }
 
         // ==================== 设置全天体力值（0x37/0x2F）====================
@@ -340,6 +365,23 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
                         .append(", 结束=").append(group[2]).append("分(").append(formatMinute(group[2])).append(")");
             }
             postView(sb.toString());
+        }
+    };
+
+    /**
+     * 久坐触发时间和重复模式监听（0x3A/0x3B共用，V0.5）
+     */
+    private final ISedentaryTriggerListenerLite sedentaryTriggerListener = new ISedentaryTriggerListenerLite() {
+        @Override
+        public void onSetSedentaryTriggerResult(boolean success) {
+            postView("\n设置久坐触发时间和重复模式结果: " + (success ? "成功" : "失败"));
+        }
+
+        @Override
+        public void onGetSedentaryTriggerResult(int isContinousAlarm, int sedentaryTime) {
+            postView("\n久坐触发时间和重复模式: 重复模式=" + isContinousAlarm
+                    + (isContinousAlarm == 1 ? "（提醒三次每15分钟一次）" : "（单次提醒）")
+                    + ", 触发时间=" + sedentaryTime + "秒");
         }
     };
 

@@ -2,14 +2,14 @@
 
 > 本文档汇总 com.lomo.demo（demo app 模块）针对 aivela 定制协议的全部修改，另一个项目可按本文档直接复制。
 > 前提：使用本项目最新的 blelibrary（SDK 层改动见《aivela定制协议.md》）。
-> 协议版本：V0.4（新增删除全部历史记录指令 0x36/0x3、蓝牙名称长度上限 12→20、0xA0 绑定/连接请求删 timeMillis 且响应精简为固定 28 字节；含 V0.3：历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
+> 协议版本：V0.5（新增久坐触发时间和重复模式指令 0x37/0x3A、0x37/0x3B；含 V0.4：删除全部历史记录指令 0x36/0x3、蓝牙名称长度上限 12→20、0xA0 绑定/连接请求删 timeMillis 且响应精简为固定 28 字节；含 V0.3：历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
 
 ## 一、修改清单
 
 | 序号 | 文件 | 操作 | 说明 |
 |---|---|---|---|
-| 1 | `app/src/main/java/com/lomo/demo/activity/AivelaProtocolActivity.java` | 新增 | 测试页（13个入参输入框 + 11个按钮 + 指令日志对话框；V0.3 长睡改4参数） |
-| 2 | `app/src/main/res/layout/activity_aivela_protocol.xml` | 新增 | 测试页布局（四大分区标题栏；V0.3 长睡参数两行输入） |
+| 1 | `app/src/main/java/com/lomo/demo/activity/AivelaProtocolActivity.java` | 新增 | 测试页（15个入参输入框 + 13个按钮 + 指令日志对话框；V0.3 长睡改4参数；V0.5 新增久坐触发时间和重复模式） |
+| 2 | `app/src/main/res/layout/activity_aivela_protocol.xml` | 新增 | 测试页布局（四大分区标题栏；V0.3 长睡参数两行输入；V0.5 新增久坐触发模式/时长输入行及两个按钮） |
 | 3 | `app/src/main/res/layout/dialog_cmd_log.xml` | 新增 | 指令日志全屏对话框布局 |
 | 4 | `app/src/main/AndroidManifest.xml` | 修改 | 注册 AivelaProtocolActivity |
 | 5 | `app/src/main/java/com/lomo/demo/activity/TestActivity.java` | 修改 | 跳转按钮 + V0.3 新增 7 个协议入口（佩戴检测/飞行模式/工作模式/异常日志读取/删除/Shipmode/复位测试）+ 电量推送充电状态显示 + V0.4 新增删除历史记录入口、APP_CONNECT 调用适配新签名 |
@@ -22,7 +22,7 @@
 另一个项目直接整体替换为本项目的 blelibrary 即可，demo 层代码依赖以下 SDK 能力：
 
 - 接口：`com.lm.sdk.inter.ICMDLogListener`（指令日志回调）
-- Lite 系列接口（`com.lm.sdk.lmApiInter`）：`IHistoryRecordListenerLite`、`ISedentaryReminderListenerLite`、`IAllDayStaminaListenerLite`、`ILongSleepTimeListenerLite`、`ISportStatusPushListenerLite`、`IMenstrualHistoryListenerLite`、`IMenstrualPredictionListenerLite`、`IWearStatusListenerLite`（V0.3）、`IAirplaneModeListenerLite`（V0.3）、`IWorkModeListenerLite`（V0.3）、`IExceptionLogListenerLite`（V0.3）、`IDeleteHistoryListenerLite`（V0.4 新增）、`IBindConnectRefreshListenerLite`（已有，V0.4 回调数据类精简）、`IBatteryListenerLite`（已有，V0.3 签名变更）
+- Lite 系列接口（`com.lm.sdk.lmApiInter`）：`IHistoryRecordListenerLite`、`ISedentaryReminderListenerLite`、`IAllDayStaminaListenerLite`、`ILongSleepTimeListenerLite`、`ISportStatusPushListenerLite`、`IMenstrualHistoryListenerLite`、`IMenstrualPredictionListenerLite`、`IWearStatusListenerLite`（V0.3）、`IAirplaneModeListenerLite`（V0.3）、`IWorkModeListenerLite`（V0.3）、`IExceptionLogListenerLite`（V0.3）、`IDeleteHistoryListenerLite`（V0.4 新增）、`ISedentaryTriggerListenerLite`（V0.5 新增，久坐触发时间和重复模式 0x3A/0x3B）、`IBindConnectRefreshListenerLite`（已有，V0.4 回调数据类精简）、`IBatteryListenerLite`（已有，V0.3 签名变更）
 - 数据类：`com.lm.sdk.mode.HistoryRecordLite`（V0.3 新增 wearStatus 字段）、`com.lm.sdk.mode.GoMoreSleep`（已有，V0.3 新增 reportTs 字段）、`com.lm.sdk.mode.SystemControlLiteBean`（已有，V0.4 按协议重写为 8 字段：固件版本、硬件版本、电量、充电状态、当前计步、自检标识、gomore授权、工作模式）
 - 老接口：`com.lm.sdk.inter.IGoMoreListener`（Gomore睡眠复用已有接口）
 - `LmAPILite` 方法：
@@ -33,6 +33,8 @@
   - `GET_GOMORE_SLEEP(long, long, IGoMoreListener)`（0x36/0x05 带时间范围重载）
   - `SET_SEDENTARY_REMINDER(int, List<int[]>, ISedentaryReminderListenerLite)`（0x37/0x2D）
   - `GET_SEDENTARY_REMINDER(int, ISedentaryReminderListenerLite)`（0x37/0x2E）
+  - `SET_SEDENTARY_TRIGGER(int, int, ISedentaryTriggerListenerLite)`（0x37/0x3A，V0.5 新增：重复模式 0单次/1连续三次每15分钟一次、触发时间 1200-7200 秒，SDK 不校验范围直接透传）
+  - `GET_SEDENTARY_TRIGGER(ISedentaryTriggerListenerLite)`（0x37/0x3B，V0.5 新增）
   - `SET_ALL_DAY_STAMINA(float, IAllDayStaminaListenerLite)`（0x37/0x2F）
   - `SET_LONG_SLEEP_TIME(int, int, int, int, ILongSleepTimeListenerLite)`（0x37/0x30，V0.3 由 2 参数扩为 4 参数：长睡开始小时、长睡结束小时、计步初始阈值 2-20、PPG周期测量时长 20-240 秒）
   - `SET_SPORT_STATUS_LISTENER(ISportStatusPushListenerLite)`（0x38/0x07，纯监听不发包）
@@ -88,6 +90,7 @@ import com.lm.sdk.lmApiInter.ILongSleepTimeListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualPredictionListenerLite;
 import com.lm.sdk.lmApiInter.ISedentaryReminderListenerLite;
+import com.lm.sdk.lmApiInter.ISedentaryTriggerListenerLite;
 import com.lm.sdk.lmApiInter.ISportStatusPushListenerLite;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryRecordLite;
@@ -104,7 +107,7 @@ import java.util.Locale;
 /**
  * Aivela定制协议测试Activity
  * 一、操作本地数据（0x36）：未上传/全部历史记录（0x2E/0x2F，V0.3调整）、Gomore睡眠（0x05）
- * 二、系统设置（0x37）：久坐提醒（0x2D/0x2E）、全天体力值（0x2F）、长睡时间（0x30，V0.3扩为4参数）
+ * 二、系统设置（0x37）：久坐提醒（0x2D/0x2E）、全天体力值（0x2F）、长睡时间（0x30，V0.3扩为4参数）、久坐触发时间和重复模式（0x3A/0x3B，V0.5）
  * 三、运动模式（0x38/0x07）
  * 四、女性健康相关（0xC0）：周期写入（0x00）、获取预测（0x01）
  *
@@ -131,6 +134,10 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
     EditText etStamina;
     /** 久坐提醒配置组，格式"类型,开始分钟,结束分钟"，多组分号隔开 */
     EditText etSedentaryGroups;
+    /** 久坐重复模式（0单次提醒，1提醒三次每15分钟一次，V0.5） */
+    EditText etSedentaryAlarmMode;
+    /** 久坐触发时间（秒，1200-7200，V0.5） */
+    EditText etSedentaryTriggerTime;
     /** 长睡开始小时（0-23） */
     EditText etLongSleepStart;
     /** 长睡结束小时（0-23） */
@@ -193,6 +200,8 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         etWeekday = findViewById(R.id.et_weekday);
         etStamina = findViewById(R.id.et_stamina);
         etSedentaryGroups = findViewById(R.id.et_sedentary_groups);
+        etSedentaryAlarmMode = findViewById(R.id.et_sedentary_alarm_mode);
+        etSedentaryTriggerTime = findViewById(R.id.et_sedentary_trigger_time);
         etLongSleepStart = findViewById(R.id.et_long_sleep_start);
         etLongSleepEnd = findViewById(R.id.et_long_sleep_end);
         etStepThreshold = findViewById(R.id.et_step_threshold);
@@ -208,6 +217,8 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         // 二、系统设置（0x37）
         findViewById(R.id.bt_set_sedentary).setOnClickListener(this);
         findViewById(R.id.bt_get_sedentary).setOnClickListener(this);
+        findViewById(R.id.bt_set_sedentary_trigger).setOnClickListener(this);
+        findViewById(R.id.bt_get_sedentary_trigger).setOnClickListener(this);
         findViewById(R.id.bt_set_stamina).setOnClickListener(this);
         findViewById(R.id.bt_set_long_sleep).setOnClickListener(this);
         // 三、运动状态推送（0x38）
@@ -272,6 +283,22 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
             int weekday = parseInt(etWeekday, 1);
             postView("\n获取久坐提醒: weekday=" + weekday);
             LmAPILite.GET_SEDENTARY_REMINDER(weekday, sedentaryListener);
+        }
+
+        // ==================== 设置久坐触发时间和重复模式（0x37/0x3A，V0.5）====================
+        if (id == R.id.bt_set_sedentary_trigger) {
+            int alarmMode = parseInt(etSedentaryAlarmMode, 0);
+            int triggerTime = parseInt(etSedentaryTriggerTime, 1200);
+            postView("\n设置久坐触发时间和重复模式: 重复模式=" + alarmMode
+                    + (alarmMode == 1 ? "（提醒三次每15分钟一次）" : "（单次提醒）")
+                    + ", 触发时间=" + triggerTime + "秒");
+            LmAPILite.SET_SEDENTARY_TRIGGER(alarmMode, triggerTime, sedentaryTriggerListener);
+        }
+
+        // ==================== 获取久坐触发时间和重复模式（0x37/0x3B，V0.5）====================
+        if (id == R.id.bt_get_sedentary_trigger) {
+            postView("\n获取久坐触发时间和重复模式");
+            LmAPILite.GET_SEDENTARY_TRIGGER(sedentaryTriggerListener);
         }
 
         // ==================== 设置全天体力值（0x37/0x2F）====================
@@ -455,6 +482,23 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
                         .append(", 结束=").append(group[2]).append("分(").append(formatMinute(group[2])).append(")");
             }
             postView(sb.toString());
+        }
+    };
+
+    /**
+     * 久坐触发时间和重复模式监听（0x3A/0x3B共用，V0.5）
+     */
+    private final ISedentaryTriggerListenerLite sedentaryTriggerListener = new ISedentaryTriggerListenerLite() {
+        @Override
+        public void onSetSedentaryTriggerResult(boolean success) {
+            postView("\n设置久坐触发时间和重复模式结果: " + (success ? "成功" : "失败"));
+        }
+
+        @Override
+        public void onGetSedentaryTriggerResult(int isContinousAlarm, int sedentaryTime) {
+            postView("\n久坐触发时间和重复模式: 重复模式=" + isContinousAlarm
+                    + (isContinousAlarm == 1 ? "（提醒三次每15分钟一次）" : "（单次提醒）")
+                    + ", 触发时间=" + sedentaryTime + "秒");
         }
     };
 
@@ -886,6 +930,42 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
                     android:textSize="12sp"/>
             </LinearLayout>
 
+            <!-- 久坐触发时间和重复模式输入（V0.5） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重复模式:"
+                    android:textSize="12sp"/>
+                <EditText
+                    android:id="@+id/et_sedentary_alarm_mode"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="0单次1连续三次"
+                    android:text="0"
+                    android:inputType="number"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="触发时间(秒):"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="5dp"/>
+                <EditText
+                    android:id="@+id/et_sedentary_trigger_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="1200-7200"
+                    android:text="1200"
+                    android:inputType="number"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
             <!-- 久坐提醒按钮 -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -916,6 +996,32 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="设置体力值(0x2F)"
+                    android:textSize="11sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+            </LinearLayout>
+
+            <!-- 久坐触发时间和重复模式按钮（V0.5） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_set_sedentary_trigger"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="设置久坐触发(0x3A)"
+                    android:textSize="11sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_bg_state"/>
+                <Button
+                    android:id="@+id/bt_get_sedentary_trigger"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="获取久坐触发(0x3B)"
                     android:textSize="11sp"
                     android:textColor="@color/white"
                     android:background="@drawable/button_bg_state"/>
@@ -1569,3 +1675,4 @@ import com.lm.sdk.LmAPI;  // 删除此行
 - 2026-10-28：创建文档；包含 aivela 测试页、指令日志捕获与对话框、TestActivity 跳转、App 初始化改造、LmAPI 删除统一到 LmAPILite
 - 2026-10-29：按协议 V0.3 更新：历史记录 Subcmd 0x25/0x26→0x2E/0x2F；AivelaProtocolActivity 长睡设置扩为 4 参数（新增计步阈值、PPG时长输入框）；TestActivity 新增佩戴检测/飞行模式/工作模式/异常日志读取/删除/Shipmode/复位测试 7 个入口及 4 个监听器；电量推送 `battery_push` 签名变更并显示充电状态；运动开始/停止/被动停止结果显示；"aivela定制协议"跳转按钮调整到页面最下面
 - 2026-10-30：按协议 V0.4 更新：新增删除全部本地数据历史记录指令（0x36/0x3，TestActivity 异常日志按钮行追加"删除历史记录"按钮 + IDeleteHistoryListenerLite 监听）；蓝牙名称长度上限 12→20（Set_BlueTooth_Name/Get_BlueTooth_Name，设置后设备 1s 自动断开并重广播，demo 调用代码无需改动）；0xA0 绑定/连接 APP_BIND/APP_CONNECT 删除 timeMillis 入参（SDK 内部取当前时间）、响应 Data 精简为固定 28 字节（SystemControlLiteBean 重写为 8 字段并新增工作模式 workMode），TestActivity 的 APP_CONNECT 调用同步适配
+- 2026-11-05：按协议 V0.5 更新：新增久坐触发时间和重复模式指令（0x37/0x3A 设置、0x37/0x3B 获取，SDK 新增 SET_SEDENTARY_TRIGGER/GET_SEDENTARY_TRIGGER 方法及 ISedentaryTriggerListenerLite 接口）；AivelaProtocolActivity 新增"重复模式/触发时间(秒)"输入行、"设置久坐触发(0x3A)"/"获取久坐触发(0x3B)"两个按钮及对应监听器
