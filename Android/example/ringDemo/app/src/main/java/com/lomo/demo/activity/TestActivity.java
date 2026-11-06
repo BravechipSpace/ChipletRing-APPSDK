@@ -468,7 +468,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
 
         if(view.getId()==R.id.bt_blood_oxygen){
             postView("\n开始测量血氧");
-            LmAPILite.GET_HEART_Q2_WITH_TIME((byte) 1, (byte) 30, new IBloodOxygenListenerLite() {
+            LmAPILite.GET_HEART_Q2_WITH_TIME((byte) 0, (byte) 0, new IBloodOxygenListenerLite() {
 
                 @Override
                 public void progress(int progress) {
@@ -478,6 +478,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void resultData(int bloodOxygen, int perfusion,int progress) {
                     postView("\n血氧：" + bloodOxygen + ",灌注度：" + perfusion + "%"+ ",进度：" + progress);
+                    Log.i(TAG, "血氧：" + bloodOxygen + ",灌注度：" + perfusion + "%"+ ",进度：" + progress);
                 }
 
                 @Override
@@ -553,7 +554,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 postView("\ngomore睡眠");
                 //postView("\n开始读取未上传数据");
                 List<GoMoreSleep> gomoreSleepList=new ArrayList<>();
-                LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+                LmAPILite.GET_GOMORE_SLEEP(0,new IGoMoreListener() {
                     @Override
                     public void overviewOfSleep(GoMoreSleep goMoreSleep) {
 //                        postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));

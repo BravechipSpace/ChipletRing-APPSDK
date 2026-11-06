@@ -7,8 +7,9 @@ android {
         applicationId "com.lomo.demo"
         minSdkVersion 23
         targetSdkVersion 35
-        versionCode 10
-        versionName "2.1.0"//1.sdk去掉保存日志到本地文件的功能
+        versionCode 11
+        versionName "2.1.1"//1.gomore入参新增时间戳，0:获取缓存内全部未数据，非0:为切NIX时间，获取指定时间后的数据，2.Gomore返回新增endSleepType，出睡类型:1自动出睡，2手动出睡
+
 
         applicationVariants.all { variant ->
             variant.outputs.all {
