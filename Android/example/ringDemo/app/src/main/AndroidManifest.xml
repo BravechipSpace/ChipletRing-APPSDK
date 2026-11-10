@@ -88,6 +88,14 @@
 
         </activity>
         <activity
+            android:name=".activity.DeviceKeyAuthActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:screenOrientation="user">
+
+        </activity>
+        <activity
             android:name=".activity.LinearMotorActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"

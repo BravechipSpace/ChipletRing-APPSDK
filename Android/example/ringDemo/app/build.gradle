@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 11
-        versionName "2.1.0"//本地增加闪退日志
+        versionCode 12
+        versionName "2.1.1"//辉扬增加密钥鉴权
 
         applicationVariants.all { variant ->
             variant.outputs.all {

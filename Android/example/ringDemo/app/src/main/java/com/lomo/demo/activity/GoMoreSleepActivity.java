@@ -264,7 +264,7 @@ public class GoMoreSleepActivity extends BaseActivity implements  View.OnClickLi
             postView("\ngomore睡眠");
             List<GoMoreSleep> sleepStaging=new ArrayList<>();
 
-            LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+            LmAPILite.GET_GOMORE_SLEEP(0,new IGoMoreListener() {
                 @Override
                 public void overviewOfSleep(GoMoreSleep goMoreSleep) {
                     StringBuilder stringBuilder=new StringBuilder();

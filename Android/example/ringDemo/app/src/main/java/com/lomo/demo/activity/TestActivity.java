@@ -190,6 +190,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.btn_ota_local).setOnClickListener(this);
         findViewById(R.id.bt_new_protocol).setOnClickListener(this);
         findViewById(R.id.bt_touch_setting).setOnClickListener(this);
+        findViewById(R.id.bt_device_key_auth).setOnClickListener(this);
         //获取上个页面传递过来的deviceBean对象
         //部分OPPO/华为机型上Parcelable回读可能失败返回null，直接调用getDevice()会NPE闪退
         Intent intent = getIntent();
@@ -551,7 +552,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 postView("\ngomore睡眠");
                 //postView("\n开始读取未上传数据");
                 List<GoMoreSleep> gomoreSleepList=new ArrayList<>();
-                LmAPILite.GET_GOMORE_SLEEP(new IGoMoreListener() {
+                LmAPILite.GET_GOMORE_SLEEP(0,new IGoMoreListener() {
                     @Override
                     public void overviewOfSleep(GoMoreSleep goMoreSleep) {
 //                        postView("\ngomore睡眠 overviewOfSleep:" + GsonUtils.beanToJson(goMoreSleep));
@@ -824,6 +825,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         if(view.getId()==R.id.bt_touch_setting) {
             Intent intent=new Intent(this,TouchSettingActivity.class);
+            startActivity(intent);
+        }
+        if(view.getId()==R.id.bt_device_key_auth) {
+            Intent intent=new Intent(this,DeviceKeyAuthActivity.class);
             startActivity(intent);
         }
     }
