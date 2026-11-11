@@ -21,6 +21,16 @@
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
         <TextView
+            android:id="@+id/tv_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连接"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_cmd_log_btn"
+            android:textColor="@color/white"/>
+        <TextView
             android:id="@+id/tv_cmd_log_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,14 +44,18 @@
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="300dp"
         android:text="数据区域"
         android:scrollbars="vertical"
         android:padding="10dp"
         android:lineSpacingExtra="5dp"
         android:textSize="16sp"
         android:textColor="@color/colorPrimaryDark"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -198,6 +212,30 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/bt_stop_heart"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="停止心率"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_stop_q2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="停止血氧"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
                 android:id="@+id/bt_test_temp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -342,6 +380,67 @@
 
         </LinearLayout>
 
+        <!-- ==== V0.6运动模式及扩展入口 start ==== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_reset"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="恢复出厂"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_electricity_meter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="电量计"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_get_gomore_auth"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="授权查询"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_start_sport"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="开始运动"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+            <Button
+                android:id="@+id/bt_stop_sport"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="停止运动"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
+        <!-- ==== V0.6运动模式及扩展入口 end ==== -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -481,4 +580,5 @@
 
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

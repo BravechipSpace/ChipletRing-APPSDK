@@ -28,6 +28,7 @@ import com.lm.sdk.LmAPILite;
 import com.lm.sdk.LogicalApi;
 import com.lm.sdk.OtaApi;
 import com.lm.sdk.inter.ICreateToken;
+import com.lm.sdk.inter.IGoMoreKeyListener;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
@@ -38,9 +39,11 @@ import com.lm.sdk.lmApiInter.IBatteryListenerLite;
 import com.lm.sdk.lmApiInter.IBindConnectRefreshListenerLite;
 import com.lm.sdk.lmApiInter.IBloodOxygenListenerLite;
 import com.lm.sdk.lmApiInter.IDeleteHistoryListenerLite;
+import com.lm.sdk.lmApiInter.IElectricityMeterListenerLite;
 import com.lm.sdk.lmApiInter.IExceptionLogListenerLite;
 import com.lm.sdk.lmApiInter.IHeartListenerLite;
 import com.lm.sdk.lmApiInter.IResponseListenerLite;
+import com.lm.sdk.lmApiInter.ISportListenerLite;
 import com.lm.sdk.lmApiInter.IStepListenerLite;
 import com.lm.sdk.lmApiInter.ISyncTimeListenerLite;
 import com.lm.sdk.lmApiInter.ISystemControlListenerLite;
@@ -113,6 +116,131 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         @Override
         public void readBlueToolName(int len, String name) {
             postView("读取蓝牙名称:"+name+"，长度:"+len+"\n");
+        }
+    };
+
+    /** 电量计监听（SDK源码复用） */
+    private IElectricityMeterListenerLite iElectricityMeterListenerLite = new IElectricityMeterListenerLite() {
+        @Override
+        public void battery(int power, int voltage, int current, int temperature, int cyclesNumber, int health) {
+            postView("\n电量计:电量=" + power + ",电压=" + voltage + ",电流=" + current
+                    + ",温度=" + (temperature / 10f) + "℃,循环次数=" + cyclesNumber + ",健康度=" + health);
+        }
+    };
+
+    /** 停止心率测量监听（SDK源码复用） */
+    private IHeartListenerLite iStopHeartListenerLite = new IHeartListenerLite() {
+        @Override
+        public void progress(int progress) {
+
+        }
+
+        @Override
+        public void resultData(int heart, int heartRota, int yaLi, int temp) {
+
+        }
+
+        @Override
+        public void waveformData(int serialNumber, int numberOfData, String waveData, List<String[]> waveDataList) {
+
+        }
+
+        @Override
+        public void rriData(int serialNumber, int numberOfData, String data) {
+
+        }
+
+        @Override
+        public void error(int code, String message) {
+
+        }
+
+        @Override
+        public void success() {
+
+        }
+
+        @Override
+        public void stopHeart() {
+            postView("\n停止心率测量");
+        }
+    };
+
+    /** 停止血氧测量监听（SDK源码复用） */
+    private IBloodOxygenListenerLite iStopQ2ListenerLite = new IBloodOxygenListenerLite() {
+        @Override
+        public void progress(int progress) {
+
+        }
+
+        @Override
+        public void resultData(int heartRate, int bloodOxygen, int temperature) {
+
+        }
+
+        @Override
+        public void waveformData(int serialNumber, int numberOfData, String waveformData, List<String[]> waveDataList) {
+
+        }
+
+        @Override
+        public void error(int code, String message) {
+
+        }
+
+        @Override
+        public void success() {
+
+        }
+
+        @Override
+        public void stopQ2() {
+            postView("\n停止血氧测量");
+        }
+    };
+
+    /** 运动监听（0x38，V0.6：开始运动无运动类型参数；周期推送Data仅1字节心率，步数/卡路里/时间为0；已删漏点续传sportType=2/被动停止sportType=4分支） */
+    private ISportListenerLite iSportListenerLite = new ISportListenerLite() {
+        @Override
+        public void onSport(int sportType, int step, int heart, int calorie, long time) {
+            String type;
+            switch (sportType) {
+                case 0:
+                    type = "开始运动结果";
+                    break;
+                case 1:
+                    type = "运动周期推送";
+                    break;
+                case 3:
+                    type = "停止运动";
+                    break;
+                default:
+                    type = "运动推送type=" + sportType;
+                    break;
+            }
+            if (sportType == 0) {
+                String result = step == 0 ? "失败" : (step == 1 ? "成功" : (step == 2 ? "文件数量已满" : "结果=" + step));
+                postView("\n" + type + ":" + result);
+            } else if (sportType == 3) {
+                String result = step == 0 ? "失败" : (step == 1 ? "成功" : "结果=" + step);
+                postView("\n" + type + ":" + result);
+            } else {
+                // V0.6删减：周期推送仅返回心率，步数/卡路里/时间为0
+                postView("\n" + type + ":心率=" + heart);
+            }
+        }
+    };
+
+    /** Gomore授权监听（SDK源码复用，授权查询/下发PKey） */
+    private IGoMoreKeyListener iGoMoreKeyListener = new IGoMoreKeyListener() {
+        @Override
+        public void getGoMoreAuthorization(boolean success, String mcuId) {
+            postView("\n授权查询:" + (success ? "已授权" : "未授权") + ",MCU ID:" + mcuId);
+        }
+
+        @Override
+        public void setGoMoreAuthorization(boolean success, String mcuId) {
+            postView("\n下发PKey:" + (success ? "成功" : "失败") + ",MCU ID:" + mcuId);
         }
     };
 
@@ -230,6 +358,14 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_get_gomore_user).setOnClickListener(this);
         findViewById(R.id.bt_setBluttoothName).setOnClickListener(this);
         findViewById(R.id.bt_getBluttoothName).setOnClickListener(this);
+        findViewById(R.id.tv_connect).setOnClickListener(this);
+        findViewById(R.id.bt_reset).setOnClickListener(this);
+        findViewById(R.id.bt_electricity_meter).setOnClickListener(this);
+        findViewById(R.id.bt_stop_heart).setOnClickListener(this);
+        findViewById(R.id.bt_stop_q2).setOnClickListener(this);
+        findViewById(R.id.bt_start_sport).setOnClickListener(this);
+        findViewById(R.id.bt_stop_sport).setOnClickListener(this);
+        findViewById(R.id.bt_get_gomore_auth).setOnClickListener(this);
         findViewById(R.id.tv_cmd_log_btn).setOnClickListener(this);
         findViewById(R.id.bt_aivela_protocol).setOnClickListener(this);
         findViewById(R.id.bt_wear_status).setOnClickListener(this);
@@ -690,6 +826,49 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 }
             });
         }
+        if(view.getId()==R.id.tv_connect) {
+            //标题栏手动触发连接
+            if (bluetoothDevice != null) {
+                BLEUtils.connectLockByBLE(TestActivity.this, bluetoothDevice);
+            }
+        }
+
+        if(view.getId()==R.id.bt_reset) {
+            postView("\n开始恢复出厂设置");
+            LmAPILite.RESET(iSystemControlListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_electricity_meter) {
+            postView("\n开始获取电量计");
+            LmAPILite.GET_ELECTRICITY_METER(iElectricityMeterListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_stop_heart) {
+            postView("\n停止心率测量");
+            LmAPILite.STOP_HEART(iStopHeartListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_stop_q2) {
+            postView("\n停止血氧测量");
+            LmAPILite.STOP_Q2(iStopQ2ListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_start_sport) {
+            postView("\n开始运动");
+            //V0.6：START_SPORT删除运动类型参数，只传监听器
+            LmAPILite.START_SPORT(iSportListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_stop_sport) {
+            postView("\n停止运动");
+            LmAPILite.STOP_SPORT(iSportListenerLite);
+        }
+
+        if(view.getId()==R.id.bt_get_gomore_auth) {
+            postView("\n授权查询");
+            LmAPILite.GET_GOMORE_AUTHORIZATION(iGoMoreKeyListener);
+        }
+
         if(view.getId()==R.id.tv_cmd_log_btn) {
             //右上角查看指令日志（多页面共用CmdLogManager）
             CmdLogManager.getInstance().show(this);

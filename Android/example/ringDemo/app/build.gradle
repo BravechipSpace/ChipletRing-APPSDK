@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo.aivela"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 14
-        versionName "2.1.3"//新增V0.5新增功能
+        versionCode 15
+        versionName "2.1.4"//按照V0.6修改功能
 
         applicationVariants.all { variant ->
             variant.outputs.all {
