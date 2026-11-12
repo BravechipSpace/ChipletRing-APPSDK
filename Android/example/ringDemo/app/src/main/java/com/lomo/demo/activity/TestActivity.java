@@ -813,10 +813,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         }
         if(view.getId()==R.id.btn_ota_local) {
             postView("\n选择固件文件");
-            //启动文件选择器，尝试过滤.bin文件（部分设备支持）
+            //启动文件选择器，尝试过滤.bin/.hex16/.zip固件（部分设备支持）
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("application/octet-stream");
+            intent.setType("*/*");
+            String[] mimeTypes = {"application/octet-stream", "application/zip", "text/plain"};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             filePickerLauncher.launch(intent);
         }
         if(view.getId()==R.id.bt_new_protocol) {
@@ -847,8 +849,9 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 return;
             }
 
-            //校验文件扩展名是否为.bin
-            if (!fileName.toLowerCase().endsWith(".bin")) {
+            //校验文件扩展名是否为.bin/.hex16/.zip
+            String lowerName = fileName.toLowerCase();
+            if (!lowerName.endsWith(".bin") && !lowerName.endsWith(".hex16") && !lowerName.endsWith(".zip")) {
                 Toast.makeText(this, "请正确选择固件", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -956,10 +959,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             return null;
         }
 
-        //移除.bin扩展名
+        //移除扩展名（支持.bin/.hex16/.zip）
         String nameWithoutExt = fileName;
-        if (fileName.toLowerCase().endsWith(".bin")) {
-            nameWithoutExt = fileName.substring(0, fileName.length() - 4);
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex > 0) {
+            nameWithoutExt = fileName.substring(0, dotIndex);
         }
 
         //查找下划线
