@@ -220,8 +220,8 @@ import CoreBluetooth
      it by filtering the advertising packet, as device address is not available through iOS API.
      */
     var newAddressExpected: Bool {
-        // See https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/170 and
-        // https://github.com/NordicSemiconductor/Android-DFU-Library/pull/45
+        // See https://github.com/nordicsemi/IOS-Pods-DFU-Library/issues/170 and
+        // https://github.com/nordicsemi/Android-DFU-Library/pull/45
         // The legacy bootloader will advertise with address +1 only in SDK 6.1.
         // Future implementations of legacy DFU will advertise directly with the same
         // address no matter whether the device was bonded or not. In SDK 6.1 there was
@@ -539,7 +539,7 @@ import CoreBluetooth
                                 return
                             }
                             let bytesSent = dfuPacketCharacteristic.bytesSent
-                            // Due to https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/54
+                            // Due to https://github.com/nordicsemi/IOS-Pods-DFU-Library/issues/54
                             // only 16 least significant bits are verified.
                             if peripheralIsReadyToSendWriteWithoutRequest ||
                                (bytesSent & 0xFFFF) == (bytesReceived! & 0xFFFF) {

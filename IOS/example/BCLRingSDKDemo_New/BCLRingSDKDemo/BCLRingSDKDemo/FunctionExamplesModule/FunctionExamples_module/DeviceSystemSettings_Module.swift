@@ -41,9 +41,79 @@ class DeviceSystemSettings_Module: BaseFunction_Module {
             showCustomerAutoCollectionConfigDialog()
         case 70: // 读取客户定制自动采集配置
             getCustomerAutoCollectionConfig()
+        case 71: // 设置血氧采集周期
+            showBloodOxygenCollectionPeriodDialog()
+        case 72: // 读取血氧采集周期
+            getBloodOxygenCollectionPeriod()
+        case 73: // 设置系统功能开关
+            showSetSystemFeatureSwitchDialog()
+        case 75: // 设置算法相关参数
+            showAlgorithmParameterConfigDialog()
+        case 76: // 读取算法相关参数
+            getAlgorithmParameterConfig()
+        case 74: // 查询系统功能开关
+            showReadSystemFeatureSwitchDialog()
         default:
             showError("未知功能ID: \(id)")
         }
+    }
+
+    /// 读取设备实际算法配置，不触发设置操作。
+    private func getAlgorithmParameterConfig() {
+        BCLRingManager.shared.getAlgorithmParameterConfig { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case let .success(response):
+                    guard let config = response.config else {
+                        self.showError("读取算法参数失败：设备未返回有效配置")
+                        return
+                    }
+                    let message = """
+                    长睡开始：\(config.longSleepStartHour)时
+                    长睡结束：\(config.longSleepEndHour)时
+                    计步初始阈值：\(config.stepCountInitialThresholdSeconds)秒
+                    PPG周期测量时长：\(config.ppgPeriodicMeasurementDurationSeconds)秒
+                    """
+                    BDLogger.info("算法参数读取成功：\n\(message)")
+                    self.showInfoAlert(title: "算法相关参数", message: message)
+                case let .failure(error):
+                    BDLogger.error("算法参数读取失败：\(error.localizedDescription)")
+                    self.showError("读取算法参数失败：\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    /// 展示算法参数配置，确认后将四个参数一次写入设备。
+    private func showAlgorithmParameterConfigDialog() {
+        let dialog = AlgorithmParameterConfig_Dialog(frame: CGRect(
+            x: 0, y: 0, width: UIScreen.main.bounds.width - 30,
+            height: min(600, UIScreen.main.bounds.height - 80)))
+        dialog.confirmButtonCallback = { [weak self] config in
+            BDLogger.info("设置算法参数：长睡=\(config.longSleepStartHour)-\(config.longSleepEndHour)时，计步阈值=\(config.stepCountInitialThresholdSeconds)秒，PPG时长=\(config.ppgPeriodicMeasurementDurationSeconds)秒")
+            BCLRingManager.shared.setAlgorithmParameterConfig(config) { result in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case let .success(response):
+                        BDLogger.info("算法参数设置状态：\(response.statusRawValue)")
+                        if response.isSuccess {
+                            self.showSuccess("算法参数设置成功")
+                        } else {
+                            self.showError("设备设置失败，状态：\(response.statusRawValue)")
+                        }
+                    case let .failure(error):
+                        BDLogger.error("算法参数设置失败：\(error)")
+                        self.showError("算法参数设置失败：\(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+        let modal = QMUIModalPresentationViewController()
+        modal.isModal = true
+        modal.contentView = dialog
+        modal.showWith(animated: true)
     }
 
     // MARK: - Private Methods
@@ -357,5 +427,199 @@ class DeviceSystemSettings_Module: BaseFunction_Module {
 
     private func autoCollectionAllowedDescription(_ allowed: Bool) -> String {
         return allowed ? "允许" : "禁止"
+    }
+
+    /// 显示设置血氧采集周期弹窗
+    private func showBloodOxygenCollectionPeriodDialog() {
+        let alert = UIAlertController(title: "设置血氧采集周期",
+                                      message: "请输入血氧采集周期倍数",
+                                      preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "非睡眠时周期倍数"
+            textField.keyboardType = .numberPad
+            textField.text = "1"
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "睡眠时周期倍数"
+            textField.keyboardType = .numberPad
+            textField.text = "1"
+        }
+        let setAction = UIAlertAction(title: "设置", style: .default) { _ in
+            guard let nonSleepText = alert.textFields?[0].text,
+                  let sleepText = alert.textFields?[1].text,
+                  let nonSleepValue = Int(nonSleepText),
+                  let sleepValue = Int(sleepText),
+                  (0 ... Int(UInt16.max)).contains(nonSleepValue),
+                  (0 ... Int(UInt16.max)).contains(sleepValue) else {
+                self.showError("请输入有效周期倍数，范围 0-65535")
+                return
+            }
+            self.setBloodOxygenCollectionPeriod(nonSleepPeriodMultiplier: UInt16(nonSleepValue),
+                                                sleepPeriodMultiplier: UInt16(sleepValue))
+        }
+        alert.addAction(setAction)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 71 - 设置血氧采集周期
+    private func setBloodOxygenCollectionPeriod(nonSleepPeriodMultiplier: UInt16,
+                                                sleepPeriodMultiplier: UInt16) {
+        BCLRingManager.shared.setBloodOxygenCollectionPeriod(nonSleepPeriodMultiplier: nonSleepPeriodMultiplier,
+                                                             sleepPeriodMultiplier: sleepPeriodMultiplier) { result in
+            switch result {
+            case let .success(response):
+                if response.isSuccess {
+                    BDLogger.info("设置血氧采集周期成功: 非睡眠=\(nonSleepPeriodMultiplier), 睡眠=\(sleepPeriodMultiplier)")
+                    self.showSuccess("设置血氧采集周期成功\n非睡眠：\(nonSleepPeriodMultiplier)\n睡眠：\(sleepPeriodMultiplier)")
+                } else {
+                    BDLogger.error("设置血氧采集周期失败: \(response.statusRawValue)")
+                    self.showError("设置血氧采集周期失败：状态码 \(response.statusRawValue)")
+                }
+            case let .failure(error):
+                BDLogger.error("设置血氧采集周期失败: \(error)")
+                self.showError("设置血氧采集周期失败")
+            }
+        }
+    }
+
+    /// 72 - 读取血氧采集周期
+    private func getBloodOxygenCollectionPeriod() {
+        BCLRingManager.shared.getBloodOxygenCollectionPeriod { result in
+            switch result {
+            case let .success(response):
+                let message = """
+                非睡眠时周期倍数：\(response.nonSleepPeriodMultiplier)
+                睡眠时周期倍数：\(response.sleepPeriodMultiplier)
+                """
+                BDLogger.info("读取血氧采集周期成功: 非睡眠=\(response.nonSleepPeriodMultiplier), 睡眠=\(response.sleepPeriodMultiplier)")
+                self.showSuccess(message)
+            case let .failure(error):
+                BDLogger.error("读取血氧采集周期失败: \(error)")
+                self.showError("读取血氧采集周期失败")
+            }
+        }
+    }
+
+    /// 73 - 显示系统功能开关设置弹窗。
+    ///
+    /// 类型支持十进制或`0x`前缀的十六进制输入，便于直接验证固件后续新增类型。
+    private func showSetSystemFeatureSwitchDialog() {
+        let alert = UIAlertController(title: "设置系统功能开关",
+                                      message: "请输入类型原始值（0...255）。\n当前已知：0x01=充电时停止全部功能",
+                                      preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "类型，如 0x01 或 1"
+            textField.keyboardType = .asciiCapable
+            textField.text = "0x01"
+        }
+        alert.addAction(UIAlertAction(title: "开启", style: .default) { _ in
+            self.handleSetSystemFeatureSwitch(typeText: alert.textFields?.first?.text,
+                                              data: BCLSystemFeatureSwitchData.enabled)
+        })
+        alert.addAction(UIAlertAction(title: "关闭", style: .default) { _ in
+            self.handleSetSystemFeatureSwitch(typeText: alert.textFields?.first?.text,
+                                              data: BCLSystemFeatureSwitchData.disabled)
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 执行系统功能开关设置。
+    private func handleSetSystemFeatureSwitch(typeText: String?, data: Int) {
+        guard let type = parseProtocolByte(typeText) else {
+            BDLogger.error("设置系统功能开关失败：类型必须是0...255的十进制或十六进制数")
+            showError("请输入有效类型，范围0...255")
+            return
+        }
+        BCLRingManager.shared.setSystemFeatureSwitch(type: type, data: data) { result in
+            let requestDescription = "type=\(self.hexByte(type)), data=\(self.hexByte(data))"
+            switch result {
+            case let .success(response):
+                let responseDescription = "length=\(response.length), type=\(self.hexByte(response.typeRawValue)), status=\(self.hexByte(response.statusRawValue))"
+                if response.isSuccess {
+                    BDLogger.info("设置系统功能开关成功：\(requestDescription)，\(responseDescription)")
+                    self.showSuccess("设置成功\n\(requestDescription)\n\(responseDescription)")
+                } else {
+                    BDLogger.error("设备设置系统功能开关失败：\(requestDescription)，\(responseDescription)")
+                    self.showError("设备设置失败\n\(requestDescription)\n\(responseDescription)")
+                }
+            case let .failure(error):
+                BDLogger.error("设置系统功能开关失败：\(requestDescription)，error=\(error)")
+                self.showError("设置系统功能开关失败：\(error)")
+            }
+        }
+    }
+
+    /// 74 - 显示系统功能开关查询弹窗。
+    private func showReadSystemFeatureSwitchDialog() {
+        let alert = UIAlertController(title: "查询系统功能开关",
+                                      message: "请输入类型原始值（0...255）。\n支持0x前缀的十六进制输入",
+                                      preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "类型，如 0x01 或 1"
+            textField.keyboardType = .asciiCapable
+            textField.text = "0x01"
+        }
+        alert.addAction(UIAlertAction(title: "查询", style: .default) { _ in
+            guard let type = self.parseProtocolByte(alert.textFields?.first?.text) else {
+                BDLogger.error("查询系统功能开关失败：类型必须是0...255的十进制或十六进制数")
+                self.showError("请输入有效类型，范围0...255")
+                return
+            }
+            self.readSystemFeatureSwitch(type: type)
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 查询系统功能开关并展示协议原始字段。
+    private func readSystemFeatureSwitch(type: Int) {
+        BCLRingManager.shared.readSystemFeatureSwitch(type: type) { result in
+            switch result {
+            case let .success(response):
+                let stateDescription: String
+                switch response.isEnabled {
+                case true?:
+                    stateDescription = "开启"
+                case false?:
+                    stateDescription = "关闭"
+                case nil:
+                    stateDescription = "未知"
+                }
+                let message = """
+                length：\(response.length)
+                type：\(self.hexByte(response.typeRawValue))
+                state：\(self.hexByte(response.stateRawValue))（\(stateDescription)）
+                """
+                BDLogger.info("查询系统功能开关成功：\(message.replacingOccurrences(of: "\n", with: "，"))")
+                self.showSuccess(message)
+            case let .failure(error):
+                BDLogger.error("查询系统功能开关失败：type=\(self.hexByte(type))，error=\(error)")
+                self.showError("查询系统功能开关失败：\(error)")
+            }
+        }
+    }
+
+    /// 将十进制或`0x`前缀的十六进制文本解析为协议单字节整数。
+    private func parseProtocolByte(_ text: String?) -> Int? {
+        guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty else {
+            return nil
+        }
+        let value: Int?
+        if text.lowercased().hasPrefix("0x") {
+            value = Int(text.dropFirst(2), radix: 16)
+        } else {
+            value = Int(text)
+        }
+        guard let value = value, (0 ... Int(UInt8.max)).contains(value) else {
+            return nil
+        }
+        return value
+    }
+
+    /// 将协议单字节整数格式化为两位十六进制文本。
+    private func hexByte(_ value: Int) -> String {
+        return String(format: "0x%02X", value)
     }
 }

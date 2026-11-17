@@ -22,11 +22,14 @@ class BaseFunction_Module: NSObject, FunctionProtocol_Module {
 
     /// 该模块负责的功能ID范围
     var functionIdRange: ClosedRange<Int>
+    /// 该模块额外负责的功能ID
+    var extraFunctionIds: Set<Int>
 
     // MARK: - Initialization
 
-    init(functionIdRange: ClosedRange<Int>) {
+    init(functionIdRange: ClosedRange<Int>, extraFunctionIds: Set<Int> = []) {
         self.functionIdRange = functionIdRange
+        self.extraFunctionIds = extraFunctionIds
         super.init()
     }
 
@@ -37,7 +40,7 @@ class BaseFunction_Module: NSObject, FunctionProtocol_Module {
     }
 
     func canHandle(functionId: Int) -> Bool {
-        return functionIdRange.contains(functionId)
+        return functionIdRange.contains(functionId) || extraFunctionIds.contains(functionId)
     }
 
     // MARK: - 通用UI提示方法

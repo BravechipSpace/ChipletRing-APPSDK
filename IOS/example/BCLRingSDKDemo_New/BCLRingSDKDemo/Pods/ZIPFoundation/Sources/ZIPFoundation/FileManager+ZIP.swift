@@ -2,7 +2,7 @@
 //  FileManager+ZIP.swift
 //  ZIPFoundation
 //
-//  Copyright © 2017-2024 Thomas Zoechling, https://www.peakstep.com and the ZIP Foundation project authors.
+//  Copyright © 2017-2025 Thomas Zoechling, https://www.peakstep.com and the ZIP Foundation project authors.
 //  Released under the MIT License.
 //
 //  See https://github.com/weichsel/ZIPFoundation/blob/master/LICENSE for license information.
@@ -224,10 +224,7 @@ extension FileManager {
         let fileDate = centralDirectoryStructure.lastModFileDate
         let defaultPermissions = entryType == .directory ? defaultDirectoryPermissions : defaultFilePermissions
         var attributes = [.posixPermissions: defaultPermissions] as [FileAttributeKey: Any]
-        // Certain keys are not yet supported in swift-corelibs
-#if os(macOS) || os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         attributes[.modificationDate] = Date(dateTime: (fileDate, fileTime))
-#endif
         let versionMadeBy = centralDirectoryStructure.versionMadeBy
         guard let osType = Entry.OSType(rawValue: UInt(versionMadeBy >> 8)) else { return attributes }
 
@@ -297,14 +294,14 @@ extension FileManager {
         guard fileManager.itemExists(at: url) else {
             throw CocoaError(.fileReadNoSuchFile, userInfo: [NSFilePathErrorKey: url.path])
         }
+
         let entryFileSystemRepresentation = fileManager.fileSystemRepresentation(withPath: url.path)
-        var fileStat = stat()
-        lstat(entryFileSystemRepresentation, &fileStat)
-        guard fileStat.st_size >= 0 else {
-            throw CocoaError(.fileReadTooLarge, userInfo: [NSFilePathErrorKey: url.path])
-        }
+        var stats = stat()
+        lstat(entryFileSystemRepresentation, &stats)
+        guard stats.st_size >= 0 else { throw CocoaError(.fileReadTooLarge, userInfo: [NSFilePathErrorKey: url.path]) }
+
         // `st_size` is a signed int value
-        return Int64(fileStat.st_size)
+        return Int64(stats.st_size)
     }
 
     class func typeForItem(at url: URL) throws -> Entry.EntryType {

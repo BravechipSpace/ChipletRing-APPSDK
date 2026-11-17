@@ -15,6 +15,8 @@ class BatteryManagement_Module: BaseFunction_Module {
     // MARK: properties
 
     private let disposeBag = DisposeBag()
+    /// 是否正在监听电量计详细信息推送
+    private var isBatteryGaugeInfoPushMonitoring = false
 
     // MARK: - Initialization
 
@@ -32,6 +34,10 @@ class BatteryManagement_Module: BaseFunction_Module {
             readChargingStatus()
         case 53:
             monitorChargingStatus()
+        case 54:
+            readBatteryGaugeInfo()
+        case 55:
+            toggleBatteryGaugeInfoPushMonitoring()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -130,5 +136,54 @@ class BatteryManagement_Module: BaseFunction_Module {
                 self.showError("未知电量状态")
             }
         }
+    }
+
+    /// 54 - 电量管理 - 读取电量计详细信息
+    private func readBatteryGaugeInfo() {
+        BCLRingManager.shared.readBatteryGaugeInfo { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(response):
+                let message = self.batteryGaugeInfoDescription(response)
+                BDLogger.info("读取电量计详细信息成功: \(message)")
+                self.showSuccess("主动读取响应\n\(message)")
+            case let .failure(error):
+                BDLogger.error("读取电量计详细信息失败: \(error)")
+                self.showError("读取电量计详细信息失败: \(error)")
+            }
+        }
+    }
+
+    /// 55 - 电量管理 - 开启或取消监听电量计详细信息推送
+    private func toggleBatteryGaugeInfoPushMonitoring() {
+        if isBatteryGaugeInfoPushMonitoring {
+            BCLRingManager.shared.batteryGaugeInfoPushBlock = nil
+            isBatteryGaugeInfoPushMonitoring = false
+            BDLogger.info("已取消监听电量计详细信息推送")
+            showSuccess("已取消监听电量计详细信息推送")
+            return
+        }
+
+        BCLRingManager.shared.batteryGaugeInfoPushBlock = { [weak self] response in
+            guard let self = self else { return }
+            let message = self.batteryGaugeInfoDescription(response)
+            BDLogger.info("收到固件主动推送的电量计详细信息: \(message)")
+            self.showSuccess("固件主动推送\n\(message)")
+        }
+        isBatteryGaugeInfoPushMonitoring = true
+        BDLogger.info("已开启监听电量计详细信息推送")
+        showSuccess("已开启监听电量计详细信息推送")
+    }
+
+    /// 格式化电量计详细信息
+    private func batteryGaugeInfoDescription(_ response: BCLBatteryGaugeInfoResponse) -> String {
+        return """
+        电量：\(response.batteryLevel)
+        电压：\(response.voltage)
+        电流：\(response.current)
+        温度：\(response.temperature)
+        电池循环次数：\(response.cycleCount)
+        电池健康状况：\(response.batteryHealth)
+        """
     }
 }

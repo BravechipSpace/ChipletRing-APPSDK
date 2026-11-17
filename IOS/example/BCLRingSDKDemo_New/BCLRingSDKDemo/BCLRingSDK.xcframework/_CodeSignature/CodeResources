@@ -6,11 +6,11 @@
 	<dict>
 		<key>ios-arm64/BCLRingSDK.framework/BCLRingSDK</key>
 		<data>
-		KTkeCywo2SWEk0CP2awA6ZGCiqY=
+		sER9wQQ0eRGDe2cUpo3myUrfHAc=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Headers/BCLRingSDK-Swift.h</key>
 		<data>
-		hN9y2Ip8739Wv1E5JQjQGSCNcUI=
+		vIZsY7uOvS7sgDI2Ieh15n23duE=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Headers/BCLRingSDK.h</key>
 		<data>
@@ -22,23 +22,23 @@
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Info.plist</key>
 		<data>
-		6Rj2UwB3/U4ap+L4Nx3jx8kVliE=
+		35dZM4e4n3yKLidcdnfZgsomjDQ=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+		A/dEYy0PplZz/CSmrxubr5ZHGt8=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		BAIuOvTIFXvmPKXUtMWwo0UwoLY=
+		rALjjfQ8jnqKpjwwXA3fC8JUlgo=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		q8HhGPT2N9BzcyM2egc/8QHCTiQ=
+		uO/3lbPjwgjvGJCWNmwpf11bjgc=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		BAIuOvTIFXvmPKXUtMWwo0UwoLY=
+		rALjjfQ8jnqKpjwwXA3fC8JUlgo=
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>ios-arm64/BCLRingSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		4oBmh5VkglMYqAQ6IXtECprw3Mo=
+		jMl5H4yTq4YJ5rQXeWV3a+Izep0=
 		</data>
 		<key>ios-arm64/dSYMs/BCLRingSDK.framework.dSYM/Contents/Info.plist</key>
 		<data>
@@ -58,19 +58,19 @@
 		</data>
 		<key>ios-arm64/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/DWARF/BCLRingSDK</key>
 		<data>
-		wgeInp33/9DIUoJ7sHI9CoBv/Vg=
+		LtQJb2s8G/+0Qskypq4j75TXutw=
 		</data>
 		<key>ios-arm64/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/aarch64/BCLRingSDK.yml</key>
 		<data>
-		fOOODIpTzSNzdiGGjJPnFYBnH7Y=
+		bG0gxeVJfzl59AA029FLzDccEm0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/BCLRingSDK</key>
 		<data>
-		U9lz9sxa4lQLzmeGnguEmOiXoYc=
+		0XVNqvo9SFfkhk7FIG4j0kXldyQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Headers/BCLRingSDK-Swift.h</key>
 		<data>
-		9HYVlifUPuEkRDrjAAnjFEdK2Oo=
+		jOMZ0udA6tH7bXsuE+BPSUVboRs=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Headers/BCLRingSDK.h</key>
 		<data>
@@ -82,39 +82,39 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Info.plist</key>
 		<data>
-		i9j6+bFNrqi2IxUNZoUdkPMJ6qs=
+		ejAlJxTjsGXV5c+A+UAUVC5gPjk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+		A/dEYy0PplZz/CSmrxubr5ZHGt8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		FLFiIMQmDGmweD/gqwqt6jVdUm8=
+		UlUoWG7XwwCbYoTqK87ZpmlmT7w=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		jN/LLR38DOBNtkEs2RL5pdGJZeg=
+		VeR5xjG6B3Rlqx06MXSdWWwbNts=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		FLFiIMQmDGmweD/gqwqt6jVdUm8=
+		UlUoWG7XwwCbYoTqK87ZpmlmT7w=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+		A/dEYy0PplZz/CSmrxubr5ZHGt8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		j0E2L38jiqHDDP5Yq6GqQasGtkY=
+		zbfNsOWSCiAeycohCNE/LgLtxJI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		kUGsSx8RWqSYV3ly1z1YbJnVwQk=
+		ryq6ez7LEPsY++BqW+kyil390UE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		j0E2L38jiqHDDP5Yq6GqQasGtkY=
+		zbfNsOWSCiAeycohCNE/LgLtxJI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -126,7 +126,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		bLgpe8vDCIwgUC+WSOleGetb40U=
+		oxmmaVH3zj7WtuUduDJV/1q6wZU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Info.plist</key>
 		<data>
@@ -134,15 +134,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/DWARF/BCLRingSDK</key>
 		<data>
-		593gUosAP4qgFBUC/PVvEAI68f4=
+		mXVVvCexYRPAJZHeGolrgAYXDb8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/aarch64/BCLRingSDK.yml</key>
 		<data>
-		4IGKa1W7yBYJcWGlK4dXK6pwSPA=
+		T4P/K64NReMMpLHMwmP0/QcxVHs=
 		</data>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/x86_64/BCLRingSDK.yml</key>
 		<data>
-		k0PZf9FG74lMIOhvDIFs1Qg/Am0=
+		6/C4LkMd+4X3iXXhcPL/afqAYWw=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -151,22 +151,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KTkeCywo2SWEk0CP2awA6ZGCiqY=
+			sER9wQQ0eRGDe2cUpo3myUrfHAc=
 			</data>
 			<key>hash2</key>
 			<data>
-			+ckfU/7S8nwArQZKgafoKQV/aQxCDNAp1wkk0NUDMuU=
+			8/2VCX4mUgdSrdfdQ/K+6lKeF6VW/C5LCky2dKP4gOU=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Headers/BCLRingSDK-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hN9y2Ip8739Wv1E5JQjQGSCNcUI=
+			vIZsY7uOvS7sgDI2Ieh15n23duE=
 			</data>
 			<key>hash2</key>
 			<data>
-			qmAFH22FAy3an5ofBYMmrgrkZlDdNiwg13bfaqH6s2E=
+			mfr5i/YSEhwS38ENA6WscASeI/PMMuZN707myBXcbzs=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Headers/BCLRingSDK.h</key>
@@ -195,55 +195,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6Rj2UwB3/U4ap+L4Nx3jx8kVliE=
+			35dZM4e4n3yKLidcdnfZgsomjDQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			7pCBIKiC39iprKNhq1yZBkiMvTzBina4Zbw84H3e1S0=
+			jI/KWi4ALJiV4uyaqeLXiw6ILMOnp0lmT/iOJTOmSAo=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+			A/dEYy0PplZz/CSmrxubr5ZHGt8=
 			</data>
 			<key>hash2</key>
 			<data>
-			3kiYJ6cUFB5v0YcBAcFjb1uvxi+WQigyJgKatyG7YH4=
+			6kRCRYA4oWWzCkb8ZqXIUZjfTAqjjXka+eHm4VcHkWE=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BAIuOvTIFXvmPKXUtMWwo0UwoLY=
+			rALjjfQ8jnqKpjwwXA3fC8JUlgo=
 			</data>
 			<key>hash2</key>
 			<data>
-			5Z2Q9B7HgD8SZCKPNepnVhqvrwm1JC054rf8kz2bXno=
+			7vOlA/fNX5irMAUnC9Qx5hB2sDZ5OTtoFl7yRfJaujk=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			q8HhGPT2N9BzcyM2egc/8QHCTiQ=
+			uO/3lbPjwgjvGJCWNmwpf11bjgc=
 			</data>
 			<key>hash2</key>
 			<data>
-			IKwy6M914F76sc/3wcuG1yP1NbKZiL8rl2awECB6qxc=
+			P0jN3XivqrkLSdsr0kIMe+sFFOv4d+5LnL0abw4KBvQ=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BAIuOvTIFXvmPKXUtMWwo0UwoLY=
+			rALjjfQ8jnqKpjwwXA3fC8JUlgo=
 			</data>
 			<key>hash2</key>
 			<data>
-			5Z2Q9B7HgD8SZCKPNepnVhqvrwm1JC054rf8kz2bXno=
+			7vOlA/fNX5irMAUnC9Qx5hB2sDZ5OTtoFl7yRfJaujk=
 			</data>
 		</dict>
 		<key>ios-arm64/BCLRingSDK.framework/Modules/module.modulemap</key>
@@ -272,11 +272,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4oBmh5VkglMYqAQ6IXtECprw3Mo=
+			jMl5H4yTq4YJ5rQXeWV3a+Izep0=
 			</data>
 			<key>hash2</key>
 			<data>
-			RKSj6XwsLBTIfzaiKFBd9vLWB4szTvW1u05qeJ6DJWo=
+			coUqNWeaGxotC7Llv78ybT5L4uMY+HpzkjUkosQBmkQ=
 			</data>
 		</dict>
 		<key>ios-arm64/dSYMs/BCLRingSDK.framework.dSYM/Contents/Info.plist</key>
@@ -294,44 +294,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wgeInp33/9DIUoJ7sHI9CoBv/Vg=
+			LtQJb2s8G/+0Qskypq4j75TXutw=
 			</data>
 			<key>hash2</key>
 			<data>
-			AwUhRMLdNGCSGigtQVXLsg6uBIHKWA/TFcJOmkWIUkc=
+			FxsFoO6lyQWVw1nSdDo0IljnYPMvWpNAPhnQ5s1dFYg=
 			</data>
 		</dict>
 		<key>ios-arm64/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/aarch64/BCLRingSDK.yml</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fOOODIpTzSNzdiGGjJPnFYBnH7Y=
+			bG0gxeVJfzl59AA029FLzDccEm0=
 			</data>
 			<key>hash2</key>
 			<data>
-			wk5xbxPTpCVklgZdsoTxeKwBmYippuIQc5xs6TUEq6M=
+			dCAK5B/+XD0KS0uqqTpH/j1g10jWbVZSnokcMUO3iYg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/BCLRingSDK</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			U9lz9sxa4lQLzmeGnguEmOiXoYc=
+			0XVNqvo9SFfkhk7FIG4j0kXldyQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			OD2cE+1zPniRFxHky4KrEqW233a/XONrUacTxeNV0iY=
+			frjM40YNOCziiciwik0nAVYhV0XKF/14Gf2A2GuccBg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Headers/BCLRingSDK-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9HYVlifUPuEkRDrjAAnjFEdK2Oo=
+			jOMZ0udA6tH7bXsuE+BPSUVboRs=
 			</data>
 			<key>hash2</key>
 			<data>
-			nlY6tUD0rvalOjU3cohG2kySnRcTi0LPqKWHuYhW/Ns=
+			RRBf39HXoYi5UehOClAtWhsJXuZYvDKZ6hkHqsoAD68=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Headers/BCLRingSDK.h</key>
@@ -360,99 +360,99 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			i9j6+bFNrqi2IxUNZoUdkPMJ6qs=
+			ejAlJxTjsGXV5c+A+UAUVC5gPjk=
 			</data>
 			<key>hash2</key>
 			<data>
-			CWBtB50bj2l5zJWGnItvka0YSMSD/zJOqCHG54L6a48=
+			VWc+2LvjI40fhoHjINt8nEUYLoU3CsU1RjHGDmN5DyM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+			A/dEYy0PplZz/CSmrxubr5ZHGt8=
 			</data>
 			<key>hash2</key>
 			<data>
-			3kiYJ6cUFB5v0YcBAcFjb1uvxi+WQigyJgKatyG7YH4=
+			6kRCRYA4oWWzCkb8ZqXIUZjfTAqjjXka+eHm4VcHkWE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FLFiIMQmDGmweD/gqwqt6jVdUm8=
+			UlUoWG7XwwCbYoTqK87ZpmlmT7w=
 			</data>
 			<key>hash2</key>
 			<data>
-			za2Y1aTu8djqAh1HzdX1jYXqmtc4VA6o4AcIcP6mZ88=
+			PswgvsQFbQdgwVk325J5+VaSXtj9RVnj1/KEtQSW414=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jN/LLR38DOBNtkEs2RL5pdGJZeg=
+			VeR5xjG6B3Rlqx06MXSdWWwbNts=
 			</data>
 			<key>hash2</key>
 			<data>
-			RkXUx22eEtzkYd/b2NZbOn8WBy8U4Xlsvis1E7T//yg=
+			DESU+MbJt9Fr+lxU9i6JeA08HxkcIYPVIrRJYXbVyOo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FLFiIMQmDGmweD/gqwqt6jVdUm8=
+			UlUoWG7XwwCbYoTqK87ZpmlmT7w=
 			</data>
 			<key>hash2</key>
 			<data>
-			za2Y1aTu8djqAh1HzdX1jYXqmtc4VA6o4AcIcP6mZ88=
+			PswgvsQFbQdgwVk325J5+VaSXtj9RVnj1/KEtQSW414=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cmJgpybZ6fWS6yaPmuC8f0tg/Yc=
+			A/dEYy0PplZz/CSmrxubr5ZHGt8=
 			</data>
 			<key>hash2</key>
 			<data>
-			3kiYJ6cUFB5v0YcBAcFjb1uvxi+WQigyJgKatyG7YH4=
+			6kRCRYA4oWWzCkb8ZqXIUZjfTAqjjXka+eHm4VcHkWE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			j0E2L38jiqHDDP5Yq6GqQasGtkY=
+			zbfNsOWSCiAeycohCNE/LgLtxJI=
 			</data>
 			<key>hash2</key>
 			<data>
-			339sYf/c5nXcm4mxXuGaf3q6nRED6vEzS4MnnjXc3oQ=
+			N/YBHFtkE+wz4Q1BIKlz/lNcot0jiDrk61L3Z2s5UvU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kUGsSx8RWqSYV3ly1z1YbJnVwQk=
+			ryq6ez7LEPsY++BqW+kyil390UE=
 			</data>
 			<key>hash2</key>
 			<data>
-			CxI/xVvQoNMQLG+eonwYy+7BrvafnwzNsDM/bxAM2iE=
+			SXQENginCZildPs9S0aWtGDXbrHVJ0IfhHBhqrErtLo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/BCLRingSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			j0E2L38jiqHDDP5Yq6GqQasGtkY=
+			zbfNsOWSCiAeycohCNE/LgLtxJI=
 			</data>
 			<key>hash2</key>
 			<data>
-			339sYf/c5nXcm4mxXuGaf3q6nRED6vEzS4MnnjXc3oQ=
+			N/YBHFtkE+wz4Q1BIKlz/lNcot0jiDrk61L3Z2s5UvU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BCLRingSDK.framework/Modules/module.modulemap</key>
@@ -481,11 +481,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bLgpe8vDCIwgUC+WSOleGetb40U=
+			oxmmaVH3zj7WtuUduDJV/1q6wZU=
 			</data>
 			<key>hash2</key>
 			<data>
-			7WImFIQyq+JfLg7I3vgXZKvs90t9dtuNSewrm4tXdEY=
+			Ncyxyf20XuQpWb+G13T5n34f7+fBa2CSSJRg3x+9ysk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Info.plist</key>
@@ -503,33 +503,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			593gUosAP4qgFBUC/PVvEAI68f4=
+			mXVVvCexYRPAJZHeGolrgAYXDb8=
 			</data>
 			<key>hash2</key>
 			<data>
-			FCZ4GiYlmkGySYgTuHhcgJkT925vQat8hJVflDHmjDk=
+			c1WHyCBBbHk9Gvh520Pi+Ic0NjRoUz1mDyTG2hKzsBo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/aarch64/BCLRingSDK.yml</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4IGKa1W7yBYJcWGlK4dXK6pwSPA=
+			T4P/K64NReMMpLHMwmP0/QcxVHs=
 			</data>
 			<key>hash2</key>
 			<data>
-			v9bFBkPW14KzdsicVHWby57ZlBQk69leqiqJQjQeY7s=
+			aKzyQCbY/bZsgQ/Oj+67vCyb3Y71DVfp8lXzdzp+tfw=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/dSYMs/BCLRingSDK.framework.dSYM/Contents/Resources/Relocations/x86_64/BCLRingSDK.yml</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			k0PZf9FG74lMIOhvDIFs1Qg/Am0=
+			6/C4LkMd+4X3iXXhcPL/afqAYWw=
 			</data>
 			<key>hash2</key>
 			<data>
-			f6FLMokrqQBA8eZaci63kZm4tcrk/LDPLFC1tsijvS4=
+			jXt3HpKVNVwXAHhGgxpJYssFfnrvG8bcHcTNgnwTrRE=
 			</data>
 		</dict>
 	</dict>

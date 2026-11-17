@@ -222,7 +222,7 @@ internal struct PacketReceiptNotification {
         
         self.opCode = opCode
         
-        // According to https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/54
+        // According to https://github.com/nordicsemi/IOS-Pods-DFU-Library/issues/54
         // in SDK 5.2.0.39364 the `bytesReceived` value in a PRN packet is 16-bit long,
         // instead of 32-bit. However, the packet is still 5 bytes long and the two last
         // bytes are 0x00-00. This has to be taken under consideration when comparing

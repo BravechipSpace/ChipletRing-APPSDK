@@ -54,11 +54,13 @@ class FunctionExecutor {
             MeasurementBloodPressure_Module(), // 96-100: 主动测量-血压测量
             MeasurementPPGBloodPressure_Module(), // 98-99: 主动测量-PPG血压曲线
             MeasurementQingHuaPPG_Module(), // 131-132: 主动测量-清华实时PPG
+            PPGWaveform_Module(), // 150-152: PPG波形透传输
             MeasurementBloodGlucose_Module(), // 101-105: 主动测量-血糖测量
             MeasurementECG_Module(), // 106-110: 主动测量-心电测量
             StepCount_Module(), // 111-115: 计步功能
             DataSync_Module(), // 116-120: 数据同步
             HIDFunction_Module(), // 121-130: HID功能
+            TouchControl_Module(), // 451-454: Touch空置时间与休眠唤醒控制
             NetworkAPI_Module(), // 201-300: 网络API
             SixAxisProtocol_Module(), // 301-320: 六轴协议功能
             TenMeterSixAxisThreeAxisProtocol_Module(), // 321-325: 十米游戏-六轴三轴协议功能

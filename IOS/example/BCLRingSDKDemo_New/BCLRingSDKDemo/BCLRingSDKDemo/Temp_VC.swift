@@ -61,6 +61,9 @@ class Temp_VC: UIViewController {
                     BDLogger.info("New version：\(firmwareVersionInfo.version ?? "")")
                     BDLogger.info("Download link for the new version：\(firmwareVersionInfo.downloadUrl ?? "")")
                     BDLogger.info("New Version File Name：\(firmwareVersionInfo.fileName ?? "")")
+                    if let upgradeDescribe = firmwareVersionInfo.upgradeDescribe, !upgradeDescribe.isEmpty {
+                        BDLogger.info("Upgrade description：\(upgradeDescribe)")
+                    }
 
                     guard let downloadUrl = firmwareVersionInfo.downloadUrl, !downloadUrl.isEmpty,
                           let fileName = firmwareVersionInfo.fileName, !fileName.isEmpty,

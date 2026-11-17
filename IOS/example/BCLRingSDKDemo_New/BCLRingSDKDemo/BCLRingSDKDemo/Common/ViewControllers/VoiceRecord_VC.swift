@@ -2,7 +2,7 @@
 //  VoiceRecord_VC.swift
 //  BCLRingSDKDemo
 //
-//  Created by JianDan on 2025/9/19.
+//  ADPCM1 单声道手动录音与 HID 触摸录音获取、保存、播放示例。
 //
 
 import AVFoundation
@@ -10,8 +10,7 @@ import BCLRingSDK
 import SnapKit
 import UIKit
 
-// 音频文件信息结构
-struct AudioFileInfo {
+private struct AudioFileInfo {
     let fileName: String
     let filePath: String
     let fileSize: Int64
@@ -19,26 +18,26 @@ struct AudioFileInfo {
     let createDate: Date
 }
 
-class VoiceRecord_VC: UIViewController {
-    private var isRecording = false
+final class VoiceRecord_VC: UIViewController {
+    private let outputFormat = AudioFormatConfiguration.pcm8kMono16
 
-    // 音频文件列表
+    /// SDK 解码器具有跨包状态，所有会话操作都必须在此串行队列执行。
+    private let audioConversionQueue = DispatchQueue(label: "com.bclring.demo.hid-audio-conversion")
+    private var currentSession: HIDAudioStreamingSession?
+    private var acceptsAudioEvents = true
+    private var isManualRecording = false
+
     private var audioFileList: [AudioFileInfo] = []
-
-    // 缓存收到的ADPCM格式音频数据
-    private var adpcmAudioDataList: [(length: Int, seq: Int, audioData: [Int])] = []
-
-    // 音频播放器
     private var audioPlayer: AVAudioPlayer?
-
-    // 当前播放的文件路径
     private var currentPlayingFilePath: String?
+    private var recordingTimer: Timer?
+    private var recordingStartTime: Date?
 
     private lazy var startRecordButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("开始录音", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        button.backgroundColor = UIColor.systemBlue
+        button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(startRecording), for: .touchUpInside)
@@ -49,7 +48,7 @@ class VoiceRecord_VC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("结束录音", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        button.backgroundColor = UIColor.systemRed
+        button.backgroundColor = .systemRed
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 25
         button.isEnabled = false
@@ -58,39 +57,34 @@ class VoiceRecord_VC: UIViewController {
         return button
     }()
 
+    private lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "等待手动录音或 HID 触摸音频"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        return label
+    }()
+
     private lazy var recordingAnimationView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
         view.isHidden = true
         return view
     }()
 
-    private lazy var waveformView1: UIView = {
+    private lazy var waveformViews: [UIView] = [250, 200, 150].enumerated().map { index, size in
         let view = UIView()
-        view.backgroundColor = UIColor.systemRed.withAlphaComponent(0.3)
-        view.layer.cornerRadius = 75
+        view.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1 * CGFloat(3 - index))
+        view.layer.cornerRadius = CGFloat(size) / 2
         return view
-    }()
-
-    private lazy var waveformView2: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
-        view.layer.cornerRadius = 100
-        return view
-    }()
-
-    private lazy var waveformView3: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
-        view.layer.cornerRadius = 125
-        return view
-    }()
+    }
 
     private lazy var recordingLabel: UILabel = {
         let label = UILabel()
         label.text = "录音中..."
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.textColor = UIColor.systemRed
+        label.textColor = .systemRed
         label.textAlignment = .center
         label.isHidden = true
         return label
@@ -100,7 +94,7 @@ class VoiceRecord_VC: UIViewController {
         let label = UILabel()
         label.text = "00:00"
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 24, weight: .regular)
-        label.textColor = UIColor.darkGray
+        label.textColor = .darkGray
         label.textAlignment = .center
         label.isHidden = true
         return label
@@ -111,7 +105,6 @@ class VoiceRecord_VC: UIViewController {
         table.delegate = self
         table.dataSource = self
         table.register(UITableViewCell.self, forCellReuseIdentifier: "AudioFileCell")
-        table.backgroundColor = .systemBackground
         return table
     }()
 
@@ -119,13 +112,10 @@ class VoiceRecord_VC: UIViewController {
         let label = UILabel()
         label.text = "暂无录音文件"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
+        label.textColor = .gray
         label.textAlignment = .center
         return label
     }()
-
-    private var recordingTimer: Timer?
-    private var recordingStartTime: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,321 +124,327 @@ class VoiceRecord_VC: UIViewController {
         loadAudioFileList()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        registerHIDAudioCallback()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isRecording {
-            stopRecording()
-        }
+
+        // SDK 当前仅提供单一闭包属性，音频页面拥有其可见期间的独占消费权。
+        BCLRingManager.shared.hidTouchAudioDataBlock = nil
+        cancelActiveSession()
         stopAudioPlayback()
+        resetRecordingUI()
     }
 
     private func setupUI() {
-        view.backgroundColor = .white
-        title = "录音"
+        view.backgroundColor = .systemBackground
+        title = "单声道音频录制与播放"
 
         view.addSubview(tableView)
+        view.addSubview(emptyLabel)
+        view.addSubview(statusLabel)
         view.addSubview(recordingAnimationView)
-        recordingAnimationView.addSubview(waveformView3)
-        recordingAnimationView.addSubview(waveformView2)
-        recordingAnimationView.addSubview(waveformView1)
-
+        waveformViews.forEach(recordingAnimationView.addSubview)
         view.addSubview(recordingLabel)
         view.addSubview(timeLabel)
         view.addSubview(startRecordButton)
         view.addSubview(stopRecordButton)
-        view.addSubview(emptyLabel)
 
-        // 音频文件列表
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
             make.height.equalTo(300)
         }
-
-        emptyLabel.snp.makeConstraints { make in
-            make.center.equalTo(tableView)
+        emptyLabel.snp.makeConstraints { make in make.center.equalTo(tableView) }
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(20)
         }
-
         recordingAnimationView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(tableView.snp.bottom).offset(20)
+            make.top.equalTo(statusLabel.snp.bottom).offset(12)
             make.width.height.equalTo(250)
         }
-
-        waveformView3.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(250)
+        for (view, size) in zip(waveformViews, [250, 200, 150]) {
+            view.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.height.equalTo(size)
+            }
         }
-
-        waveformView2.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(200)
-        }
-
-        waveformView1.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(150)
-        }
-
         recordingLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(recordingAnimationView.snp.top).offset(-10)
+            make.bottom.equalTo(recordingAnimationView.snp.top).offset(-4)
         }
-
         timeLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(recordingAnimationView.snp.bottom).offset(10)
+            make.top.equalTo(recordingAnimationView.snp.bottom).offset(4)
         }
-
         startRecordButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview().offset(-80)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
             make.width.equalTo(120)
             make.height.equalTo(50)
         }
-
         stopRecordButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview().offset(80)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
             make.width.equalTo(120)
             make.height.equalTo(50)
         }
-
         updateEmptyLabelVisibility()
     }
 
     private func setupAudioSession() {
-        let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playback, mode: .default)
-            try audioSession.setActive(true)
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default)
+            try session.setActive(true)
         } catch {
-            BDLogger.error("Failed to set up audio session: \(error)")
+            BDLogger.error("配置播放音频会话失败: \(error.localizedDescription)")
         }
     }
 
-    private func updateEmptyLabelVisibility() {
-        emptyLabel.isHidden = !audioFileList.isEmpty
+    /// 页面可见时直接监听 SDK 回调。闭包只负责投递到串行队列，避免阻塞蓝牙回调线程。
+    private func registerHIDAudioCallback() {
+        acceptsAudioEvents = true
+        BCLRingManager.shared.hidTouchAudioDataBlock = { [weak self] length, sequence, audioData, isEnd in
+            guard let self else { return }
+            BDLogger.info("HID音频包: length=\(length), seq=\(sequence), isEnd=\(isEnd)")
+            self.audioConversionQueue.async { [weak self] in
+                self?.handleHIDPacket(sequence: sequence, audioData: audioData, isEnd: isEnd)
+            }
+        }
+    }
+
+    private func handleHIDPacket(sequence: Int, audioData: [Int], isEnd: Bool) {
+        guard acceptsAudioEvents else { return }
+
+        if currentSession?.source == .manual {
+            BDLogger.warning("手动录音进行中，忽略HID音频包: \(sequence)")
+            return
+        }
+
+        if !audioData.isEmpty {
+            if currentSession == nil {
+                do {
+                    currentSession = try makeSession(source: .hid)
+                    DispatchQueue.main.async { [weak self] in self?.showRecordingUI(source: .hid) }
+                } catch {
+                    failSession(source: .hid, error: error)
+                    return
+                }
+            }
+            appendPacket(source: .hid, sequence: sequence, audioData: audioData)
+        } else if !isEnd {
+            failSession(source: .hid, error: AudioStreamingError.emptyPacket)
+            return
+        }
+
+        if isEnd {
+            finishSession(source: .hid)
+        }
     }
 
     @objc private func startRecording() {
-        isRecording = true
-        recordingStartTime = Date()
-        adpcmAudioDataList.removeAll()
-
-        startRecordButton.isEnabled = false
-        startRecordButton.alpha = 0.5
-        stopRecordButton.isEnabled = true
-        stopRecordButton.alpha = 1.0
-
-        recordingLabel.isHidden = false
-        timeLabel.isHidden = false
-        recordingAnimationView.isHidden = false
-
-        startRecordingAnimation()
-        startTimer()
-
-        // 调用SDK开始录音
-        controlADPCMFormatAudio(isOpen: true)
-
-        BDLogger.info("开始从SDK获取音频数据")
+        audioConversionQueue.async { [weak self] in
+            guard let self else { return }
+            guard self.currentSession == nil else {
+                BDLogger.warning("已有\(self.currentSession?.source.rawValue ?? "未知")录音会话，拒绝手动录音")
+                DispatchQueue.main.async {
+                    self.showAlert(title: "无法开始录音", message: "HID音频正在接收，请稍后重试")
+                }
+                return
+            }
+            self.acceptsAudioEvents = true
+            do {
+                // 在发送开启命令前先占用 SDK 解码器，避免等待首包期间 HID 数据抢占会话。
+                self.currentSession = try self.makeSession(source: .manual)
+            } catch {
+                self.failSession(source: .manual, error: error)
+                return
+            }
+            DispatchQueue.main.async { self.showRecordingUI(source: .manual) }
+            self.controlManualRecording(isOpen: true)
+        }
     }
 
     @objc private func stopRecording() {
-        isRecording = false
-
-        startRecordButton.isEnabled = true
-        startRecordButton.alpha = 1.0
-        stopRecordButton.isEnabled = false
-        stopRecordButton.alpha = 0.5
-
-        recordingLabel.isHidden = true
-        timeLabel.isHidden = true
-        recordingAnimationView.isHidden = true
-
-        stopRecordingAnimation()
-        stopTimer()
-
-        // 调用SDK停止录音
-        controlADPCMFormatAudio(isOpen: false)
-
-        BDLogger.info("停止从SDK获取音频数据")
+        guard isManualRecording else { return }
+        controlManualRecording(isOpen: false)
     }
 
-    // MARK: - SDK音频控制
-
-    private func controlADPCMFormatAudio(isOpen: Bool) {
+    private func controlManualRecording(isOpen: Bool) {
         BCLRingManager.shared.controlADPCMFormatAudio(mode: .adpcm1Mono, isOpen: isOpen) { [weak self] result in
-            switch result {
-            case let .success(response):
-                BDLogger.info("ADPCM音频数据 - 长度: \(response.audioDataLength), 序号: \(response.seq)")
-
-                if isOpen {
-                    // 收集音频数据
-                    self?.adpcmAudioDataList.append((
-                        length: response.audioDataLength,
-                        seq: response.seq,
-                        audioData: response.audioData
-                    ))
-                } else {
-                    // 停止录音时处理数据
-                    self?.processADPCMData()
-                }
-
-            case let .failure(error):
-                BDLogger.error("控制ADPCM音频失败: \(error.localizedDescription)")
-                DispatchQueue.main.async {
-                    self?.showAlert(title: isOpen ? "开启录音失败" : "停止录音失败",
-                                    message: error.localizedDescription)
+            guard let self else { return }
+            self.audioConversionQueue.async {
+                switch result {
+                case let .success(response):
+                    if isOpen {
+                        self.appendPacket(
+                            source: .manual,
+                            sequence: response.seq,
+                            audioData: response.audioData
+                        )
+                    } else {
+                        self.finishSession(source: .manual)
+                    }
+                case let .failure(error):
+                    self.failSession(source: .manual, error: error)
                 }
             }
         }
     }
 
-    // MARK: - 处理ADPCM数据
-
-    private func processADPCMData() {
-        guard !adpcmAudioDataList.isEmpty else {
-            BDLogger.error("没有音频数据需要处理")
-            return
-        }
-
-        // 按序号排序
-        let sortedDataList = adpcmAudioDataList.sorted { $0.seq < $1.seq }
-
-        var processedPCMData = Data()
-
-        // 将每段ADPCM数据转换为PCM
-        for dataItem in sortedDataList {
-            // 将Int数组转换为Data
-            let int16Array = dataItem.audioData.map { Int16($0) }
-            let adpcmData = int16Array.withUnsafeBufferPointer { buffer in
-                Data(bytes: buffer.baseAddress!, count: buffer.count * MemoryLayout<Int16>.size)
-            }
-
-            // 使用SDK提供的转换方法
-            if let pcmData = BCLRingManager.shared.convertAdpcmToPcm(adpcmData: adpcmData) {
-                processedPCMData.append(pcmData)
-            }
-        }
-
-        // 保存PCM文件
-        savePCMFile(processedPCMData)
+    private func makeSession(source: HIDAudioStreamingSession.Source) throws -> HIDAudioStreamingSession {
+        try HIDAudioStreamingSession(source: source, format: outputFormat, outputURL: makeRecordingURL())
     }
 
-    // MARK: - 保存PCM文件
-
-    private func savePCMFile(_ pcmData: Data) {
-        guard !pcmData.isEmpty else {
-            BDLogger.error("PCM数据为空")
-            return
-        }
-
-        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let deviceMac = BCLRingManager.shared.currentConnectedDevice?.macAddress ?? "unknown"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
-        let dateString = dateFormatter.string(from: Date())
-        let fileName = "\(deviceMac)_\(dateString).pcm"
-        let filePath = (documentPath as NSString).appendingPathComponent(fileName)
-
+    private func appendPacket(source: HIDAudioStreamingSession.Source, sequence: Int, audioData: [Int]) {
+        guard let session = currentSession, session.source == source else { return }
         do {
-            try pcmData.write(to: URL(fileURLWithPath: filePath))
-            BDLogger.info("PCM文件已保存: \(filePath)")
+            switch try session.append(packetNumber: sequence, audioData: audioData) {
+            case .appended:
+                BDLogger.info("\(source.rawValue)音频已处理包\(sequence)，PCM累计\(session.pcmByteCount)字节")
+            case .duplicate:
+                BDLogger.warning("\(source.rawValue)音频忽略重复包: \(sequence)")
+            }
+        } catch {
+            failSession(source: source, error: error)
+        }
+    }
 
-            DispatchQueue.main.async {
+    private func finishSession(source: HIDAudioStreamingSession.Source) {
+        guard let session = currentSession, session.source == source else {
+            failSession(source: source, error: AudioStreamingError.emptyRecording)
+            return
+        }
+        do {
+            let url = try session.finish()
+            BDLogger.info("\(source.rawValue)音频保存成功: \(url.path)，共\(session.packetCount)包")
+            currentSession = nil
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.resetRecordingUI()
                 self.loadAudioFileList()
                 self.showAlert(title: "录音完成", message: "音频文件已保存")
             }
         } catch {
-            BDLogger.error("保存PCM文件失败: \(error)")
-            DispatchQueue.main.async {
-                self.showAlert(title: "保存失败", message: error.localizedDescription)
-            }
+            failSession(source: source, error: error)
         }
     }
 
-    // MARK: - 加载音频文件列表
+    private func failSession(source: HIDAudioStreamingSession.Source, error: Error) {
+        if currentSession?.source == source {
+            currentSession?.cancel()
+            currentSession = nil
+        }
+        BDLogger.error("\(source.rawValue)音频处理失败: \(error.localizedDescription)")
+        DispatchQueue.main.async { [weak self] in
+            self?.resetRecordingUI()
+            self?.showAlert(title: "音频处理失败", message: error.localizedDescription)
+        }
+    }
+
+    private func cancelActiveSession() {
+        acceptsAudioEvents = false
+        audioConversionQueue.async { [weak self] in
+            self?.currentSession?.cancel()
+            self?.currentSession = nil
+        }
+    }
+
+    private func makeRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let device = BCLRingManager.shared.currentConnectedDevice?.macAddress ?? "unknown"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd_HHmmss_SSS"
+        return documents.appendingPathComponent("\(device)_\(formatter.string(from: Date())).wav")
+    }
 
     private func loadAudioFileList() {
-        audioFileList.removeAll()
-
-        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let fileManager = FileManager.default
-
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {
-            let files = try fileManager.contentsOfDirectory(atPath: documentPath)
-
-            for file in files {
-                if file.hasSuffix(".pcm") {
-                    let filePath = (documentPath as NSString).appendingPathComponent(file)
-
-                    if let attributes = try? fileManager.attributesOfItem(atPath: filePath) {
-                        let fileSize = attributes[.size] as? Int64 ?? 0
-                        let createDate = attributes[.creationDate] as? Date ?? Date()
-
-                        // 计算音频时长（PCM格式：采样率8000Hz，单声道，16位）
-                        let duration = Double(fileSize) / (8000 * 2)
-
-                        let audioInfo = AudioFileInfo(
-                            fileName: file,
-                            filePath: filePath,
-                            fileSize: fileSize,
-                            duration: duration,
-                            createDate: createDate
-                        )
-
-                        audioFileList.append(audioInfo)
-                    }
+            audioFileList = try FileManager.default.contentsOfDirectory(
+                at: documents,
+                includingPropertiesForKeys: [.fileSizeKey, .creationDateKey],
+                options: [.skipsHiddenFiles]
+            ).compactMap { url in
+                let ext = url.pathExtension.lowercased()
+                guard ext == "wav" || ext == "pcm" else { return nil }
+                let values = try? url.resourceValues(forKeys: [.fileSizeKey, .creationDateKey])
+                let fileSize = Int64(values?.fileSize ?? 0)
+                let duration: TimeInterval
+                if ext == "wav" {
+                    duration = (try? AVAudioPlayer(contentsOf: url).duration) ?? 0
+                } else {
+                    duration = outputFormat.duration(forPCMByteCount: fileSize)
                 }
-            }
-
-            // 按创建时间排序，最新的在前
-            audioFileList.sort { $0.createDate > $1.createDate }
-
+                return AudioFileInfo(
+                    fileName: url.lastPathComponent,
+                    filePath: url.path,
+                    fileSize: fileSize,
+                    duration: duration,
+                    createDate: values?.creationDate ?? .distantPast
+                )
+            }.sorted { $0.createDate > $1.createDate }
             tableView.reloadData()
             updateEmptyLabelVisibility()
-
         } catch {
-            BDLogger.error("读取文件列表失败: \(error)")
+            BDLogger.error("读取音频文件列表失败: \(error.localizedDescription)")
         }
     }
 
-    // MARK: - 播放音频
-
-    private func playPCMFile(_ filePath: String) {
-        // 如果正在播放同一个文件，则停止
+    private func playAudioFile(_ filePath: String) {
         if currentPlayingFilePath == filePath {
             stopAudioPlayback()
             return
         }
-
-        // 停止之前的播放
         stopAudioPlayback()
 
         do {
-            let pcmData = try Data(contentsOf: URL(fileURLWithPath: filePath))
-
-            // 将PCM转换为WAV格式（添加WAV文件头）
-            let wavData = createWAVData(from: pcmData)
-
-            // 创建播放器
-            audioPlayer = try AVAudioPlayer(data: wavData)
+            let url = URL(fileURLWithPath: filePath)
+            if url.pathExtension.lowercased() == "wav" {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+            } else {
+                let pcmData = try Data(contentsOf: url)
+                audioPlayer = try AVAudioPlayer(data: makeWAVData(pcmData: pcmData, format: outputFormat))
+            }
             audioPlayer?.delegate = self
-            audioPlayer?.play()
-
+            audioPlayer?.prepareToPlay()
+            guard audioPlayer?.play() == true else { throw AudioStreamingError.decodeFailed }
             currentPlayingFilePath = filePath
             tableView.reloadData()
-
-            BDLogger.info("开始播放: \(filePath)")
-
         } catch {
-            BDLogger.error("播放失败: \(error)")
+            BDLogger.error("播放音频失败: \(error.localizedDescription)")
             showAlert(title: "播放失败", message: error.localizedDescription)
         }
     }
 
-    // MARK: - 停止播放
+    /// 历史裸 PCM 文件没有自描述头，使用同一格式配置临时封装后播放。
+    private func makeWAVData(pcmData: Data, format: AudioFormatConfiguration) -> Data {
+        var data = Data()
+        func append<T: FixedWidthInteger>(_ value: T) {
+            var littleEndianValue = value.littleEndian
+            data.append(Data(bytes: &littleEndianValue, count: MemoryLayout<T>.size))
+        }
+        data.append("RIFF".data(using: .ascii) ?? Data())
+        append(UInt32(36 + pcmData.count))
+        data.append("WAVEfmt ".data(using: .ascii) ?? Data())
+        append(UInt32(16))
+        append(UInt16(1))
+        append(UInt16(format.channelCount))
+        append(UInt32(format.sampleRate))
+        append(UInt32(format.byteRate))
+        append(UInt16(format.blockAlign))
+        append(UInt16(format.bitsPerSample))
+        data.append("data".data(using: .ascii) ?? Data())
+        append(UInt32(pcmData.count))
+        data.append(pcmData)
+        return data
+    }
 
     private func stopAudioPlayback() {
         audioPlayer?.stop()
@@ -457,102 +453,60 @@ class VoiceRecord_VC: UIViewController {
         tableView.reloadData()
     }
 
-    // MARK: - 创建WAV数据
+    private func showRecordingUI(source: HIDAudioStreamingSession.Source) {
+        isManualRecording = source == .manual
+        recordingStartTime = Date()
+        statusLabel.text = source == .hid ? "正在接收 HID 触摸音频" : "正在接收手动录音数据"
+        startRecordButton.isEnabled = false
+        startRecordButton.alpha = 0.5
+        stopRecordButton.isEnabled = source == .manual
+        stopRecordButton.alpha = source == .manual ? 1 : 0.5
+        recordingLabel.isHidden = false
+        timeLabel.isHidden = false
+        recordingAnimationView.isHidden = false
+        startRecordingAnimation()
+        startTimer()
+    }
 
-    private func createWAVData(from pcmData: Data) -> Data {
-        var wavData = Data()
-
-        // WAV文件头
-        let sampleRate: UInt32 = 8000
-        let bitsPerSample: UInt16 = 16
-        let channels: UInt16 = 1
-        let byteRate = sampleRate * UInt32(channels) * UInt32(bitsPerSample) / 8
-        let blockAlign = channels * bitsPerSample / 8
-        let dataSize = UInt32(pcmData.count)
-        var fileSize = dataSize + 36
-
-        // RIFF标识
-        wavData.append("RIFF".data(using: .ascii)!)
-        withUnsafeBytes(of: fileSize.littleEndian) { wavData.append(Data($0)) }
-        wavData.append("WAVE".data(using: .ascii)!)
-
-        // fmt子块
-        wavData.append("fmt ".data(using: .ascii)!)
-        var subchunk1Size: UInt32 = 16
-        withUnsafeBytes(of: subchunk1Size.littleEndian) { wavData.append(Data($0)) }
-        var audioFormat: UInt16 = 1 // PCM
-        withUnsafeBytes(of: audioFormat.littleEndian) { wavData.append(Data($0)) }
-        var channelsCopy = channels
-        withUnsafeBytes(of: channelsCopy.littleEndian) { wavData.append(Data($0)) }
-        var sampleRateCopy = sampleRate
-        withUnsafeBytes(of: sampleRateCopy.littleEndian) { wavData.append(Data($0)) }
-        var byteRateCopy = byteRate
-        withUnsafeBytes(of: byteRateCopy.littleEndian) { wavData.append(Data($0)) }
-        var blockAlignCopy = blockAlign
-        withUnsafeBytes(of: blockAlignCopy.littleEndian) { wavData.append(Data($0)) }
-        var bitsPerSampleCopy = bitsPerSample
-        withUnsafeBytes(of: bitsPerSampleCopy.littleEndian) { wavData.append(Data($0)) }
-
-        // data子块
-        wavData.append("data".data(using: .ascii)!)
-        var dataSizeCopy = dataSize
-        withUnsafeBytes(of: dataSizeCopy.littleEndian) { wavData.append(Data($0)) }
-        wavData.append(pcmData)
-
-        return wavData
+    private func resetRecordingUI() {
+        isManualRecording = false
+        recordingStartTime = nil
+        statusLabel.text = "等待手动录音或 HID 触摸音频"
+        startRecordButton.isEnabled = true
+        startRecordButton.alpha = 1
+        stopRecordButton.isEnabled = false
+        stopRecordButton.alpha = 0.5
+        recordingLabel.isHidden = true
+        timeLabel.isHidden = true
+        recordingAnimationView.isHidden = true
+        timeLabel.text = "00:00"
+        stopRecordingAnimation()
+        stopTimer()
     }
 
     private func startRecordingAnimation() {
-        let animation1 = CABasicAnimation(keyPath: "transform.scale")
-        animation1.fromValue = 1.0
-        animation1.toValue = 1.2
-        animation1.duration = 1.5
-        animation1.repeatCount = .infinity
-        animation1.autoreverses = true
-        animation1.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-
-        let animation2 = CABasicAnimation(keyPath: "transform.scale")
-        animation2.fromValue = 1.0
-        animation2.toValue = 1.3
-        animation2.duration = 1.5
-        animation2.repeatCount = .infinity
-        animation2.autoreverses = true
-        animation2.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation2.beginTime = CACurrentMediaTime() + 0.3
-
-        let animation3 = CABasicAnimation(keyPath: "transform.scale")
-        animation3.fromValue = 1.0
-        animation3.toValue = 1.4
-        animation3.duration = 1.5
-        animation3.repeatCount = .infinity
-        animation3.autoreverses = true
-        animation3.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animation3.beginTime = CACurrentMediaTime() + 0.6
-
-        waveformView1.layer.add(animation1, forKey: "scale1")
-        waveformView2.layer.add(animation2, forKey: "scale2")
-        waveformView3.layer.add(animation3, forKey: "scale3")
-
-        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-        opacityAnimation.fromValue = 1.0
-        opacityAnimation.toValue = 0.3
-        opacityAnimation.duration = 0.8
-        opacityAnimation.repeatCount = .infinity
-        opacityAnimation.autoreverses = true
-
-        recordingLabel.layer.add(opacityAnimation, forKey: "opacity")
+        for (index, view) in waveformViews.enumerated() {
+            let animation = CABasicAnimation(keyPath: "transform.scale")
+            animation.fromValue = 1
+            animation.toValue = 1.2 + Double(index) * 0.1
+            animation.duration = 1.5
+            animation.repeatCount = .infinity
+            animation.autoreverses = true
+            animation.beginTime = CACurrentMediaTime() + Double(index) * 0.3
+            view.layer.add(animation, forKey: "recordingScale")
+        }
     }
 
     private func stopRecordingAnimation() {
-        waveformView1.layer.removeAllAnimations()
-        waveformView2.layer.removeAllAnimations()
-        waveformView3.layer.removeAllAnimations()
-        recordingLabel.layer.removeAllAnimations()
+        waveformViews.forEach { $0.layer.removeAllAnimations() }
     }
 
     private func startTimer() {
-        recordingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.updateTimeLabel()
+        stopTimer()
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { [weak self] _ in
+            guard let self, let start = self.recordingStartTime else { return }
+            let elapsed = Int(Date().timeIntervalSince(start))
+            self.timeLabel.text = String(format: "%02d:%02d", elapsed / 60, elapsed % 60)
         }
     }
 
@@ -561,107 +515,74 @@ class VoiceRecord_VC: UIViewController {
         recordingTimer = nil
     }
 
-    private func updateTimeLabel() {
-        guard let startTime = recordingStartTime else { return }
-
-        let elapsed = Date().timeIntervalSince(startTime)
-        let minutes = Int(elapsed) / 60
-        let seconds = Int(elapsed) % 60
-
-        timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+    private func updateEmptyLabelVisibility() {
+        emptyLabel.isHidden = !audioFileList.isEmpty
     }
 
     private func showAlert(title: String, message: String) {
+        guard viewIfLoaded?.window != nil else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确定", style: .default))
         present(alert, animated: true)
     }
 }
 
-// MARK: - UITableViewDataSource
-
-extension VoiceRecord_VC: UITableViewDataSource {
+extension VoiceRecord_VC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audioFileList.count
+        audioFileList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AudioFileCell", for: indexPath)
-        let audioInfo = audioFileList[indexPath.row]
-
-        // 格式化文件大小
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .file
-        let sizeString = formatter.string(fromByteCount: audioInfo.fileSize)
-
-        // 格式化时长
-        let minutes = Int(audioInfo.duration) / 60
-        let seconds = Int(audioInfo.duration) % 60
-        let durationString = String(format: "%02d:%02d", minutes, seconds)
-
-        // 设置cell内容
-        cell.textLabel?.text = audioInfo.fileName
-        cell.detailTextLabel?.text = "\(durationString) | \(sizeString)"
-
-        // 如果正在播放这个文件，显示播放图标
-        if currentPlayingFilePath == audioInfo.filePath {
-            cell.accessoryType = .disclosureIndicator
-            cell.textLabel?.textColor = .systemBlue
-        } else {
-            cell.accessoryType = .none
-            cell.textLabel?.textColor = .label
-        }
-
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "AudioFileCell")
+        let info = audioFileList[indexPath.row]
+        let size = ByteCountFormatter.string(fromByteCount: info.fileSize, countStyle: .file)
+        let duration = String(format: "%02d:%02d", Int(info.duration) / 60, Int(info.duration) % 60)
+        cell.textLabel?.text = info.fileName
+        cell.detailTextLabel?.text = "\(duration) | \(size)"
+        let isPlaying = currentPlayingFilePath == info.filePath
+        cell.accessoryType = isPlaying ? .disclosureIndicator : .none
+        cell.textLabel?.textColor = isPlaying ? .systemBlue : .label
         return cell
     }
-}
 
-// MARK: - UITableViewDelegate
-
-extension VoiceRecord_VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let audioInfo = audioFileList[indexPath.row]
-        playPCMFile(audioInfo.filePath)
+        playAudioFile(audioFileList[indexPath.row].filePath)
     }
 
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { true }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let audioInfo = audioFileList[indexPath.row]
-
-            // 如果正在播放这个文件，先停止
-            if currentPlayingFilePath == audioInfo.filePath {
-                stopAudioPlayback()
-            }
-
-            // 删除文件
-            do {
-                try FileManager.default.removeItem(atPath: audioInfo.filePath)
-                audioFileList.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                updateEmptyLabelVisibility()
-            } catch {
-                showAlert(title: "删除失败", message: error.localizedDescription)
-            }
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        guard editingStyle == .delete else { return }
+        let info = audioFileList[indexPath.row]
+        if currentPlayingFilePath == info.filePath {
+            stopAudioPlayback()
+        }
+        do {
+            try FileManager.default.removeItem(atPath: info.filePath)
+            audioFileList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            updateEmptyLabelVisibility()
+        } catch {
+            showAlert(title: "删除失败", message: error.localizedDescription)
         }
     }
 }
-
-// MARK: - AVAudioPlayerDelegate
 
 extension VoiceRecord_VC: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         stopAudioPlayback()
+        if !flag {
+            showAlert(title: "播放失败", message: "播放器未能正常完成播放")
+        }
     }
 
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         stopAudioPlayback()
-        if let error = error {
-            showAlert(title: "播放错误", message: error.localizedDescription)
-        }
+        showAlert(title: "播放错误", message: error?.localizedDescription ?? "未知解码错误")
     }
 }

@@ -187,6 +187,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 21, title: "App复合指令-绑定指令", category: .appEvent),
             FunctionDemoModel(id: 22, title: "App复合指令-连接指令", category: .appEvent),
             FunctionDemoModel(id: 23, title: "App复合指令-刷新指令", category: .appEvent),
+            FunctionDemoModel(id: 24, title: "读取复合配置信息", category: .appEvent),
 
             // 时间同步 (31-40)
             FunctionDemoModel(id: 31, title: "同步时间", category: .timeSync),
@@ -201,6 +202,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 51, title: "获取电量信息", category: .batteryManagement),
             FunctionDemoModel(id: 52, title: "获取充电状态", category: .batteryManagement),
             FunctionDemoModel(id: 53, title: "开启监听充电状态变化", category: .batteryManagement),
+            FunctionDemoModel(id: 54, title: "读取电量计详细信息(0x1205)", category: .batteryManagement),
+            FunctionDemoModel(id: 55, title: "开启/取消监听电量计详细信息推送", category: .batteryManagement),
 
             // 设备系统设置 (61-80)
             FunctionDemoModel(id: 61, title: "设置采集周期", category: .deviceSystemSettings),
@@ -213,6 +216,12 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 68, title: "读取个人信息", category: .deviceSystemSettings),
             FunctionDemoModel(id: 69, title: "设置自动采集配置(0x3727)", category: .deviceSystemSettings),
             FunctionDemoModel(id: 70, title: "读取自动采集配置(0x3728)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 71, title: "设置血氧采集周期(0x372B)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 72, title: "读取血氧采集周期(0x372C)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 73, title: "设置系统功能开关(0x3737)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 74, title: "查询系统功能开关(0x3738)", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 75, title: "设置算法相关参数", category: .deviceSystemSettings),
+            FunctionDemoModel(id: 76, title: "读取算法相关参数(0x373C)", category: .deviceSystemSettings),
 
             // 主动测量-温度 (81-85)
             FunctionDemoModel(id: 81, title: "温度读取", category: .measurementTemperature),
@@ -221,6 +230,8 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 86, title: "开始血氧测量", category: .measurementBloodOxygen),
             FunctionDemoModel(id: 87, title: "停止血氧测量", category: .measurementBloodOxygen),
             FunctionDemoModel(id: 88, title: "配置血氧采集模式(0x88)", category: .measurementBloodOxygen),
+            FunctionDemoModel(id: 89, title: "设置血氧模式开关(0x3729)", category: .measurementBloodOxygen),
+            FunctionDemoModel(id: 90, title: "读取血氧模式开关(0x372A)", category: .measurementBloodOxygen),
 
             // 主动测量-心率 (91-95)
             FunctionDemoModel(id: 91, title: "开始心率测量", category: .measurementHeartRate),
@@ -237,6 +248,11 @@ class FunctionDemo_VC: UIViewController {
             // 主动测量-清华实时PPG (131-132)
             FunctionDemoModel(id: 131, title: "开始清华定制实时PPG测量", category: .measurementQingHuaPPG),
             FunctionDemoModel(id: 132, title: "停止清华定制实时PPG测量", category: .measurementQingHuaPPG),
+
+            // PPG波形透传输 (150-152)
+            FunctionDemoModel(id: 150, title: "开始PPG波形透传输(0x3D)", category: .ppgWaveform),
+            FunctionDemoModel(id: 151, title: "停止PPG波形透传输(0x3D)", category: .ppgWaveform),
+            FunctionDemoModel(id: 152, title: "设置PPG波形电流(0x3D07)", category: .ppgWaveform),
 
             // 主动测量-血糖 (101-105)
             FunctionDemoModel(id: 101, title: "开始血糖测量", category: .measurementBloodGlucose),
@@ -271,6 +287,12 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 128, title: "刷新蓝牙服务相关信息(Z4I定制)", category: .hidControl),
             FunctionDemoModel(id: 127, title: "手动临时断开连接(Z4I定制)", category: .hidControl),
             FunctionDemoModel(id: 126, title: getHIDServiceSubscriptionTitle(), category: .hidControl),
+            FunctionDemoModel(id: 451, title: "设置Touch空置时间", category: .hidControl),
+            FunctionDemoModel(id: 452, title: "读取Touch空置时间", category: .hidControl),
+            FunctionDemoModel(id: 453, title: "休眠Touch", category: .hidControl),
+            FunctionDemoModel(id: 454, title: "唤醒Touch", category: .hidControl),
+            FunctionDemoModel(id: 455, title: "设置触摸键开关", category: .hidControl),
+            FunctionDemoModel(id: 456, title: "读取触摸键开关", category: .hidControl),
 
             // 网络相关API功能 (201-300)
             FunctionDemoModel(id: 201, title: "切换服务器-国内", category: .sdkNetwork, requiresConnection: false),
@@ -310,8 +332,15 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 329, title: "读取节假日日期-闹钟", category: .alarmSettings),
 
             // 马达震动（331-340）
-            FunctionDemoModel(id: 331, title: "马达震动-立刻", category: .vibrationMotor),
+            FunctionDemoModel(id: 331, title: "线性马达-立即振动", category: .vibrationMotor),
             FunctionDemoModel(id: 332, title: "马达震动-延迟", category: .vibrationMotor),
+            FunctionDemoModel(id: 333, title: "线性马达-读取振动配置", category: .vibrationMotor),
+            FunctionDemoModel(id: 334, title: "线性马达-设置振动配置", category: .vibrationMotor),
+            FunctionDemoModel(id: 335, title: "线性马达-读取目标值", category: .vibrationMotor),
+            FunctionDemoModel(id: 336, title: "线性马达-设置目标值", category: .vibrationMotor),
+            FunctionDemoModel(id: 337, title: "线性马达-读取计数值", category: .vibrationMotor),
+            FunctionDemoModel(id: 338, title: "线性马达-清空计数值", category: .vibrationMotor),
+            FunctionDemoModel(id: 339, title: "线性马达-停止振动", category: .vibrationMotor),
 
             // 固件升级（341-350）
             FunctionDemoModel(id: 341, title: "Apollo固件升级", category: .firmwareUpgrade),
@@ -336,11 +365,33 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 372, title: "停止音频传输-adpcm_1单声道", category: .audioTransmission),
             FunctionDemoModel(id: 373, title: "开始音频传输-adpcm_1双声道", category: .audioTransmission),
             FunctionDemoModel(id: 374, title: "停止音频传输-adpcm_1双声道", category: .audioTransmission),
+            FunctionDemoModel(id: 375, title: "HID触摸音频获取、保存与播放", category: .audioTransmission),
+            FunctionDemoModel(id: 376, title: "获取离线录音状态", category: .audioTransmission),
+            FunctionDemoModel(id: 377, title: "开启离线录音状态推送监听", category: .audioTransmission),
+            FunctionDemoModel(id: 378, title: "取消离线录音状态推送监听", category: .audioTransmission),
+            FunctionDemoModel(id: 379, title: "打开定时录音", category: .audioTransmission),
+            FunctionDemoModel(id: 380, title: "关闭定时录音", category: .audioTransmission),
+            FunctionDemoModel(id: 1000, title: "读取定时录音配置", category: .audioTransmission),
+            FunctionDemoModel(id: 10001, title: "设置单次录音时长", category: .audioTransmission),
+            FunctionDemoModel(id: 10002, title: "读取单次录音时长", category: .audioTransmission),
+            FunctionDemoModel(id: 10003, title: "开启在线录音本地文件ID推送监听", category: .audioTransmission),
+            FunctionDemoModel(id: 10004, title: "取消在线录音本地文件ID推送监听", category: .audioTransmission, requiresConnection: false),
+            FunctionDemoModel(id: 10005, title: "设置自动录音关闭时段", category: .audioTransmission),
+            FunctionDemoModel(id: 10006, title: "读取自动录音关闭时段", category: .audioTransmission),
 
             // 文件系统（381-400）
             FunctionDemoModel(id: 388, title: "开始信息采集\n（部分固件支持）", category: .fileSystem),
             FunctionDemoModel(id: 389, title: "采集数据配置信息获取（部分固件支持）", category: .fileSystem),
             FunctionDemoModel(id: 390, title: "请求文件数据断点续传", category: .fileSystem),
+            FunctionDemoModel(id: 391, title: "暂停文件下载", category: .fileSystem),
+            FunctionDemoModel(id: 392, title: "恢复文件下载", category: .fileSystem),
+            FunctionDemoModel(id: 393, title: "取消文件下载", category: .fileSystem),
+            FunctionDemoModel(id: 394, title: "开启下载状态推送监听", category: .fileSystem),
+            FunctionDemoModel(id: 395, title: "取消下载状态推送监听", category: .fileSystem, requiresConnection: false),
+            FunctionDemoModel(id: 396, title: "设置文件系统录制存储模式", category: .fileSystem),
+            FunctionDemoModel(id: 397, title: "查询文件系统录制存储模式", category: .fileSystem),
+            FunctionDemoModel(id: 398, title: "读取异常日志", category: .fileSystem),
+            FunctionDemoModel(id: 399, title: "删除异常日志", category: .fileSystem),
             FunctionDemoModel(id: 381, title: "获取文件系统空间信息", category: .fileSystem),
             FunctionDemoModel(id: 382, title: "获取文件系统状态", category: .fileSystem),
             FunctionDemoModel(id: 383, title: "格式化文件系统", category: .fileSystem),
@@ -371,6 +422,7 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 1001, title: "发送自定义指令（开启）", category: .customCommand),
             FunctionDemoModel(id: 1002, title: "发送自定义指令（结束）", category: .customCommand),
             FunctionDemoModel(id: 1003, title: "分享Log日志", category: .customCommand, requiresConnection: false),
+            FunctionDemoModel(id: 1004, title: "智能分享诊断包（可含固件异常日志）", category: .customCommand, requiresConnection: false),
 
             // 其他相关指令（2000-3000）
             FunctionDemoModel(id: 2001, title: "设置SN码", category: .otherCommands),
@@ -380,6 +432,33 @@ class FunctionDemo_VC: UIViewController {
             FunctionDemoModel(id: 2005, title: "读取电池AD采样值", category: .otherCommands),
             FunctionDemoModel(id: 2006, title: "设置Shipmode（运输模式）", category: .otherCommands),
             FunctionDemoModel(id: 2007, title: "复位测试", category: .otherCommands),
+            FunctionDemoModel(id: 2008, title: "设置自定义灯光特效（Z7B定制）", category: .otherCommands),
+            FunctionDemoModel(id: 2009, title: "获取自定义灯光特效（Z7B定制）", category: .otherCommands),
+            FunctionDemoModel(id: 2010, title: "设置自定义震动特效（Z7B定制）", category: .otherCommands),
+            FunctionDemoModel(id: 2011, title: "获取自定义震动特效（Z7B定制）", category: .otherCommands),
+            FunctionDemoModel(id: 2012, title: "启动查找戒指", category: .otherCommands),
+            FunctionDemoModel(id: 2013, title: "结束查找戒指", category: .otherCommands),
+            FunctionDemoModel(id: 2014, title: "启动戒指勿扰模式", category: .otherCommands),
+            FunctionDemoModel(id: 2015, title: "结束戒指勿扰模式", category: .otherCommands),
+            FunctionDemoModel(id: 2016, title: "启动戒指常亮模式", category: .otherCommands),
+            FunctionDemoModel(id: 2017, title: "结束戒指常亮模式", category: .otherCommands),
+            FunctionDemoModel(id: 2018, title: "APP启动灯光震动特效", category: .otherCommands),
+            FunctionDemoModel(id: 2019, title: "APP结束灯光震动特效", category: .otherCommands),
+            FunctionDemoModel(id: 2020, title: "设置心率压力报警参数", category: .otherCommands),
+            FunctionDemoModel(id: 2021, title: "读取心率压力报警参数", category: .otherCommands),
+            FunctionDemoModel(id: 2022, title: "监听/取消监听戒指报警信息", category: .otherCommands),
+            FunctionDemoModel(id: 2023, title: "读取戒指勿扰模式", category: .otherCommands),
+            FunctionDemoModel(id: 2024, title: "设置戒指LED模式亮度", category: .otherCommands),
+            FunctionDemoModel(id: 2025, title: "查询戒指LED模式", category: .otherCommands),
+            FunctionDemoModel(id: 2026, title: "设置戒指马达模式", category: .otherCommands),
+            FunctionDemoModel(id: 2027, title: "查询戒指马达模式", category: .otherCommands),
+            FunctionDemoModel(id: 2028, title: "马达振动测试", category: .otherCommands),
+            FunctionDemoModel(id: 2029, title: "设置闹钟马达模式", category: .otherCommands),
+            FunctionDemoModel(id: 2030, title: "查询闹钟马达模式", category: .otherCommands),
+            FunctionDemoModel(id: 2031, title: "设置压力报警冻结延时", category: .otherCommands),
+            FunctionDemoModel(id: 2032, title: "获取压力报警冻结延时", category: .otherCommands),
+            FunctionDemoModel(id: 2033, title: "设备密钥鉴权", category: .otherCommands),
+            FunctionDemoModel(id: 2034, title: "查询设备授权状态", category: .otherCommands),
 
             // 测试功能，需要调整。
 //            FunctionDemoModel(id: 202, title: "PWTT", category: .measurementBloodPressure),

@@ -19,7 +19,7 @@ when using the nRF5x Series SoCs.
              [nRF Connect SDK (NCS)](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/index.html)
              or [Zephyr](https://docs.zephyrproject.org/latest/index.html). 
              To update devices built on those SDKs use 
-             [nRF Connect Device Manager](https://github.com/NordicSemiconductor/IOS-nRF-Connect-Device-Manager/) 
+             [nRF Connect Device Manager](https://github.com/nordicsemi/IOS-nRF-Connect-Device-Manager/) 
              library instead.
 
 ## Supported Features

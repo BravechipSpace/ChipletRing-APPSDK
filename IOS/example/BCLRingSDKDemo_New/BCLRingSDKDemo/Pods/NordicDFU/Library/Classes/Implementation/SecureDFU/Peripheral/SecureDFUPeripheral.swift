@@ -45,7 +45,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     /// set the name, and will freeze.
     ///
     /// For more info, see:
-    /// https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/365
+    /// https://github.com/nordicsemi/IOS-Pods-DFU-Library/issues/365
     /// and for solution:
     /// https://devzone.nordicsemi.com/f/nordic-q-a/59881/advertising-rename-feature-not-working
     var possibleDisconnectionOnSettingAlternativeName: Bool = false
@@ -65,7 +65,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     
     override init(_ initiator: DFUServiceInitiator, _ logger: LoggerHelper) {
         self.alternativeAdvertisingNameEnabled = initiator.alternativeAdvertisingNameEnabled
-        self.alternativeAdvertisingName = initiator.alternativeAdvertisingName.map { String($0.prefix(20)) }
+        self.alternativeAdvertisingName = initiator.alternativeAdvertisingName
         super.init(initiator, logger)
     }
     
@@ -140,7 +140,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
         // err_code = ble_dfu_buttonless_async_svci_init();
         // APP_ERROR_CHECK(err_code);
         //
-        // See https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library/issues/365
+        // See https://github.com/nordicsemi/IOS-Pods-DFU-Library/issues/365
         if possibleDisconnectionOnSettingAlternativeName {
             logger.e("Buttonless service not configured, see: https://devzone.nordicsemi.com/f/nordic-q-a/59881/advertising-rename-feature-not-working/243566#243566. To workaround, disable alternative advertising name.")
             possibleDisconnectionOnSettingAlternativeName = false
@@ -212,7 +212,7 @@ internal class SecureDFUPeripheral : BaseCommonDFUPeripheral<SecureDFUExecutor, 
     }
     
     /**
-     [Issue 465](https://github.com/NordicSemiconductor/IOS-DFU-Library/issues/465)
+     [Issue 465](https://github.com/nordicsemi/IOS-DFU-Library/issues/465)
      indicates, that sometimes a Checksum response is received here.
      It may be a lost PRN, or an invalid response. We don't know yet.
      If you encounter this log, please report to the mentioned issue

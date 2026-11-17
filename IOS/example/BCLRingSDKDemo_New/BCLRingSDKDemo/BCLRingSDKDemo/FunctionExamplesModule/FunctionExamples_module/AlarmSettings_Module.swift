@@ -7,6 +7,8 @@
 //
 
 import BCLRingSDK
+import QMUIKit
+import SwiftDate
 import UIKit
 
 /// 闹钟功能模块 - 设置闹钟、读取闹钟配置、智能闹钟配置、智能闹钟配置读取等功能
@@ -38,75 +40,35 @@ class AlarmSettings_Module: BaseFunction_Module {
 
     // 326 - 设置闹钟
     private func setAlarm() {
-        let alarmClock1 = BCLAlarmClockData(timestamp: "2025-06-24 12:33:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
-                                            repeatType: .once,
-                                            vibrationEffect: .strong,
-                                            isEnabled: true,
-                                            isMonday: true,
-                                            isTuesday: true,
-                                            isWednesday: true,
-                                            isThursday: true,
-                                            isFriday: true,
-                                            isSaturday: true,
-                                            isSunday: true)
-        let alarmClock2 = BCLAlarmClockData(timestamp: "2025-06-24 12:34:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
-                                            repeatType: .once,
-                                            vibrationEffect: .strong,
-                                            isEnabled: true,
-                                            isMonday: true,
-                                            isTuesday: true,
-                                            isWednesday: true,
-                                            isThursday: true,
-                                            isFriday: true,
-                                            isSaturday: true,
-                                            isSunday: true)
-        let alarmClock3 = BCLAlarmClockData(timestamp: "2025-06-24 12:35:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
-                                            repeatType: .once,
-                                            vibrationEffect: .strong,
-                                            isEnabled: true,
-                                            isMonday: true,
-                                            isTuesday: true,
-                                            isWednesday: true,
-                                            isThursday: true,
-                                            isFriday: true,
-                                            isSaturday: true,
-                                            isSunday: true)
-        let alarmClock4 = BCLAlarmClockData(timestamp: "2025-06-24 12:36:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
-                                            repeatType: .once,
-                                            vibrationEffect: .strong,
-                                            isEnabled: true,
-                                            isMonday: true,
-                                            isTuesday: true,
-                                            isWednesday: true,
-                                            isThursday: true,
-                                            isFriday: true,
-                                            isSaturday: true,
-                                            isSunday: true)
+        let dialogWidth = UIScreen.main.bounds.width - 30
+        let dialogHeight = min(UIScreen.main.bounds.height - 80, 700)
+        let contentView = AlarmClockConfig_Dialog(x: 0, y: 0, width: dialogWidth, height: dialogHeight)
+        contentView.confirmButtonCallback = { [weak self] items in
+            self?.sendAlarmClockItems(items)
+        }
 
-        let alarmClock5 = BCLAlarmClockData(timestamp: "2025-06-24 12:37:00".toDate("yyyy-MM-dd HH:mm:ss", region: .local)?.date.timeIntervalSince1970 ?? 0,
-                                            repeatType: .once,
-                                            vibrationEffect: .strong,
-                                            isEnabled: true,
-                                            isMonday: true,
-                                            isTuesday: true,
-                                            isWednesday: true,
-                                            isThursday: true,
-                                            isFriday: true,
-                                            isSaturday: true,
-                                            isSunday: true)
-        BCLRingManager.shared.setAlarmClock(items: [alarmClock1, alarmClock2, alarmClock3, alarmClock4, alarmClock5]) { res in
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
+    private func sendAlarmClockItems(_ items: [BCLAlarmClockData]) {
+        let itemCount = items.count
+        BDLogger.info("开始设置闹钟，共 \(itemCount) 条")
+        BCLRingManager.shared.setAlarmClock(items: items) { res in
             switch res {
             case let .success(response):
                 if response.status == 1 {
-                    BDLogger.info("闹钟设置--成功")
-                    self.showSuccess("闹钟设置--成功")
+                    BDLogger.info("闹钟设置成功，共 \(itemCount) 条")
+                    self.showSuccess("闹钟设置成功，共 \(itemCount) 条")
                 } else {
-                    BDLogger.error("闹钟设置--失败")
-                    self.showError("闹钟设置--失败")
+                    BDLogger.error("闹钟设置失败，共 \(itemCount) 条，status: \(response.status.map(String.init) ?? "nil")")
+                    self.showError("闹钟设置失败，共 \(itemCount) 条")
                 }
             case let .failure(err):
-                BDLogger.error("闹钟设置失败：\(err)")
-                self.showError("闹钟设置失败：\(err)")
+                BDLogger.error("闹钟设置失败，共 \(itemCount) 条：\(err)")
+                self.showError("闹钟设置失败，共 \(itemCount) 条：\(err.localizedDescription)")
             }
         }
     }
@@ -118,17 +80,12 @@ class AlarmSettings_Module: BaseFunction_Module {
             case let .success(response):
                 BDLogger.info("读取闹钟配置成功，共有\(response.items.count)个闹钟")
                 for alarmClock in response.items {
-                    BDLogger.info("闹钟时间: \(alarmClock.timestamp)")
+                    BDLogger.info("闹钟时间: \(self.alarmTimeText(alarmClock.timestamp))")
                     BDLogger.info("重复类型: \(alarmClock.repeatType.rawValue)")
-                    BDLogger.info("振动效果: \(alarmClock.vibrationEffect.rawValue)")
+                    BDLogger.info("震动效果: \(alarmClock.vibrationEffect.rawValue)")
+                    BDLogger.info("灯光效果: \(alarmClock.lightEffect)")
                     BDLogger.info("是否启用: \(alarmClock.isEnabled)")
-                    BDLogger.info("星期一: \(alarmClock.isMonday)")
-                    BDLogger.info("星期二: \(alarmClock.isTuesday)")
-                    BDLogger.info("星期三: \(alarmClock.isWednesday)")
-                    BDLogger.info("星期四: \(alarmClock.isThursday)")
-                    BDLogger.info("星期五: \(alarmClock.isFriday)")
-                    BDLogger.info("星期六: \(alarmClock.isSaturday)")
-                    BDLogger.info("星期日: \(alarmClock.isSunday)")
+                    BDLogger.info("重复星期: \(self.weekdayText(alarmClock))")
                 }
                 self.showSuccess("读取闹钟配置成功，共有\(response.items.count)个闹钟")
             case let .failure(error):
@@ -136,6 +93,22 @@ class AlarmSettings_Module: BaseFunction_Module {
                 self.showError("读取闹钟配置失败: \(error)")
             }
         }
+    }
+
+    private func alarmTimeText(_ timestamp: TimeInterval) -> String {
+        return Date(timeIntervalSince1970: timestamp).toFormat("yyyy-MM-dd HH:mm:ss", locale: Locales.chinese)
+    }
+
+    private func weekdayText(_ alarmClock: BCLAlarmClockData) -> String {
+        var weekdays: [String] = []
+        if alarmClock.isSunday { weekdays.append("星期日") }
+        if alarmClock.isMonday { weekdays.append("星期一") }
+        if alarmClock.isTuesday { weekdays.append("星期二") }
+        if alarmClock.isWednesday { weekdays.append("星期三") }
+        if alarmClock.isThursday { weekdays.append("星期四") }
+        if alarmClock.isFriday { weekdays.append("星期五") }
+        if alarmClock.isSaturday { weekdays.append("星期六") }
+        return weekdays.isEmpty ? "无" : weekdays.joined(separator: ",")
     }
 
     // 328 - 设置智能闹钟

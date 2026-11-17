@@ -27,6 +27,8 @@ class CustomCommand_Module: BaseFunction_Module {
             stopAllCustomCommands()
         case 1003: // 1003 - 分享 Log 日志文件
             shareLogFiles()
+        case 1004: // 1004 - 分享包含固件异常日志的诊断包
+            shareDiagnosticArchiveWithFirmwareAbnormalLog()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -107,6 +109,130 @@ class CustomCommand_Module: BaseFunction_Module {
         BCLRingManager.shared.compressLogAndDataFiles(fromDate: nil) { [weak self] result in
             self?.hideLoading()
             self?.handleCompressLogResult(result)
+        }
+    }
+
+    /// 1004 - 根据设备连接与能力状态，智能生成并分享诊断包。
+    ///
+    /// 未连接设备时直接生成本地诊断包；已连接时先通过 APP 刷新事件读取 [75] 能力位，
+    /// 仅在明确支持异常日志读取时获取固件日志并加入压缩包，其余情况均降级为本地诊断包。
+    private func shareDiagnosticArchiveWithFirmwareAbnormalLog() {
+        guard BCLRingManager.shared.currentConnectedDevice != nil else {
+            compressAndShareLocalDiagnosticArchive(reason: "设备未连接")
+            return
+        }
+
+        BDLogger.info("🔄 设备已连接，开始刷新 APP 事件并检查 [75] 固件异常日志能力")
+        showLoading("正在检查固件日志能力...", userInteractionEnabled: false)
+
+        let callbacks = BCLDataSyncCallbacks(
+            onProgress: { totalNumber, currentIndex, progress, _ in
+                BDLogger.info("诊断包刷新-历史数据同步进度：\(currentIndex)/\(totalNumber)（\(progress)%）")
+            },
+            onStatusChanged: { status in
+                BDLogger.info("诊断包刷新-历史数据同步状态：\(status)")
+            },
+            onCompleted: { models in
+                BDLogger.info("诊断包刷新-历史数据同步完成，共 \(models.count) 条记录")
+            },
+            onError: { error in
+                BDLogger.error("诊断包刷新-历史数据同步失败：\(error.localizedDescription)")
+            }
+        )
+
+        BCLRingManager.shared.appEventRefreshRing(
+            date: Date(),
+            timeZone: BCLRingTimeZone.getCurrentSystemTimeZone(),
+            filterTime: nil,
+            callbacks: callbacks
+        ) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                switch result {
+                case let .success(response):
+                    BDLogger.info("APP 事件刷新成功，[75] 状态：\(String(describing: response.abnormalLogSupportedStatus))")
+                    guard response.isAbnormalLogSupported == true else {
+                        let reason = response.isAbnormalLogSupported == false
+                            ? "设备明确不支持固件异常日志"
+                            : "设备响应未包含 [75] 能力字段"
+                        self.compressAndShareLocalDiagnosticArchive(reason: reason)
+                        return
+                    }
+                    self.readFirmwareAbnormalLogAndShareArchive()
+
+                case let .failure(error):
+                    self.compressAndShareLocalDiagnosticArchive(
+                        reason: "APP 事件刷新失败：\(error.localizedDescription)"
+                    )
+                }
+            }
+        }
+    }
+
+    /// 读取设备异常日志；读取失败时保留日志分享能力，降级生成本地诊断包。
+    private func readFirmwareAbnormalLogAndShareArchive() {
+        BDLogger.info("📥 [75] 表示支持，开始读取固件异常日志")
+        showLoading("正在读取固件异常日志...", userInteractionEnabled: false)
+
+        BCLRingManager.shared.readAbnormalLog { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                switch result {
+                case let .success(response):
+                    guard let timestamp = response.timestamp else {
+                        BDLogger.error("❌ 固件异常日志读取成功，但响应缺少时间戳")
+                        self.compressAndShareLocalDiagnosticArchive(reason: "固件异常日志响应缺少时间戳")
+                        return
+                    }
+                    BDLogger.info("✅ 固件异常日志读取成功，时间戳：\(timestamp)，总包数：\(response.totalPacketCount ?? 0)")
+                    self.showLoading("正在生成完整诊断包...", userInteractionEnabled: false)
+                    BCLRingManager.shared.compressLogAndDataFiles(
+                        fromDate: nil,
+                        firmwareAbnormalLog: response
+                    ) { [weak self] compressResult in
+                        DispatchQueue.main.async {
+                            self?.hideLoading()
+                            self?.handleFirmwareDiagnosticArchiveResult(compressResult,
+                                                                        firmwareTimestamp: timestamp)
+                        }
+                    }
+
+                case let .failure(error):
+                    self.compressAndShareLocalDiagnosticArchive(
+                        reason: "固件异常日志读取失败：\(error.localizedDescription)"
+                    )
+                }
+            }
+        }
+    }
+
+    /// 使用原压缩接口生成不包含固件异常日志的诊断包，供 1004 各降级分支复用。
+    private func compressAndShareLocalDiagnosticArchive(reason: String) {
+        BDLogger.warning("⚠️ \(reason)，1004 降级为分享本地日志及数据文件")
+        showLoading("正在生成本地诊断包...", userInteractionEnabled: false)
+
+        BCLRingManager.shared.compressLogAndDataFiles(fromDate: nil) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.hideLoading()
+                self?.handleCompressLogResult(result)
+            }
+        }
+    }
+
+    /// 处理包含固件异常日志的诊断包结果；设备端日志仍由用户通过删除接口显式管理。
+    private func handleFirmwareDiagnosticArchiveResult(
+        _ result: Result<(String, Data), BCLError>,
+        firmwareTimestamp: UInt32
+    ) {
+        switch result {
+        case let .success((filePath, fileData)):
+            BDLogger.info("✅ 完整诊断包生成成功，固件日志时间戳：\(firmwareTimestamp)")
+            BDLogger.info("诊断包路径：\(filePath)，文件大小：\(fileData.count) 字节")
+            presentShareSheet(with: URL(fileURLWithPath: filePath))
+
+        case let .failure(error):
+            BDLogger.error("❌ 固件异常日志已读取，但完整诊断包生成失败：\(error)")
+            showError("固件日志读取成功，但诊断包生成失败：\(error.localizedDescription)")
         }
     }
 

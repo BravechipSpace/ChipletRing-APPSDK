@@ -361,6 +361,21 @@ class StereoAdpcmDecode_VC: UIViewController {
             case let .success(response):
 //                BDLogger.info("获取文件数据成功")
 //                BDLogger.info("文件数据-状态: \(response.fileSystemStatus ?? 0)")
+                if let status = response.fileSystemStatus, [2, 3, 4].contains(status) {
+                    let message: String
+                    switch status {
+                    case 2: message = "文件系统正在写入，请稍后重试"
+                    case 3: message = "文件系统繁忙，请稍后重试"
+                    default: message = "文件大小错误"
+                    }
+                    BDLogger.error("获取文件数据失败：\(message)")
+                    BCLRingManager.shared.adpcmTransferFinish()
+                    DispatchQueue.main.async {
+                        self.resetDownloadState()
+                        self.showAlert(title: "下载失败", message: message)
+                    }
+                    return
+                }
                 BDLogger.info("文件数据-大小: \(response.fileSize ?? 0)")
                 BDLogger.info("文件数据-总包数: \(response.totalNumber ?? 0)")
                 BDLogger.info("文件数据-当前包号: \(response.currentNumber ?? 0)")
