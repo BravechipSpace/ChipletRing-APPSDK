@@ -31,6 +31,7 @@ import com.lm.sdk.inter.ICreateToken;
 import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.inter.IExceptionLogListener;
 import com.lm.sdk.inter.IGoMoreUserListener;
+import com.lm.sdk.inter.IManualSleepExitListener;
 import com.lm.sdk.inter.ISNListener;
 import com.lm.sdk.inter.IWriteHistoryDataListener;
 import com.lm.sdk.inter.LmOtaProgressListener;
@@ -183,6 +184,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         findViewById(R.id.bt_gomore_test).setOnClickListener(this);
         findViewById(R.id.bt_gomore_user).setOnClickListener(this);
         findViewById(R.id.bt_get_gomore_user).setOnClickListener(this);
+        findViewById(R.id.bt_manual_sleep_exit).setOnClickListener(this);
         findViewById(R.id.bt_setSn).setOnClickListener(this);
         findViewById(R.id.bt_getSn).setOnClickListener(this);
         findViewById(R.id.bt_setBluttoothName).setOnClickListener(this);
@@ -728,6 +730,16 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                 @Override
                 public void getUserInfoResult(int age, int sex, int height, int weight, int maximumHeartRate, int normalHeartRate, int maximalOxygenUptake) {
                     postView("\n获取Gomore个人信息:" + age + "," + sex + "," + height + "," + weight + "," + maximumHeartRate + "," + normalHeartRate + "," + maximalOxygenUptake);
+                }
+            });
+        }
+        if(view.getId()==R.id.bt_manual_sleep_exit) {
+            postView("\ngomore手动出睡");
+            //0x36/0x30，请求Data为空，返回1字节：0成功/1失败
+            LmAPILite.MANUAL_SLEEP_EXIT(new IManualSleepExitListener() {
+                @Override
+                public void onManualSleepExitResult(boolean success) {
+                    postView("\ngomore手动出睡:" + (success ? "成功" : "失败"));
                 }
             });
         }
