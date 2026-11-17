@@ -12,6 +12,7 @@ import com.lm.sdk.inter.IGoMoreListener;
 import com.lm.sdk.lmApiInter.IAllDayStaminaListenerLite;
 import com.lm.sdk.lmApiInter.IHistoryRecordListenerLite;
 import com.lm.sdk.lmApiInter.ILongSleepTimeListenerLite;
+import com.lm.sdk.lmApiInter.IMcuIdListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualHistoryListenerLite;
 import com.lm.sdk.lmApiInter.IMenstrualPredictionListenerLite;
 import com.lm.sdk.lmApiInter.ISedentaryReminderListenerLite;
@@ -36,6 +37,7 @@ import java.util.Locale;
  * 二、系统设置（0x37）：久坐提醒（0x2D/0x2E）、全天体力值（0x2F）、长睡时间（0x30）
  * 三、运动模式（0x38/0x07）
  * 四、女性健康相关（0xC0）：周期写入（0x00）、获取预测（0x01）
+ * 五、工装测试（0xF2）：读取MCU ID（0x16）
  *
  * 历史记录和Gomore睡眠数据除页面显示外，还覆盖保存到本地：
  *   LM/LocalHistoryLog.txt、LM/GoMoreSleepLog.txt（每次发送指令时清空，只保存本次数据）
@@ -122,6 +124,8 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         // 四、女性健康（0xC0）
         findViewById(R.id.bt_write_menstrual).setOnClickListener(this);
         findViewById(R.id.bt_get_menstrual_prediction).setOnClickListener(this);
+        // 五、工装测试（0xF2）
+        findViewById(R.id.bt_get_mcu_id).setOnClickListener(this);
         // 查看指令日志
         findViewById(R.id.tv_cmd_log_btn).setOnClickListener(this);
     }
@@ -267,6 +271,18 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
                         sb.append("\n  月经日").append(i + 1).append(": ").append(formatTime(periodDates[i]));
                     }
                     postView(sb.toString());
+                }
+            });
+        }
+
+        // ==================== 读取MCU ID（0xF2/0x16，V0.7）====================
+        if (id == R.id.bt_get_mcu_id) {
+            postView("\n读取MCU ID");
+            LmAPILite.GET_MCU_ID(new IMcuIdListenerLite() {
+                @Override
+                public void onGetMcuId(String mcuId) {
+                    //响应8字节转16位HEX字符串，长度不足回调空串
+                    postView("\nMCU ID: " + (TextUtils.isEmpty(mcuId) ? "（空）" : mcuId));
                 }
             });
         }
