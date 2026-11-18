@@ -515,8 +515,6 @@
                     android:background="@drawable/button_bg_state"/>
             </LinearLayout>
 
-        </LinearLayout>
-
         <!-- ==================== 五、工装测试（cmd=0xF2）==================== -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -542,6 +540,7 @@
                 android:textSize="11sp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg_state"/>
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
