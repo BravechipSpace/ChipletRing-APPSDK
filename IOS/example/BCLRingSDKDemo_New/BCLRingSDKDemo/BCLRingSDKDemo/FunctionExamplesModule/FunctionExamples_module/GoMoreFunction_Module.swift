@@ -30,7 +30,7 @@ class GoMoreFunction_Module: BaseFunction_Module {
         case 424: // 获取GoMore个人信息
             getGoMorePersonalInformation()
         case 425: // 读取戒指中GoMore睡眠数据
-            readGoMoreSleepData()
+            presentGoMoreSleepReadDialog()
         case 426: // 提交GoMore睡眠数据到云端
             uploadGoMoreSleepData()
         case 427: // 查询指定日期的GoMore睡眠数据详情
@@ -301,13 +301,29 @@ class GoMoreFunction_Module: BaseFunction_Module {
 
     // MARK: - 425: 读取戒指中GoMore睡眠数据
 
-    private func readGoMoreSleepData() {
-        BDLogger.info("开始读取戒指中GoMore睡眠数据")
+    /// 蓝牙睡眠读取配置，不复用云端日期查询弹窗。
+    private func presentGoMoreSleepReadDialog() {
+        let contentView = GoMoreSleepReadConfig_Dialog(x: 0, y: 0, width: 340, height: 350)
+        contentView.confirmButtonCallback = { [weak self] timestamp in
+            self?.readGoMoreSleepData(sinceTimestamp: timestamp)
+        }
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
+    /// nil保留旧无参请求；非nil始终发送新版4字节UNIX秒，不自动切换请求格式。
+    private func readGoMoreSleepData(sinceTimestamp: UInt32?) {
+        if let timestamp = sinceTimestamp {
+            BDLogger.info("开始读取GoMore睡眠：新协议，UNIX秒=\(timestamp)（0获取全部缓存）")
+        } else {
+            BDLogger.info("开始读取GoMore睡眠：旧固件无参请求")
+        }
         showLoading("读取睡眠数据中...", userInteractionEnabled: false)
 
-        BCLRingManager.shared.readGoMoreSleepData { [weak self] result in
+        let completion: (Result<BCLGoMoreSleepDataResponse, BCLError>) -> Void = { [weak self] result in
             self?.hideLoading()
-
             switch result {
             case let .success(response):
                 self?.handleGoMoreSleepDataResponse(response)
@@ -315,6 +331,11 @@ class GoMoreFunction_Module: BaseFunction_Module {
                 BDLogger.error("❌ 读取GoMore睡眠数据失败: \(error)")
                 self?.showError("读取失败: \(error.localizedDescription)")
             }
+        }
+        if let timestamp = sinceTimestamp {
+            BCLRingManager.shared.readGoMoreSleepData(sinceTimestamp: timestamp, completion: completion)
+        } else {
+            BCLRingManager.shared.readGoMoreSleepData(completion: completion)
         }
     }
 
@@ -373,6 +394,16 @@ class GoMoreFunction_Module: BaseFunction_Module {
         BDLogger.info("⏱ 睡眠时长: \(model.sleepPeriod) 分钟")
         BDLogger.info("💤 睡眠类型: \(model.isLongSleep ? "长睡" : "短睡")")
 
+        // 未提供与未知原始值分别展示，避免将旧设备误标为自动出睡。
+        let endSleepText: String
+        switch model.endSleepType?.intValue {
+        case 1?: endSleepText = "自动出睡"
+        case 2?: endSleepText = "手动出睡"
+        case let value?: endSleepText = "未知（\(value)）"
+        case nil: endSleepText = "未提供（旧响应）"
+        }
+        BDLogger.info("出睡类型: \(endSleepText)")
+
         // 睡眠质量
         BDLogger.info("\n--- 睡眠质量 ---")
         BDLogger.info("⭐️ 睡眠评分: \(model.score) / 100")
@@ -380,6 +411,19 @@ class GoMoreFunction_Module: BaseFunction_Module {
         BDLogger.info("⏰ 睡眠潜伏期: \(model.latency) 分钟")
         BDLogger.info("🔄 入睡后清醒时间(WASO): \(model.waso) 分钟")
         BDLogger.info("⏱ 总睡眠时间: \(model.totalSleepTime) 分钟")
+
+        // 新版睡眠评分和HRV数据
+        BDLogger.info("\n--- 新版睡眠评分 ---")
+        BDLogger.info("总睡眠时间评分: \(String(format: "%.1f", model.totalSleepTimeScore))")
+        BDLogger.info("睡眠效率评分: \(String(format: "%.1f", model.sleepEfficiencyScore))")
+        BDLogger.info("清醒次数评分: \(String(format: "%.1f", model.wakeTimeScore))")
+        BDLogger.info("深睡比例评分: \(String(format: "%.1f", model.deepRatioScore))")
+        BDLogger.info("眼动比例评分: \(String(format: "%.1f", model.remRatioScore))")
+        BDLogger.info("SRI评分: \(String(format: "%.1f", model.sriScore))")
+        BDLogger.info("HRV评分: \(String(format: "%.1f", model.hrvScore))")
+        BDLogger.info("SRI: \(model.sri)")
+        BDLogger.info("夜间RMSSD: \(String(format: "%.1f", model.nightlyRmssd)) ms")
+        BDLogger.info("新版总睡眠评分: \(String(format: "%.1f", model.sleepScore))")
 
         // 各阶段时长和比例
         BDLogger.info("\n--- 各睡眠阶段 ---")
@@ -548,6 +592,12 @@ class GoMoreFunction_Module: BaseFunction_Module {
     private func handleGoMoreSleepQuerySuccess(_ sleepModel: BCLRingSleepModel) {
         BDLogger.info("✅ GoMore睡眠详情查询成功")
         BDLogger.info("睡眠时长: \(sleepModel.hours)小时\(sleepModel.minutes)分钟, 数据条数: \(sleepModel.sleepDataList.count)")
+        BDLogger.info("总睡眠时间评分: \(formatOptionalScore(sleepModel.totalSleepTimeScore))")
+        BDLogger.info("睡眠效率评分: \(formatOptionalScore(sleepModel.sleepEfficiencyScore))")
+        BDLogger.info("清醒次数评分: \(formatOptionalScore(sleepModel.wakeTimeScore))")
+        BDLogger.info("深睡比例评分: \(formatOptionalScore(sleepModel.deepRatioScore))")
+        BDLogger.info("眼动比例评分: \(formatOptionalScore(sleepModel.remRatioScore))")
+        BDLogger.info("总睡眠评分: \(formatOptionalScore(sleepModel.sleepScore))")
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -559,11 +609,24 @@ class GoMoreFunction_Module: BaseFunction_Module {
         let message = """
         睡眠时长: \(sleepModel.hours)小时\(sleepModel.minutes)分钟
         睡眠评分: \(sleepModel.score)
+        总睡眠时间评分: \(formatOptionalScore(sleepModel.totalSleepTimeScore))
+        睡眠效率评分: \(formatOptionalScore(sleepModel.sleepEfficiencyScore))
+        清醒次数评分: \(formatOptionalScore(sleepModel.wakeTimeScore))
+        深睡比例评分: \(formatOptionalScore(sleepModel.deepRatioScore))
+        眼动比例评分: \(formatOptionalScore(sleepModel.remRatioScore))
+        总睡眠评分: \(formatOptionalScore(sleepModel.sleepScore))
         开始时间: \(formatter.string(from: startDate))
         结束时间: \(formatter.string(from: endDate))
         数据条数: \(sleepModel.sleepDataList.count)
         """
         showAlert(title: "GoMore睡眠详情", message: message)
+    }
+
+    private func formatOptionalScore(_ score: NSNumber?) -> String {
+        guard let score = score else {
+            return "暂无"
+        }
+        return String(format: "%.1f", score.doubleValue)
     }
 
     private func handleGoMoreSleepQueryError(_ error: BCLError) {

@@ -176,18 +176,22 @@ class SixAxisProtocol_Module: BaseFunction_Module {
 
     // 307-获取六轴传感器-加速度和陀螺仪数据(开启后一直上传直至接收到停止指令)
     private func startContinuousAccelerometerAndGyroscopeDataUpload() {
-        BCLRingManager.shared.getSixAxisRealTimeGyroscopeData { res in
+        BCLRingManager.shared.getSixAxisRealTimeAccelerationAndGyroscopeData { res in
             switch res {
             case let .success(data):
-                BDLogger.info("六轴-陀螺仪-持续数据: \(data)")
-                BDLogger.info("六轴-陀螺仪-持续数据-状态: \(data.status ?? 0)")
-                BDLogger.info("六轴-陀螺仪-持续数据-X: \(data.xGyroscope ?? 0)")
-                BDLogger.info("六轴-陀螺仪-持续数据-Y: \(data.yGyroscope ?? 0)")
-                BDLogger.info("六轴-陀螺仪-持续数据-Z: \(data.zGyroscope ?? 0)")
-                self.showSuccess("六轴-陀螺仪-持续数据成功\n状态: \(data.status ?? 0)\nX: \(data.xGyroscope ?? 0)\nY: \(data.yGyroscope ?? 0)\nZ: \(data.zGyroscope ?? 0)")
+                let sampleDescriptions = data.samples.enumerated().map { index, sample in
+                    "样本\(index + 1): 加速度(\(sample.xAcceleration), \(sample.yAcceleration), \(sample.zAcceleration))，陀螺仪(\(sample.xGyroscope), \(sample.yGyroscope), \(sample.zGyroscope))"
+                }
+                let samplesText = sampleDescriptions.isEmpty ? "无样本" : sampleDescriptions.joined(separator: "\n")
+                BDLogger.info("六轴-加速度、陀螺仪-持续数据，状态: \(data.status ?? 0)，样本数: \(data.samples.count)\n\(samplesText)")
+                self.showSuccess("六轴组合数据\n状态: \(data.status ?? 0)\n样本数: \(data.samples.count)\n\(samplesText)")
             case let .failure(error):
-                BDLogger.error("六轴-陀螺仪-持续数据失败: \(error)")
-                self.showError("六轴-陀螺仪-持续数据失败: \(error)")
+                if case .sixAxis(.measurementStopped) = error {
+                    BDLogger.info("六轴-加速度、陀螺仪-持续数据已停止")
+                } else {
+                    BDLogger.error("六轴-加速度、陀螺仪-持续数据失败: \(error)")
+                    self.showError("六轴-加速度、陀螺仪-持续数据失败: \(error)")
+                }
             }
         }
     }

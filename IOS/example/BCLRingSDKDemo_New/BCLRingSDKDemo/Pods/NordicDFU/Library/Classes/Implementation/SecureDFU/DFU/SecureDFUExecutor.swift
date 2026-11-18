@@ -47,7 +47,16 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     private var initPacketSent  : Bool = false
     private var firmwareSent    : Bool = false
     private var uploadStartTime : CFAbsoluteTime!
-    
+
+    /// A scheduled, cancellable task that sends the next data object after an
+    /// optional preparation delay (see `peripheralDidCreateDataObject()`).
+    ///
+    /// It is held here so that it can be cancelled if the link drops before it
+    /// fires. On reconnection `resetFirmwareRanges()` nulls `firmwareRanges` and
+    /// recomputes `currentRangeIdx`; without cancelling, this task would later run
+    /// against that reset state and crash (nil `firmwareRanges` / stale index).
+    private var dataObjectPreparationTask: DispatchWorkItem?
+
     /// Retry counter in case the peripheral returns invalid CRC.
     private let maxRetryCount = 3
     private var retryCount: Int
@@ -286,7 +295,8 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         if firmwareRanges == nil {
             // Split firmware into smaller object of at most maxLen bytes, if firmware is bigger
             // than maxLen.
-            firmwareRanges = calculateFirmwareRanges(Int(maxLen))
+            firmwareRanges = SecureDFUObjectGeometry.ranges(dataSize: firmware.data.count,
+                                                            maxObjectLength: Int(maxLen))
             currentRangeIdx = 0
         }
         
@@ -295,15 +305,13 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
         }
         
         if offset > 0 {
-            // Find the current range index.
-            currentRangeIdx = 0
-            for range in firmwareRanges! {
-                if range.contains(Int(offset)) {
-                    break
-                }
-                currentRangeIdx += 1
-            }
-            
+            // Map the reported offset onto the object it belongs to. This is clamped to
+            // the last object, so an offset at (or past) the end of the firmware can't
+            // point out of bounds. See SecureDFUObjectGeometry.objectIndex(...).
+            currentRangeIdx = SecureDFUObjectGeometry.objectIndex(forOffset: Int(offset),
+                                                                  maxObjectLength: Int(maxLen),
+                                                                  objectCount: firmwareRanges!.count)
+
             if verifyCRC(for: firmware.data, andPacketOffset: offset, matches: crc) {
                 logger.i("\(offset) bytes of data sent before, CRC match")
                 // Did we sent the whole firmware?
@@ -341,20 +349,22 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     }
     
     func peripheralDidCreateDataObject() {
-        guard let firmwareRanges = firmwareRanges else {
-            error(.invalidInternalState, didOccurWithMessage:
-                  "Assert firmwareRanges != nil failed")
-            return
-        }
-        logger.i("Data object \(currentRangeIdx + 1)/\(firmwareRanges.count) created")
+        logger.i("Data object \(currentRangeIdx + 1)/\(firmwareRanges!.count) created")
         // For SDK 15.x and 16 the bootloader needs some time before it's ready to receive data.
         // Otherwise, some packets may be discarded and the received checksum will not match.
         if currentRangeIdx == 0 || initiator.dataObjectPreparationDelay > 0 {
             let delay = initiator.dataObjectPreparationDelay > 0 ? initiator.dataObjectPreparationDelay : 0.4
             logger.d("wait(\(Int(delay * 1000)))")
-            initiator.queue.asyncAfter(deadline: .now() + delay) {
-                self.sendDataObject(self.currentRangeIdx) // -> peripheralDidReceiveObject() will be called.
+            // Schedule sending the object as a cancellable task. The range index is
+            // captured now, not read at fire time, so a concurrent reconnection can't
+            // make it send a different object. If the link drops before it fires,
+            // resetFirmwareRanges() cancels it (see dataObjectPreparationTask).
+            let rangeIdx = currentRangeIdx
+            let task = DispatchWorkItem { [weak self] in
+                self?.sendDataObject(rangeIdx) // -> peripheralDidReceiveObject() will be called.
             }
+            dataObjectPreparationTask = task
+            initiator.queue.asyncAfter(deadline: .now() + delay, execute: task)
         } else {
             sendDataObject(currentRangeIdx) // -> peripheralDidReceiveObject() will be called.
         }
@@ -387,43 +397,15 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      This method should be called before sending each part of the firmware.
      */
     private func resetFirmwareRanges() {
+        // Cancel a "send next object" task that may have been scheduled before a
+        // reconnection, so it can't run against the state we're about to reset.
+        dataObjectPreparationTask?.cancel()
+        dataObjectPreparationTask = nil
         currentRangeIdx = 0
         firmwareRanges  = nil
         initPacketSent  = false
         firmwareSent    = false
         uploadStartTime = CFAbsoluteTimeGetCurrent()
-    }
-    
-    /**
-     Calculates the firmware ranges.
-     
-     In Secure DFU the firmware is sent as separate 'objects', where each object is at most
-     'maxLen' long. This method creates a list of ranges that will be used to send data to the
-     peripheral, for example: `0 ..< 4096` and `4096 ..< 5000` in case the firmware
-     was 5000 bytes long.
-     
-     - parameter maxLen: The maximum length of an object.
-     
-     - returns: The array of ranges.
-     */
-    private func calculateFirmwareRanges(_ maxLen: Int) -> [Range<Int>] {
-        var totalLength = firmware.data.count
-        var ranges: [Range<Int>] = []
-        ranges.reserveCapacity((totalLength + maxLen - 1) / maxLen)
-        
-        var partIdx = 0
-        while totalLength > 0 {
-            if totalLength > maxLen {
-                ranges.append(partIdx * maxLen..<partIdx * maxLen + maxLen)
-                totalLength -= maxLen
-            } else {
-                ranges.append(partIdx * maxLen..<partIdx * maxLen + totalLength)
-                totalLength = 0
-            }
-            partIdx += 1
-        }
-        
-        return ranges
     }
     
     /**
@@ -473,17 +455,12 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
     /**
      Creates the new data object with length equal to the length of the range with given index.
      
-     The ranges were calculated using `calculateFirmwareRanges()`.
+     The ranges were calculated using `SecureDFUObjectGeometry.ranges(...)`.
      
      - parameter rangeIdx: Index of a range of the firmware.
      */
     private func createDataObject(_ rangeIdx: Int) {
-        guard let firmwareRanges = firmwareRanges else {
-            error(.invalidInternalState, didOccurWithMessage:
-                  "Assert firmwareRanges != nil failed")
-            return
-        }
-        let currentRange = firmwareRanges[rangeIdx]
+        let currentRange = firmwareRanges![rangeIdx]
         peripheral.createDataObject(withLength: UInt32(currentRange.upperBound - currentRange.lowerBound))
         // -> peripheralDidCreateDataObject() will be called.
     }
@@ -496,22 +473,12 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
      call this method again, now with the offset parameter equal `nil`.
      
      - parameter rangeIdx:     Index of the range to be sent. The ranges were calculated
-                               using `calculateFirmwareRanges()`.
+                               using `SecureDFUObjectGeometry.ranges(...)`.
      - parameter resumeOffset: If set, this method will send only the part of firmware from
                                the range. The offset must be inside the given range.
      */
     private func sendDataObject(_ rangeIdx: Int, from resumeOffset: UInt32? = nil) {
-        guard let firmwareRanges = firmwareRanges else {
-            error(.invalidInternalState, didOccurWithMessage:
-                  "Assert firmwareRanges != nil failed")
-            return
-        }
-        guard firmwareRanges.count > rangeIdx else {
-            error(.invalidInternalState, didOccurWithMessage:
-                  "Assert firmwareRanges.count (\(firmwareRanges.count)) > rangeIdx (\(rangeIdx)) failed")
-            return
-        }
-        var range = firmwareRanges[rangeIdx]
+        var range = firmwareRanges![rangeIdx]
         
         if let resumeOffset = resumeOffset {
             if UInt32(range.lowerBound) == resumeOffset {
@@ -520,9 +487,9 @@ internal class SecureDFUExecutor : DFUExecutor, SecureDFUPeripheralDelegate {
                 return
             }
             
-            // This is a resuming object, recalculate location and size.
-            let newLength = range.lowerBound + (range.upperBound - range.lowerBound) - Int(offset)
-            range = Int(resumeOffset) ..< newLength + Int(resumeOffset)
+            // This is a resuming object: send from the resume offset to the end
+            // of the current object's range.
+            range = SecureDFUObjectGeometry.resumeRange(of: range, from: Int(resumeOffset))
         }
         
         peripheral.sendNextObject(from: range, of: firmware,

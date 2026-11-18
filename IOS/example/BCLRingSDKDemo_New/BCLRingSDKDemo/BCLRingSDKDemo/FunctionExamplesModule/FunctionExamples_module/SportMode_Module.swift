@@ -45,7 +45,8 @@ class SportMode_Module: BaseFunction_Module {
             self.showSuccess("运动数据-\n时间戳: \(sportDataResponse.timestamp ?? 0)\n运动数据-步数: \(sportDataResponse.totalSteps ?? 0)\n运动数据-心率: \(sportDataResponse.heartRate ?? 0)次/分\n运动数据-能量消耗: \(sportDataResponse.energyConsumption ?? 0)")
         }
 
-        BCLRingManager.shared.startSportMode(sportType: 1, recordDuration: 600, sliceDuration: 60) { res in
+        // sportType 4 表示骑行模式
+        BCLRingManager.shared.startSportMode(sportType: 4, recordDuration: 600, sliceDuration: 60) { res in
             switch res {
             case let .success(response):
                 if response.status == 1 {

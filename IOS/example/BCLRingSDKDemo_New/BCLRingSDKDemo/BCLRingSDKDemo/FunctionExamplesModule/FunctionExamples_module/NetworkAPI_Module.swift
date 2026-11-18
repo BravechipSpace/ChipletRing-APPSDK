@@ -228,13 +228,22 @@ class NetworkAPI_Module: BaseFunction_Module {
             switch result {
             case let .success(versionInfo):
                 if versionInfo.hasNewVersion {
-                    BDLogger.info("""
-                    ✅ 发现新版本：
-                    - 版本号：\(versionInfo.version ?? "")
-                    - 下载地址：\(versionInfo.downloadUrl ?? "")
-                    - 文件名：\(versionInfo.fileName ?? "")
-                    """)
-                    self.showSuccess("发现新版本: \(versionInfo.version ?? "")")
+                    var logLines = [
+                        "✅ 发现新版本：",
+                        "- 版本号：\(versionInfo.version ?? "")",
+                        "- 下载地址：\(versionInfo.downloadUrl ?? "")",
+                        "- 文件名：\(versionInfo.fileName ?? "")",
+                    ]
+                    if let upgradeDescribe = versionInfo.upgradeDescribe, !upgradeDescribe.isEmpty {
+                        logLines.append("- 升级说明：\(upgradeDescribe)")
+                    }
+                    BDLogger.info(logLines.joined(separator: "\n"))
+
+                    var successMessage = "发现新版本: \(versionInfo.version ?? "")"
+                    if let upgradeDescribe = versionInfo.upgradeDescribe, !upgradeDescribe.isEmpty {
+                        successMessage += "\n\n升级说明:\n\(upgradeDescribe)"
+                    }
+                    self.showSuccess(successMessage)
                 } else {
                     BDLogger.info("✅ 当前已是最新版本")
                     self.showSuccess("当前已是最新版本")

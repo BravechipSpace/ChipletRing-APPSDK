@@ -28,6 +28,10 @@ class MeasurementBloodOxygen_Module: BaseFunction_Module {
             stopBloodOxygenMeasurement()
         case 88: // 配置血氧采集模式
             showBloodOxygenCollectionModeConfigDialog()
+        case 89: // 设置血氧模式开关
+            showBloodOxygenModeDialog()
+        case 90: // 读取血氧模式开关
+            getBloodOxygenMode()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -229,6 +233,70 @@ class MeasurementBloodOxygen_Module: BaseFunction_Module {
         case .failure:
             return "失败"
         case .none:
+            return "未知"
+        }
+    }
+
+    /// 显示血氧模式开关设置弹窗
+    private func showBloodOxygenModeDialog() {
+        let alert = UIAlertController(title: "设置血氧模式开关",
+                                      message: "请选择血氧模式状态",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "打开", style: .default) { _ in
+            self.setBloodOxygenMode(enabled: true)
+        })
+        alert.addAction(UIAlertAction(title: "关闭", style: .default) { _ in
+            self.setBloodOxygenMode(enabled: false)
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController?.present(alert, animated: true)
+    }
+
+    /// 89 - 设置血氧模式开关
+    private func setBloodOxygenMode(enabled: Bool) {
+        BCLRingManager.shared.setBloodOxygenMode(enabled: enabled) { result in
+            let targetStatus = enabled ? "打开" : "关闭"
+            switch result {
+            case let .success(response):
+                BDLogger.info("设置血氧模式开关完成: 目标状态=\(targetStatus), 结果=\(response.statusRawValue)")
+                if response.isSuccess {
+                    self.showSuccess("设置成功\n血氧模式：\(targetStatus)")
+                } else {
+                    self.showError("设置失败\n血氧模式：\(targetStatus)\n结果：\(response.statusRawValue)")
+                }
+            case let .failure(error):
+                BDLogger.error("设置血氧模式开关失败: \(error)")
+                self.showError("设置血氧模式开关失败: \(error)")
+            }
+        }
+    }
+
+    /// 90 - 读取血氧模式开关
+    private func getBloodOxygenMode() {
+        BCLRingManager.shared.getBloodOxygenMode { result in
+            switch result {
+            case let .success(response):
+                let statusText = self.bloodOxygenModeStatusDescription(response.statusRawValue)
+                BDLogger.info("读取血氧模式开关完成: \(statusText)(\(response.statusRawValue))")
+                if response.statusRawValue == 0x00 || response.statusRawValue == 0x01 {
+                    self.showSuccess("血氧模式：\(statusText)")
+                } else {
+                    self.showError("血氧模式状态未知：\(response.statusRawValue)")
+                }
+            case let .failure(error):
+                BDLogger.error("读取血氧模式开关失败: \(error)")
+                self.showError("读取血氧模式开关失败: \(error)")
+            }
+        }
+    }
+
+    private func bloodOxygenModeStatusDescription(_ status: UInt8) -> String {
+        switch status {
+        case 0x00:
+            return "关闭"
+        case 0x01:
+            return "打开"
+        default:
             return "未知"
         }
     }

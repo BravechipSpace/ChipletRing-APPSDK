@@ -2,7 +2,7 @@
 此SDK能够让工程师快速了解和集成勇芯智能戒指解决方案。  
 此SDK封装了低功耗蓝牙（蓝牙标准）、勇芯智能戒指通讯协议（私有）、勇芯生理算法进行了封装。  
 此SDK需要结合真实的智能戒指进行移植和功能测试。  
-此SDK具有两种版本，安卓和IOS。  
+此SDK具有三种版本，安卓，IOS，小程序（uniapp）。  
 ##### 2.目录介绍
 ./Android/example:基于SDK在安卓端设计的例子。  
 ./Android/library:安卓SDK库。  
@@ -10,7 +10,7 @@
 ./IOS/example:基于SDK在IOS端设计的例子。  
 ./IOS/library:IOS SDK库。  
 ./IOS/source:IOS端部分开放的源码，结合SDK进行使用。  
-./Doc/:重要，低功耗蓝牙技术和智能戒指解决方案的介绍。  
+ 
 ##### 3.商务合作
 如果您有商业合作、定制开发或企业支持需求，欢迎联系：  
 📧 **Email**: xiaojian.cui@bravechip.com
@@ -26,7 +26,7 @@ It encapsulates low-power Bluetooth (Bluetooth standard), BraveChip smart ring c
 
 This SDK needs to be integrated with a real smart ring for deployment and functional testing.
 
-There are two versions of this SDK: Android and iOS.
+This SDK has three versions: Android, iOS, and Mini Program (uniapp).
 ##### 2.Directory Overview
 ./Android/example: Example design on the Android side based on the SDK.  
 
@@ -40,7 +40,6 @@ There are two versions of this SDK: Android and iOS.
 
 ./IOS/source: Partially open-source code on the iOS side, used with the SDK.  
 
-./Doc/: Important documentation about low-power Bluetooth technology and the smart ring solution.  
 
 ##### 3.Business Cooperation
 For commercial cooperation, custom development, or enterprise support, feel free to contact:  

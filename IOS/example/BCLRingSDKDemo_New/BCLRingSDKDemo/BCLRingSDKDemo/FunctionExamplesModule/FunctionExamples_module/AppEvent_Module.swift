@@ -7,8 +7,14 @@
 //
 
 import BCLRingSDK
-import SwiftDate
+import QMUIKit
 import UIKit
+
+/// 将可选能力位转换为便于客户 App 展示的语义；nil 表示旧固件未返回该字段。
+private func abnormalLogSupportDescription(_ isSupported: Bool?) -> String {
+    guard let isSupported else { return "未知" }
+    return isSupported ? "支持" : "不支持"
+}
 
 /// App复合指令功能模块 - 处理绑定戒指、连接戒指、刷新戒指等APP事件
 class AppEvent_Module: BaseFunction_Module {
@@ -28,11 +34,13 @@ class AppEvent_Module: BaseFunction_Module {
     override func executeFunction(id: Int) {
         switch id {
         case 21:
-            appEventBindRing()
+            showAppEventConfigDialog(commandType: .bind)
         case 22:
-            appEventConnectRing()
+            showAppEventConfigDialog(commandType: .connect)
         case 23:
-            appEventRefreshRing()
+            showAppEventConfigDialog(commandType: .refresh)
+        case 24:
+            readCompositeInformation()
         default:
             showError("未知功能ID: \(id)")
         }
@@ -40,13 +48,85 @@ class AppEvent_Module: BaseFunction_Module {
 
     // MARK: - Private Methods
 
+    /// 24 - 读取录音、触摸键、存储模式和充电停一切复合配置信息
+    private func readCompositeInformation() {
+        showLoading("读取中...")
+        BCLRingManager.shared.readCompositeInformation { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.hideLoading()
+                switch result {
+                case let .success(response):
+                    let touchKeys = response.enabledTouchKeys
+                        .map { String(format: "0x%02X", $0.rawValue) }
+                        .joined(separator: "、")
+                    let storageMode: String
+                    switch response.recordingStorageMode {
+                    case .loopOverwrite?: storageMode = "循环覆盖"
+                    case .stopWhenFull?: storageMode = "录满停止"
+                    case nil: storageMode = String(format: "未知(0x%02X)", response.recordingStorageModeRawValue)
+                    }
+                    // 旧固件不返回Data[26]时必须显示未知，不能将nil当作禁止。
+                    // 此处展示的是设备配置使能状态，并非当前充电或功能停止状态。
+                    let chargingState: String
+                    switch response.isStopAllWhileChargingEnabled {
+                    case true?: chargingState = "使能"
+                    case false?: chargingState = "禁止"
+                    case nil: chargingState = "未知（设备未返回）"
+                    }
+                    let chargingRawValue = response.stopAllWhileChargingStatus.map { String($0) } ?? "nil（设备未返回）"
+                    BDLogger.info("充电停一切开关原始值(Data[26]，1使能、0禁止)：\(chargingRawValue)")
+                    let startTime = self.beijingTimeDescription(response.automaticRecordingDisabledStartTime)
+                    let endTime = self.beijingTimeDescription(response.automaticRecordingDisabledEndTime)
+                    let crossesMidnight = response.automaticRecordingDisabledStartTime > response.automaticRecordingDisabledEndTime
+                    let message = "定时录音：\(response.isTimedRecordingEnabled ? "开启" : "关闭")\n间隔：\(response.timedRecordingInterval)秒\n录音时长：\(response.timedRecordingDuration)秒\n关闭时段：\(response.isAutomaticRecordingDisabledPeriodEnabled ? "开启" : "关闭")\n开始时间：\(startTime)（北京时间）\n结束时间：\(endTime)（北京时间）\n跨越零点：\(crossesMidnight ? "是" : "否")\n触摸键掩码：0x\(String(format: "%02X", response.enabledTouchKeyMask))\n已知触摸键：\(touchKeys.isEmpty ? "无" : touchKeys)\n单次录音时长：\(response.singleRecordingDuration)秒\n存储模式：\(storageMode)\n充电停一切：\(chargingState)"
+                    BDLogger.info("读取复合配置信息成功：\(message.replacingOccurrences(of: "\n", with: "，"))")
+                    self.showInfoAlert(title: "复合配置信息", message: message)
+                case let .failure(error):
+                    BDLogger.error("读取复合配置信息失败：\(error)")
+                    self.showError("读取复合配置信息失败：\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    /// 将北京时间当天秒数格式化为HH:mm:ss。
+    private func beijingTimeDescription(_ seconds: UInt32) -> String {
+        let hour = seconds / 3_600
+        let minute = seconds % 3_600 / 60
+        let second = seconds % 60
+        return String(format: "%02u:%02u:%02u", hour, minute, second)
+    }
+
+    /// App复合指令参数配置弹窗
+    private func showAppEventConfigDialog(commandType: AppEventConfig_Dialog.CommandType) {
+        let height: CGFloat = commandType.supportsFilterTime ? 470 : 350
+        let contentView = AppEventConfig_Dialog(x: 0, y: 0, width: 320, height: height, commandType: commandType)
+        contentView.confirmButtonCallback = { [weak self] date, timeZone, filterTime in
+            switch commandType {
+            case .bind:
+                self?.appEventBindRing(date: date, timeZone: timeZone)
+            case .connect:
+                self?.appEventConnectRing(date: date, timeZone: timeZone, filterTime: filterTime)
+            case .refresh:
+                self?.appEventRefreshRing(date: date, timeZone: timeZone, filterTime: filterTime)
+            }
+        }
+
+        let modalPresentation_VC = QMUIModalPresentationViewController()
+        modalPresentation_VC.isModal = true
+        modalPresentation_VC.contentView = contentView
+        modalPresentation_VC.showWith(animated: true)
+    }
+
     /// 21 - App复合指令-绑定戒指(所谓复合指令即将时间同步、版本信息获取、电量信息获取、采集间隔获取、历史数据同步等多个功能集合在一个指令中执行)
-    private func appEventBindRing() {
+    private func appEventBindRing(date: Date, timeZone: BCLRingTimeZone) {
         // 该指令适用于用户首次绑定戒指时使用，提交当前时间和时区信息，以确保戒指与APP的时间同步，同时获取戒指的基本信息和功能支持情况。
         // 注意：该指令执行时，戒指内部会根据情况清除历史数据。适用场景如：用户首次使用App绑定戒指，或用户更换新的戒指时使用。避免戒指初始状态下存在旧数据影响使用体验。
 
         // 此处提交当前时间和时区信息，以确保戒指与APP的时间同步,功能同时间同步接口一致
-        BCLRingManager.shared.appEventBindRing(date: Date(), timeZone: BCLRingTimeZone.getCurrentSystemTimeZone()) { res in
+        BDLogger.info("APP事件-绑定戒指-同步时间: \(date), 时区: \(timeZone.rawValue)")
+        BCLRingManager.shared.appEventBindRing(date: date, timeZone: timeZone) { res in
             switch res {
             case let .success(response):
                 BDLogger.info("绑定戒指成功: \(response)")
@@ -106,6 +186,8 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
                 BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
                 BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
+                BDLogger.info("异常日志读取支持状态值(1支持,0不支持): \(String(describing: response.abnormalLogSupportedStatus))")
+                BDLogger.info("异常日志读取能力: \(abnormalLogSupportDescription(response.isAbnormalLogSupported))")
             case let .failure(error):
                 switch error {
                 case let .responseParsing(reason):
@@ -118,7 +200,7 @@ class AppEvent_Module: BaseFunction_Module {
     }
 
     /// 22 - App复合指令-连接戒指(所谓复合指令即将时间同步、版本信息获取、电量信息获取、采集间隔获取、历史数据同步等多个功能集合在一个指令中执行)
-    private func appEventConnectRing() {
+    private func appEventConnectRing(date: Date, timeZone: BCLRingTimeZone, filterTime: Date?) {
         historyData.removeAll()
         // 该指令适用于App启动后连接戒指成功后使用，提交当前时间和时区信息，以确保戒指与APP的时间同步，功能同时间同步接口一致，同时获取戒指的基本信息和功能支持情况。且戒指会主动将历史数据同步到APP。
         // App在接收到数据后，可以根据业务需求将数据存储到本地数据库或上传到服务器进行进一步处理和分析。
@@ -156,11 +238,10 @@ class AppEvent_Module: BaseFunction_Module {
         )
 
         // 设置过滤时间（可选）(如果不需要过滤时间，可以传nil，表示不过滤) (传入时间则只会同步过滤时间之后的数据)
-        // 这里设置为2025-01-01 00:00:00，表示只同步该时间之后的数据
         // 此处注意该过滤时间参数目前仅部分固件支持
-        let filterTime = "2025-01-01 00:00:00".toDate("yyyy-MM-dd HH:mm:ss", region: BCLRingTimeZone.getCurrentSystemTimeZone().region)?.date
+        BDLogger.info("APP事件-连接戒指-同步时间: \(date), 时区: \(timeZone.rawValue)")
         BDLogger.info("APP事件-连接戒指-过滤时间: \(String(describing: filterTime))")
-        BCLRingManager.shared.appEventConnectRing(date: Date(), timeZone: BCLRingTimeZone.getCurrentSystemTimeZone(), filterTime: filterTime, callbacks: callbacks) { res in
+        BCLRingManager.shared.appEventConnectRing(date: date, timeZone: timeZone, filterTime: filterTime, callbacks: callbacks) { res in
             switch res {
             case let .success(response):
                 //  此处可根据业务需求，将数据更新到相关UI中
@@ -222,6 +303,8 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
                 BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
                 BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
+                BDLogger.info("异常日志读取支持状态值(1支持,0不支持): \(String(describing: response.abnormalLogSupportedStatus))")
+                BDLogger.info("异常日志读取能力: \(abnormalLogSupportDescription(response.isAbnormalLogSupported))")
             case let .failure(error):
                 BDLogger.error("连接戒指指令执行-失败: \(error)")
             }
@@ -229,7 +312,7 @@ class AppEvent_Module: BaseFunction_Module {
     }
 
     /// 23 - App复合指令-刷新戒指(所谓复合指令即将时间同步、版本信息获取、电量信息获取、采集间隔获取、历史数据同步等多个功能集合在一个指令中执行)
-    private func appEventRefreshRing() {
+    private func appEventRefreshRing(date: Date, timeZone: BCLRingTimeZone, filterTime: Date?) {
         historyData.removeAll()
         // 该指令适用于需要刷新页面场景，提交当前时间和时区信息，以确保戒指与APP的时间同步，功能同时间同步接口一致，同时获取戒指的基本信息和功能支持情况。且戒指会主动将历史数据同步到APP。
         // App在接收到数据后，可以根据业务需求将数据存储到本地数据库或上传到服务器进行进一步处理和分析。
@@ -267,11 +350,10 @@ class AppEvent_Module: BaseFunction_Module {
         )
 
         // 设置过滤时间（可选）(如果不需要过滤时间，可以传nil，表示不过滤) (传入时间则只会同步过滤时间之后的数据)
-        // 这里设置为2025-01-01 00:00:00，表示只同步该时间之后的数据
         // 此处注意该过滤时间参数目前仅部分固件支持
-        let filterTime = "2025-01-01 00:00:00".toDate("yyyy-MM-dd HH:mm:ss", region: BCLRingTimeZone.getCurrentSystemTimeZone().region)?.date
+        BDLogger.info("APP事件-刷新戒指-同步时间: \(date), 时区: \(timeZone.rawValue)")
         BDLogger.info("APP事件-刷新戒指-过滤时间: \(String(describing: filterTime))")
-        BCLRingManager.shared.appEventRefreshRing(date: Date(), timeZone: BCLRingTimeZone.getCurrentSystemTimeZone(), filterTime: filterTime, callbacks: callbacks) { res in
+        BCLRingManager.shared.appEventRefreshRing(date: date, timeZone: timeZone, filterTime: filterTime, callbacks: callbacks) { res in
             switch res {
             case let .success(response):
                 BDLogger.info("刷新戒指指令执行-成功: \(response)")
@@ -334,6 +416,8 @@ class AppEvent_Module: BaseFunction_Module {
                 BDLogger.info("GoMore是否已授权: \(String(describing: response.isGoMoreAuthorized))")
                 BDLogger.info("HID服务开启状态值(iOS定制,1开启,0关闭): \(String(describing: response.hidServiceEnabledStatus))")
                 BDLogger.info("HID服务是否开启(iOS定制): \(String(describing: response.isHIDServiceEnabled))")
+                BDLogger.info("异常日志读取支持状态值(1支持,0不支持): \(String(describing: response.abnormalLogSupportedStatus))")
+                BDLogger.info("异常日志读取能力: \(abnormalLogSupportDescription(response.isAbnormalLogSupported))")
             case let .failure(error):
                 BDLogger.error("刷新戒指指令执行-失败: \(error)")
             }

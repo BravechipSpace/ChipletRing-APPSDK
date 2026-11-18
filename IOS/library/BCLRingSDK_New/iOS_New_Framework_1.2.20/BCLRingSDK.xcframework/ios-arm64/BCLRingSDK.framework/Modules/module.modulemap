@@ -1,0 +1,11 @@
+framework module BCLRingSDK {
+  umbrella header "BCLRingSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module BCLRingSDK.Swift {
+  header "BCLRingSDK-Swift.h"
+  requires objc
+}

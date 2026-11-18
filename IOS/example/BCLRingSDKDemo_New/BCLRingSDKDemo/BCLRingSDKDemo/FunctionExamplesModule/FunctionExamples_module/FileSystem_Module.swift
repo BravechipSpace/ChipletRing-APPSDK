@@ -8,11 +8,21 @@
 
 import BCLRingSDK
 import QMUIKit
+import RxSwift
 import UIKit
 
 /// 文件系统功能模块（381-400） -  获取文件列表、文件数据等
 class FileSystem_Module: BaseFunction_Module {
     // MARK: - Properties
+
+    /// 模块拥有的推送订阅；取消监听不影响其他业务的 Block 或 Observable。
+    private var fileDownloadStateSubscription: Disposable?
+    /// 避免重复点击覆盖本模块控制请求的加载提示。
+    private var isControllingFileDownload = false
+
+    deinit {
+        fileDownloadStateSubscription?.dispose()
+    }
 
     /// 文件列表缓存
     private var collectedFiles: [FileInfoModel] = []
@@ -56,8 +66,110 @@ class FileSystem_Module: BaseFunction_Module {
             getStartSportModeConfigInfo()
         case 390: // 390 - 请求文件数据断点续传
             showRequestFileDataResumeDialog()
+        case 391: // 391 - 暂停文件下载
+            controlFileDownload(action: .pause)
+        case 392: // 392 - 恢复文件下载（不是带偏移量的断点续传）
+            controlFileDownload(action: .resume)
+        case 393: // 393 - 取消文件下载（不删除设备文件）
+            controlFileDownload(action: .cancel)
+        case 394: // 394 - 开启下载状态推送监听
+            startFileDownloadStateListening()
+        case 395: // 395 - 取消下载状态推送监听
+            stopFileDownloadStateListening()
+        case 396: // 396 - 设置文件系统录制存储模式
+            showSetFileSystemRecordingModeDialog()
+        case 397: // 397 - 查询文件系统录制存储模式
+            getFileSystemRecordingMode()
+        case 398: // 398 - 读取异常日志
+            readAbnormalLog()
+        case 399: // 399 - 删除异常日志
+            confirmDeleteAbnormalLog()
         default:
             showError("未知功能ID: \(id)")
+        }
+    }
+
+    // MARK: - 文件下载控制与主动推送
+
+    /// 发送 0x3627，等待设备执行结果；下载状态和控制请求结果是独立通道。
+    private func controlFileDownload(action: BCLFileDownloadControlAction) {
+        guard !isControllingFileDownload else {
+            showError("正在等待下载控制结果，请稍后再试")
+            return
+        }
+        isControllingFileDownload = true
+        let name = fileDownloadActionDescription(action)
+        BDLogger.info("发送文件下载控制：\(name)")
+        showLoading("正在\(name)文件下载...", userInteractionEnabled: false)
+        BCLRingManager.shared.controlFileDownload(action: action) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.isControllingFileDownload = false
+                self.hideLoading()
+                switch result {
+                case let .success(response):
+                    if response.status == 1 {
+                        BDLogger.info("设备已执行文件下载控制：\(name)")
+                        self.showSuccess("设备已执行\(name)下载")
+                    } else {
+                        BDLogger.warning("设备拒绝文件下载控制：\(name)")
+                        self.showError("设备执行\(name)下载失败")
+                    }
+                case let .failure(error):
+                    BDLogger.error("文件下载控制失败：\(error)")
+                    self.showError("\(name)下载失败：\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    /// 监听 0x3628；原因 1 为录音，事件不包含文件名或文件 ID。
+    private func startFileDownloadStateListening() {
+        fileDownloadStateSubscription?.dispose()
+        // Block 用法：BCLRingManager.shared.fileDownloadStatePushBlock = { response in ... }
+        // Block 取消：将 fileDownloadStatePushBlock 置 nil。本示例仅管理自己的 Rx 订阅。
+        fileDownloadStateSubscription = BCLRingManager.shared.fileDownloadStatePushObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] response in
+                guard let self = self else { return }
+                let action = response.action.map(self.fileDownloadActionDescription)
+                    ?? "未知动作(\(response.actionRawValue.map(String.init) ?? "无"))"
+                let reason = response.reason == .recording
+                    ? "录音" : "未知原因(\(response.reasonRawValue.map(String.init) ?? "无"))"
+                let message = "戒指推送：\(action)下载，原因：\(reason)"
+                BDLogger.info(message)
+                self.showSuccess(message)
+            })
+        BDLogger.info("已开启文件下载状态推送监听")
+        showSuccess("已开启文件下载状态推送监听")
+    }
+
+    /// 仅释放本模块订阅，不改变下载状态或其他调用方的监听。
+    private func stopFileDownloadStateListening() {
+        fileDownloadStateSubscription?.dispose()
+        fileDownloadStateSubscription = nil
+        BDLogger.info("已取消文件下载状态推送监听")
+        showSuccess("已取消文件下载状态推送监听")
+    }
+
+    private func fileDownloadActionDescription(_ action: BCLFileDownloadControlAction) -> String {
+        switch action {
+        case .pause: return "暂停"
+        case .resume: return "恢复"
+        case .cancel: return "取消"
+        }
+    }
+
+    /// 原下载回调的取消是正常终止，不应显示为设备故障。
+    private func handleFileDownloadError(_ error: BCLError) {
+        DispatchQueue.main.async { [weak self] in
+            if case .commandSending(.cancelled) = error {
+                BDLogger.info("当前文件下载已取消，设备文件保留")
+                self?.showSuccess("当前文件下载已取消")
+            } else {
+                BDLogger.error("文件下载失败：\(error)")
+                self?.showError("文件下载失败：\(error.localizedDescription)")
+            }
         }
     }
 
@@ -108,6 +220,166 @@ class FileSystem_Module: BaseFunction_Module {
             case let .failure(error):
                 BDLogger.error("获取文件系统状态失败: \(error)")
                 self.showError("获取文件系统状态失败: \(error)")
+            }
+        }
+    }
+
+    // 396 - 设置文件系统录制存储模式
+    private func showSetFileSystemRecordingModeDialog() {
+        guard let viewController = viewController else { return }
+        let alert = UIAlertController(title: "设置录制存储模式",
+                                      message: "请选择文件系统录满后的录制行为",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "循环覆盖", style: .default) { [weak self] _ in
+            self?.setFileSystemRecordingMode(.loopOverwrite)
+        })
+        alert.addAction(UIAlertAction(title: "录满停止", style: .default) { [weak self] _ in
+            self?.setFileSystemRecordingMode(.stopWhenFull)
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        viewController.present(alert, animated: true)
+    }
+
+    /// 设置文件系统录制存储模式，并区分设备拒绝与通信失败。
+    private func setFileSystemRecordingMode(_ mode: BCLFileSystemRecordingMode) {
+        let modeDescription = fileSystemRecordingModeDescription(mode)
+        BCLRingManager.shared.setFileSystemRecordingMode(mode) { [weak self] result in
+            switch result {
+            case let .success(response):
+                if response.isSuccess {
+                    BDLogger.info("设置文件系统录制存储模式成功：\(modeDescription)")
+                    self?.showSuccess("已设置为\(modeDescription)")
+                } else {
+                    BDLogger.error("设备拒绝设置文件系统录制存储模式：\(modeDescription)")
+                    self?.showError("设备拒绝设置\(modeDescription)")
+                }
+            case let .failure(error):
+                BDLogger.error("设置文件系统录制存储模式失败：\(error)")
+                self?.showError("设置录制存储模式失败：\(error)")
+            }
+        }
+    }
+
+    // 397 - 查询文件系统录制存储模式
+    private func getFileSystemRecordingMode() {
+        BCLRingManager.shared.getFileSystemRecordingMode { [weak self] result in
+            switch result {
+            case let .success(response):
+                guard let mode = response.mode else {
+                    self?.showError("文件系统录制存储模式无效")
+                    return
+                }
+                let modeDescription = self?.fileSystemRecordingModeDescription(mode) ?? "未知模式"
+                BDLogger.info("当前文件系统录制存储模式：\(modeDescription)")
+                self?.showInfoAlert(title: "录制存储模式", message: "当前模式：\(modeDescription)")
+            case let .failure(error):
+                BDLogger.error("查询文件系统录制存储模式失败：\(error)")
+                self?.showError("查询录制存储模式失败：\(error)")
+            }
+        }
+    }
+
+    /// 返回录制存储模式的中文展示文本。
+    private func fileSystemRecordingModeDescription(_ mode: BCLFileSystemRecordingMode) -> String {
+        switch mode {
+        case .loopOverwrite:
+            return "循环覆盖"
+        case .stopWhenFull:
+            return "录满停止"
+        }
+    }
+
+    // 398 - 读取异常日志
+    /// 读取 0x36/0x25，展示完整日志并演示由客户 App 将内容保存到自身沙盒。
+    private func readAbnormalLog() {
+        BCLRingManager.shared.readAbnormalLog { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case let .success(response):
+                    guard let timestamp = response.timestamp,
+                          let date = response.date,
+                          let content = response.logContent else {
+                        BDLogger.error("读取异常日志失败：响应字段为空")
+                        self.showError("读取异常日志失败：响应字段为空")
+                        return
+                    }
+                    let localTime = self.timestampFormatter.string(from: date)
+                    let displayContent = content.isEmpty ? "（无日志内容）" : content
+                    let totalPacketCount = response.totalPacketCount ?? 0
+                    do {
+                        let fileURL = try self.saveAbnormalLog(content: content, timestamp: timestamp)
+                        BDLogger.info("读取异常日志成功，本地时间：\(localTime)，时间戳：\(timestamp)，总包数：\(totalPacketCount)，保存路径：\(fileURL.path)，内容：\(displayContent)")
+                        self.showInfoAlert(title: "异常日志已保存",
+                                           message: "本地时间：\(localTime)\n时间戳：\(timestamp)\n总包数：\(totalPacketCount)\n保存路径：\(fileURL.path)\n\n\(displayContent)")
+                    } catch {
+                        BDLogger.error("异常日志读取成功但保存失败：\(error)，内容：\(displayContent)")
+                        self.showInfoAlert(title: "异常日志读取成功，保存失败",
+                                           message: "本地时间：\(localTime)\n时间戳：\(timestamp)\n总包数：\(totalPacketCount)\n保存错误：\(error.localizedDescription)\n\n\(displayContent)")
+                    }
+                case let .failure(error):
+                    BDLogger.error("读取异常日志失败：\(error)")
+                    self.showError("读取异常日志失败：\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    /// 将完整日志保存到 Documents/AbnormalLogs；同名文件通过递增后缀避免覆盖。
+    private func saveAbnormalLog(content: String, timestamp: UInt32) throws -> URL {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw NSError(domain: "BCLRingSDKDemo.AbnormalLog",
+                          code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取 App Documents 目录"])
+        }
+
+        let directoryURL = documentsURL.appendingPathComponent("AbnormalLogs", isDirectory: true)
+        try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+
+        let baseName = "abnormal_log_\(timestamp)"
+        var fileURL = directoryURL.appendingPathComponent("\(baseName).log")
+        var suffix = 1
+        while fileManager.fileExists(atPath: fileURL.path) {
+            fileURL = directoryURL.appendingPathComponent("\(baseName)_\(suffix).log")
+            suffix += 1
+        }
+        try content.write(to: fileURL, atomically: true, encoding: .utf8)
+        return fileURL
+    }
+
+    // 399 - 删除异常日志
+    /// 删除不可恢复，发送 0x36/0x26 前必须由用户二次确认。
+    private func confirmDeleteAbnormalLog() {
+        guard let viewController = viewController else { return }
+        let alert = UIAlertController(title: "删除异常日志",
+                                      message: "删除后无法恢复，确定继续吗？",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "删除", style: .destructive) { [weak self] _ in
+            self?.deleteAbnormalLog()
+        })
+        viewController.present(alert, animated: true)
+    }
+
+    /// 用户确认后执行异常日志删除命令。
+    private func deleteAbnormalLog() {
+        BCLRingManager.shared.deleteAbnormalLog { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case let .success(response):
+                    guard response.isSuccess else {
+                        BDLogger.error("删除异常日志失败：设备未确认执行")
+                        self.showError("删除异常日志失败：设备未确认执行")
+                        return
+                    }
+                    BDLogger.info("异常日志已删除")
+                    self.showSuccess("异常日志已删除")
+                case let .failure(error):
+                    BDLogger.error("删除异常日志失败：\(error)")
+                    self.showError("删除异常日志失败：\(error.localizedDescription)")
+                }
             }
         }
     }
@@ -189,11 +461,29 @@ class FileSystem_Module: BaseFunction_Module {
 
     // 385 - 获取指定文件数据
     private func getFileData(fileName: String) {
-        BCLRingManager.shared.getFileData(fileName: fileName) { res in
+        BCLRingManager.shared.getFileData(fileName: fileName) { [weak self] res in
             switch res {
             case let .success(response):
                 BDLogger.info("获取文件数据成功: \(response)")
                 BDLogger.info("文件数据-状态: \(response.fileSystemStatus ?? 0)")
+                if response.fileSystemStatus == 2 {
+                    let message = "获取文件数据失败：文件系统正在写入，请稍后重试"
+                    BDLogger.error(message)
+                    self?.showError(message)
+                    return
+                }
+                if response.fileSystemStatus == 3 {
+                    let message = "获取文件数据失败：文件系统繁忙，请稍后重试"
+                    BDLogger.error(message)
+                    self?.showError(message)
+                    return
+                }
+                if response.fileSystemStatus == 4 {
+                    let message = "获取文件数据失败：文件大小错误"
+                    BDLogger.error(message)
+                    self?.showError(message)
+                    return
+                }
                 BDLogger.info("文件数据-大小: \(response.fileSize ?? 0)")
                 BDLogger.info("文件数据-总包数: \(response.totalNumber ?? 0)")
                 BDLogger.info("文件数据-当前包号: \(response.currentNumber ?? 0)")
@@ -252,7 +542,7 @@ class FileSystem_Module: BaseFunction_Module {
                     BDLogger.info("未知的文件类型")
                 }
             case let .failure(error):
-                BDLogger.error("获取文件数据失败: \(error)")
+                self?.handleFileDownloadError(error)
             }
         }
 //        // 弹出输入框让用户输入文件名
@@ -267,10 +557,103 @@ class FileSystem_Module: BaseFunction_Module {
 
     // 386 - 删除指定文件数据
     private func deleteFileData() {
+        guard let viewController = viewController else { return }
+
+        let alert = UIAlertController(
+            title: "删除文件",
+            message: "请输入要删除的文件名",
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { textField in
+            textField.placeholder = "例如：010203040506_2025_6_18:13:45:20_3.txt"
+        }
+
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "确认", style: .default) { [weak self, weak alert] _ in
+            guard let self = self else { return }
+            guard let fileName = alert?.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !fileName.isEmpty
+            else {
+                self.showError("文件名不能为空")
+                return
+            }
+
+            self.deleteFile(fileName: fileName)
+        })
+
+        viewController.present(alert, animated: true)
+    }
+
+    /// 删除指定文件
+    /// - Parameter fileName: 文件名
+    private func deleteFile(fileName: String) {
+        BCLRingManager.shared.deleteFile(fileName: fileName) { [weak self] res in
+            guard let self = self else { return }
+
+            switch res {
+            case let .success(response):
+                switch response.resultStatus {
+                case .success:
+                    BDLogger.info("删除文件成功: \(fileName), result=\(response.deleteResult ?? -1)")
+                    self.showSuccess("删除文件成功")
+                case .failure:
+                    BDLogger.info("删除文件失败: \(fileName), result=\(response.deleteResult ?? -1)")
+                    self.showError("删除文件失败")
+                case .fileBusy:
+                    BDLogger.info("删除文件失败，文件繁忙: \(fileName), result=\(response.deleteResult ?? -1)")
+                    self.showError("文件繁忙，请稍后重试")
+                case .unknown:
+                    BDLogger.info("删除文件返回未知结果: \(fileName), result=\(response.deleteResult ?? -1)")
+                    self.showError("删除文件返回未知结果")
+                }
+
+            case let .failure(error):
+                BDLogger.error("删除文件失败: \(fileName), error=\(error)")
+                self.showError("删除文件失败: \(error.localizedDescription)")
+            }
+        }
     }
 
     // 387 - 一键获取全部文件数据
+    /// 一键上传从指定文件序号开始，供暂停/恢复/取消示例联动验证。
     private func getAllFileData() {
+        let alert = UIAlertController(title: "获取全部文件数据", message: "请输入起始文件序号（0...255）", preferredStyle: .alert)
+        alert.addTextField { field in
+            field.text = "0"
+            field.keyboardType = .numberPad
+        }
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alert.addAction(UIAlertAction(title: "开始下载", style: .default) { [weak self, weak alert] _ in
+            guard let self = self else { return }
+            guard let text = alert?.textFields?.first?.text, let index = Int(text), (0...255).contains(index) else {
+                self.showError("文件序号必须为0...255")
+                return
+            }
+            // 不使用阻塞交互的持续加载态，传输中仍可点击下载控制入口。
+            BCLRingManager.shared.requestFileDataOneKey(fileIndex: index) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case let .success(response):
+                    guard let type = response.responseType else { return }
+                    switch type {
+                    case let .fileDataOneKey(status, _, _):
+                        BDLogger.info("一键下载状态：\(status)，0忙、1开始、2完成、3序号无效")
+                    case let .fileDataOneKeyProgress(progress):
+                        BDLogger.info("一键下载总进度：\(progress)%")
+                    case let .fileResponse(index, status, _, _, name):
+                        BDLogger.info("一键下载文件：\(name)，序号：\(index)，状态：\(status)")
+                    case let .fileProgress(index, progress):
+                        BDLogger.info("文件\(index)下载进度：\(progress)%")
+                    case .fileContentData:
+                        BDLogger.debug("收到一键下载文件内容")
+                    }
+                case let .failure(error):
+                    self.handleFileDownloadError(error)
+                }
+            }
+        })
+        viewController?.present(alert, animated: true)
     }
 
     // 388 - 开始采集数据（部分固件支持）
@@ -335,8 +718,7 @@ class FileSystem_Module: BaseFunction_Module {
                 }
 
             case let .failure(error):
-                BDLogger.error("请求文件数据断点续传失败: \(error)")
-                self.showError("请求文件数据断点续传失败: \(error.localizedDescription)")
+                self.handleFileDownloadError(error)
             }
         }
     }
@@ -351,13 +733,15 @@ class FileSystem_Module: BaseFunction_Module {
         let dialogX: CGFloat = 20
         let dialogY: CGFloat = (UIScreen.main.bounds.height - dialogHeight) / 2
         let fileListDialog = FileListDialog(x: dialogX, y: dialogY, width: dialogWidth, height: dialogHeight, files: collectedFiles)
+        let modalPresentation_VC = QMUIModalPresentationViewController()
         // 设置下载按钮回调
-        fileListDialog.downloadButtonCallback = { [weak self] selectedFiles in
+        fileListDialog.downloadButtonCallback = { [weak self, weak modalPresentation_VC] selectedFiles in
             guard let self = self else { return }
             guard !selectedFiles.isEmpty else {
                 BDLogger.warning("未选择任何文件进行下载")
                 return
             }
+            modalPresentation_VC?.hideWith(animated: true)
             BDLogger.info("开始下载选中的文件，共 \(selectedFiles.count) 个")
             // 此处因为指令是队列执行的，所以可以直接循环调用
             for fileName in selectedFiles {
@@ -365,7 +749,6 @@ class FileSystem_Module: BaseFunction_Module {
                 self.getFileData(fileName: fileName)
             }
         }
-        let modalPresentation_VC = QMUIModalPresentationViewController()
         modalPresentation_VC.isModal = true
         modalPresentation_VC.contentView = fileListDialog
         modalPresentation_VC.showWith(animated: true)

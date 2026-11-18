@@ -2,7 +2,7 @@
 //  Archive+Writing.swift
 //  ZIPFoundation
 //
-//  Copyright © 2017-2024 Thomas Zoechling, https://www.peakstep.com and the ZIP Foundation project authors.
+//  Copyright © 2017-2025 Thomas Zoechling, https://www.peakstep.com and the ZIP Foundation project authors.
 //  Released under the MIT License.
 //
 //  See https://github.com/weichsel/ZIPFoundation/blob/master/LICENSE for license information.
@@ -129,6 +129,8 @@ extension Archive {
         let existingData = try Data.readChunk(of: Int(existingSize), from: self.archiveFile)
         fseeko(self.archiveFile, off_t(startOfCD), SEEK_SET)
         let fileHeaderStart = Int64(ftello(self.archiveFile))
+        guard fileHeaderStart >= 0 else { throw ArchiveError.unwritableArchive }
+
         let modDateTime = modificationDate.fileModificationDateTime
         defer { fflush(self.archiveFile) }
         do {
@@ -141,6 +143,8 @@ extension Archive {
                                                           compressionMethod: compressionMethod, bufferSize: bufferSize,
                                                           progress: progress, provider: provider)
             startOfCD = Int64(ftello(self.archiveFile))
+            guard startOfCD >= 0 else { throw ArchiveError.unwritableArchive }
+
             // Write the local file header a second time. Now with compressedSize (if applicable) and a valid checksum.
             fseeko(self.archiveFile, off_t(fileHeaderStart), SEEK_SET)
             localFileHeader = try self.writeLocalFileHeader(path: path, compressionMethod: compressionMethod,
@@ -155,10 +159,13 @@ extension Archive {
                                                                      relativeOffset: UInt64(fileHeaderStart),
                                                                      externalFileAttributes: externalAttributes)
             // End of Central Directory Record (including ZIP64 End of Central Directory Record/Locator)
-            let startOfEOCD = UInt64(ftello(self.archiveFile))
-            let eocd = try self.writeEndOfCentralDirectory(centralDirectoryStructure: centralDir,
-                                                           startOfCentralDirectory: UInt64(startOfCD),
-                                                           startOfEndOfCentralDirectory: startOfEOCD, operation: .add)
+            let startOfEOCD = Int64(ftello(self.archiveFile))
+            guard startOfEOCD >= 0 else { throw ArchiveError.unwritableArchive }
+
+            let eocd = try
+                self.writeEndOfCentralDirectory(centralDirectoryStructure: centralDir,
+                                                startOfCentralDirectory: UInt64(startOfCD),
+                                                startOfEndOfCentralDirectory: UInt64(startOfEOCD), operation: .add)
             (self.endOfCentralDirectoryRecord, self.zip64EndOfCentralDirectory) = eocd
         } catch ArchiveError.cancelledOperation {
             try rollback(UInt64(fileHeaderStart), (existingData, existingSize), bufferSize, eocdRecord, zip64EOCD)
@@ -201,15 +208,19 @@ extension Archive {
                 centralDirectoryData.append(updatedCentralDirectory.data)
             } else { offset = currentEntry.localSize }
         }
-        let startOfCentralDirectory = UInt64(ftello(tempArchive.archiveFile))
+        let startOfCentralDirectory = Int64(ftello(tempArchive.archiveFile))
+        guard startOfCentralDirectory >= 0 else { throw ArchiveError.unwritableArchive }
+
         _ = try Data.write(chunk: centralDirectoryData, to: tempArchive.archiveFile)
-        let startOfEndOfCentralDirectory = UInt64(ftello(tempArchive.archiveFile))
+        let startOfEndOfCentralDirectory = Int64(ftello(tempArchive.archiveFile))
+        guard startOfEndOfCentralDirectory >= 0 else { throw ArchiveError.unwritableArchive }
+
         tempArchive.endOfCentralDirectoryRecord = self.endOfCentralDirectoryRecord
         tempArchive.zip64EndOfCentralDirectory = self.zip64EndOfCentralDirectory
         let ecodStructure = try
             tempArchive.writeEndOfCentralDirectory(centralDirectoryStructure: entry.centralDirectoryStructure,
-                                                   startOfCentralDirectory: startOfCentralDirectory,
-                                                   startOfEndOfCentralDirectory: startOfEndOfCentralDirectory,
+                                                   startOfCentralDirectory: UInt64(startOfCentralDirectory),
+                                                   startOfEndOfCentralDirectory: UInt64(startOfEndOfCentralDirectory),
                                                    operation: .remove)
         (tempArchive.endOfCentralDirectoryRecord, tempArchive.zip64EndOfCentralDirectory) = ecodStructure
         (self.endOfCentralDirectoryRecord, self.zip64EndOfCentralDirectory) = ecodStructure
@@ -218,7 +229,6 @@ extension Archive {
     }
 
     func replaceCurrentArchive(with archive: Archive) throws {
-        fclose(self.archiveFile)
         if self.isMemoryArchive {
             #if swift(>=5.0)
             guard let data = archive.data else {
@@ -246,6 +256,7 @@ extension Archive {
             #endif
             let fileSystemRepresentation = fileManager.fileSystemRepresentation(withPath: self.url.path)
             guard let file = fopen(fileSystemRepresentation, "rb+") else { throw ArchiveError.unreadableArchive }
+
             self.archiveFile = file
         }
     }
