@@ -1,0 +1,143 @@
+<view class="page">
+  <view
+    class="floating-status {{statusClass}}"
+    style="left: {{floatingX}}px; top: {{floatingY}}px;"
+    catchtouchstart="onFloatingTouchStart"
+    catchtouchmove="onFloatingTouchMove"
+    catchtouchend="onFloatingTouchEnd"
+    catchtouchcancel="onFloatingTouchEnd"
+  >
+    <view class="status-dot"></view>
+    <view class="status-copy">
+      <view class="status-title">{{statusText}}</view>
+      <view class="status-subtitle">{{statusDeviceText}}</view>
+    </view>
+    <view class="status-icon">Log</view>
+  </view>
+
+  <view wx:if="{{heartRateMeasuring || heartRateStatusText}}" class="measurement-banner">
+    <view class="measurement-title">心率测量</view>
+    <view class="measurement-status">{{heartRateStatusText}}</view>
+    <view wx:if="{{heartRateResultText}}" class="measurement-result">{{heartRateResultText}}</view>
+  </view>
+
+  <view wx:if="{{bloodOxygenMeasuring || bloodOxygenStatusText}}" class="measurement-banner">
+    <view class="measurement-title">血氧测量</view>
+    <view class="measurement-status">{{bloodOxygenStatusText}}</view>
+    <view wx:if="{{bloodOxygenResultText}}" class="measurement-result">{{bloodOxygenResultText}}</view>
+  </view>
+
+  <view wx:if="{{historyDataSyncing || historyDataStatusText}}" class="measurement-banner">
+    <view class="measurement-title">戒指内数据</view>
+    <view class="measurement-status">{{historyDataStatusText}}</view>
+    <view wx:if="{{historyDataResultText}}" class="measurement-result">{{historyDataResultText}}</view>
+  </view>
+
+  <view wx:if="{{appCompositeSyncing || appCompositeStatusText}}" class="measurement-banner">
+    <view class="measurement-title">App事件</view>
+    <view class="measurement-status">{{appCompositeStatusText}}</view>
+    <view wx:if="{{appCompositeResultText}}" class="measurement-result">{{appCompositeResultText}}</view>
+  </view>
+
+  <view wx:if="{{goMoreSleepReading || goMoreStatusText}}" class="measurement-banner">
+    <view class="measurement-title">GoMore</view>
+    <view class="measurement-status">{{goMoreStatusText}}</view>
+    <view wx:if="{{goMoreResultText}}" class="measurement-result">{{goMoreResultText}}</view>
+  </view>
+
+  <view wx:if="{{networkBusy || networkStatusText}}" class="measurement-banner">
+    <view class="measurement-title">网络接口 · {{networkRegionText}}</view>
+    <view class="measurement-status">{{networkStatusText}}</view>
+    <view wx:if="{{networkResultText}}" class="measurement-result">{{networkResultText}}</view>
+  </view>
+
+  <view wx:for="{{commandSections}}" wx:for-item="section" wx:key="title" class="section">
+    <view class="section-title">{{section.title}}</view>
+    <view class="function-grid">
+      <button
+        wx:for="{{section.items}}"
+        wx:for-item="command"
+        wx:key="id"
+        class="function-card"
+        disabled="{{(command.requiresConnection && !connected) || isConnecting || (command.id === 12 && !connected) || (isBusy && command.id !== 2 && command.id !== 72 && command.id !== 82) || (networkBusy && command.id !== 2) || (heartRateMeasuring && command.id !== 2 && command.id !== 12 && command.id !== 72) || (bloodOxygenMeasuring && command.id !== 2 && command.id !== 12 && command.id !== 82) || (historyDataSyncing && command.id !== 2 && command.id !== 12) || (appCompositeSyncing && command.id !== 2 && command.id !== 12) || (goMoreSleepReading && command.id !== 2 && command.id !== 12) || (!heartRateMeasuring && command.id === 72) || (!bloodOxygenMeasuring && command.id === 82)}}"
+        data-id="{{command.id}}"
+        bindtap="onCommandTap"
+      >
+        <view wx:if="{{command.requiresConnection}}" class="link-mark"></view>
+        <text>{{command.title}}</text>
+      </button>
+    </view>
+  </view>
+
+  <view wx:if="{{networkDialogVisible}}" class="dialog-mask" catchtouchmove="noop">
+    <view class="config-dialog">
+      <view class="dialog-title">{{networkDialogTitle}}</view>
+      <view wx:if="{{networkDialogDescription}}" class="dialog-desc">{{networkDialogDescription}}</view>
+
+      <block wx:if="{{networkDialogMode == 'fields'}}">
+        <view wx:for="{{networkDialogFields}}" wx:for-item="field" wx:key="key" class="dialog-field">
+          <view class="field-label">{{field.label}}</view>
+          <input
+            class="dialog-input"
+            data-key="{{field.key}}"
+            value="{{field.value}}"
+            placeholder="{{field.placeholder}}"
+            bindinput="onNetworkDialogInput"
+          />
+        </view>
+      </block>
+
+      <block wx:elif="{{networkDialogMode == 'historyUpload'}}">
+        <view class="choice-list">
+          <button
+            class="choice-button {{networkHistoryUploadMode == 'all' ? 'selected' : ''}}"
+            data-mode="all"
+            bindtap="onHistoryUploadModeTap"
+          >
+            <view class="choice-title">同步全部历史数据</view>
+            <view class="choice-desc">读取戒指内全部历史记录，同步完成后立即上传。</view>
+          </button>
+          <button
+            class="choice-button {{networkHistoryUploadMode == 'unuploaded' ? 'selected' : ''}}"
+            data-mode="unuploaded"
+            bindtap="onHistoryUploadModeTap"
+          >
+            <view class="choice-title">同步未上传历史数据</view>
+            <view class="choice-desc">只读取设备侧标记为未上传的历史记录。</view>
+          </button>
+        </view>
+      </block>
+
+      <block wx:else>
+        <view class="dialog-field">
+          <view class="field-label">开始时间</view>
+          <view class="picker-row">
+            <picker mode="date" value="{{networkTimelineStartDate}}" data-field="networkTimelineStartDate" bindchange="onNetworkTimelinePickerChange">
+              <view class="picker-value">{{networkTimelineStartDate}}</view>
+            </picker>
+            <picker mode="time" value="{{networkTimelineStartTime}}" data-field="networkTimelineStartTime" bindchange="onNetworkTimelinePickerChange">
+              <view class="picker-value">{{networkTimelineStartTime}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="dialog-field">
+          <view class="field-label">结束时间</view>
+          <view class="picker-row">
+            <picker mode="date" value="{{networkTimelineEndDate}}" data-field="networkTimelineEndDate" bindchange="onNetworkTimelinePickerChange">
+              <view class="picker-value">{{networkTimelineEndDate}}</view>
+            </picker>
+            <picker mode="time" value="{{networkTimelineEndTime}}" data-field="networkTimelineEndTime" bindchange="onNetworkTimelinePickerChange">
+              <view class="picker-value">{{networkTimelineEndTime}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="range-text">{{networkTimelineRangeText}}</view>
+      </block>
+
+      <view class="dialog-actions">
+        <button class="dialog-button secondary" bindtap="closeNetworkDialog">取消</button>
+        <button class="dialog-button primary" bindtap="confirmNetworkDialog">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

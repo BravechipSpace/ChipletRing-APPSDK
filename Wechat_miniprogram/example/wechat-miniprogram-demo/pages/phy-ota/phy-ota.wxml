@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="title">PHY 固件升级与 Boot 恢复</view>
+  <view class="hint">正常升级请先连接戒指；停在 PPLUSOTA 的戒指可直接扫描恢复。恢复会从首分区完整重刷，请保持小程序前台运行。</view>
+  <button disabled="{{busy}}" bindtap="chooseFile">选择 HEX16 / HEX 固件</button>
+  <button wx:if="{{hasRecovery}}" disabled="{{busy}}" bindtap="loadRecovery">加载上次升级固件</button>
+  <view>{{fileName || '尚未选择文件'}}</view>
+  <button disabled="{{busy}}" bindtap="scan">重新搜索 Boot 恢复设备</button>
+  <view wx:for="{{devices}}" wx:key="deviceId" class="device {{selectedId === item.deviceId ? 'selected' : ''}}" data-id="{{item.deviceId}}" bindtap="select">
+    <view>{{item.localName || item.name}} · PHY 恢复模式</view>
+    <view>MAC: {{item.macAddress || '缺失，无法自动关联升级'}}</view>
+    <view>{{item.deviceId}}</view>
+  </view>
+  <view class="confirm"><switch disabled="{{busy || !ready}}" checked="{{confirmed}}" bindchange="confirm" />我已确认此固件适用于目标戒指</view>
+  <button type="primary" disabled="{{busy || !ready || !confirmed}}" bindtap="start">开始升级 / 完整恢复</button>
+  <progress percent="{{percent}}" show-info />
+  <view class="status">{{status}}</view>
+  <view wx:if="{{firmwareVersion}}">当前固件版本：{{firmwareVersion}}</view>
+  <button wx:if="{{hasRecovery}}" disabled="{{busy}}" bindtap="reconnect">重新搜索并读取版本（不刷写）</button>
+  <button wx:if="{{busy}}" bindtap="cancel">停止操作</button>
+  <button wx:if="{{hasRecovery}}" disabled="{{busy}}" bindtap="clearRecovery">清除本地标记（设备模式不变）</button>
+  <button bindtap="logs">查看日志</button>
+</view>

@@ -1,0 +1,5 @@
+.page { padding: 20px; font-size: 14px; }
+.title { font-size: 20px; font-weight: bold; }
+.hint { color: #666; margin: 12px 0; line-height: 1.6; }
+.status { padding: 12px 0; word-break: break-all; }
+button { margin: 10px 0; }

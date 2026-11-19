@@ -1,0 +1,19 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/index/index",
+    "pages/device-list/device-list",
+    "pages/logs/logs",
+    "pages/apollo-ota/apollo-ota",
+    "pages/nordic-ota/nordic-ota",
+    "pages/phy-ota/phy-ota"
+  ],
+  "window": {
+    "navigationBarTitleText": "BCL 戒指 Demo",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f2f2f7"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

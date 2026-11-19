@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="log-device">
+    <view class="log-device-status">{{connected ? "已连接" : "未连接"}}: {{logDeviceName}}</view>
+    <view class="log-device-meta">MAC: {{logDeviceMac}}</view>
+    <view class="log-device-meta">RSSI: {{logDeviceRssi}}</view>
+    <button wx:if="{{otaDiagnosticPath}}" class="toolbar-button" disabled="{{otaBusy}}" bindtap="copyOtaDiagnostics">{{otaBusy ? '升级进行中，结束后可复制完整日志' : '复制完整 OTA 诊断日志'}}</button>
+  </view>
+
+  <scroll-view
+    class="log-list"
+    scroll-y
+    scroll-into-view="{{logScrollIntoView}}"
+  >
+    <view wx:if="{{logs.length === 0}}" class="log-empty">暂无日志</view>
+    <view
+      wx:for="{{logs}}"
+      wx:key="id"
+      id="{{item.id}}"
+      data-log-id="{{item.id}}"
+      class="log-entry {{item.level}}"
+      catchtap="copyLogLine"
+    >
+      <view class="log-entry-text">{{item.text}}</view>
+      <view wx:if="{{item.detail}}" class="log-entry-detail">{{item.detail}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="log-toolbar">
+    <button class="toolbar-button" catchtap="clearLogs">清空</button>
+    <button class="toolbar-button" catchtap="copyAllLogs">复制</button>
+    <view class="auto-scroll">
+      <text>自动滚动</text>
+      <switch checked="{{autoScroll}}" bindchange="onAutoScrollChange" color="#34c759"></switch>
+    </view>
+  </view>
+</view>

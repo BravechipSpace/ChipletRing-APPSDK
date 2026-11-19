@@ -1,0 +1,8 @@
+.page { padding: 20px; font-size: 14px; }
+.title { font-size: 18px; font-weight: 600; }
+.hint { color: #666; line-height: 22px; margin: 12px 0; }
+.status { margin: 14px 0; word-break: break-all; }
+.device { border: 1px solid #ccc; margin: 8px 0; padding: 10px; word-break: break-all; }
+.selected { border-color: #1677ff; background: #eef5ff; }
+.confirm { margin: 12px 0; line-height: 28px; }
+button { margin: 10px 0; font-size: 14px; }

@@ -1,0 +1,12 @@
+{
+  "name": "@bcl/ring-wechat-miniprogram-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bundle:sdk": "pnpm --filter @bcl/ring-protocol-core build && pnpm --filter @bcl/ring-sdk-core build && pnpm --filter @bcl/ring-transport build && pnpm --filter @bcl/ring-adapter-wechat build && pnpm --filter @bcl/ring-network-core build && node scripts/build-sdk-bundle.mjs",
+    "build": "echo \"Open this demo with WeChat DevTools\"",
+    "test": "echo \"No demo tests\"",
+    "lint": "echo \"No demo lint\""
+  }
+}

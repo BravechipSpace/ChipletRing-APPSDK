@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="title">Nordic 固件升级</view>
+  <view class="hint">{{busy ? '正在为当前戒指升级，请保持戒指靠近手机。' : connected ? '升级设备：' + deviceName : canRetry ? '已保留本次升级设备，可点击开始重试。' : '请先在首页连接需要升级的戒指。'}}</view>
+  <button disabled="{{busy}}" bindtap="chooseZip">选择升级文件（ZIP）</button>
+  <view>{{fileName || '尚未选择升级文件'}}</view>
+  <button type="primary" disabled="{{busy || !ready || !(connected || canRetry)}}" bindtap="start">{{connected ? '开始升级' : canRetry ? '重新开始升级' : '开始升级'}}</button>
+  <view wx:if="{{!ready}}" class="hint">选择适用于当前戒指的固件文件，校验通过后即可开始。</view>
+  <progress wx:if="{{busy || percent > 0}}" percent="{{percent}}" show-info />
+  <view class="status">{{status}}</view>
+  <button wx:if="{{busy ? false : canReconnect}}" disabled="{{busy}}" bindtap="reconnect">重新连接戒指</button>
+  <button wx:if="{{busy}}" bindtap="cancel">停止升级</button>
+  <view class="hint">升级期间请保持小程序前台运行。设备切换与重新连接将自动完成。</view>
+  <button bindtap="logs">查看升级日志</button>
+  <button disabled="{{busy}}" bindtap="home">返回首页</button>
+</view>

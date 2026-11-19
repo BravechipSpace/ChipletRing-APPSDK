@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@bcl/ring-adapter-wechat": ["../../packages/adapter-wechat/src/index.ts"],
+      "@bcl/ring-protocol-core": ["../../packages/protocol-core/src/index.ts"],
+      "@bcl/ring-sdk-core": ["../../packages/sdk-core/src/index.ts"],
+      "@bcl/ring-transport": ["../../packages/transport/src/index.ts"]
+    }
+  },
+  "include": ["**/*.ts", "typings/**/*.d.ts"],
+  "exclude": ["test", "node_modules"]
+}

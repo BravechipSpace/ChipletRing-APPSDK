@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="section-header">
+    <view>
+      <view class="section-title">设备列表</view>
+      <view class="section-subtitle">{{scanSummary}}</view>
+    </view>
+    <view wx:if="{{isScanning}}" class="scan-badge">扫描中</view>
+  </view>
+
+  <view class="action-bar">
+    <button class="primary-button" disabled="{{isScanning || otaBusy}}" bindtap="scanDevices">扫描蓝牙设备</button>
+    <button class="secondary-button" disabled="{{connected || isConnecting || otaBusy || !selectedDeviceId}}" bindtap="connectSelectedDevice">连接选中设备</button>
+  </view>
+
+  <view wx:if="{{devices.length === 0}}" class="empty">暂无设备</view>
+  <view
+    wx:for="{{devices}}"
+    wx:key="deviceId"
+    class="device-cell {{selectedDeviceId === item.deviceId ? 'selected' : ''}}"
+    data-device-id="{{item.deviceId}}"
+    bindtap="selectDevice"
+  >
+    <view class="device-info">
+      <view class="device-name">Name:{{item.localName || item.name || "Unknown"}}</view>
+      <view wx:if="{{item.mode === 'phyBootloader'}}" class="device-meta">PHY 恢复模式 · 请进入固件恢复页</view>
+      <view wx:if="{{item.systemConnected}}" class="device-meta">系统已连接 · 可接入小程序会话</view>
+      <view class="device-meta">Mac:{{item.macAddress || "Unknown"}}</view>
+      <view class="device-meta">RSSI: {{item.RSSI || "Unknown"}}</view>
+      <view class="device-meta">DeviceId: {{item.deviceId}}</view>
+      <view class="device-meta">厂商数据: {{item.manufacturerDataHex || "Unknown"}}</view>
+    </view>
+    <button
+      class="connect-button"
+      disabled="{{connected || isConnecting || otaBusy}}"
+      data-device-id="{{item.deviceId}}"
+      catchtap="connectDeviceFromCard"
+    >
+      {{item.mode === 'phyBootloader' ? '恢复固件' : 'Connect'}}
+    </button>
+  </view>
+</view>

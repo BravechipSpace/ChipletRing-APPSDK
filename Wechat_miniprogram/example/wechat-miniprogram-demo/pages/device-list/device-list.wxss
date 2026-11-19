@@ -1,0 +1,148 @@
+.page {
+  min-height: 100vh;
+  padding: 8px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+  background: #f2f2f7;
+  color: #000;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding-right: 8px;
+}
+
+.section-title {
+  height: 40px;
+  padding: 0 8px;
+  color: #3c3c43;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.section-subtitle {
+  margin: -8px 0 8px;
+  padding: 0 8px;
+  color: #8e8e93;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.scan-badge {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(0, 122, 255, 0.12);
+  color: #007aff;
+  font-size: 12px;
+}
+
+.action-bar {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 7px 12px;
+}
+
+.primary-button,
+.secondary-button {
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 44px;
+}
+
+.primary-button {
+  background: #007aff;
+  color: #fff;
+}
+
+.secondary-button {
+  background: #fff;
+  color: #007aff;
+}
+
+.primary-button::after,
+.secondary-button::after,
+.connect-button::after {
+  border: 0;
+}
+
+.device-cell,
+.empty {
+  margin: 0 7px 15px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.device-cell {
+  display: flex;
+  align-items: center;
+  min-height: 112px;
+}
+
+.device-cell.selected {
+  border-color: #007aff;
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.device-info {
+  flex: 1;
+  min-width: 0;
+  padding-right: 12px;
+}
+
+.device-name {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.device-meta {
+  overflow: hidden;
+  margin-top: 5px;
+  color: #8e8e93;
+  font-size: 14px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connect-button {
+  flex: 0 0 60px;
+  width: 60px;
+  height: 42px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #007aff;
+  font-size: 14px;
+  line-height: 42px;
+}
+
+.connect-button[disabled],
+.primary-button[disabled],
+.secondary-button[disabled] {
+  color: #8e8e93;
+  background: #fafafa;
+}
+
+.empty {
+  border-color: #d1d1d6;
+  color: #8e8e93;
+  font-size: 13px;
+  line-height: 18px;
+}

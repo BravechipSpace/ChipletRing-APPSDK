@@ -1,0 +1,39 @@
+.page { min-height: 100vh; padding: 24px 16px calc(32px + env(safe-area-inset-bottom)); box-sizing: border-box; background: #f2f2f7; color: #1d2834; }
+.header { margin: 4px 4px 20px; }
+.eyebrow { color: #147d75; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.title { margin: 7px 0 10px; font-size: 29px; font-weight: 700; }
+.connection { font-size: 12px; color: #78818b; word-break: break-all; }
+.connection.online { color: #147d75; }
+.notice { padding: 13px 15px; margin-bottom: 16px; background: #fff7e6; border-radius: 12px; color: #795627; font-size: 12px; line-height: 1.7; }
+.card { padding: 18px 15px; margin-bottom: 16px; border-radius: 16px; background: #fff; }
+.step { font-size: 15px; font-weight: 600; margin-bottom: 17px; }
+.source-tabs { display: flex; padding: 4px; background: #f0f3f5; border-radius: 10px; margin-bottom: 18px; }
+button { font-size: 13px; line-height: 1.5; padding: 11px 12px; border-radius: 9px; margin: 10px 0; }
+button::after { border: 0; }
+button[disabled] { opacity: .45; }
+.tab { flex: 1; margin: 0; background: transparent; color: #67717d; padding: 9px 4px; font-size: 12px; }
+.tab.active { background: white; color: #147d75; font-weight: 600; }
+.label { font-size: 12px; color: #596573; margin: 14px 0 8px; }
+.query-row { display: flex; align-items: center; gap: 8px; }
+.query-row input { flex: 1; min-width: 0; background: #f3f5f7; padding: 11px; border-radius: 9px; font-size: 14px; height: 22px; }
+.query-row button { flex: 0 0 auto; margin: 0; font-size: 12px; }
+.primary { background: #147d75; color: #fff; }
+.secondary { background: #edf5f4; color: #147d75; }
+.danger { background: #fff0ee; color: #bd4236; }
+.hint, .footer { font-size: 11px; line-height: 1.7; color: #7a838c; margin: 9px 0; }
+.chat-hint { margin-bottom: 16px; }
+.firmware-list { margin: 16px 0 12px; }
+.firmware-item { display: flex; align-items: center; width: 100%; margin: 7px 0; text-align: left; border: 1px solid #e7ebee; background: #fff; box-sizing: border-box; }
+.firmware-item.selected { border-color: #147d75; background: #f1f8f6; }
+.radio { flex: 0 0 17px; width: 17px; height: 17px; border: 1px solid #cbd5d6; border-radius: 50%; text-align: center; line-height: 17px; color: #147d75; margin-right: 10px; }
+.firmware-copy { flex: 1; min-width: 0; }
+.firmware-name { font-size: 13px; font-weight: 600; word-break: break-all; }
+.firmware-url { margin-top: 4px; font-size: 10px; color: #8a939b; word-break: break-all; }
+.empty { padding: 16px 0; font-size: 12px; color: #89929b; line-height: 1.6; }
+.ready-file { padding: 13px; background: #f3f7f6; border-radius: 10px; }
+.payload-info { padding: 12px; border: 1px solid #e4e9ec; border-radius: 9px; font-size: 12px; }
+.status { margin: 14px 0; font-size: 12px; color: #5c6875; line-height: 1.7; word-break: break-all; }
+.start-reason { margin: 8px 0 12px; padding: 10px 12px; border-radius: 8px; color: #795627; background: #fff7e6; font-size: 12px; line-height: 1.7; }
+.result { padding: 12px; border-radius: 9px; background: #f0f6f5; font-size: 12px; line-height: 1.8; margin-top: 14px; }
+.logs { color: #147d75; background: transparent; text-align: left; padding-left: 5px; }
+.footer { margin: 0 5px; }

@@ -1,0 +1,66 @@
+<view class="page">
+  <view class="header">
+    <view class="eyebrow">APOLLO OTA</view>
+    <view class="title">固件升级</view>
+    <view class="connection {{connected ? 'online' : ''}}">{{connected ? statusDeviceText : '尚未连接 · 请先在设备列表连接戒指'}}</view>
+  </view>
+
+  <view class="notice">仅适用于 Apollo 设备。请使用与戒指型号匹配的固件，保证供电，并在升级期间保持小程序前台运行。</view>
+
+  <view class="card">
+    <view class="step">01 · 选择固件来源</view>
+    <view class="source-tabs">
+      <button class="tab {{source === 'network' ? 'active' : ''}}" data-source="network" bindtap="onSourceTap" disabled="{{fileBusy || otaBusy || readVersionBusy}}">历史版本下载</button>
+      <button class="tab {{source === 'chat' ? 'active' : ''}}" data-source="chat" bindtap="onSourceTap" disabled="{{fileBusy || otaBusy || readVersionBusy}}">微信聊天文件</button>
+    </view>
+
+    <block wx:if="{{source === 'network'}}">
+      <view class="label">固件分类</view>
+      <view class="query-row">
+        <input value="{{category}}" placeholder="例如 Z5X" bindinput="onCategoryInput" disabled="{{fileBusy || otaBusy || readVersionBusy}}" maxlength="40" />
+        <button class="secondary" bindtap="queryFirmwareList" loading="{{fileBusy}}" disabled="{{fileBusy || otaBusy || readVersionBusy}}">查询历史版本</button>
+      </view>
+      <view class="hint">查询后先选择文件，再下载。分类需与设备固件系列一致。</view>
+      <view wx:if="{{queried && !firmwareList.length}}" class="empty">暂无历史版本，请检查分类或使用聊天文件。</view>
+      <view class="firmware-list">
+        <button wx:for="{{firmwareList}}" wx:key="id" class="firmware-item {{selectedIndex === index ? 'selected' : ''}}" data-index="{{index}}" bindtap="selectFirmware" disabled="{{!item.selectable || fileBusy || otaBusy || readVersionBusy}}">
+          <view class="radio">{{selectedIndex === index ? '✓' : ''}}</view>
+          <view class="firmware-copy">
+            <view class="firmware-name">{{item.fileName}}</view>
+            <view class="firmware-url">{{item.selectable ? item.displayUrl : item.reason}}</view>
+          </view>
+        </button>
+      </view>
+      <button class="primary" bindtap="downloadSelectedFirmware" disabled="{{selectedIndex < 0 || fileBusy || otaBusy || readVersionBusy}}">下载所选固件</button>
+      <progress wx:if="{{downloadPercent > 0}}" percent="{{downloadPercent}}" stroke-width="5" activeColor="#147d75" show-info />
+    </block>
+
+    <block wx:else>
+      <view class="hint chat-hint">先将 .bin 文件发送到文件传输助手或微信聊天，再在这里选择。选择文件不会立即刷机。</view>
+      <button class="primary" bindtap="chooseChatFile" disabled="{{fileBusy || otaBusy || readVersionBusy}}">从聊天记录选择 bin 文件</button>
+    </block>
+    <view class="status">{{fileStatus}}</view>
+  </view>
+
+  <view class="card">
+    <view class="step">02 · 核对并升级</view>
+    <view wx:if="{{ready}}" class="ready-file">
+      <view class="firmware-name">{{fileName}}</view>
+      <view class="hint">文件 {{fileSize}} 字节 · 正文 {{bodySize}} 字节 · 基本格式校验通过</view>
+    </view>
+    <view wx:else class="empty">文件准备完成后，才能开始升级。</view>
+    <view class="label">蓝牙单片负载</view>
+    <view class="payload-info">237 字节 · 连接 MTU 需至少 240</view>
+    <button class="primary" bindtap="startUpgrade" disabled="{{!canStartUpgrade}}">开始 Apollo 升级</button>
+    <view wx:if="{{upgradeBlockReason}}" class="start-reason">{{upgradeBlockReason}}</view>
+    <button wx:if="{{!connected}}" class="secondary" bindtap="openDeviceList" disabled="{{fileBusy || otaBusy || readVersionBusy}}">连接 / 选择设备（保留已选固件）</button>
+    <view class="status">{{otaStatus}}</view>
+    <progress percent="{{otaPercent}}" stroke-width="6" activeColor="#147d75" show-info />
+    <view class="hint">这里显示设备已确认的正文进度，100% 后仍需完成校验与重启确认。</view>
+    <button wx:if="{{otaBusy}}" class="danger" bindtap="cancelUpgrade">停止升级</button>
+    <view wx:if="{{resultText}}" class="result">{{resultText}}</view>
+    <button wx:if="{{protocolCompleted || resultText}}" class="secondary" bindtap="reconnectReadVersion" loading="{{readVersionBusy}}" disabled="{{fileBusy || otaBusy || readVersionBusy}}">重连并读取固件版本</button>
+  </view>
+  <button class="logs" bindtap="openLogs">查看统一日志 ↗</button>
+  <view class="footer">完整协议诊断包含发送分片和原始响应。当前文件：{{diagnosticPath}}</view>
+</view>

@@ -1,0 +1,116 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #000;
+}
+
+.log-device {
+  flex: 0 0 64px;
+  padding: 8px 15px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #d1d1d6;
+  background: #f2f2f7;
+}
+
+.log-device-status {
+  overflow: hidden;
+  color: #1c1c1e;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-device-meta {
+  display: inline-block;
+  margin-right: 16px;
+  color: #8e8e93;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.log-list {
+  flex: 1;
+  min-height: 0;
+  background: #000;
+}
+
+.log-empty {
+  padding: 12px;
+  color: #34c759;
+  font-size: 12px;
+}
+
+.log-entry {
+  padding: 3px 8px;
+  box-sizing: border-box;
+  background: #000;
+  color: #34c759;
+  font-family: Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  word-break: break-all;
+}
+
+.log-entry.debug {
+  color: #2196f3;
+}
+
+.log-entry.info {
+  color: #34c759;
+}
+
+.log-entry.warning {
+  color: #ffcc02;
+}
+
+.log-entry.error {
+  color: #ff453a;
+}
+
+.log-entry-detail {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.log-toolbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  flex: 0 0 48px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  background: #f2f2f7;
+}
+
+.toolbar-button {
+  width: auto;
+  margin: 0 18px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #007aff;
+  font-size: 14px;
+  line-height: 48px;
+}
+
+.toolbar-button::after {
+  border: 0;
+}
+
+.auto-scroll {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  color: #1c1c1e;
+  font-size: 14px;
+}
+
+.auto-scroll switch {
+  margin-left: 8px;
+  transform: scale(0.82);
+}

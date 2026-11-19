@@ -1,0 +1,52 @@
+{
+  "description": "BCL 戒指微信小程序 Demo",
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "appid": "wx896f80b06721394f",
+  "projectname": "BCLRingWechatDemo",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "postcss": true,
+    "enhance": true,
+    "packNpmManually": false,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "useCompilerPlugins": [],
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmRelationList": [],
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "condition": {
+    "miniprogram": {
+      "current": 0,
+      "list": [
+        {
+          "name": "首页",
+          "pathName": "pages/index/index",
+          "query": ""
+        }
+      ]
+    }
+  },
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": "test" }
+    ],
+    "include": []
+  },
+  "editorSetting": {},
+  "libVersion": "3.17.0"
+}
