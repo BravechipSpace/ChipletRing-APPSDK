@@ -1,0 +1,36 @@
+{
+  "name": "BCLRingSDKDemo",
+  "appid": "__UNI__BCL_RING_DEMO",
+  "description": "BCL 戒指跨平台 SDK uni-app Demo",
+  "versionName": "0.1.0",
+  "versionCode": "1",
+  "uniStatistics": {
+    "enable": false
+  },
+  "vueVersion": "3",
+  "mp-weixin": {
+    "appid": "wx896f80b06721394f",
+    "setting": {
+      "urlCheck": true,
+      "es6": true,
+      "minified": true
+    },
+    "usingComponents": true
+  },
+  "app-plus": {
+    "modules": {
+      "Bluetooth": {}
+    },
+    "distribute": {
+      "android": {
+        "permissions": [
+          "<uses-permission android:name=\"android.permission.BLUETOOTH\"/>",
+          "<uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\"/>",
+          "<uses-permission android:name=\"android.permission.BLUETOOTH_SCAN\"/>",
+          "<uses-permission android:name=\"android.permission.BLUETOOTH_CONNECT\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>"
+        ]
+      }
+    }
+  }
+}

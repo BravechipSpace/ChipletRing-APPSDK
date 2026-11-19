@@ -1,0 +1,16 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "BCL 戒指 Demo"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "BCL 戒指 Demo",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f2f2f7"
+  }
+}
