@@ -125,7 +125,7 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
         @Override
         public void battery(int power, int voltage, int current, int temperature, int cyclesNumber, int health) {
             postView("\n电量计:电量=" + power + ",电压=" + voltage + ",电流=" + current
-                    + ",温度=" + (temperature / 10f) + "℃,循环次数=" + cyclesNumber + ",健康度=" + health);
+                    + ",温度=" + temperature + "℃,循环次数=" + cyclesNumber + ",健康度=" + health);
         }
     };
 
@@ -230,10 +230,10 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     };
 
     /** Gomore授权监听（SDK源码复用，授权查询/下发PKey） */
-    private IGoMoreKeyListener iGoMoreKeyListener = new IGoMoreKeyListener() {
+    private IGoMoreKeyListener iGoMoreKeyListener=new IGoMoreKeyListener() {
         @Override
-        public void getGoMoreAuthorization(boolean success, String mcuId) {
-            postView("\n授权查询:" + (success ? "已授权" : "未授权") + ",MCU ID:" + mcuId);
+        public void getGoMoreAuthorization(boolean success, String mcuId, String key) {
+            postView("\n授权查询:" + (success ? "已授权" : "未授权") + ",MCU ID:" + mcuId + ",key:" + key);
         }
 
         @Override
@@ -794,8 +794,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
             int sex = parseGomoreInput(et_gomore_sex.getText().toString());
             int height = parseGomoreInput(et_gomore_height.getText().toString());
             int weight = parseGomoreInput(et_gomore_weight.getText().toString());
-            //年龄0-99，性别0/1，身高100-220（小于100置为100），体重10-150
-            if (age < 0 || age > 99 || (sex != 0 && sex != 1)
+            //年龄10-99，性别0/1，身高100-220（小于100置为100），体重10-150
+            if (age < 10 || age > 99 || (sex != 0 && sex != 1)
                     || height < 0 || height > 220 || weight < 10 || weight > 150) {
                 Toast.makeText(this, "请正确输入内容", Toast.LENGTH_SHORT).show();
                 return;
