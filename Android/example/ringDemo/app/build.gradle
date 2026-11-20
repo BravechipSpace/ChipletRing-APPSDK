@@ -7,8 +7,8 @@ android {
         applicationId "com.lomo.demo.aivela"
         minSdkVersion 27
         targetSdkVersion 35
-        versionCode 17
-        versionName "2.1.6"//修改aivela页面闪退的Bug
+        versionCode 18
+        versionName "2.1.7"//按照aivelaV0.9文档协议进行修改
 
         applicationVariants.all { variant ->
             variant.outputs.all {

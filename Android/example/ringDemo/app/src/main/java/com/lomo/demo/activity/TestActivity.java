@@ -52,6 +52,7 @@ import com.lm.sdk.lmApiInter.IVersionListenerLite;
 import com.lm.sdk.lmApiInter.IWearStatusListenerLite;
 import com.lm.sdk.lmApiInter.IWorkModeListenerLite;
 import com.lm.sdk.mode.BleDeviceInfo;
+import com.lm.sdk.mode.GoMoreMovement;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.SystemControlLiteBean;
 import com.lm.sdk.utils.BLEUtils;
@@ -202,7 +203,8 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
     /** 运动监听（0x38，V0.6：开始运动无运动类型参数；周期推送Data仅1字节心率，步数/卡路里/时间为0；已删漏点续传sportType=2/被动停止sportType=4分支） */
     private ISportListenerLite iSportListenerLite = new ISportListenerLite() {
         @Override
-        public void onSport(int sportType, int step, int heart, int calorie, long time) {
+        public void onSport(int sportType, int heart) {
+            //V0.9精简为2参：sportType=1时heart为心率；sportType=0/3时heart为执行结果（0失败 1成功 2文件数量已满）
             String type;
             switch (sportType) {
                 case 0:
@@ -218,15 +220,11 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     type = "运动推送type=" + sportType;
                     break;
             }
-            if (sportType == 0) {
-                String result = step == 0 ? "失败" : (step == 1 ? "成功" : (step == 2 ? "文件数量已满" : "结果=" + step));
-                postView("\n" + type + ":" + result);
-            } else if (sportType == 3) {
-                String result = step == 0 ? "失败" : (step == 1 ? "成功" : "结果=" + step);
-                postView("\n" + type + ":" + result);
-            } else {
-                // V0.6删减：周期推送仅返回心率，步数/卡路里/时间为0
+            if (sportType == 1) {
                 postView("\n" + type + ":心率=" + heart);
+            } else {
+                String result = heart == 0 ? "失败" : (heart == 1 ? "成功" : (heart == 2 ? "文件数量已满" : "结果=" + heart));
+                postView("\n" + type + ":" + result);
             }
         }
     };
@@ -748,6 +746,12 @@ public class TestActivity extends BaseActivity implements IResponseListenerLite,
                     @Override
                     public void noSleepData() {
                         postView("\ngomore睡眠 noSleepData");
+                    }
+
+                    @Override
+                    public void movementOfSleep(GoMoreMovement movement) {
+                        //V0.9新增：睡眠期间体动数据
+                        postView("\ngomore睡眠 movementOfSleep:" + GsonUtils.beanToJson(movement));
                     }
                 });
             }

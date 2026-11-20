@@ -18,6 +18,7 @@ import com.lm.sdk.lmApiInter.IMenstrualPredictionListenerLite;
 import com.lm.sdk.lmApiInter.ISedentaryReminderListenerLite;
 import com.lm.sdk.lmApiInter.ISedentaryTriggerListenerLite;
 import com.lm.sdk.lmApiInter.ISportStatusPushListenerLite;
+import com.lm.sdk.mode.GoMoreMovement;
 import com.lm.sdk.mode.GoMoreSleep;
 import com.lm.sdk.mode.HistoryRecordLite;
 import com.lm.sdk.utils.ImageSaverUtil;
@@ -354,6 +355,29 @@ public class AivelaProtocolActivity extends BaseActivity implements View.OnClick
         @Override
         public void dataUploadFinish() {
             String msg = "\n[Gomore数据上传结束]";
+            postView(msg);
+            gomoreLog.append(msg).append("\n");
+            saveGomoreLog();
+        }
+
+        @Override
+        public void movementOfSleep(GoMoreMovement movement) {
+            //V0.9新增：睡眠期间体动数据（0x36/0x05 res_type=4），movements每项代表5分钟内体动状态
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n[睡眠体动] 包").append(movement.getPackNo() + 1).append("/").append(movement.getPackNum())
+                    .append(" 报告时间:").append(formatTime(movement.getReportTs()))
+                    .append(" ").append(formatTime(movement.getStartTs()))
+                    .append("-").append(formatTime(movement.getEndTs()));
+            int[] movements = movement.getMovements();
+            if (movements != null) {
+                sb.append(" 体动(").append(movements.length).append("项):");
+                for (int m : movements) {
+                    //-1无效 0静止 1轻度 2中度 3剧烈
+                    sb.append(m == -1 ? "无效" : m == 0 ? "静止" : m == 1 ? "轻度"
+                            : m == 2 ? "中度" : m == 3 ? "剧烈" : String.valueOf(m)).append(" ");
+                }
+            }
+            String msg = sb.toString();
             postView(msg);
             gomoreLog.append(msg).append("\n");
             saveGomoreLog();

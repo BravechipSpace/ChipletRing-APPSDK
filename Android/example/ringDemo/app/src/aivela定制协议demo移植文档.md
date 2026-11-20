@@ -2,7 +2,7 @@
 
 > 本文档汇总 com.lomo.demo（demo app 模块）针对 aivela 定制协议的全部修改，另一个项目可按本文档直接复制。
 > 前提：使用本项目最新的 blelibrary（SDK 层改动见《aivela定制协议.md》）。
-> 协议版本：V0.5（新增久坐触发时间和重复模式指令 0x37/0x3A、0x37/0x3B；含 V0.4：删除全部历史记录指令 0x36/0x3、蓝牙名称长度上限 12→20、0xA0 绑定/连接请求删 timeMillis 且响应精简为固定 28 字节；含 V0.3：历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
+> 协议版本：V0.9（新增睡眠期间体动数据 0x36/0x05 res_type=4、运动周期心率推送 Subcmd 0x01→0x02、`ISportListenerLite.onSport` 签名精简为2参；含 V0.7：历史记录心率拼包调整、读取MCU ID 0xF2/0x16；含 V0.6：运动模式删减；含 V0.5：久坐触发时间和重复模式指令 0x37/0x3A、0x37/0x3B；含 V0.4：删除全部历史记录指令 0x36/0x3、蓝牙名称长度上限 12→20、0xA0 绑定/连接请求删 timeMillis 且响应精简为固定 28 字节；含 V0.3：历史记录 Subcmd 调整、长睡 4 参数、电量推送 2 字节、佩戴检测/飞行模式/工作模式/异常日志/Shipmode）。
 
 ## 一、修改清单
 
@@ -1680,3 +1680,4 @@ import com.lm.sdk.LmAPI;  // 删除此行
 - 2026-11-17：按协议 V0.7 更新（已按 V0.3~V0.6 完成移植的项目需同步以下修改）：<br>1. **SDK 依赖变更**：`HistoryRecordLite` 新增 `heartRates` 字段（int[]，运动模式60个心率点uint8、0值无效，非运动模式null；`heartRate` 运动模式下为首点心率）；新增 `GET_MCU_ID(IMcuIdListenerLite)`（0xF2/0x16）方法及 `IMcuIdListenerLite` 回调接口（响应8字节转16位HEX字符串，长度不足回调空串）<br>2. **demo 修改**：AivelaProtocolActivity 新增"五、工装测试（0xF2）"区块及"读取MCU ID(0xF2/0x16)"按钮（注册 `bt_get_mcu_id`、onClick 内 `LmAPILite.GET_MCU_ID` 匿名监听回调显示）；历史记录展示无需改码（`HistoryRecordLite.toString()` 已含 heartRates 数组）<br>3. 历史记录心率解析（SDK 内部）：运动模式（mode==1）按 60 字节心率点解析，其他模式仍 1 字节，上层数据消费逻辑如有按字节定位的需同步
   - **SDK 层（LmAPILite.java）**：① `START_SPORT()` 删除运动类型参数（请求 Data 2→0 字节），调用签名变为 `START_SPORT(listener)`；② 周期主动推送 Data 8→1 字节（仅心率），`onSport(1, 0, heart, 0, 0)` 步数/卡路里/时间填0；③ 删除 `HIS_SPORT()` 漏点续传方法（0x38/0x2）及解析分支；④ 删除被动停止运动推送解析及 SDK 自动应答（0x38/0x4）
   - **Demo 层（TestActivity.java）**：① `START_SPORT` 调用去掉运动类型参数；② 删除"漏点续传"按钮（`bt_his_sport`）的注册、onClick 分支及 activity_test.xml 中对应 Button；③ `ISportListenerLite.onSport` 回调删除 sportType=2（漏点续传）/4（被动停止）分支，周期推送仅显示心率
+- 2026-11-20：按协议 V0.9 更新（已按 V0.3~V0.7 完成移植的项目需同步以下修改）：<br>1. **SDK 依赖变更**：① `ISportListenerLite.onSport` 签名由 5 参 `(sportType, step, heart, calorie, time)` 精简为 2 参 `(sportType, heart)`（sportType=1 时 heart 为心率；sportType=0/3 时 heart 为执行结果 0失败 1成功 2文件数量已满）；② `IGoMoreListener` 新增回调 `movementOfSleep(GoMoreMovement)`（睡眠期间体动数据，res_type=4）；③ 新增数据类 `com.lm.sdk.mode.GoMoreMovement`（reportTs/startTs/endTs/packNum/packNo/movementNum/movements，movements 每项代表5分钟内体动状态：-1无效 0静止 1轻度 2中度 3剧烈）<br>2. **Demo 层（TestActivity.java）**：`ISportListenerLite.onSport` 实现改为 2 参签名（sportType=1 显示心率，sportType=0/3 显示结果文案）<br>3. **Demo 层（AivelaProtocolActivity.java）**：`goMoreListener` 补 `movementOfSleep` 回调（显示包序、报告时间、起止时间及体动状态文案，并保存到 LM/GoMoreSleepLog.txt），import 区新增 `com.lm.sdk.mode.GoMoreMovement`
